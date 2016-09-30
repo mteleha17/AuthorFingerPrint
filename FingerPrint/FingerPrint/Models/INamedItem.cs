@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace FingerPrint.Models
 {
-    public interface IWordCountItem
+    public interface INamedItem
     {
-        
+        string GetName();
     }
 }
