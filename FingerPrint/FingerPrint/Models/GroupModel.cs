@@ -6,48 +6,84 @@ using System.Threading.Tasks;
 
 namespace FingerPrint.Models
 {
-    public class GroupModel : ICountableItem, INamedItem
+    public class GroupModel : INamedCountableItem
     {
-        public string Name { get; set; }
-        private List<INamedCountableItem> _contents;
-        private SingleWordCountModel _counts;
+        private readonly int _length;
+        private ISingleWordCountModel _counts;
+        private List<INamedCountableItem> _items;
 
-        public GroupModel(string name)
+        public string Name { get; set; }
+
+        public GroupModel(string name, ISingleWordCountModel wordCountModel)
         {
             Name = name;
-            _contents = new List<INamedCountableItem>();
-
-
+            _counts = wordCountModel.Copy();
+            _length = _counts.Length();
+            _items = new List<INamedCountableItem>();
         }
 
-        public void AddItem(INamedCountableItem item)
+        public int Length()
         {
-            _contents.Add(item);
+            return _length;
         }
 
-        public void DeleteByName(string name)
-        {
-            INamedCountableItem item = _contents.FirstOrDefault(x => string.Equals(name, x.GetName(), StringComparison.CurrentCultureIgnoreCase));
-            if (item == null)
-            {
-                throw new ArgumentException($"Group does not contain an item named {name}");
-            }
-            _contents.Remove(item);
-        }
-
-        private void CalculateFingerprint()
-        {
-
-        } 
-
-        public SingleWordCountModel GetCounts()
+        public ISingleWordCountModel Counts()
         {
             return _counts.Copy();
         }
 
+        public void Add(INamedCountableItem item)
+        {
+            if (item == null)
+            {
+                throw new ArgumentException("Cannot add null item.");
+            }
+            if (item.Length() != _length)
+            {
+                throw new ArgumentException("Countable item must have the same number of counts as the group to which it is added.");
+            }
+            _items.Add(item);
+            CalculateFingerprint();
+        }
+
+        public void Delete(INamedCountableItem item)
+        {
+            if (item == null)
+            {
+                throw new ArgumentException("Cannot remove null item.");
+            }
+            if (!_items.Contains(item))
+            {
+                throw new ArgumentException($"Group does not contain item: {item}.");
+            }
+            _items.Remove(item);
+            CalculateFingerprint();
+        }
+
+        private void CalculateFingerprint()
+        {
+            for (int i = 0; i < _length; i++)
+            {
+                _counts[i] = 0;
+            }
+            foreach (INamedCountableItem item in _items)
+            {
+                int[] itemCounts = item.Counts().Counts();
+                for (int i = 0; i < _length; i++)
+                {
+                    _counts[i] += itemCounts[i];
+                }
+            }
+            int numberOfItems = _items.Count;
+            for (int i = 0; i < _length; i++)
+            {
+                _counts[i] /= numberOfItems;
+            }
+        } 
+
         public string GetName()
         {
-            return string.Copy(Name);
+            return Name;
         }
     }
 }

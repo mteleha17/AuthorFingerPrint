@@ -6,43 +6,14 @@ using System.Threading.Tasks;
 
 namespace FingerPrint.Models
 {
-    public class SingleWordCountModel
+    public class SingleWordCountModel : ISingleWordCountModel
     {
         public readonly int _length;
-        public int Length
-        {
-            get
-            {
-                return _length;
-            }
-        }
-
         private int[] _counts;
-        public int[] Counts
+
+        public int[] Counts()
         {
-            get
-            {
-                return _counts.ToArray();
-            }
-            set
-            {
-                if (value == null)
-                {
-                    throw new ArgumentException("Array of counts must not be null.");
-                }
-                if (value.Length != _length)
-                {
-                    throw new ArgumentException("Wrong number of counts provided.");
-                }
-                foreach (int i in value)
-                {
-                    if (i < 0)
-                    {
-                        throw new ArgumentException("Counts must be positive.");
-                    }
-                }
-                _counts = value;
-            }
+            return _counts.ToArray();
         }
 
         public SingleWordCountModel(int length)
@@ -73,10 +44,37 @@ namespace FingerPrint.Models
                 }
             }
             _length = counts.Length;
-            _counts = counts;
+            _counts = counts.ToArray();
         }
 
-        public void SetAt(int index, int value)
+        public int Length()
+        {
+            return _length;
+        }
+
+        /// <summary>
+        /// Enable use of square brackets to get and set array elements, e.g.
+        /// var model = new SingleWordCountModel(n);
+        /// model[i] = value
+        /// </summary>
+        /// <param name="i">index</param>
+        /// <returns>int at specified index</returns>
+        public int this[int i]
+        {
+            get { return GetAt(i); }
+            set { SetAt(i, value); }
+        }
+
+        private int GetAt(int index)
+        {
+            if (index < 0 || index >= _counts.Length)
+            {
+                throw new IndexOutOfRangeException();
+            }
+            return _counts[index];
+        }
+
+        private void SetAt(int index, int value)
         {
             if (index < 0 || index >= _counts.Length)
             {
@@ -91,7 +89,7 @@ namespace FingerPrint.Models
 
         public SingleWordCountModel Copy()
         {
-            return new SingleWordCountModel(Counts);
+            return new SingleWordCountModel(Counts());
         }
 
     }

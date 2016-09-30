@@ -8,6 +8,7 @@ namespace FingerPrint.Models
 {
     public interface ICountableItem
     {
-        SingleWordCountModel GetCounts();
+        ISingleWordCountModel Counts();
+        int Length();
     }
 }

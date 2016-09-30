@@ -55,8 +55,10 @@
     <Compile Include="Models\FlexibleWordCountModel.cs" />
     <Compile Include="Models\GroupModel.cs" />
     <Compile Include="Models\ICountableItem.cs" />
+    <Compile Include="Models\IFlexibleWordCountModel.cs" />
     <Compile Include="Models\INamedCountableItem.cs" />
     <Compile Include="Models\INamedItem.cs" />
+    <Compile Include="Models\ISingleWordCountModel.cs" />
     <Compile Include="Models\SingleWordCountModel.cs" />
     <Compile Include="Models\TextModel.cs" />
     <Compile Include="Program.cs" />
