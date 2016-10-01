@@ -40,7 +40,7 @@ namespace FingerPrint.Models
             {
                 if (i < 0)
                 {
-                    throw new ArgumentException("Counts must be positive.");
+                    throw new ArgumentException("Counts must not be negative.");
                 }
             }
             _length = counts.Length;
@@ -67,7 +67,7 @@ namespace FingerPrint.Models
 
         private int GetAt(int index)
         {
-            if (index < 0 || index >= _counts.Length)
+            if (index < 0 || index >= _length)
             {
                 throw new IndexOutOfRangeException();
             }
@@ -76,7 +76,7 @@ namespace FingerPrint.Models
 
         private void SetAt(int index, int value)
         {
-            if (index < 0 || index >= _counts.Length)
+            if (index < 0 || index >= _length)
             {
                 throw new IndexOutOfRangeException();
             }
@@ -87,7 +87,7 @@ namespace FingerPrint.Models
             _counts[index] = value;
         }
 
-        public SingleWordCountModel Copy()
+        public ISingleWordCountModel Copy()
         {
             return new SingleWordCountModel(Counts());
         }

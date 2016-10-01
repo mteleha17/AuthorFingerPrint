@@ -54,15 +54,16 @@
     </Compile>
     <Compile Include="Models\FlexibleWordCountModel.cs" />
     <Compile Include="Models\GroupModel.cs" />
-    <Compile Include="Models\ICountableItem.cs" />
-    <Compile Include="Models\IFlexibleWordCountModel.cs" />
-    <Compile Include="Models\INamedCountableItem.cs" />
-    <Compile Include="Models\INamedItem.cs" />
-    <Compile Include="Models\ISingleWordCountModel.cs" />
+    <Compile Include="Models\Interfaces\ICountableItem.cs" />
+    <Compile Include="Models\Interfaces\IFlexibleWordCountModel.cs" />
+    <Compile Include="Models\Interfaces\INamedCountableItem.cs" />
+    <Compile Include="Models\Interfaces\INamedItem.cs" />
+    <Compile Include="Models\Interfaces\ISingleWordCountModel.cs" />
     <Compile Include="Models\SingleWordCountModel.cs" />
     <Compile Include="Models\TextModel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Stores\IItemStore.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -88,6 +89,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

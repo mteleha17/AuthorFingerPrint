@@ -12,16 +12,6 @@ namespace FingerPrint.Models
         private ISingleWordCountModel _countsWithQuotes;
         private ISingleWordCountModel _countsWithoutQuotes;
 
-        public ISingleWordCountModel CountsWithQuotes()
-        {
-            return _countsWithQuotes.Copy();
-        }
-
-        public ISingleWordCountModel CountsWithoutQuotes()
-        {
-            return _countsWithoutQuotes.Copy();
-        }
-
         public FlexibleWordCountModel(ISingleWordCountModel countsWithQuotes, ISingleWordCountModel countsWithoutQuotes)
         {
             if (countsWithQuotes == null || countsWithoutQuotes == null)
@@ -49,6 +39,16 @@ namespace FingerPrint.Models
             _length = withQuotesLength;
             _countsWithQuotes = countsWithQuotes.Copy();
             _countsWithoutQuotes = countsWithoutQuotes.Copy();
+        }
+
+        public ISingleWordCountModel CountsWithQuotes()
+        {
+            return _countsWithQuotes.Copy();
+        }
+
+        public ISingleWordCountModel CountsWithoutQuotes()
+        {
+            return _countsWithoutQuotes.Copy();
         }
 
         public int Length()

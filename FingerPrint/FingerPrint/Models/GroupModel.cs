@@ -16,7 +16,7 @@ namespace FingerPrint.Models
 
         public GroupModel(string name, ISingleWordCountModel wordCountModel)
         {
-            Name = name;
+            Name = string.Copy(name);
             _counts = wordCountModel.Copy();
             _length = _counts.Length();
             _items = new List<INamedCountableItem>();
@@ -30,6 +30,11 @@ namespace FingerPrint.Models
         public ISingleWordCountModel Counts()
         {
             return _counts.Copy();
+        }
+
+        public string GetName()
+        {
+            return Name;
         }
 
         public void Add(INamedCountableItem item)
@@ -68,10 +73,10 @@ namespace FingerPrint.Models
             }
             foreach (INamedCountableItem item in _items)
             {
-                int[] itemCounts = item.Counts().Counts();
+                ISingleWordCountModel countModel = item.Counts();
                 for (int i = 0; i < _length; i++)
                 {
-                    _counts[i] += itemCounts[i];
+                    _counts[i] += countModel[i];
                 }
             }
             int numberOfItems = _items.Count;
@@ -81,9 +86,5 @@ namespace FingerPrint.Models
             }
         } 
 
-        public string GetName()
-        {
-            return Name;
-        }
     }
 }

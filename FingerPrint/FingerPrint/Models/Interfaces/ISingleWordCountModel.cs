@@ -4,7 +4,7 @@
     {
         int Length();
         int[] Counts();
-        SingleWordCountModel Copy();
+        ISingleWordCountModel Copy();
         int this[int i] { get; set; }
     }
 }
