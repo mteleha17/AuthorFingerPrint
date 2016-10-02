@@ -7,10 +7,10 @@ namespace FingerPrint.Models
     /// Interface to be implemented by a class that represents flexible collections of word-length counts,
     /// i.e. a class that has a collection of counts including quotes and a collection of counts not including quotes.
     /// </summary>
-    public interface IFlexibleWordCountModel : IMeasurableItem, ICopyable<IFlexibleWordCountModel>
+    public interface IFlexibleWordCountModel<SingleCountType> : IMeasurableItem, ICopyable<IFlexibleWordCountModel<SingleCountType>>
     {
-        int[] CountsWithQuotes();
-        int[] CountsWithoutQuotes();
+        SingleCountType CountsWithQuotes();
+        SingleCountType CountsWithoutQuotes();
         int GetAt(bool includeQuotes, int index);
         void SetAt(bool includeQuotes, int index, int value);
     }

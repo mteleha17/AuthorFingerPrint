@@ -11,6 +11,6 @@ namespace FingerPrint.Models
     /// </summary>
     public interface INamedItem
     {
-        string GetName();
+        string Name { get; set; }
     }
 }

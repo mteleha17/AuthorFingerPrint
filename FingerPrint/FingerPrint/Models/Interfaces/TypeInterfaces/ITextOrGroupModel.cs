@@ -9,6 +9,6 @@ namespace FingerPrint.Models.Interfaces
     /// <summary>
     /// Interface to be implemented by a text or group.
     /// </summary>
-    public interface ITextOrGroup : INamedItem, IMeasurableItem, ICountContainer 
+    public interface ITextOrGroupModel<SingleCountType> : INamedItem, IMeasurableItem, ICountContainer<SingleCountType>
     {}
 }

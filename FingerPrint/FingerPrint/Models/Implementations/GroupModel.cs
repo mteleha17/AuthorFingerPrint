@@ -10,29 +10,21 @@ namespace FingerPrint.Models
     /// <summary>
     /// Class representing a grouping of texts and other groups.
     /// </summary>
-    public class GroupModel : IGroup
+    public class GroupModel : IGroupModel<ISingleWordCountModel>
     {
         private readonly int _length;
         private string _name;
         private ISingleWordCountModel _counts;
-        private List<ITextOrGroup> _items;
+        private List<ITextOrGroupModel<ISingleWordCountModel>> _items;
+
+        public string Name { get; set; }
 
         public GroupModel(string name, ISingleWordCountModel wordCountModel)
         {
             _name = name;
             _counts = wordCountModel.Copy();
             _length = _counts.Length();
-            _items = new List<ITextOrGroup>();
-        }
-
-        public string GetName()
-        {
-            return _name;
-        }
-
-        public void SetName(string name)
-        {
-            _name = name;
+            _items = new List<ITextOrGroupModel<ISingleWordCountModel>>();
         }
 
         public int Length()
@@ -40,20 +32,24 @@ namespace FingerPrint.Models
             return _length;
         }
 
-        public int[] Counts()
+        public ISingleWordCountModel Counts()
         {
-            return _counts.Counts();
+            return _counts;
         }
 
-        public void Add(ITextOrGroup item)
+        public void Add(ITextOrGroupModel<ISingleWordCountModel> item)
         {
+            if (item == this)
+            {
+                throw new ArgumentException("It can't possibly be a good idea to add a group to itself.");
+            }
             if (item == null)
             {
                 throw new ArgumentException("Cannot add null item.");
             }
             if (item.Length() != _length)
             {
-                throw new ArgumentException("Countable item must have the same number of counts as the group to which it is added.");
+                throw new ArgumentException("Countable item must have the same length as the group to which it is added.");
             }
             if (_items.Contains(item))
             {
@@ -63,7 +59,7 @@ namespace FingerPrint.Models
             CalculateFingerprint();
         }
 
-        public void Delete(ITextOrGroup item)
+        public void Delete(ITextOrGroupModel<ISingleWordCountModel> item)
         {
             if (item == null)
             {
@@ -79,18 +75,21 @@ namespace FingerPrint.Models
 
         private void CalculateFingerprint()
         {
+            //reset counts
             for (int i = 0; i < _length; i++)
             {
                 _counts.SetAt(i, 0);
             }
-            foreach (ITextOrGroup item in _items)
+            //get count totals
+            foreach (ITextOrGroupModel<ISingleWordCountModel> item in _items)
             {
-                int[] itemCounts = item.Counts();
+                var itemCounts = item.Counts();
                 for (int i = 0; i < _length; i++)
                 {
-                    _counts.SetAt(i, _counts.GetAt(i) + itemCounts[i]);
+                    _counts.SetAt(i, _counts.GetAt(i) + itemCounts.GetAt(i));
                 }
             }
+            //divide by number of items to get averages
             int numberOfItems = _items.Count;
             for (int i = 0; i < _length; i++)
             {

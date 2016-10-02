@@ -9,7 +9,7 @@ namespace FingerPrint.Models
     /// <summary>
     /// Wrapper for two collections of word-length counts: one including quotes and one excluding quotes.
     /// </summary>
-    public class FlexibleWordCountModel : IFlexibleWordCountModel
+    public class FlexibleWordCountModel : IFlexibleWordCountModel<ISingleWordCountModel>
     {
         public readonly int _length;
         private ISingleWordCountModel _countsWithQuotes;
@@ -49,17 +49,17 @@ namespace FingerPrint.Models
             return _length;
         }
 
-        public int[] CountsWithQuotes()
+        public ISingleWordCountModel CountsWithQuotes()
         {
-            return _countsWithQuotes.Counts();
+            return _countsWithQuotes.Copy();
         }
 
-        public int[] CountsWithoutQuotes()
+        public ISingleWordCountModel CountsWithoutQuotes()
         {
-            return _countsWithoutQuotes.Counts();
+            return _countsWithoutQuotes.Copy();
         }
 
-        public IFlexibleWordCountModel Copy()
+        public IFlexibleWordCountModel<ISingleWordCountModel> Copy()
         {
             return new FlexibleWordCountModel(_countsWithQuotes.Copy(), _countsWithoutQuotes.Copy());
         }

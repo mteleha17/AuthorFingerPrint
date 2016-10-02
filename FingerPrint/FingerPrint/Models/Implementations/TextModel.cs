@@ -1,4 +1,5 @@
 ﻿using FingerPrint.Models.Interfaces;
+using FingerPrint.Models.Interfaces.TypeInterfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,16 +11,17 @@ namespace FingerPrint.Models
     /// <summary>
     /// Class representing a text.
     /// </summary>
-    public class TextModel : ITextOrGroup
+    public class TextModel : ITextModel<ISingleWordCountModel>
     {
         private readonly int _length;
         private string _name;
-        private IFlexibleWordCountModel _counts;
+        private IFlexibleWordCountModel<ISingleWordCountModel> _counts;
 
+        public string Name { get; set; }
         public string Author { get; set; }
         public bool IncludeQuotes { get; set; }
 
-        public TextModel(string name, IFlexibleWordCountModel counts)
+        public TextModel(string name, IFlexibleWordCountModel<ISingleWordCountModel> counts)
         {
             if (counts == null)
             {
@@ -31,22 +33,12 @@ namespace FingerPrint.Models
             IncludeQuotes = true;
         }
 
-        public string GetName()
-        {
-            return _name;
-        }
-
-        public void SetName(string name)
-        {
-            _name = name;
-        }
-
         public int Length()
         {
             return _length;
         }
 
-        public int[] Counts()
+        public ISingleWordCountModel Counts()
         {
             if (IncludeQuotes)
             {

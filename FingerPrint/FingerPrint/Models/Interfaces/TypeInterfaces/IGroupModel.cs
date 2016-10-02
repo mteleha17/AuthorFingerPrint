@@ -9,9 +9,9 @@ namespace FingerPrint.Models.Interfaces
     /// <summary>
     /// Interface to be implemented by a class that contains ITextOrGroup items.
     /// </summary>
-    public interface IGroup : ITextOrGroup
+    public interface IGroupModel<SingleCountType> : ITextOrGroupModel<SingleCountType>
     {
-        void Add(ITextOrGroup item);
-        void Delete(ITextOrGroup item);
+        void Add(ITextOrGroupModel<SingleCountType> item);
+        void Delete(ITextOrGroupModel<SingleCountType> item);
     }
 }
