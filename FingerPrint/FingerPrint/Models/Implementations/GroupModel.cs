@@ -55,6 +55,10 @@ namespace FingerPrint.Models
             {
                 throw new ArgumentException("Countable item must have the same number of counts as the group to which it is added.");
             }
+            if (_items.Contains(item))
+            {
+                throw new ArgumentException($"Item {item} cannot be added to a group that it is already a member of.");
+            }
             _items.Add(item);
             CalculateFingerprint();
         }
