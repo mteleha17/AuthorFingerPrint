@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace FingerPrint.Models
 {
+    /// <summary>
+    /// Wrapper for two collections of word-length counts: one including quotes and one excluding quotes.
+    /// </summary>
     public class FlexibleWordCountModel : IFlexibleWordCountModel
     {
         public readonly int _length;
@@ -31,7 +34,7 @@ namespace FingerPrint.Models
             }
             for (int i = 0; i < withQuotesLength; i++)
             {
-                if (countsWithQuotes[i] < 0 || countsWithoutQuotes[i] < 0)
+                if (countsWithQuotes.GetAt(i) < 0 || countsWithoutQuotes.GetAt(i) < 0)
                 {
                     throw new ArgumentException($"Counts must not be negative. Item {i} in one of the arrays was negative.");
                 }
@@ -41,38 +44,43 @@ namespace FingerPrint.Models
             _countsWithoutQuotes = countsWithoutQuotes.Copy();
         }
 
-        public ISingleWordCountModel CountsWithQuotes()
-        {
-            return _countsWithQuotes.Copy();
-        }
-
-        public ISingleWordCountModel CountsWithoutQuotes()
-        {
-            return _countsWithoutQuotes.Copy();
-        }
-
         public int Length()
         {
             return _length;
         }
 
-        private int GetAt(int index, bool withQuotes)
+        public int[] CountsWithQuotes()
+        {
+            return _countsWithQuotes.Counts();
+        }
+
+        public int[] CountsWithoutQuotes()
+        {
+            return _countsWithoutQuotes.Counts();
+        }
+
+        public IFlexibleWordCountModel Copy()
+        {
+            return new FlexibleWordCountModel(_countsWithQuotes.Copy(), _countsWithoutQuotes.Copy());
+        }
+
+        public int GetAt(bool includeQuotes, int index)
         {
             if (index < 0 || index >= _length)
             {
                 throw new IndexOutOfRangeException();
             }
-            if (withQuotes)
+            if (includeQuotes)
             {
-               return _countsWithQuotes[index];
+                return _countsWithQuotes.GetAt(index);
             }
             else
             {
-                return _countsWithoutQuotes[index];
+                return _countsWithoutQuotes.GetAt(index);
             }
         }
 
-        private void SetAt(int index, bool withQuotes, int value)
+        public void SetAt(bool includeQuotes, int index, int value)
         {
             if (index < 0 || index >= _length)
             {
@@ -82,19 +90,14 @@ namespace FingerPrint.Models
             {
                 throw new ArgumentException("Counts must not be negative.");
             }
-            if (withQuotes)
+            if (includeQuotes)
             {
-                _countsWithQuotes[index] = value;
+                _countsWithQuotes.SetAt(index, value);
             }
             else
             {
-                _countsWithoutQuotes[index] = value;
+                _countsWithoutQuotes.SetAt(index, value);
             }
-        }
-
-        public FlexibleWordCountModel Copy()
-        {
-            return new FlexibleWordCountModel(CountsWithQuotes(), CountsWithoutQuotes());
         }
     }
 }

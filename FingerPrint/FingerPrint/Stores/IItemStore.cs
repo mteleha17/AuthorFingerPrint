@@ -7,6 +7,11 @@ using System.Threading.Tasks;
 
 namespace FingerPrint.Stores
 {
+    /// <summary>
+    /// Interface to be implemented by a class that serves as an intermediary between its clients and a database
+    /// or other datastore.
+    /// </summary>
+    /// <typeparam name="EntityType">The type of the entity that this store handles.</typeparam>
     public interface IItemStore<EntityType>
     {
         void Add(EntityType entity);

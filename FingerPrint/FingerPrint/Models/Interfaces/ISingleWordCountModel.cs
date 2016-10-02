@@ -1,10 +1,15 @@
-﻿namespace FingerPrint.Models
+﻿using FingerPrint.Models.Interfaces;
+using System;
+using System.Collections.Generic;
+
+namespace FingerPrint.Models
 {
-    public interface ISingleWordCountModel
+    /// <summary>
+    /// Interface to be implemented be a class that represents a single collection of word-length counts.
+    /// </summary>
+    public interface ISingleWordCountModel : IMeasurableItem, ICountContainer, ICopyable<ISingleWordCountModel>
     {
-        int Length();
-        int[] Counts();
-        ISingleWordCountModel Copy();
-        int this[int i] { get; set; }
+        int GetAt(int index);
+        void SetAt(int index, int value);
     }
 }

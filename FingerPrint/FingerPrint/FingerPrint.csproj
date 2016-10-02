@@ -54,11 +54,14 @@
     </Compile>
     <Compile Include="Models\FlexibleWordCountModel.cs" />
     <Compile Include="Models\GroupModel.cs" />
-    <Compile Include="Models\Interfaces\ICountableItem.cs" />
+    <Compile Include="Models\Interfaces\ICopyable.cs" />
+    <Compile Include="Models\Interfaces\ICountContainer.cs" />
     <Compile Include="Models\Interfaces\IFlexibleWordCountModel.cs" />
-    <Compile Include="Models\Interfaces\INamedCountableItem.cs" />
+    <Compile Include="Models\Interfaces\IMeasurableItem.cs" />
+    <Compile Include="Models\Interfaces\ITextOrGroup.cs" />
     <Compile Include="Models\Interfaces\INamedItem.cs" />
     <Compile Include="Models\Interfaces\ISingleWordCountModel.cs" />
+    <Compile Include="Models\Interfaces\IGroup.cs" />
     <Compile Include="Models\SingleWordCountModel.cs" />
     <Compile Include="Models\TextModel.cs" />
     <Compile Include="Program.cs" />

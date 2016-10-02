@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FingerPrint.Models.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,20 +7,32 @@ using System.Threading.Tasks;
 
 namespace FingerPrint.Models
 {
-    public class GroupModel : INamedCountableItem
+    /// <summary>
+    /// Class representing a grouping of texts and other groups.
+    /// </summary>
+    public class GroupModel : IGroup
     {
         private readonly int _length;
+        private string _name;
         private ISingleWordCountModel _counts;
-        private List<INamedCountableItem> _items;
-
-        public string Name { get; set; }
+        private List<ITextOrGroup> _items;
 
         public GroupModel(string name, ISingleWordCountModel wordCountModel)
         {
-            Name = string.Copy(name);
+            _name = name;
             _counts = wordCountModel.Copy();
             _length = _counts.Length();
-            _items = new List<INamedCountableItem>();
+            _items = new List<ITextOrGroup>();
+        }
+
+        public string GetName()
+        {
+            return _name;
+        }
+
+        public void SetName(string name)
+        {
+            _name = name;
         }
 
         public int Length()
@@ -27,17 +40,12 @@ namespace FingerPrint.Models
             return _length;
         }
 
-        public ISingleWordCountModel Counts()
+        public int[] Counts()
         {
-            return _counts.Copy();
+            return _counts.Counts();
         }
 
-        public string GetName()
-        {
-            return Name;
-        }
-
-        public void Add(INamedCountableItem item)
+        public void Add(ITextOrGroup item)
         {
             if (item == null)
             {
@@ -51,7 +59,7 @@ namespace FingerPrint.Models
             CalculateFingerprint();
         }
 
-        public void Delete(INamedCountableItem item)
+        public void Delete(ITextOrGroup item)
         {
             if (item == null)
             {
@@ -69,22 +77,21 @@ namespace FingerPrint.Models
         {
             for (int i = 0; i < _length; i++)
             {
-                _counts[i] = 0;
+                _counts.SetAt(i, 0);
             }
-            foreach (INamedCountableItem item in _items)
+            foreach (ITextOrGroup item in _items)
             {
-                ISingleWordCountModel countModel = item.Counts();
+                int[] itemCounts = item.Counts();
                 for (int i = 0; i < _length; i++)
                 {
-                    _counts[i] += countModel[i];
+                    _counts.SetAt(i, _counts.GetAt(i) + itemCounts[i]);
                 }
             }
             int numberOfItems = _items.Count;
             for (int i = 0; i < _length; i++)
             {
-                _counts[i] /= numberOfItems;
+                _counts.SetAt(i, _counts.GetAt(i) / numberOfItems);
             }
-        } 
-
+        }
     }
 }

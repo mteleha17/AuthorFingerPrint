@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FingerPrint.Models.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,25 +7,38 @@ using System.Threading.Tasks;
 
 namespace FingerPrint.Models
 {
-    public class TextModel : INamedCountableItem
+    /// <summary>
+    /// Class representing a text.
+    /// </summary>
+    public class TextModel : ITextOrGroup
     {
         private readonly int _length;
+        private string _name;
         private IFlexibleWordCountModel _counts;
 
-        public string Name { get; set; }
         public string Author { get; set; }
         public bool IncludeQuotes { get; set; }
 
-        public TextModel(string name, IFlexibleWordCountModel wordCountModel)
+        public TextModel(string name, IFlexibleWordCountModel counts)
         {
-            if (wordCountModel == null)
+            if (counts == null)
             {
-                throw new ArgumentException("wordCountModel must not be null.");
+                throw new ArgumentException("counts must not be null.");
             }
-            Name = string.Copy(name);
-            _counts = wordCountModel.Copy();
+            _name = name;
+            _counts = counts.Copy();
             _length = _counts.Length();
             IncludeQuotes = true;
+        }
+
+        public string GetName()
+        {
+            return _name;
+        }
+
+        public void SetName(string name)
+        {
+            _name = name;
         }
 
         public int Length()
@@ -32,7 +46,7 @@ namespace FingerPrint.Models
             return _length;
         }
 
-        public ISingleWordCountModel Counts()
+        public int[] Counts()
         {
             if (IncludeQuotes)
             {
@@ -42,11 +56,6 @@ namespace FingerPrint.Models
             {
                 return _counts.CountsWithoutQuotes();
             }
-        }
-
-        public string GetName()
-        {
-            return Name;
         }
     }
 }

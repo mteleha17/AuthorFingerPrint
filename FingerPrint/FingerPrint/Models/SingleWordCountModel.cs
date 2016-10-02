@@ -6,15 +6,13 @@ using System.Threading.Tasks;
 
 namespace FingerPrint.Models
 {
+    /// <summary>
+    /// Wrapper for a collection of word-length counts.
+    /// </summary>
     public class SingleWordCountModel : ISingleWordCountModel
     {
         public readonly int _length;
         private int[] _counts;
-
-        public int[] Counts()
-        {
-            return _counts.ToArray();
-        }
 
         public SingleWordCountModel(int length)
         {
@@ -34,7 +32,7 @@ namespace FingerPrint.Models
             }
             if (counts.Length < 1)
             {
-                throw new ArgumentException("Number of counts must not be less than 1.");
+                throw new ArgumentException("The number of counts must be positive.");
             }
             foreach (int i in counts)
             {
@@ -52,20 +50,17 @@ namespace FingerPrint.Models
             return _length;
         }
 
-        /// <summary>
-        /// Enable use of square brackets to get and set array elements, e.g.
-        /// var model = new SingleWordCountModel(n);
-        /// model[i] = value
-        /// </summary>
-        /// <param name="i">index</param>
-        /// <returns>int at specified index</returns>
-        public int this[int i]
+        public int[] Counts()
         {
-            get { return GetAt(i); }
-            set { SetAt(i, value); }
+            return _counts.ToArray();
         }
 
-        private int GetAt(int index)
+        public ISingleWordCountModel Copy()
+        {
+            return new SingleWordCountModel(Counts());
+        }
+
+        public int GetAt(int index)
         {
             if (index < 0 || index >= _length)
             {
@@ -74,7 +69,7 @@ namespace FingerPrint.Models
             return _counts[index];
         }
 
-        private void SetAt(int index, int value)
+        public void SetAt(int index, int value)
         {
             if (index < 0 || index >= _length)
             {
@@ -86,11 +81,5 @@ namespace FingerPrint.Models
             }
             _counts[index] = value;
         }
-
-        public ISingleWordCountModel Copy()
-        {
-            return new SingleWordCountModel(Counts());
-        }
-
     }
 }
