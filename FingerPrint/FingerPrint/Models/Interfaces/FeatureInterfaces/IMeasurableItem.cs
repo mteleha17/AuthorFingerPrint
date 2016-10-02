@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 namespace FingerPrint.Models.Interfaces
 {
     /// <summary>
-    /// Interface to be implemented by a text or group.
+    /// Interface to be implented by a class that has and can return a length.
     /// </summary>
-    public interface ITextOrGroup : IMeasurableItem, ICountContainer, INamedItem
-    {}
+    public interface IMeasurableItem
+    {
+        int Length();
+    }
 }

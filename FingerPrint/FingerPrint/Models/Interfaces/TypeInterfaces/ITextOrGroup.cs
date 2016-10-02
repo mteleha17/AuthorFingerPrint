@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 namespace FingerPrint.Models.Interfaces
 {
     /// <summary>
-    /// Interface to be implented by a class that has and can return a length dimension.
+    /// Interface to be implemented by a text or group.
     /// </summary>
-    public interface IMeasurableItem
-    {
-        int Length();
-    }
+    public interface ITextOrGroup : INamedItem, IMeasurableItem, ICountContainer 
+    {}
 }
