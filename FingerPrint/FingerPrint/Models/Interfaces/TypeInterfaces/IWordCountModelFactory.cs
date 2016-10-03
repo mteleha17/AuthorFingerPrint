@@ -13,6 +13,6 @@ namespace FingerPrint.Models.Interfaces.TypeInterfaces
     /// <typeparam name="WordCountModelType">The type of the word count model.</typeparam>
     public interface IWordCountModelFactory<WordCountModelType>
     {
-        WordCountModelType GenerateCounts(TextReader text, WordCountModelType model);
+        void GenerateCounts(TextReader text, WordCountModelType model);
     }
 }
