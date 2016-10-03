@@ -29,247 +29,439 @@
         private void InitializeComponent()
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.listView2 = new System.Windows.Forms.ListView();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.listView1 = new System.Windows.Forms.ListView();
-            this.label1 = new System.Windows.Forms.Label();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.label2 = new System.Windows.Forms.Label();
+            this.fingerPrintTab = new System.Windows.Forms.TabPage();
+            this.fingerprintAnalysisGroupBox = new System.Windows.Forms.GroupBox();
+            this.executeAnalysisButton = new System.Windows.Forms.Button();
+            this.uploadFileButton = new System.Windows.Forms.Button();
+            this.analysisListViewTab1 = new System.Windows.Forms.ListView();
+            this.removeButtonTab2 = new System.Windows.Forms.Button();
+            this.addButtonTab1 = new System.Windows.Forms.Button();
+            this.fileListViewTab1 = new System.Windows.Forms.ListView();
+            this.fALabel = new System.Windows.Forms.Label();
+            this.filesTab = new System.Windows.Forms.TabPage();
+            this.editModifyGroupBox = new System.Windows.Forms.GroupBox();
+            this.deleterButtonTab2 = new System.Windows.Forms.Button();
+            this.editButton = new System.Windows.Forms.Button();
+            this.editModifyLabel = new System.Windows.Forms.Label();
+            this.fileListViewTab2 = new System.Windows.Forms.ListView();
+            this.addGroupBox = new System.Windows.Forms.GroupBox();
+            this.addLabel = new System.Windows.Forms.Label();
             this.button5 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.fileLocationTextBox = new System.Windows.Forms.TextBox();
+            this.newFileNameTextbox = new System.Windows.Forms.TextBox();
+            this.authorTextBox = new System.Windows.Forms.TextBox();
+            this.groupsTab = new System.Windows.Forms.TabPage();
+            this.groupsGroupBox = new System.Windows.Forms.GroupBox();
+            this.groupComboBox = new System.Windows.Forms.ComboBox();
+            this.groupListView = new System.Windows.Forms.ListView();
+            this.deleteButtonTab3 = new System.Windows.Forms.Button();
+            this.removeButtonTab3 = new System.Windows.Forms.Button();
+            this.addButtonTab3 = new System.Windows.Forms.Button();
+            this.radiouttonPanel = new System.Windows.Forms.Panel();
+            this.groupsRadioButton = new System.Windows.Forms.RadioButton();
+            this.filesRadioButton = new System.Windows.Forms.RadioButton();
+            this.fileGroupListViewTab3 = new System.Windows.Forms.ListView();
+            this.groupTabLabel = new System.Windows.Forms.Label();
+            this.analysisTab = new System.Windows.Forms.TabPage();
             this.tabControl1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
-            this.groupBox1.SuspendLayout();
-            this.tabPage2.SuspendLayout();
-            this.groupBox2.SuspendLayout();
+            this.fingerPrintTab.SuspendLayout();
+            this.fingerprintAnalysisGroupBox.SuspendLayout();
+            this.filesTab.SuspendLayout();
+            this.editModifyGroupBox.SuspendLayout();
+            this.addGroupBox.SuspendLayout();
+            this.groupsTab.SuspendLayout();
+            this.groupsGroupBox.SuspendLayout();
+            this.radiouttonPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
             // 
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Controls.Add(this.tabPage3);
+            this.tabControl1.Controls.Add(this.fingerPrintTab);
+            this.tabControl1.Controls.Add(this.filesTab);
+            this.tabControl1.Controls.Add(this.groupsTab);
+            this.tabControl1.Controls.Add(this.analysisTab);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1115, 576);
+            this.tabControl1.Size = new System.Drawing.Size(1089, 605);
             this.tabControl1.TabIndex = 0;
             // 
-            // tabPage1
+            // fingerPrintTab
             // 
-            this.tabPage1.Controls.Add(this.groupBox1);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1107, 550);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Fingerprint Analysis";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this.fingerPrintTab.Controls.Add(this.fingerprintAnalysisGroupBox);
+            this.fingerPrintTab.Location = new System.Drawing.Point(4, 22);
+            this.fingerPrintTab.Name = "fingerPrintTab";
+            this.fingerPrintTab.Padding = new System.Windows.Forms.Padding(3);
+            this.fingerPrintTab.Size = new System.Drawing.Size(1081, 579);
+            this.fingerPrintTab.TabIndex = 0;
+            this.fingerPrintTab.Text = "Fingerprint Analysis";
+            this.fingerPrintTab.UseVisualStyleBackColor = true;
             // 
-            // groupBox1
+            // fingerprintAnalysisGroupBox
             // 
-            this.groupBox1.Controls.Add(this.button4);
-            this.groupBox1.Controls.Add(this.button3);
-            this.groupBox1.Controls.Add(this.listView2);
-            this.groupBox1.Controls.Add(this.button2);
-            this.groupBox1.Controls.Add(this.button1);
-            this.groupBox1.Controls.Add(this.listView1);
-            this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Location = new System.Drawing.Point(8, 6);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(1041, 444);
-            this.groupBox1.TabIndex = 0;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
+            this.fingerprintAnalysisGroupBox.Controls.Add(this.executeAnalysisButton);
+            this.fingerprintAnalysisGroupBox.Controls.Add(this.uploadFileButton);
+            this.fingerprintAnalysisGroupBox.Controls.Add(this.analysisListViewTab1);
+            this.fingerprintAnalysisGroupBox.Controls.Add(this.removeButtonTab2);
+            this.fingerprintAnalysisGroupBox.Controls.Add(this.addButtonTab1);
+            this.fingerprintAnalysisGroupBox.Controls.Add(this.fileListViewTab1);
+            this.fingerprintAnalysisGroupBox.Controls.Add(this.fALabel);
+            this.fingerprintAnalysisGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.fingerprintAnalysisGroupBox.Location = new System.Drawing.Point(3, 3);
+            this.fingerprintAnalysisGroupBox.Name = "fingerprintAnalysisGroupBox";
+            this.fingerprintAnalysisGroupBox.Size = new System.Drawing.Size(1075, 573);
+            this.fingerprintAnalysisGroupBox.TabIndex = 0;
+            this.fingerprintAnalysisGroupBox.TabStop = false;
+            this.fingerprintAnalysisGroupBox.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
-            // button4
+            // executeAnalysisButton
             // 
-            this.button4.Location = new System.Drawing.Point(761, 407);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(96, 23);
-            this.button4.TabIndex = 6;
-            this.button4.Text = "Execute Analysis";
-            this.button4.UseVisualStyleBackColor = true;
+            this.executeAnalysisButton.Location = new System.Drawing.Point(800, 407);
+            this.executeAnalysisButton.Name = "executeAnalysisButton";
+            this.executeAnalysisButton.Size = new System.Drawing.Size(96, 23);
+            this.executeAnalysisButton.TabIndex = 6;
+            this.executeAnalysisButton.Text = "Execute Analysis";
+            this.executeAnalysisButton.UseVisualStyleBackColor = true;
             // 
-            // button3
+            // uploadFileButton
             // 
-            this.button3.Location = new System.Drawing.Point(166, 407);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 5;
-            this.button3.Text = "Upload File";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.uploadFileButton.Location = new System.Drawing.Point(166, 407);
+            this.uploadFileButton.Name = "uploadFileButton";
+            this.uploadFileButton.Size = new System.Drawing.Size(75, 23);
+            this.uploadFileButton.TabIndex = 5;
+            this.uploadFileButton.Text = "Upload File";
+            this.uploadFileButton.UseVisualStyleBackColor = true;
+            this.uploadFileButton.Click += new System.EventHandler(this.button3_Click);
             // 
-            // listView2
+            // analysisListViewTab1
             // 
-            this.listView2.Location = new System.Drawing.Point(662, 47);
-            this.listView2.Name = "listView2";
-            this.listView2.Size = new System.Drawing.Size(301, 354);
-            this.listView2.TabIndex = 4;
-            this.listView2.UseCompatibleStateImageBehavior = false;
+            this.analysisListViewTab1.Location = new System.Drawing.Point(697, 78);
+            this.analysisListViewTab1.Name = "analysisListViewTab1";
+            this.analysisListViewTab1.Size = new System.Drawing.Size(301, 323);
+            this.analysisListViewTab1.TabIndex = 4;
+            this.analysisListViewTab1.UseCompatibleStateImageBehavior = false;
             // 
-            // button2
+            // removeButtonTab2
             // 
-            this.button2.Location = new System.Drawing.Point(490, 228);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 3;
-            this.button2.Text = "<- Remove";
-            this.button2.UseVisualStyleBackColor = true;
+            this.removeButtonTab2.Location = new System.Drawing.Point(490, 230);
+            this.removeButtonTab2.Name = "removeButtonTab2";
+            this.removeButtonTab2.Size = new System.Drawing.Size(75, 23);
+            this.removeButtonTab2.TabIndex = 3;
+            this.removeButtonTab2.Text = "<- Remove";
+            this.removeButtonTab2.UseVisualStyleBackColor = true;
             // 
-            // button1
+            // addButtonTab1
             // 
-            this.button1.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.button1.Location = new System.Drawing.Point(490, 131);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "Add ->";
-            this.button1.UseVisualStyleBackColor = true;
+            this.addButtonTab1.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.addButtonTab1.Location = new System.Drawing.Point(490, 131);
+            this.addButtonTab1.Name = "addButtonTab1";
+            this.addButtonTab1.Size = new System.Drawing.Size(75, 23);
+            this.addButtonTab1.TabIndex = 2;
+            this.addButtonTab1.Text = "Add ->";
+            this.addButtonTab1.UseVisualStyleBackColor = true;
             // 
-            // listView1
+            // fileListViewTab1
             // 
-            this.listView1.Location = new System.Drawing.Point(57, 47);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(301, 354);
-            this.listView1.TabIndex = 1;
-            this.listView1.UseCompatibleStateImageBehavior = false;
+            this.fileListViewTab1.Location = new System.Drawing.Point(57, 78);
+            this.fileListViewTab1.Name = "fileListViewTab1";
+            this.fileListViewTab1.Size = new System.Drawing.Size(301, 323);
+            this.fileListViewTab1.TabIndex = 1;
+            this.fileListViewTab1.UseCompatibleStateImageBehavior = false;
             // 
-            // label1
+            // fALabel
             // 
-            this.label1.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(505, 33);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "label1";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.fALabel.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.fALabel.AutoSize = true;
+            this.fALabel.Location = new System.Drawing.Point(469, 34);
+            this.fALabel.Name = "fALabel";
+            this.fALabel.Size = new System.Drawing.Size(112, 13);
+            this.fALabel.TabIndex = 0;
+            this.fALabel.Text = "Text on Analysis Page";
+            this.fALabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // tabPage2
+            // filesTab
             // 
-            this.tabPage2.Controls.Add(this.groupBox3);
-            this.tabPage2.Controls.Add(this.groupBox2);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1107, 550);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Files";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.filesTab.Controls.Add(this.editModifyGroupBox);
+            this.filesTab.Controls.Add(this.addGroupBox);
+            this.filesTab.Location = new System.Drawing.Point(4, 22);
+            this.filesTab.Name = "filesTab";
+            this.filesTab.Padding = new System.Windows.Forms.Padding(3);
+            this.filesTab.Size = new System.Drawing.Size(1081, 579);
+            this.filesTab.TabIndex = 1;
+            this.filesTab.Text = "Files";
+            this.filesTab.UseVisualStyleBackColor = true;
             // 
-            // groupBox3
+            // editModifyGroupBox
             // 
-            this.groupBox3.Location = new System.Drawing.Point(550, 7);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(488, 518);
-            this.groupBox3.TabIndex = 7;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "groupBox3";
+            this.editModifyGroupBox.Controls.Add(this.deleterButtonTab2);
+            this.editModifyGroupBox.Controls.Add(this.editButton);
+            this.editModifyGroupBox.Controls.Add(this.editModifyLabel);
+            this.editModifyGroupBox.Controls.Add(this.fileListViewTab2);
+            this.editModifyGroupBox.Dock = System.Windows.Forms.DockStyle.Right;
+            this.editModifyGroupBox.Location = new System.Drawing.Point(566, 3);
+            this.editModifyGroupBox.Name = "editModifyGroupBox";
+            this.editModifyGroupBox.Size = new System.Drawing.Size(512, 573);
+            this.editModifyGroupBox.TabIndex = 7;
+            this.editModifyGroupBox.TabStop = false;
             // 
-            // groupBox2
+            // deleterButtonTab2
             // 
-            this.groupBox2.Controls.Add(this.label2);
-            this.groupBox2.Controls.Add(this.button5);
-            this.groupBox2.Controls.Add(this.button6);
-            this.groupBox2.Controls.Add(this.textBox1);
-            this.groupBox2.Controls.Add(this.textBox2);
-            this.groupBox2.Controls.Add(this.textBox3);
-            this.groupBox2.Location = new System.Drawing.Point(8, 6);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(535, 519);
-            this.groupBox2.TabIndex = 6;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "groupBox2";
+            this.deleterButtonTab2.Location = new System.Drawing.Point(361, 351);
+            this.deleterButtonTab2.Name = "deleterButtonTab2";
+            this.deleterButtonTab2.Size = new System.Drawing.Size(75, 23);
+            this.deleterButtonTab2.TabIndex = 3;
+            this.deleterButtonTab2.Text = "Delete";
+            this.deleterButtonTab2.UseVisualStyleBackColor = true;
             // 
-            // label2
+            // editButton
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(253, 30);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(35, 13);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "label2";
+            this.editButton.Location = new System.Drawing.Point(280, 352);
+            this.editButton.Name = "editButton";
+            this.editButton.Size = new System.Drawing.Size(75, 23);
+            this.editButton.TabIndex = 2;
+            this.editButton.Text = "Edit";
+            this.editButton.UseVisualStyleBackColor = true;
+            // 
+            // editModifyLabel
+            // 
+            this.editModifyLabel.AutoSize = true;
+            this.editModifyLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.editModifyLabel.Location = new System.Drawing.Point(202, 29);
+            this.editModifyLabel.Name = "editModifyLabel";
+            this.editModifyLabel.Size = new System.Drawing.Size(87, 20);
+            this.editModifyLabel.TabIndex = 1;
+            this.editModifyLabel.Text = "Edit/Modify";
+            // 
+            // fileListViewTab2
+            // 
+            this.fileListViewTab2.Location = new System.Drawing.Point(52, 75);
+            this.fileListViewTab2.Name = "fileListViewTab2";
+            this.fileListViewTab2.Size = new System.Drawing.Size(385, 271);
+            this.fileListViewTab2.TabIndex = 0;
+            this.fileListViewTab2.UseCompatibleStateImageBehavior = false;
+            // 
+            // addGroupBox
+            // 
+            this.addGroupBox.Controls.Add(this.addLabel);
+            this.addGroupBox.Controls.Add(this.button5);
+            this.addGroupBox.Controls.Add(this.button6);
+            this.addGroupBox.Controls.Add(this.fileLocationTextBox);
+            this.addGroupBox.Controls.Add(this.newFileNameTextbox);
+            this.addGroupBox.Controls.Add(this.authorTextBox);
+            this.addGroupBox.Dock = System.Windows.Forms.DockStyle.Left;
+            this.addGroupBox.Location = new System.Drawing.Point(3, 3);
+            this.addGroupBox.Name = "addGroupBox";
+            this.addGroupBox.Size = new System.Drawing.Size(557, 573);
+            this.addGroupBox.TabIndex = 6;
+            this.addGroupBox.TabStop = false;
+            // 
+            // addLabel
+            // 
+            this.addLabel.AutoSize = true;
+            this.addLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.addLabel.Location = new System.Drawing.Point(253, 30);
+            this.addLabel.Name = "addLabel";
+            this.addLabel.Size = new System.Drawing.Size(38, 20);
+            this.addLabel.TabIndex = 0;
+            this.addLabel.Text = "Add";
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(233, 66);
+            this.button5.Location = new System.Drawing.Point(233, 76);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(75, 23);
             this.button5.TabIndex = 4;
-            this.button5.Text = "button5";
+            this.button5.Text = "SelectFile";
             this.button5.UseVisualStyleBackColor = true;
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(124, 246);
+            this.button6.Location = new System.Drawing.Point(124, 196);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(75, 23);
             this.button6.TabIndex = 5;
-            this.button6.Text = "button6";
+            this.button6.Text = "Save";
             this.button6.UseVisualStyleBackColor = true;
             // 
-            // textBox1
+            // fileLocationTextBox
             // 
-            this.textBox1.Location = new System.Drawing.Point(6, 68);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(193, 20);
-            this.textBox1.TabIndex = 1;
+            this.fileLocationTextBox.Location = new System.Drawing.Point(6, 79);
+            this.fileLocationTextBox.Name = "fileLocationTextBox";
+            this.fileLocationTextBox.Size = new System.Drawing.Size(193, 20);
+            this.fileLocationTextBox.TabIndex = 1;
+            this.fileLocationTextBox.Text = "File location";
             // 
-            // textBox2
+            // newFileNameTextbox
             // 
-            this.textBox2.Location = new System.Drawing.Point(6, 136);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(193, 20);
-            this.textBox2.TabIndex = 2;
+            this.newFileNameTextbox.Location = new System.Drawing.Point(6, 114);
+            this.newFileNameTextbox.Name = "newFileNameTextbox";
+            this.newFileNameTextbox.Size = new System.Drawing.Size(193, 20);
+            this.newFileNameTextbox.TabIndex = 2;
+            this.newFileNameTextbox.Text = "New File Name";
             // 
-            // textBox3
+            // authorTextBox
             // 
-            this.textBox3.Location = new System.Drawing.Point(6, 200);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(193, 20);
-            this.textBox3.TabIndex = 3;
+            this.authorTextBox.Location = new System.Drawing.Point(6, 152);
+            this.authorTextBox.Name = "authorTextBox";
+            this.authorTextBox.Size = new System.Drawing.Size(193, 20);
+            this.authorTextBox.TabIndex = 3;
+            this.authorTextBox.Text = "Name of Author";
             // 
-            // tabPage3
+            // groupsTab
             // 
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(1107, 550);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "Groups";
-            this.tabPage3.UseVisualStyleBackColor = true;
+            this.groupsTab.Controls.Add(this.groupsGroupBox);
+            this.groupsTab.Location = new System.Drawing.Point(4, 22);
+            this.groupsTab.Name = "groupsTab";
+            this.groupsTab.Padding = new System.Windows.Forms.Padding(3);
+            this.groupsTab.Size = new System.Drawing.Size(1081, 579);
+            this.groupsTab.TabIndex = 2;
+            this.groupsTab.Text = "Groups";
+            this.groupsTab.UseVisualStyleBackColor = true;
+            // 
+            // groupsGroupBox
+            // 
+            this.groupsGroupBox.Controls.Add(this.groupComboBox);
+            this.groupsGroupBox.Controls.Add(this.groupListView);
+            this.groupsGroupBox.Controls.Add(this.deleteButtonTab3);
+            this.groupsGroupBox.Controls.Add(this.removeButtonTab3);
+            this.groupsGroupBox.Controls.Add(this.addButtonTab3);
+            this.groupsGroupBox.Controls.Add(this.radiouttonPanel);
+            this.groupsGroupBox.Controls.Add(this.fileGroupListViewTab3);
+            this.groupsGroupBox.Controls.Add(this.groupTabLabel);
+            this.groupsGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupsGroupBox.Location = new System.Drawing.Point(3, 3);
+            this.groupsGroupBox.Name = "groupsGroupBox";
+            this.groupsGroupBox.Size = new System.Drawing.Size(1075, 573);
+            this.groupsGroupBox.TabIndex = 0;
+            this.groupsGroupBox.TabStop = false;
+            // 
+            // groupComboBox
+            // 
+            this.groupComboBox.FormattingEnabled = true;
+            this.groupComboBox.Location = new System.Drawing.Point(642, 63);
+            this.groupComboBox.Name = "groupComboBox";
+            this.groupComboBox.Size = new System.Drawing.Size(121, 21);
+            this.groupComboBox.TabIndex = 7;
+            // 
+            // groupListView
+            // 
+            this.groupListView.Location = new System.Drawing.Point(559, 90);
+            this.groupListView.Name = "groupListView";
+            this.groupListView.Size = new System.Drawing.Size(296, 325);
+            this.groupListView.TabIndex = 6;
+            this.groupListView.UseCompatibleStateImageBehavior = false;
+            // 
+            // deleteButtonTab3
+            // 
+            this.deleteButtonTab3.Location = new System.Drawing.Point(64, 422);
+            this.deleteButtonTab3.Name = "deleteButtonTab3";
+            this.deleteButtonTab3.Size = new System.Drawing.Size(75, 23);
+            this.deleteButtonTab3.TabIndex = 5;
+            this.deleteButtonTab3.Text = "Delete";
+            this.deleteButtonTab3.UseVisualStyleBackColor = true;
+            // 
+            // removeButtonTab3
+            // 
+            this.removeButtonTab3.Location = new System.Drawing.Point(425, 317);
+            this.removeButtonTab3.Name = "removeButtonTab3";
+            this.removeButtonTab3.Size = new System.Drawing.Size(75, 23);
+            this.removeButtonTab3.TabIndex = 4;
+            this.removeButtonTab3.Text = "<- Remove";
+            this.removeButtonTab3.UseVisualStyleBackColor = true;
+            // 
+            // addButtonTab3
+            // 
+            this.addButtonTab3.Location = new System.Drawing.Point(425, 211);
+            this.addButtonTab3.Name = "addButtonTab3";
+            this.addButtonTab3.Size = new System.Drawing.Size(75, 23);
+            this.addButtonTab3.TabIndex = 3;
+            this.addButtonTab3.Text = "Add ->";
+            this.addButtonTab3.UseVisualStyleBackColor = true;
+            // 
+            // radiouttonPanel
+            // 
+            this.radiouttonPanel.Controls.Add(this.groupsRadioButton);
+            this.radiouttonPanel.Controls.Add(this.filesRadioButton);
+            this.radiouttonPanel.Location = new System.Drawing.Point(114, 42);
+            this.radiouttonPanel.Name = "radiouttonPanel";
+            this.radiouttonPanel.Size = new System.Drawing.Size(200, 42);
+            this.radiouttonPanel.TabIndex = 2;
+            // 
+            // groupsRadioButton
+            // 
+            this.groupsRadioButton.AutoSize = true;
+            this.groupsRadioButton.Location = new System.Drawing.Point(106, 21);
+            this.groupsRadioButton.Name = "groupsRadioButton";
+            this.groupsRadioButton.Size = new System.Drawing.Size(59, 17);
+            this.groupsRadioButton.TabIndex = 1;
+            this.groupsRadioButton.TabStop = true;
+            this.groupsRadioButton.Text = "Groups";
+            this.groupsRadioButton.UseVisualStyleBackColor = true;
+            // 
+            // filesRadioButton
+            // 
+            this.filesRadioButton.AutoSize = true;
+            this.filesRadioButton.Location = new System.Drawing.Point(4, 21);
+            this.filesRadioButton.Name = "filesRadioButton";
+            this.filesRadioButton.Size = new System.Drawing.Size(46, 17);
+            this.filesRadioButton.TabIndex = 0;
+            this.filesRadioButton.TabStop = true;
+            this.filesRadioButton.Text = "Files";
+            this.filesRadioButton.UseVisualStyleBackColor = true;
+            // 
+            // fileGroupListViewTab3
+            // 
+            this.fileGroupListViewTab3.Location = new System.Drawing.Point(64, 90);
+            this.fileGroupListViewTab3.Name = "fileGroupListViewTab3";
+            this.fileGroupListViewTab3.Size = new System.Drawing.Size(299, 325);
+            this.fileGroupListViewTab3.TabIndex = 1;
+            this.fileGroupListViewTab3.UseCompatibleStateImageBehavior = false;
+            // 
+            // groupTabLabel
+            // 
+            this.groupTabLabel.AutoSize = true;
+            this.groupTabLabel.Location = new System.Drawing.Point(413, 16);
+            this.groupTabLabel.Name = "groupTabLabel";
+            this.groupTabLabel.Size = new System.Drawing.Size(98, 13);
+            this.groupTabLabel.TabIndex = 0;
+            this.groupTabLabel.Text = "Text in Groups Tab";
+            // 
+            // analysisTab
+            // 
+            this.analysisTab.Location = new System.Drawing.Point(4, 22);
+            this.analysisTab.Name = "analysisTab";
+            this.analysisTab.Padding = new System.Windows.Forms.Padding(3);
+            this.analysisTab.Size = new System.Drawing.Size(1081, 579);
+            this.analysisTab.TabIndex = 3;
+            this.analysisTab.Text = "Analysis";
+            this.analysisTab.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(1115, 576);
+            this.ClientSize = new System.Drawing.Size(1089, 605);
             this.Controls.Add(this.tabControl1);
             this.Name = "Form1";
             this.Text = "Fingerprint Analysis";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.tabControl1.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            this.tabPage2.ResumeLayout(false);
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
+            this.fingerPrintTab.ResumeLayout(false);
+            this.fingerprintAnalysisGroupBox.ResumeLayout(false);
+            this.fingerprintAnalysisGroupBox.PerformLayout();
+            this.filesTab.ResumeLayout(false);
+            this.editModifyGroupBox.ResumeLayout(false);
+            this.editModifyGroupBox.PerformLayout();
+            this.addGroupBox.ResumeLayout(false);
+            this.addGroupBox.PerformLayout();
+            this.groupsTab.ResumeLayout(false);
+            this.groupsGroupBox.ResumeLayout(false);
+            this.groupsGroupBox.PerformLayout();
+            this.radiouttonPanel.ResumeLayout(false);
+            this.radiouttonPanel.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -277,25 +469,41 @@
         #endregion
 
         private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.TabPage tabPage3;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.ListView listView2;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.ListView listView1;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TabPage fingerPrintTab;
+        private System.Windows.Forms.TabPage filesTab;
+        private System.Windows.Forms.TabPage groupsTab;
+        private System.Windows.Forms.GroupBox fingerprintAnalysisGroupBox;
+        private System.Windows.Forms.Button executeAnalysisButton;
+        private System.Windows.Forms.Button uploadFileButton;
+        private System.Windows.Forms.ListView analysisListViewTab1;
+        private System.Windows.Forms.Button removeButtonTab2;
+        private System.Windows.Forms.Button addButtonTab1;
+        private System.Windows.Forms.ListView fileListViewTab1;
+        private System.Windows.Forms.Label fALabel;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.TextBox authorTextBox;
+        private System.Windows.Forms.TextBox newFileNameTextbox;
+        private System.Windows.Forms.TextBox fileLocationTextBox;
+        private System.Windows.Forms.Label addLabel;
+        private System.Windows.Forms.GroupBox editModifyGroupBox;
+        private System.Windows.Forms.GroupBox addGroupBox;
+        private System.Windows.Forms.Label editModifyLabel;
+        private System.Windows.Forms.ListView fileListViewTab2;
+        private System.Windows.Forms.Button deleterButtonTab2;
+        private System.Windows.Forms.Button editButton;
+        private System.Windows.Forms.GroupBox groupsGroupBox;
+        private System.Windows.Forms.ListView groupListView;
+        private System.Windows.Forms.Button deleteButtonTab3;
+        private System.Windows.Forms.Button removeButtonTab3;
+        private System.Windows.Forms.Button addButtonTab3;
+        private System.Windows.Forms.Panel radiouttonPanel;
+        private System.Windows.Forms.RadioButton groupsRadioButton;
+        private System.Windows.Forms.RadioButton filesRadioButton;
+        private System.Windows.Forms.ListView fileGroupListViewTab3;
+        private System.Windows.Forms.Label groupTabLabel;
+        private System.Windows.Forms.ComboBox groupComboBox;
+        private System.Windows.Forms.TabPage analysisTab;
     }
 }
 
