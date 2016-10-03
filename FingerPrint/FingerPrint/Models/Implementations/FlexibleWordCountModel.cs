@@ -17,6 +17,10 @@ namespace FingerPrint.Models
 
         public FlexibleWordCountModel(ISingleWordCountModel countsWithQuotes, ISingleWordCountModel countsWithoutQuotes)
         {
+            if (countsWithQuotes == countsWithoutQuotes)
+            {
+                throw new ArgumentException("Please supply two different count models.");
+            }
             if (countsWithQuotes == null || countsWithoutQuotes == null)
             {
                 throw new ArgumentException("Array of counts must not be null.");

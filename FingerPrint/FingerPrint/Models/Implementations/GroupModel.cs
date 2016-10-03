@@ -17,11 +17,29 @@ namespace FingerPrint.Models
         private ISingleWordCountModel _counts;
         private List<ITextOrGroupModel<ISingleWordCountModel>> _items;
 
-        public string Name { get; set; }
+        public string Name
+        {
+            get
+            {
+                return _name;
+            }
+            set
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    throw new ArgumentException("Name must not be null or whitespace.");
+                }
+                _name = value;
+            }
+        }
 
         public GroupModel(string name, ISingleWordCountModel wordCountModel)
         {
-            _name = name;
+            if (wordCountModel == null)
+            {
+                throw new ArgumentException("wordCountModel must not be null.");
+            }
+            Name = name;
             _counts = wordCountModel.Copy();
             _length = _counts.Length();
             _items = new List<ITextOrGroupModel<ISingleWordCountModel>>();
@@ -34,6 +52,7 @@ namespace FingerPrint.Models
 
         public ISingleWordCountModel Counts()
         {
+            CalculateFingerprint();
             return _counts;
         }
 
@@ -56,7 +75,6 @@ namespace FingerPrint.Models
                 throw new ArgumentException($"Item {item} cannot be added to a group that it is already a member of.");
             }
             _items.Add(item);
-            CalculateFingerprint();
         }
 
         public void Delete(ITextOrGroupModel<ISingleWordCountModel> item)
@@ -70,15 +88,22 @@ namespace FingerPrint.Models
                 throw new ArgumentException($"Group does not contain item: {item}.");
             }
             _items.Remove(item);
-            CalculateFingerprint();
+        }
+
+        public bool Contains(ITextOrGroupModel<ISingleWordCountModel> item)
+        {
+            return _items.Contains(item);
         }
 
         private void CalculateFingerprint()
         {
-            //reset counts
             for (int i = 0; i < _length; i++)
             {
                 _counts.SetAt(i, 0);
+            }
+            if (_items.Count == 0)
+            {
+                return;
             }
             //get count totals
             foreach (ITextOrGroupModel<ISingleWordCountModel> item in _items)

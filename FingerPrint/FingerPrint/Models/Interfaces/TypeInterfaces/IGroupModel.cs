@@ -13,5 +13,6 @@ namespace FingerPrint.Models.Interfaces
     {
         void Add(ITextOrGroupModel<SingleCountType> item);
         void Delete(ITextOrGroupModel<SingleCountType> item);
+        bool Contains(ITextOrGroupModel<SingleCountType> item);
     }
 }

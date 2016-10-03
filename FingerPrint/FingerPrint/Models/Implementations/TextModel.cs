@@ -17,7 +17,21 @@ namespace FingerPrint.Models
         private string _name;
         private IFlexibleWordCountModel<ISingleWordCountModel> _counts;
 
-        public string Name { get; set; }
+        public string Name
+        {
+            get
+            {
+                return _name;
+            }
+            set
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    throw new ArgumentException("Name must not be null or whitespace.");
+                }
+                _name = value;
+            }
+        }
         public string Author { get; set; }
         public bool IncludeQuotes { get; set; }
 
@@ -27,7 +41,7 @@ namespace FingerPrint.Models
             {
                 throw new ArgumentException("counts must not be null.");
             }
-            _name = name;
+            Name = name;
             _counts = counts.Copy();
             _length = _counts.Length();
             IncludeQuotes = true;
