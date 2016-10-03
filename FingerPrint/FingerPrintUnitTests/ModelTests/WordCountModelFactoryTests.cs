@@ -30,10 +30,10 @@ namespace FingerPrintUnitTests.ModelTests
         {
             string s = "As Thomas Jefferson once said, \"Hey there buddy.\"";
             stringReader = new StringReader(s);
-            counts = factory.GenerateCounts(stringReader, counts);
+            factory.GenerateCounts(stringReader, counts);
             Assert.AreEqual(0, counts.GetAt(true, 0));
             Assert.AreEqual(1, counts.GetAt(true, 1));
-            Assert.AreEqual(2, counts.GetAt(true, 2));
+            Assert.AreEqual(1, counts.GetAt(true, 2));
             Assert.AreEqual(3, counts.GetAt(true, 3));
             Assert.AreEqual(2, counts.GetAt(true, 4));
             Assert.AreEqual(1, counts.GetAt(true, 5));
