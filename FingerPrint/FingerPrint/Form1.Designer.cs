@@ -28,6 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.fingerPrintTab = new System.Windows.Forms.TabPage();
             this.fingerprintAnalysisGroupBox = new System.Windows.Forms.GroupBox();
@@ -64,6 +67,8 @@
             this.fileGroupListViewTab3 = new System.Windows.Forms.ListView();
             this.groupTabLabel = new System.Windows.Forms.Label();
             this.analysisTab = new System.Windows.Forms.TabPage();
+            this.chartGroupBox = new System.Windows.Forms.GroupBox();
+            this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tabControl1.SuspendLayout();
             this.fingerPrintTab.SuspendLayout();
             this.fingerprintAnalysisGroupBox.SuspendLayout();
@@ -73,6 +78,9 @@
             this.groupsTab.SuspendLayout();
             this.groupsGroupBox.SuspendLayout();
             this.radiouttonPanel.SuspendLayout();
+            this.analysisTab.SuspendLayout();
+            this.chartGroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -431,6 +439,7 @@
             // 
             // analysisTab
             // 
+            this.analysisTab.Controls.Add(this.chartGroupBox);
             this.analysisTab.Location = new System.Drawing.Point(4, 22);
             this.analysisTab.Name = "analysisTab";
             this.analysisTab.Padding = new System.Windows.Forms.Padding(3);
@@ -438,6 +447,32 @@
             this.analysisTab.TabIndex = 3;
             this.analysisTab.Text = "Analysis";
             this.analysisTab.UseVisualStyleBackColor = true;
+            // 
+            // chartGroupBox
+            // 
+            this.chartGroupBox.Controls.Add(this.chart1);
+            this.chartGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.chartGroupBox.Location = new System.Drawing.Point(3, 3);
+            this.chartGroupBox.Name = "chartGroupBox";
+            this.chartGroupBox.Size = new System.Drawing.Size(1075, 573);
+            this.chartGroupBox.TabIndex = 0;
+            this.chartGroupBox.TabStop = false;
+            // 
+            // chart1
+            // 
+            chartArea1.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.chart1.Legends.Add(legend1);
+            this.chart1.Location = new System.Drawing.Point(5, 19);
+            this.chart1.Name = "chart1";
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.chart1.Series.Add(series1);
+            this.chart1.Size = new System.Drawing.Size(731, 551);
+            this.chart1.TabIndex = 0;
+            this.chart1.Text = "chart1";
             // 
             // Form1
             // 
@@ -462,6 +497,9 @@
             this.groupsGroupBox.PerformLayout();
             this.radiouttonPanel.ResumeLayout(false);
             this.radiouttonPanel.PerformLayout();
+            this.analysisTab.ResumeLayout(false);
+            this.chartGroupBox.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -504,6 +542,8 @@
         private System.Windows.Forms.Label groupTabLabel;
         private System.Windows.Forms.ComboBox groupComboBox;
         private System.Windows.Forms.TabPage analysisTab;
+        private System.Windows.Forms.GroupBox chartGroupBox;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
     }
 }
 
