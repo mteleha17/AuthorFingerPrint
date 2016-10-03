@@ -27,11 +27,11 @@ namespace FingerPrint.Models.Implementations
                     foreach (string word in rgx.Split(line.Trim()))
                     {
                         string currentWord = word;
-                        if (currentWord[0] == '“')
+                        if (currentWord[0] == '"')
                         {
                             quotesOn = true;
                         }
-                        string tempCurrentWord = Regex.Replace(currentWord, "[“”]", "");
+                        string tempCurrentWord = Regex.Replace(currentWord, "[\"]", "");
                         tempCurrentWord = Regex.Replace(tempCurrentWord, "[^a-zA-Z0-9']+$", "");
                         if (!(tempCurrentWord == ""))
                         {
@@ -61,7 +61,7 @@ namespace FingerPrint.Models.Implementations
                                 }
                             }
                         }
-                        if (currentWord[currentWord.Length - 1] == '”')
+                        if (currentWord[currentWord.Length - 1] == '"')
                         {
                             quotesOn = false;
                         }
