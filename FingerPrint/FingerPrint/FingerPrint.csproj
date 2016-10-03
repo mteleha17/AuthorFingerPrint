@@ -54,6 +54,7 @@
     </Compile>
     <Compile Include="Models\Implementations\FlexibleWordCountModel.cs" />
     <Compile Include="Models\Implementations\GroupModel.cs" />
+    <Compile Include="Models\Implementations\WordCountModelFactory.cs" />
     <Compile Include="Models\Interfaces\FeatureInterfaces\ICopyable.cs" />
     <Compile Include="Models\Interfaces\FeatureInterfaces\ICountContainer.cs" />
     <Compile Include="Models\Interfaces\TypeInterfaces\IFlexibleWordCountModel.cs" />
