@@ -60,7 +60,9 @@
     <Compile Include="ModelTests\WordCountModelFactoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="SampleTextFiles\WordSpanningMultipleLines.txt" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FingerPrint\FingerPrint.csproj">
       <Project>{76DEAB44-9EC4-44BD-971B-E95D94BC6C2F}</Project>

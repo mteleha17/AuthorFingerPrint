@@ -1,0 +1,2 @@
+﻿Let's consider a word spanning multip-
+le lines. Will the program handle it correctly?
