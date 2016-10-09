@@ -30,7 +30,7 @@
         {
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.fingerPrintTab = new System.Windows.Forms.TabPage();
             this.fingerprintAnalysisGroupBox = new System.Windows.Forms.GroupBox();
@@ -68,7 +68,7 @@
             this.groupTabLabel = new System.Windows.Forms.Label();
             this.analysisTab = new System.Windows.Forms.TabPage();
             this.chartGroupBox = new System.Windows.Forms.GroupBox();
-            this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.AnalysisLineChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tabControl1.SuspendLayout();
             this.fingerPrintTab.SuspendLayout();
             this.fingerprintAnalysisGroupBox.SuspendLayout();
@@ -80,7 +80,7 @@
             this.radiouttonPanel.SuspendLayout();
             this.analysisTab.SuspendLayout();
             this.chartGroupBox.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.AnalysisLineChart)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -123,7 +123,6 @@
             this.fingerprintAnalysisGroupBox.Size = new System.Drawing.Size(1075, 573);
             this.fingerprintAnalysisGroupBox.TabIndex = 0;
             this.fingerprintAnalysisGroupBox.TabStop = false;
-            this.fingerprintAnalysisGroupBox.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
             // executeAnalysisButton
             // 
@@ -133,6 +132,7 @@
             this.executeAnalysisButton.TabIndex = 6;
             this.executeAnalysisButton.Text = "Execute Analysis";
             this.executeAnalysisButton.UseVisualStyleBackColor = true;
+            this.executeAnalysisButton.Click += new System.EventHandler(this.executeAnalysisButton_Click);
             // 
             // uploadFileButton
             // 
@@ -142,7 +142,6 @@
             this.uploadFileButton.TabIndex = 5;
             this.uploadFileButton.Text = "Upload File";
             this.uploadFileButton.UseVisualStyleBackColor = true;
-            this.uploadFileButton.Click += new System.EventHandler(this.button3_Click);
             // 
             // analysisListViewTab1
             // 
@@ -450,7 +449,7 @@
             // 
             // chartGroupBox
             // 
-            this.chartGroupBox.Controls.Add(this.chart1);
+            this.chartGroupBox.Controls.Add(this.AnalysisLineChart);
             this.chartGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.chartGroupBox.Location = new System.Drawing.Point(3, 3);
             this.chartGroupBox.Name = "chartGroupBox";
@@ -458,21 +457,21 @@
             this.chartGroupBox.TabIndex = 0;
             this.chartGroupBox.TabStop = false;
             // 
-            // chart1
+            // AnalysisLineChart
             // 
             chartArea1.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea1);
+            this.AnalysisLineChart.ChartAreas.Add(chartArea1);
             legend1.Name = "Legend1";
-            this.chart1.Legends.Add(legend1);
-            this.chart1.Location = new System.Drawing.Point(5, 19);
-            this.chart1.Name = "chart1";
-            series1.ChartArea = "ChartArea1";
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.chart1.Series.Add(series1);
-            this.chart1.Size = new System.Drawing.Size(731, 551);
-            this.chart1.TabIndex = 0;
-            this.chart1.Text = "chart1";
+            this.AnalysisLineChart.Legends.Add(legend1);
+            this.AnalysisLineChart.Location = new System.Drawing.Point(6, 19);
+            this.AnalysisLineChart.Name = "AnalysisLineChart";
+            this.AnalysisLineChart.Size = new System.Drawing.Size(731, 551);
+            this.AnalysisLineChart.TabIndex = 0;
+            this.AnalysisLineChart.Text = "analysisChart";
+            title1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            title1.Name = "Author Analysis";
+            title1.Text = "Author Analysis";
+            this.AnalysisLineChart.Titles.Add(title1);
             // 
             // Form1
             // 
@@ -499,7 +498,7 @@
             this.radiouttonPanel.PerformLayout();
             this.analysisTab.ResumeLayout(false);
             this.chartGroupBox.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.AnalysisLineChart)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -543,7 +542,7 @@
         private System.Windows.Forms.ComboBox groupComboBox;
         private System.Windows.Forms.TabPage analysisTab;
         private System.Windows.Forms.GroupBox chartGroupBox;
-        private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
+        private System.Windows.Forms.DataVisualization.Charting.Chart AnalysisLineChart;
     }
 }
 
