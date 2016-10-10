@@ -69,6 +69,8 @@
             this.analysisTab = new System.Windows.Forms.TabPage();
             this.chartGroupBox = new System.Windows.Forms.GroupBox();
             this.AnalysisLineChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tabControl1.SuspendLayout();
             this.fingerPrintTab.SuspendLayout();
             this.fingerprintAnalysisGroupBox.SuspendLayout();
@@ -94,7 +96,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1089, 605);
+            this.tabControl1.Size = new System.Drawing.Size(1355, 605);
             this.tabControl1.TabIndex = 0;
             // 
             // fingerPrintTab
@@ -103,7 +105,7 @@
             this.fingerPrintTab.Location = new System.Drawing.Point(4, 22);
             this.fingerPrintTab.Name = "fingerPrintTab";
             this.fingerPrintTab.Padding = new System.Windows.Forms.Padding(3);
-            this.fingerPrintTab.Size = new System.Drawing.Size(1081, 579);
+            this.fingerPrintTab.Size = new System.Drawing.Size(1347, 579);
             this.fingerPrintTab.TabIndex = 0;
             this.fingerPrintTab.Text = "Fingerprint Analysis";
             this.fingerPrintTab.UseVisualStyleBackColor = true;
@@ -120,13 +122,13 @@
             this.fingerprintAnalysisGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.fingerprintAnalysisGroupBox.Location = new System.Drawing.Point(3, 3);
             this.fingerprintAnalysisGroupBox.Name = "fingerprintAnalysisGroupBox";
-            this.fingerprintAnalysisGroupBox.Size = new System.Drawing.Size(1075, 573);
+            this.fingerprintAnalysisGroupBox.Size = new System.Drawing.Size(1341, 573);
             this.fingerprintAnalysisGroupBox.TabIndex = 0;
             this.fingerprintAnalysisGroupBox.TabStop = false;
             // 
             // executeAnalysisButton
             // 
-            this.executeAnalysisButton.Location = new System.Drawing.Point(800, 407);
+            this.executeAnalysisButton.Location = new System.Drawing.Point(1049, 407);
             this.executeAnalysisButton.Name = "executeAnalysisButton";
             this.executeAnalysisButton.Size = new System.Drawing.Size(96, 23);
             this.executeAnalysisButton.TabIndex = 6;
@@ -142,18 +144,21 @@
             this.uploadFileButton.TabIndex = 5;
             this.uploadFileButton.Text = "Upload File";
             this.uploadFileButton.UseVisualStyleBackColor = true;
+            this.uploadFileButton.Click += new System.EventHandler(this.uploadFileButton_Click);
             // 
             // analysisListViewTab1
             // 
-            this.analysisListViewTab1.Location = new System.Drawing.Point(697, 78);
+            this.analysisListViewTab1.Location = new System.Drawing.Point(945, 78);
             this.analysisListViewTab1.Name = "analysisListViewTab1";
             this.analysisListViewTab1.Size = new System.Drawing.Size(301, 323);
             this.analysisListViewTab1.TabIndex = 4;
             this.analysisListViewTab1.UseCompatibleStateImageBehavior = false;
+            this.analysisListViewTab1.View = System.Windows.Forms.View.List;
             // 
             // removeButtonTab2
             // 
-            this.removeButtonTab2.Location = new System.Drawing.Point(490, 230);
+            this.removeButtonTab2.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.removeButtonTab2.Location = new System.Drawing.Point(623, 219);
             this.removeButtonTab2.Name = "removeButtonTab2";
             this.removeButtonTab2.Size = new System.Drawing.Size(75, 23);
             this.removeButtonTab2.TabIndex = 3;
@@ -163,12 +168,13 @@
             // addButtonTab1
             // 
             this.addButtonTab1.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.addButtonTab1.Location = new System.Drawing.Point(490, 131);
+            this.addButtonTab1.Location = new System.Drawing.Point(623, 131);
             this.addButtonTab1.Name = "addButtonTab1";
             this.addButtonTab1.Size = new System.Drawing.Size(75, 23);
             this.addButtonTab1.TabIndex = 2;
             this.addButtonTab1.Text = "Add ->";
             this.addButtonTab1.UseVisualStyleBackColor = true;
+            this.addButtonTab1.Click += new System.EventHandler(this.addButtonTab1_Click);
             // 
             // fileListViewTab1
             // 
@@ -177,12 +183,13 @@
             this.fileListViewTab1.Size = new System.Drawing.Size(301, 323);
             this.fileListViewTab1.TabIndex = 1;
             this.fileListViewTab1.UseCompatibleStateImageBehavior = false;
+            this.fileListViewTab1.View = System.Windows.Forms.View.List;
             // 
             // fALabel
             // 
             this.fALabel.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.fALabel.AutoSize = true;
-            this.fALabel.Location = new System.Drawing.Point(469, 34);
+            this.fALabel.Location = new System.Drawing.Point(602, 34);
             this.fALabel.Name = "fALabel";
             this.fALabel.Size = new System.Drawing.Size(112, 13);
             this.fALabel.TabIndex = 0;
@@ -196,7 +203,7 @@
             this.filesTab.Location = new System.Drawing.Point(4, 22);
             this.filesTab.Name = "filesTab";
             this.filesTab.Padding = new System.Windows.Forms.Padding(3);
-            this.filesTab.Size = new System.Drawing.Size(1081, 579);
+            this.filesTab.Size = new System.Drawing.Size(1347, 579);
             this.filesTab.TabIndex = 1;
             this.filesTab.Text = "Files";
             this.filesTab.UseVisualStyleBackColor = true;
@@ -208,9 +215,9 @@
             this.editModifyGroupBox.Controls.Add(this.editModifyLabel);
             this.editModifyGroupBox.Controls.Add(this.fileListViewTab2);
             this.editModifyGroupBox.Dock = System.Windows.Forms.DockStyle.Right;
-            this.editModifyGroupBox.Location = new System.Drawing.Point(566, 3);
+            this.editModifyGroupBox.Location = new System.Drawing.Point(688, 3);
             this.editModifyGroupBox.Name = "editModifyGroupBox";
-            this.editModifyGroupBox.Size = new System.Drawing.Size(512, 573);
+            this.editModifyGroupBox.Size = new System.Drawing.Size(656, 573);
             this.editModifyGroupBox.TabIndex = 7;
             this.editModifyGroupBox.TabStop = false;
             // 
@@ -261,7 +268,7 @@
             this.addGroupBox.Dock = System.Windows.Forms.DockStyle.Left;
             this.addGroupBox.Location = new System.Drawing.Point(3, 3);
             this.addGroupBox.Name = "addGroupBox";
-            this.addGroupBox.Size = new System.Drawing.Size(557, 573);
+            this.addGroupBox.Size = new System.Drawing.Size(679, 573);
             this.addGroupBox.TabIndex = 6;
             this.addGroupBox.TabStop = false;
             // 
@@ -283,6 +290,7 @@
             this.button5.TabIndex = 4;
             this.button5.Text = "SelectFile";
             this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // button6
             // 
@@ -323,7 +331,7 @@
             this.groupsTab.Location = new System.Drawing.Point(4, 22);
             this.groupsTab.Name = "groupsTab";
             this.groupsTab.Padding = new System.Windows.Forms.Padding(3);
-            this.groupsTab.Size = new System.Drawing.Size(1081, 579);
+            this.groupsTab.Size = new System.Drawing.Size(1347, 579);
             this.groupsTab.TabIndex = 2;
             this.groupsTab.Text = "Groups";
             this.groupsTab.UseVisualStyleBackColor = true;
@@ -341,7 +349,7 @@
             this.groupsGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupsGroupBox.Location = new System.Drawing.Point(3, 3);
             this.groupsGroupBox.Name = "groupsGroupBox";
-            this.groupsGroupBox.Size = new System.Drawing.Size(1075, 573);
+            this.groupsGroupBox.Size = new System.Drawing.Size(1341, 573);
             this.groupsGroupBox.TabIndex = 0;
             this.groupsGroupBox.TabStop = false;
             // 
@@ -387,6 +395,7 @@
             this.addButtonTab3.TabIndex = 3;
             this.addButtonTab3.Text = "Add ->";
             this.addButtonTab3.UseVisualStyleBackColor = true;
+            this.addButtonTab3.Click += new System.EventHandler(this.addButtonTab3_Click);
             // 
             // radiouttonPanel
             // 
@@ -442,18 +451,19 @@
             this.analysisTab.Location = new System.Drawing.Point(4, 22);
             this.analysisTab.Name = "analysisTab";
             this.analysisTab.Padding = new System.Windows.Forms.Padding(3);
-            this.analysisTab.Size = new System.Drawing.Size(1081, 579);
+            this.analysisTab.Size = new System.Drawing.Size(1347, 579);
             this.analysisTab.TabIndex = 3;
             this.analysisTab.Text = "Analysis";
             this.analysisTab.UseVisualStyleBackColor = true;
             // 
             // chartGroupBox
             // 
+            this.chartGroupBox.Controls.Add(this.tableLayoutPanel1);
             this.chartGroupBox.Controls.Add(this.AnalysisLineChart);
             this.chartGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.chartGroupBox.Location = new System.Drawing.Point(3, 3);
             this.chartGroupBox.Name = "chartGroupBox";
-            this.chartGroupBox.Size = new System.Drawing.Size(1075, 573);
+            this.chartGroupBox.Size = new System.Drawing.Size(1341, 573);
             this.chartGroupBox.TabIndex = 0;
             this.chartGroupBox.TabStop = false;
             // 
@@ -473,11 +483,37 @@
             title1.Text = "Author Analysis";
             this.AnalysisLineChart.Titles.Add(title1);
             // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            this.openFileDialog1.Filter = "Text Files (.txt)|*.txt";
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 10;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(744, 19);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(592, 424);
+            this.tableLayoutPanel1.TabIndex = 1;
+            // 
             // Form1
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(1089, 605);
+            this.ClientSize = new System.Drawing.Size(1355, 605);
             this.Controls.Add(this.tabControl1);
             this.Name = "Form1";
             this.Text = "Fingerprint Analysis";
@@ -543,6 +579,8 @@
         private System.Windows.Forms.TabPage analysisTab;
         private System.Windows.Forms.GroupBox chartGroupBox;
         private System.Windows.Forms.DataVisualization.Charting.Chart AnalysisLineChart;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
     }
 }
 
