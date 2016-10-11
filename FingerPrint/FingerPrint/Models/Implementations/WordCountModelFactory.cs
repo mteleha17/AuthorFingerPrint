@@ -1,4 +1,5 @@
 ﻿using FingerPrint.Models.Interfaces.TypeInterfaces;
+using System.Diagnostics;
 using System.IO;
 using System.Text.RegularExpressions;
 
@@ -14,28 +15,28 @@ namespace FingerPrint.Models.Implementations
             Regex rgx = new Regex(pattern);
             bool inQuotes = false;
             bool continueWord = false;
-            string firstHalf = "";
+            string firstHalfOfWord = "";
             string line;
 
             while ((line = text.ReadLine()) != null)
             {
                 if (line.Length != 0)
                 {
-                    string[] wordArray = rgx.Split(line.Trim());
-                    for (int i = 0; i  < wordArray.Length; i++)
+                    string[] wordsArray = rgx.Split(line.Trim());
+                    for (int i = 0; i  < wordsArray.Length; i++)
                     {
-                        string currentWord = wordArray[i];
+                        string currentWord = wordsArray[i];
                         if (continueWord)
                         {
-                            currentWord += firstHalf;
-                            firstHalf = "";
+                            currentWord = firstHalfOfWord + currentWord;
+                            firstHalfOfWord = "";
                             continueWord = false;
                         }
-                        if (i == wordArray.Length - 1)
+                        if (i == wordsArray.Length - 1)
                         {
                             if (currentWord[currentWord.Length - 1] == '-')
                             {
-                                firstHalf = wordArray[i];
+                                firstHalfOfWord = currentWord.Substring(0, currentWord.Length - 1);
                                 continueWord = true;
                             }
                         }
@@ -47,6 +48,7 @@ namespace FingerPrint.Models.Implementations
                             }
                             string tempCurrentWord = Regex.Replace(currentWord, "[\"]", "");
                             tempCurrentWord = Regex.Replace(tempCurrentWord, "[^a-zA-Z0-9']+$", "");
+                            Debug.Print(tempCurrentWord);
                             if (!(tempCurrentWord.Length == 0))
                             {
                                 int wordLength = tempCurrentWord.Length;
