@@ -1,4 +1,5 @@
 ﻿using FingerPrint.Models;
+using FingerPrint.Models.Interfaces.TypeInterfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -21,7 +22,20 @@ namespace FingerPrint
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            ISingleWordCountModel model2 = new SingleWordCountModel(10);
+            int[] arrayPoints = new int[10];
+            //TEST POINTS/*
+            model2.SetAt(0, 150);
+            model2.SetAt(1, 250);
+            model2.SetAt(2, 400);
+            model2.SetAt(3, 550);
+            model2.SetAt(4, 650);
+            model2.SetAt(5, 500);
+            model2.SetAt(6, 350);
+            model2.SetAt(7, 150);
+            model2.SetAt(8, 60);
+            model2.SetAt(9, 30);
+            
         }
 
         private void executeAnalysisButton_Click(object sender, EventArgs e)
@@ -52,12 +66,6 @@ namespace FingerPrint
             AnalysisLineChart.Series[groupOrTitle].ChartArea = "ChartArea1";
 
 
-
-
-
-
-
-
         }
 
         private void uploadFileButton_Click(object sender, EventArgs e)
@@ -83,7 +91,7 @@ namespace FingerPrint
 
         }
 
-        private void button5_Click(object sender, EventArgs e)
+        private void selectFileButton_Click(object sender, EventArgs e)
         {
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {

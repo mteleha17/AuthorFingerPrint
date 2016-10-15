@@ -49,8 +49,8 @@
             this.fileListViewTab2 = new System.Windows.Forms.ListView();
             this.addGroupBox = new System.Windows.Forms.GroupBox();
             this.addLabel = new System.Windows.Forms.Label();
-            this.button5 = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
+            this.selectFileButtonTab2 = new System.Windows.Forms.Button();
+            this.saveButtonTab2 = new System.Windows.Forms.Button();
             this.fileLocationTextBox = new System.Windows.Forms.TextBox();
             this.newFileNameTextbox = new System.Windows.Forms.TextBox();
             this.authorTextBox = new System.Windows.Forms.TextBox();
@@ -68,9 +68,9 @@
             this.groupTabLabel = new System.Windows.Forms.Label();
             this.analysisTab = new System.Windows.Forms.TabPage();
             this.chartGroupBox = new System.Windows.Forms.GroupBox();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.AnalysisLineChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tabControl1.SuspendLayout();
             this.fingerPrintTab.SuspendLayout();
             this.fingerprintAnalysisGroupBox.SuspendLayout();
@@ -148,7 +148,7 @@
             // 
             // analysisListViewTab1
             // 
-            this.analysisListViewTab1.Location = new System.Drawing.Point(945, 78);
+            this.analysisListViewTab1.Location = new System.Drawing.Point(937, 78);
             this.analysisListViewTab1.Name = "analysisListViewTab1";
             this.analysisListViewTab1.Size = new System.Drawing.Size(301, 323);
             this.analysisListViewTab1.TabIndex = 4;
@@ -158,7 +158,7 @@
             // removeButtonTab2
             // 
             this.removeButtonTab2.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.removeButtonTab2.Location = new System.Drawing.Point(623, 219);
+            this.removeButtonTab2.Location = new System.Drawing.Point(623, 220);
             this.removeButtonTab2.Name = "removeButtonTab2";
             this.removeButtonTab2.Size = new System.Drawing.Size(75, 23);
             this.removeButtonTab2.TabIndex = 3;
@@ -260,8 +260,8 @@
             // addGroupBox
             // 
             this.addGroupBox.Controls.Add(this.addLabel);
-            this.addGroupBox.Controls.Add(this.button5);
-            this.addGroupBox.Controls.Add(this.button6);
+            this.addGroupBox.Controls.Add(this.selectFileButtonTab2);
+            this.addGroupBox.Controls.Add(this.saveButtonTab2);
             this.addGroupBox.Controls.Add(this.fileLocationTextBox);
             this.addGroupBox.Controls.Add(this.newFileNameTextbox);
             this.addGroupBox.Controls.Add(this.authorTextBox);
@@ -282,24 +282,24 @@
             this.addLabel.TabIndex = 0;
             this.addLabel.Text = "Add";
             // 
-            // button5
+            // selectFileButtonTab2
             // 
-            this.button5.Location = new System.Drawing.Point(233, 76);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(75, 23);
-            this.button5.TabIndex = 4;
-            this.button5.Text = "SelectFile";
-            this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.button5_Click);
+            this.selectFileButtonTab2.Location = new System.Drawing.Point(233, 76);
+            this.selectFileButtonTab2.Name = "selectFileButtonTab2";
+            this.selectFileButtonTab2.Size = new System.Drawing.Size(75, 23);
+            this.selectFileButtonTab2.TabIndex = 4;
+            this.selectFileButtonTab2.Text = "Select File";
+            this.selectFileButtonTab2.UseVisualStyleBackColor = true;
+            this.selectFileButtonTab2.Click += new System.EventHandler(this.selectFileButton_Click);
             // 
-            // button6
+            // saveButtonTab2
             // 
-            this.button6.Location = new System.Drawing.Point(124, 196);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(75, 23);
-            this.button6.TabIndex = 5;
-            this.button6.Text = "Save";
-            this.button6.UseVisualStyleBackColor = true;
+            this.saveButtonTab2.Location = new System.Drawing.Point(124, 196);
+            this.saveButtonTab2.Name = "saveButtonTab2";
+            this.saveButtonTab2.Size = new System.Drawing.Size(75, 23);
+            this.saveButtonTab2.TabIndex = 5;
+            this.saveButtonTab2.Text = "Save";
+            this.saveButtonTab2.UseVisualStyleBackColor = true;
             // 
             // fileLocationTextBox
             // 
@@ -467,27 +467,6 @@
             this.chartGroupBox.TabIndex = 0;
             this.chartGroupBox.TabStop = false;
             // 
-            // AnalysisLineChart
-            // 
-            chartArea1.Name = "ChartArea1";
-            this.AnalysisLineChart.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.AnalysisLineChart.Legends.Add(legend1);
-            this.AnalysisLineChart.Location = new System.Drawing.Point(6, 19);
-            this.AnalysisLineChart.Name = "AnalysisLineChart";
-            this.AnalysisLineChart.Size = new System.Drawing.Size(731, 551);
-            this.AnalysisLineChart.TabIndex = 0;
-            this.AnalysisLineChart.Text = "analysisChart";
-            title1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            title1.Name = "Author Analysis";
-            title1.Text = "Author Analysis";
-            this.AnalysisLineChart.Titles.Add(title1);
-            // 
-            // openFileDialog1
-            // 
-            this.openFileDialog1.FileName = "openFileDialog1";
-            this.openFileDialog1.Filter = "Text Files (.txt)|*.txt";
-            // 
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.ColumnCount = 10;
@@ -508,6 +487,27 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(592, 424);
             this.tableLayoutPanel1.TabIndex = 1;
+            // 
+            // AnalysisLineChart
+            // 
+            chartArea1.Name = "ChartArea1";
+            this.AnalysisLineChart.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.AnalysisLineChart.Legends.Add(legend1);
+            this.AnalysisLineChart.Location = new System.Drawing.Point(6, 19);
+            this.AnalysisLineChart.Name = "AnalysisLineChart";
+            this.AnalysisLineChart.Size = new System.Drawing.Size(731, 551);
+            this.AnalysisLineChart.TabIndex = 0;
+            this.AnalysisLineChart.Text = "analysisChart";
+            title1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            title1.Name = "Author Analysis";
+            title1.Text = "Author Analysis";
+            this.AnalysisLineChart.Titles.Add(title1);
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            this.openFileDialog1.Filter = "Text Files (.txt)|*.txt";
             // 
             // Form1
             // 
@@ -553,8 +553,8 @@
         private System.Windows.Forms.Button addButtonTab1;
         private System.Windows.Forms.ListView fileListViewTab1;
         private System.Windows.Forms.Label fALabel;
-        private System.Windows.Forms.Button button6;
-        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button saveButtonTab2;
+        private System.Windows.Forms.Button selectFileButtonTab2;
         private System.Windows.Forms.TextBox authorTextBox;
         private System.Windows.Forms.TextBox newFileNameTextbox;
         private System.Windows.Forms.TextBox fileLocationTextBox;
