@@ -61,6 +61,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="SampleTextFiles\MismatchedQuotationMarks.txt" />
     <Content Include="SampleTextFiles\WordSpanningMultipleLines.txt" />
   </ItemGroup>
   <ItemGroup>

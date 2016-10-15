@@ -11,6 +11,7 @@ namespace FingerPrintUnitTests.ModelTests
     {
         ITextModel<ISingleWordCountModel> textOne, textTwo, textThree, textWrongLength;
         IGroupModel<ISingleWordCountModel> groupOne, groupTwo;
+        ISingleWordCountModel badCountInitialization;
 
         [TestInitialize]
         public void Initialize()
@@ -22,6 +23,7 @@ namespace FingerPrintUnitTests.ModelTests
 
             var groupCountsOne = new int[5];
             var groupCountsTwo = new int[5];
+            var groupCountsBadInitialization = new int[] { 7, 7, 7, 7, 7};
 
             var countsWithQuotesOne = new SingleWordCountModel(countsOne);
             var countsWithQuotesTwo = new SingleWordCountModel(countsTwo);
@@ -35,6 +37,7 @@ namespace FingerPrintUnitTests.ModelTests
 
             var singleGroupCountOne = new SingleWordCountModel(groupCountsOne);
             var singleGroupCountTwo = new SingleWordCountModel(groupCountsTwo);
+            badCountInitialization = new SingleWordCountModel(groupCountsBadInitialization);
 
             var flexibleCountsOne = new FlexibleWordCountModel(countsWithQuotesOne, countsWithoutQuotesOne);
             var flexibleCountsTwo = new FlexibleWordCountModel(countsWithQuotesTwo, countsWithoutQuotesTwo);
@@ -55,6 +58,13 @@ namespace FingerPrintUnitTests.ModelTests
         public void ConstructorNullWordCount()
         {
             groupOne = new GroupModel("group one", null);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void ConstructorBadCountInitialization()
+        {
+            groupOne = new GroupModel("bad count initialization", badCountInitialization);
         }
 
         [TestMethod]
