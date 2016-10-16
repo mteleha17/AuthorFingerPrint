@@ -11,6 +11,7 @@ namespace FingerPrint.Models.Interfaces
     /// </summary>
     public interface IGroupModel<SingleCountType> : ITextOrGroupModel<SingleCountType>
     {
+        event EventHandler Modified;
         void Add(ITextOrGroupModel<SingleCountType> item);
         void Delete(ITextOrGroupModel<SingleCountType> item);
         bool Contains(ITextOrGroupModel<SingleCountType> item);

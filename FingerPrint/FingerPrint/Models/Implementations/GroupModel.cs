@@ -18,6 +18,8 @@ namespace FingerPrint.Models
         private ISingleWordCountModel _counts;
         private List<ITextOrGroupModel<ISingleWordCountModel>> _items;
 
+        public event EventHandler Modified;
+
         public string Name
         {
             get
@@ -59,13 +61,23 @@ namespace FingerPrint.Models
             return _length;
         }
 
+        private void OnModified(object sender, EventArgs e)
+        {
+            if (Modified != null)
+            {
+                Modified(this, e); 
+            }
+            _modified = true;
+        }
+
         public ISingleWordCountModel Counts()
         {
             if (_modified)
             {
-                CalculateFingerprint(); 
+                CalculateFingerprint();
+                _modified = false;
             }
-            return _counts;
+            return _counts.Copy();
         }
 
         public void Add(ITextOrGroupModel<ISingleWordCountModel> item)
@@ -87,7 +99,11 @@ namespace FingerPrint.Models
                 throw new ArgumentException($"Item {item} cannot be added to a group that it is already a member of.");
             }
             _items.Add(item);
-            _modified = true;
+            if (item is IGroupModel<ISingleWordCountModel>)
+            {
+                ((IGroupModel<ISingleWordCountModel>)item).Modified += new EventHandler(OnModified);
+            }
+            OnModified(this, EventArgs.Empty);
         }
 
         public void Delete(ITextOrGroupModel<ISingleWordCountModel> item)
@@ -100,8 +116,12 @@ namespace FingerPrint.Models
             {
                 throw new ArgumentException($"Group does not contain item: {item}.");
             }
+            if (item is IGroupModel<ISingleWordCountModel>)
+            {
+                ((IGroupModel<ISingleWordCountModel>)item).Modified -= new EventHandler(OnModified);
+            }
             _items.Remove(item);
-            _modified = true;
+            OnModified(this, EventArgs.Empty);
         }
 
         public bool Contains(ITextOrGroupModel<ISingleWordCountModel> item)

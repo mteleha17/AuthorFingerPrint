@@ -110,7 +110,7 @@ namespace FingerPrintUnitTests.ModelTests
             {
                 groupOne.Add(textOne);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 Assert.Fail();
             }
@@ -219,6 +219,38 @@ namespace FingerPrintUnitTests.ModelTests
             Assert.AreEqual(54, counts.GetAt(2));
             Assert.AreEqual(55, counts.GetAt(3));
             Assert.AreEqual(56, counts.GetAt(4));
+        }
+
+        [TestMethod]
+        public void CountBetweenAdds()
+        {
+            groupOne.Add(textOne);
+            groupOne.Add(textTwo);
+            groupTwo.Add(groupOne);
+            ISingleWordCountModel counts = groupTwo.Counts();
+            groupTwo.Add(textThree);
+            counts = groupTwo.Counts();
+            Assert.AreEqual(52, counts.GetAt(0));
+            Assert.AreEqual(53, counts.GetAt(1));
+            Assert.AreEqual(54, counts.GetAt(2));
+            Assert.AreEqual(55, counts.GetAt(3));
+            Assert.AreEqual(56, counts.GetAt(4));
+        }
+
+        [TestMethod]
+        public void DeleteFromChild()
+        {
+            groupOne.Add(textOne);
+            groupOne.Add(textTwo);
+            groupTwo.Add(groupOne);
+            ISingleWordCountModel counts = groupTwo.Counts();
+            groupOne.Delete(textTwo);
+            counts = groupTwo.Counts();
+            Assert.AreEqual(1, counts.GetAt(0));
+            Assert.AreEqual(2, counts.GetAt(1));
+            Assert.AreEqual(3, counts.GetAt(2));
+            Assert.AreEqual(4, counts.GetAt(3));
+            Assert.AreEqual(5, counts.GetAt(4));
         }
     }
 }
