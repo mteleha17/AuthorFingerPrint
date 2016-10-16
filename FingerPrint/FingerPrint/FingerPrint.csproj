@@ -55,11 +55,12 @@
     </Compile>
     <Compile Include="Models\Implementations\FlexibleWordCountModel.cs" />
     <Compile Include="Models\Implementations\GroupModel.cs" />
-    <Compile Include="Models\Implementations\WordCountModelFactory.cs" />
+    <Compile Include="Models\Implementations\ModelFactory.cs" />
     <Compile Include="Models\Interfaces\FeatureInterfaces\ICopyable.cs" />
     <Compile Include="Models\Interfaces\FeatureInterfaces\ICountContainer.cs" />
     <Compile Include="Models\Interfaces\TypeInterfaces\IFlexibleWordCountModel.cs" />
     <Compile Include="Models\Interfaces\FeatureInterfaces\IMeasurableItem.cs" />
+    <Compile Include="Models\Interfaces\TypeInterfaces\IModelFactory.cs" />
     <Compile Include="Models\Interfaces\TypeInterfaces\ITextModel.cs" />
     <Compile Include="Models\Interfaces\TypeInterfaces\ITextOrGroupModel.cs" />
     <Compile Include="Models\Interfaces\FeatureInterfaces\INamedItem.cs" />
@@ -67,7 +68,6 @@
     <Compile Include="Models\Interfaces\TypeInterfaces\IGroupModel.cs" />
     <Compile Include="Models\Implementations\SingleWordCountModel.cs" />
     <Compile Include="Models\Implementations\TextModel.cs" />
-    <Compile Include="Models\Interfaces\TypeInterfaces\IWordCountModelFactory.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Stores\IItemStore.cs" />

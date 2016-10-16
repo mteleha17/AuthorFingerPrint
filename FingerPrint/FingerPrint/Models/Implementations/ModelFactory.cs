@@ -1,13 +1,40 @@
 ﻿using FingerPrint.Models.Interfaces.TypeInterfaces;
-using System.Diagnostics;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using FingerPrint.Models.Interfaces;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Diagnostics;
 
 namespace FingerPrint.Models.Implementations
 {
-    public class WordCountModelFactory : IWordCountModelFactory<IFlexibleWordCountModel<ISingleWordCountModel>>
+    public class ModelFactory : IModelFactory<ISingleWordCountModel>
     {
-        public void GenerateCounts(TextReader text, IFlexibleWordCountModel<ISingleWordCountModel> model)
+        public ITextModel<ISingleWordCountModel> GetTextModel(string name, TextReader input, int numberWordLengths)
+        {
+            var withQuotes = new SingleWordCountModel(numberWordLengths);
+            var withoutQuotes = new SingleWordCountModel(numberWordLengths);
+            var counts = new FlexibleWordCountModel(withQuotes, withoutQuotes);
+            GenerateCounts(input, counts);
+            return new TextModel(name, counts);
+        }
+
+        public IGroupModel<ISingleWordCountModel> GetGroupModel(string name, int numberWordLengths)
+        {
+            var counts = new SingleWordCountModel(numberWordLengths);
+            return new GroupModel(name, counts);
+        }
+
+        //For test purposes. Comment out later.
+        public void GenerateCountsTestMethod(TextReader text, IFlexibleWordCountModel<ISingleWordCountModel> model)
+        {
+            GenerateCounts(text, model);
+        }
+
+        private void GenerateCounts(TextReader text, IFlexibleWordCountModel<ISingleWordCountModel> model)
         {
             int[] countsWithQuotes = new int[10];
             int[] countsWithoutQuotes = new int[10];
@@ -23,7 +50,7 @@ namespace FingerPrint.Models.Implementations
                 if (line.Length != 0)
                 {
                     string[] wordsArray = rgx.Split(line.Trim());
-                    for (int i = 0; i  < wordsArray.Length; i++)
+                    for (int i = 0; i < wordsArray.Length; i++)
                     {
                         string currentWord = wordsArray[i];
                         if (continueWord)
@@ -94,5 +121,6 @@ namespace FingerPrint.Models.Implementations
                 model.SetAt(false, i, countsWithoutQuotes[i]);
             }
         }
+
     }
 }

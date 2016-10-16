@@ -13,7 +13,7 @@ namespace FingerPrintUnitTests.ModelTests
         StringReader stringReader;
         StreamReader streamReader;
         IFlexibleWordCountModel<ISingleWordCountModel> counts;
-        IWordCountModelFactory<IFlexibleWordCountModel<ISingleWordCountModel>> factory;
+        ModelFactory factory;
 
         [TestInitialize]
         public void Initialize()
@@ -23,7 +23,7 @@ namespace FingerPrintUnitTests.ModelTests
             ISingleWordCountModel countsWithQuotes = new SingleWordCountModel(withQuotes);
             ISingleWordCountModel countsWithoutQuotes = new SingleWordCountModel(withoutQuotes);
             counts = new FlexibleWordCountModel(countsWithQuotes, countsWithoutQuotes);
-            factory = new WordCountModelFactory();
+            factory = new ModelFactory();
         }
 
         [TestMethod]
@@ -31,7 +31,7 @@ namespace FingerPrintUnitTests.ModelTests
         {
             string s = "As Thomas Jefferson once said, \"Hey there buddy.\"";
             stringReader = new StringReader(s);
-            factory.GenerateCounts(stringReader, counts);
+            factory.GenerateCountsTestMethod(stringReader, counts);
             Assert.AreEqual(0, counts.GetAt(true, 0));
             Assert.AreEqual(1, counts.GetAt(true, 1));
             Assert.AreEqual(1, counts.GetAt(true, 2));
@@ -49,7 +49,7 @@ namespace FingerPrintUnitTests.ModelTests
         {
             string s = "As Thomas Jefferson once said, \"Hey there buddy.\"";
             stringReader = new StringReader(s);
-            factory.GenerateCounts(stringReader, counts);
+            factory.GenerateCountsTestMethod(stringReader, counts);
             Assert.AreEqual(0, counts.GetAt(false, 0));
             Assert.AreEqual(1, counts.GetAt(false, 1));
             Assert.AreEqual(0, counts.GetAt(false, 2));
@@ -67,7 +67,7 @@ namespace FingerPrintUnitTests.ModelTests
         {
             string s = "Let us consider a word spanning multip-\nle lines. Will the program handle it correctly?";
             stringReader = new StringReader(s);
-            factory.GenerateCounts(stringReader, counts);
+            factory.GenerateCountsTestMethod(stringReader, counts);
             Assert.AreEqual(1, counts.GetAt(true, 0));
             Assert.AreEqual(2, counts.GetAt(true, 1));
             Assert.AreEqual(2, counts.GetAt(true, 2));
@@ -85,7 +85,7 @@ namespace FingerPrintUnitTests.ModelTests
         {
             using (streamReader = new StreamReader("..\\..\\SampleTextFiles\\WordSpanningMultipleLines.txt"))
             {
-                factory.GenerateCounts(streamReader, counts);
+                factory.GenerateCountsTestMethod(streamReader, counts);
 
                 Assert.AreEqual(1, counts.GetAt(true, 0));
                 Assert.AreEqual(2, counts.GetAt(true, 1));
@@ -105,7 +105,7 @@ namespace FingerPrintUnitTests.ModelTests
         {
             using (streamReader = new StreamReader("..\\..\\SampleTextFiles\\MismatchedQuotationMarks.txt"))
             {
-                factory.GenerateCounts(streamReader, counts);
+                factory.GenerateCountsTestMethod(streamReader, counts);
 
                 Assert.AreEqual(0, counts.GetAt(true, 0));
                 Assert.AreEqual(0, counts.GetAt(true, 1));
