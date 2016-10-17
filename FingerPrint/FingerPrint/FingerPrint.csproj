@@ -54,6 +54,12 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormPopUpFileEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormPopUpFileEdit.Designer.cs">
+      <DependentUpon>FormPopUpFileEdit.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\Implementations\FlexibleWordCountModel.cs" />
     <Compile Include="Models\Implementations\GroupModel.cs" />
     <Compile Include="Models\Implementations\ModelFactory.cs" />
@@ -77,6 +83,9 @@
     <Compile Include="Stores\IItemStore.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormPopUpFileEdit.resx">
+      <DependentUpon>FormPopUpFileEdit.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
