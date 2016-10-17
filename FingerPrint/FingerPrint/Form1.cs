@@ -1,4 +1,5 @@
 ﻿using FingerPrint.Models;
+using FingerPrint.Models.Implementations;
 using FingerPrint.Models.Interfaces.TypeInterfaces;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,8 @@ namespace FingerPrint
 {
     public partial class Form1 : Form
     {
+        IModelFactory<ISingleWordCountModel, IFlexibleWordCountModel<ISingleWordCountModel>> _modelFactory;
+
         public Form1()
         {
             InitializeComponent();
@@ -22,7 +25,9 @@ namespace FingerPrint
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            ISingleWordCountModel model2 = new SingleWordCountModel(10);
+            _modelFactory = new ModelFactory();
+            ISingleWordCountModel model2 = _modelFactory.GetSingleCountModel(10);
+            //ISingleWordCountModel model2 = new SingleWordCountModel(10);
             int[] arrayPoints = new int[10];
             //TEST POINTS/*
             model2.SetAt(0, 150);
@@ -42,7 +47,8 @@ namespace FingerPrint
         {
             tabControl1.SelectTab(analysisTab);
             string groupOrTitle = "SampleData";
-            ISingleWordCountModel model = new SingleWordCountModel(10);
+            //ISingleWordCountModel model = new SingleWordCountModel(10);
+            ISingleWordCountModel model = _modelFactory.GetSingleCountModel(10);
             int[] arrayPoints = new int[10];
             //TEST POINTS/*
             model.SetAt(0, 150);

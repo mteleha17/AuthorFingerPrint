@@ -2,23 +2,28 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using FingerPrint.Models;
 using FingerPrint.Models.Interfaces.TypeInterfaces;
+using FingerPrint.Models.Implementations;
 
 namespace FingerPrintUnitTests.ModelTests
 {
     [TestClass]
     public class TextModelTests
     {
+        private IModelFactory<ISingleWordCountModel, IFlexibleWordCountModel<ISingleWordCountModel>> _modelFactory;
+
         IFlexibleWordCountModel<ISingleWordCountModel> wordCountModel, nullWordCountModel;
         ITextModel<ISingleWordCountModel> model;
 
         [TestInitialize]
         public void Initialize()
         {
+            _modelFactory = new ModelFactory();
+
             int[] countsWithQuotes = new int[] { 0, 3, 1, 4, 2, 5};
             int[] countsWithoutQuotes = new int[] { 6, 9, 7, 10, 8, 11 };
-            SingleWordCountModel withQuotes = new SingleWordCountModel(countsWithQuotes);
-            SingleWordCountModel withoutQuotes = new SingleWordCountModel(countsWithoutQuotes);
-            wordCountModel = new FlexibleWordCountModel(withQuotes, withoutQuotes);
+            ISingleWordCountModel withQuotes = _modelFactory.GetSingleCountModel(countsWithQuotes);
+            ISingleWordCountModel withoutQuotes = _modelFactory.GetSingleCountModel(countsWithoutQuotes);
+            wordCountModel = _modelFactory.GetFlexibleCountModel(withQuotes, withoutQuotes);
             nullWordCountModel = null;
 
             model = new TextModel("model", wordCountModel);

@@ -14,16 +14,6 @@ namespace FingerPrint.Models
         public readonly int _length;
         private int[] _counts;
 
-        public SingleWordCountModel(int length)
-        {
-            if (length < 1)
-            {
-                throw new ArgumentException("The number of counts must be positive.");
-            }
-            _length = length;
-            _counts = new int[_length];
-        }
-
         public SingleWordCountModel(int[] counts)
         {
             if (counts == null)

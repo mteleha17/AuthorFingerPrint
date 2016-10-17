@@ -11,21 +11,104 @@ using System.Diagnostics;
 
 namespace FingerPrint.Models.Implementations
 {
-    public class ModelFactory : IModelFactory<ISingleWordCountModel>
+    public class ModelFactory : IModelFactory<ISingleWordCountModel, IFlexibleWordCountModel<ISingleWordCountModel>>
     {
-        public ITextModel<ISingleWordCountModel> GetTextModel(string name, TextReader input, int numberWordLengths)
+        public ITextModel<ISingleWordCountModel> GetTextModel(string name, TextReader input, int length)
         {
-            var withQuotes = new SingleWordCountModel(numberWordLengths);
-            var withoutQuotes = new SingleWordCountModel(numberWordLengths);
-            var counts = new FlexibleWordCountModel(withQuotes, withoutQuotes);
+            var counts = GetFlexibleCountModel(length);
             GenerateCounts(input, counts);
             return new TextModel(name, counts);
         }
 
-        public IGroupModel<ISingleWordCountModel> GetGroupModel(string name, int numberWordLengths)
+        public ITextModel<ISingleWordCountModel> GetTextModel(string name, IFlexibleWordCountModel<ISingleWordCountModel> counts)
         {
-            var counts = new SingleWordCountModel(numberWordLengths);
+            if (counts == null)
+            {
+                throw new ArgumentException("Counts model must not be null.");
+            }
+            if (counts.Length() < 1)
+            {
+                throw new ArgumentException("Counts model must not have length 0.");
+            }
+            return new TextModel(name, counts);
+        }
+
+        public IGroupModel<ISingleWordCountModel> GetGroupModel(string name, int length)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new ArgumentException("Name must not be null or whitespace.");
+            }
+            var counts = GetSingleCountModel(length);
             return new GroupModel(name, counts);
+        }
+
+        public ISingleWordCountModel GetSingleCountModel(int length)
+        {
+            if (length < 1)
+            {
+                throw new ArgumentException("The number of counts must be positive.");
+            }
+            var counts = new int[length];
+            return GetSingleCountModel(counts);
+        }
+
+        public ISingleWordCountModel GetSingleCountModel(int[] counts)
+        {
+            if (counts == null)
+            {
+                throw new ArgumentException("Array of counts must not be null.");
+            }
+            if (counts.Length < 1)
+            {
+                throw new ArgumentException("The number of counts must be positive.");
+            }
+            foreach (int i in counts)
+            {
+                if (i < 0)
+                {
+                    throw new ArgumentException("Counts must not be negative.");
+                }
+            }
+            return new SingleWordCountModel(counts);
+        }
+
+        public IFlexibleWordCountModel<ISingleWordCountModel> GetFlexibleCountModel(int length)
+        {
+            var withQuotes = GetSingleCountModel(length);
+            var withoutQuotes = GetSingleCountModel(length);
+            return GetFlexibleCountModel(withQuotes, withoutQuotes);
+        }
+
+        public IFlexibleWordCountModel<ISingleWordCountModel> GetFlexibleCountModel(ISingleWordCountModel withQuotes, ISingleWordCountModel withoutQuotes)
+        {
+            if (withQuotes == withoutQuotes)
+            {
+                throw new ArgumentException("Please supply two different count models.");
+            }
+            if (withQuotes == null || withoutQuotes == null)
+            {
+                throw new ArgumentException("Array of counts must not be null.");
+            }
+            int withQuotesLength = withQuotes.Length();
+            int withoutQuotesLength = withoutQuotes.Length();
+
+            if (withQuotesLength < 1 || withoutQuotesLength < 1)
+            {
+                throw new ArgumentException("Number of counts must not be less than 1.");
+            }
+            if (withQuotesLength != withoutQuotesLength)
+            {
+                throw new ArgumentException("The arrays must have the same length.");
+            }
+            for (int i = 0; i < withQuotesLength; i++)
+            {
+                if (withQuotes.GetAt(i) < 0 || withoutQuotes.GetAt(i) < 0)
+                {
+                    throw new ArgumentException($"Counts must not be negative. Item {i} in one of the arrays was negative.");
+                }
+            }
+            return new FlexibleWordCountModel(withQuotes, withoutQuotes);
         }
 
         //For test purposes. Comment out later.
@@ -121,6 +204,5 @@ namespace FingerPrint.Models.Implementations
                 model.SetAt(false, i, countsWithoutQuotes[i]);
             }
         }
-
     }
 }

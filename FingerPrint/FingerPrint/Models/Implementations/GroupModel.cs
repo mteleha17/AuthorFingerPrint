@@ -18,8 +18,6 @@ namespace FingerPrint.Models
         private ISingleWordCountModel _counts;
         private List<ITextOrGroupModel<ISingleWordCountModel>> _items;
 
-        public event EventHandler Modified;
-
         public string Name
         {
             get
@@ -36,8 +34,14 @@ namespace FingerPrint.Models
             }
         }
 
+        public event EventHandler Modified;
+
         public GroupModel(string name, ISingleWordCountModel wordCountModel)
         {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new ArgumentException("Name must not be null or whitespace.");
+            }
             if (wordCountModel == null)
             {
                 throw new ArgumentException("wordCountModel must not be null.");
@@ -49,10 +53,10 @@ namespace FingerPrint.Models
                     throw new ArgumentException("wordCountModel must have counts all equal to zero upon initializing group.");
                 }
             }
-            Name = name;
+            _items = new List<ITextOrGroupModel<ISingleWordCountModel>>();
+            _name = name;
             _counts = wordCountModel.Copy();
             _length = _counts.Length();
-            _items = new List<ITextOrGroupModel<ISingleWordCountModel>>();
             _modified = true;
         }
 
