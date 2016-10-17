@@ -28,18 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Title title2 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.fingerPrintTab = new System.Windows.Forms.TabPage();
             this.fingerprintAnalysisGroupBox = new System.Windows.Forms.GroupBox();
             this.executeAnalysisButton = new System.Windows.Forms.Button();
             this.uploadFileButton = new System.Windows.Forms.Button();
-            this.analysisListViewTab1 = new System.Windows.Forms.ListView();
             this.removeButtonTab2 = new System.Windows.Forms.Button();
             this.addButtonTab1 = new System.Windows.Forms.Button();
-            this.fileListViewTab1 = new System.Windows.Forms.ListView();
             this.fALabel = new System.Windows.Forms.Label();
             this.filesTab = new System.Windows.Forms.TabPage();
             this.editModifyGroupBox = new System.Windows.Forms.GroupBox();
@@ -71,6 +72,10 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.AnalysisLineChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.authorHeader = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.nameHeader = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.includeQuotesHeader = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.tabControl1.SuspendLayout();
             this.fingerPrintTab.SuspendLayout();
             this.fingerprintAnalysisGroupBox.SuspendLayout();
@@ -83,6 +88,7 @@
             this.analysisTab.SuspendLayout();
             this.chartGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.AnalysisLineChart)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -112,12 +118,11 @@
             // 
             // fingerprintAnalysisGroupBox
             // 
+            this.fingerprintAnalysisGroupBox.Controls.Add(this.dataGridView1);
             this.fingerprintAnalysisGroupBox.Controls.Add(this.executeAnalysisButton);
             this.fingerprintAnalysisGroupBox.Controls.Add(this.uploadFileButton);
-            this.fingerprintAnalysisGroupBox.Controls.Add(this.analysisListViewTab1);
             this.fingerprintAnalysisGroupBox.Controls.Add(this.removeButtonTab2);
             this.fingerprintAnalysisGroupBox.Controls.Add(this.addButtonTab1);
-            this.fingerprintAnalysisGroupBox.Controls.Add(this.fileListViewTab1);
             this.fingerprintAnalysisGroupBox.Controls.Add(this.fALabel);
             this.fingerprintAnalysisGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.fingerprintAnalysisGroupBox.Location = new System.Drawing.Point(3, 3);
@@ -146,15 +151,6 @@
             this.uploadFileButton.UseVisualStyleBackColor = true;
             this.uploadFileButton.Click += new System.EventHandler(this.uploadFileButton_Click);
             // 
-            // analysisListViewTab1
-            // 
-            this.analysisListViewTab1.Location = new System.Drawing.Point(937, 78);
-            this.analysisListViewTab1.Name = "analysisListViewTab1";
-            this.analysisListViewTab1.Size = new System.Drawing.Size(301, 323);
-            this.analysisListViewTab1.TabIndex = 4;
-            this.analysisListViewTab1.UseCompatibleStateImageBehavior = false;
-            this.analysisListViewTab1.View = System.Windows.Forms.View.List;
-            // 
             // removeButtonTab2
             // 
             this.removeButtonTab2.Anchor = System.Windows.Forms.AnchorStyles.None;
@@ -175,15 +171,6 @@
             this.addButtonTab1.Text = "Add ->";
             this.addButtonTab1.UseVisualStyleBackColor = true;
             this.addButtonTab1.Click += new System.EventHandler(this.addButtonTab1_Click);
-            // 
-            // fileListViewTab1
-            // 
-            this.fileListViewTab1.Location = new System.Drawing.Point(57, 78);
-            this.fileListViewTab1.Name = "fileListViewTab1";
-            this.fileListViewTab1.Size = new System.Drawing.Size(301, 323);
-            this.fileListViewTab1.TabIndex = 1;
-            this.fileListViewTab1.UseCompatibleStateImageBehavior = false;
-            this.fileListViewTab1.View = System.Windows.Forms.View.List;
             // 
             // fALabel
             // 
@@ -490,24 +477,82 @@
             // 
             // AnalysisLineChart
             // 
-            chartArea1.Name = "ChartArea1";
-            this.AnalysisLineChart.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.AnalysisLineChart.Legends.Add(legend1);
+            chartArea2.Name = "ChartArea1";
+            this.AnalysisLineChart.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.AnalysisLineChart.Legends.Add(legend2);
             this.AnalysisLineChart.Location = new System.Drawing.Point(6, 19);
             this.AnalysisLineChart.Name = "AnalysisLineChart";
             this.AnalysisLineChart.Size = new System.Drawing.Size(731, 551);
             this.AnalysisLineChart.TabIndex = 0;
             this.AnalysisLineChart.Text = "analysisChart";
-            title1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            title1.Name = "Author Analysis";
-            title1.Text = "Author Analysis";
-            this.AnalysisLineChart.Titles.Add(title1);
+            title2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            title2.Name = "Author Analysis";
+            title2.Text = "Author Analysis";
+            this.AnalysisLineChart.Titles.Add(title2);
             // 
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             this.openFileDialog1.Filter = "Text Files (.txt)|*.txt";
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.AllowUserToOrderColumns = true;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.authorHeader,
+            this.nameHeader,
+            this.includeQuotesHeader});
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle2;
+            this.dataGridView1.Location = new System.Drawing.Point(55, 78);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.ReadOnly = true;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            this.dataGridView1.Size = new System.Drawing.Size(344, 323);
+            this.dataGridView1.TabIndex = 7;
+            // 
+            // authorHeader
+            // 
+            this.authorHeader.HeaderText = "Author";
+            this.authorHeader.Name = "authorHeader";
+            this.authorHeader.ReadOnly = true;
+            // 
+            // nameHeader
+            // 
+            this.nameHeader.HeaderText = "Text Name";
+            this.nameHeader.Name = "nameHeader";
+            this.nameHeader.ReadOnly = true;
+            // 
+            // includeQuotesHeader
+            // 
+            this.includeQuotesHeader.HeaderText = "Include Quotes";
+            this.includeQuotesHeader.Name = "includeQuotesHeader";
+            this.includeQuotesHeader.ReadOnly = true;
             // 
             // Form1
             // 
@@ -535,6 +580,7 @@
             this.analysisTab.ResumeLayout(false);
             this.chartGroupBox.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.AnalysisLineChart)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -548,10 +594,8 @@
         private System.Windows.Forms.GroupBox fingerprintAnalysisGroupBox;
         private System.Windows.Forms.Button executeAnalysisButton;
         private System.Windows.Forms.Button uploadFileButton;
-        private System.Windows.Forms.ListView analysisListViewTab1;
         private System.Windows.Forms.Button removeButtonTab2;
         private System.Windows.Forms.Button addButtonTab1;
-        private System.Windows.Forms.ListView fileListViewTab1;
         private System.Windows.Forms.Label fALabel;
         private System.Windows.Forms.Button saveButtonTab2;
         private System.Windows.Forms.Button selectFileButtonTab2;
@@ -581,6 +625,10 @@
         private System.Windows.Forms.DataVisualization.Charting.Chart AnalysisLineChart;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn authorHeader;
+        private System.Windows.Forms.DataGridViewTextBoxColumn nameHeader;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn includeQuotesHeader;
     }
 }
 

@@ -22,20 +22,24 @@ namespace FingerPrint
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            ISingleWordCountModel model2 = new SingleWordCountModel(10);
-            int[] arrayPoints = new int[10];
-            //TEST POINTS/*
-            model2.SetAt(0, 150);
-            model2.SetAt(1, 250);
-            model2.SetAt(2, 400);
-            model2.SetAt(3, 550);
-            model2.SetAt(4, 650);
-            model2.SetAt(5, 500);
-            model2.SetAt(6, 350);
-            model2.SetAt(7, 150);
-            model2.SetAt(8, 60);
-            model2.SetAt(9, 30);
+            IFlexibleWordCountModel<ISingleWordCountModel> wordCountModel, nullWordCountModel;
+            ITextModel<ISingleWordCountModel> model;
+            int[] countsWithQuotes = new int[] { 0, 3, 1, 4, 2, 5 };
+            int[] countsWithoutQuotes = new int[] { 6, 9, 7, 10, 8, 11 };
+            SingleWordCountModel withQuotes = new SingleWordCountModel(countsWithQuotes);
+            SingleWordCountModel withoutQuotes = new SingleWordCountModel(countsWithoutQuotes);
+            wordCountModel = new FlexibleWordCountModel(withQuotes, withoutQuotes);
+            nullWordCountModel = null;
+            model = new TextModel("model", wordCountModel);
+            model.Author = "Dude";
+            model.Name = "ThisTextDoe";
+            model.IncludeQuotes = true;
             
+            string[] row = { model.Author, model.Name };
+            ListViewItem item = new ListViewItem(row);
+           
+
+
         }
 
         private void executeAnalysisButton_Click(object sender, EventArgs e)
