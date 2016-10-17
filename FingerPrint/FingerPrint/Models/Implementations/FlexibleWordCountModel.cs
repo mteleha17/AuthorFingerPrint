@@ -25,8 +25,8 @@ namespace FingerPrint.Models
             {
                 throw new ArgumentException("Array of counts must not be null.");
             }
-            int withQuotesLength = countsWithQuotes.Length();
-            int withoutQuotesLength = countsWithoutQuotes.Length();
+            int withQuotesLength = countsWithQuotes.GetLength();
+            int withoutQuotesLength = countsWithoutQuotes.GetLength();
 
             if (withQuotesLength < 1 || withoutQuotesLength < 1)
             {
@@ -48,7 +48,7 @@ namespace FingerPrint.Models
             _countsWithoutQuotes = countsWithoutQuotes.Copy();
         }
 
-        public int Length()
+        public int GetLength()
         {
             return _length;
         }

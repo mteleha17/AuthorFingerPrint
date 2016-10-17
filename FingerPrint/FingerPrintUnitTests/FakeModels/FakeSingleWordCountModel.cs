@@ -26,7 +26,7 @@ namespace FingerPrintUnitTests.FakeModels
             CountCollection[index] = value;
         }
 
-        public int Length()
+        public int GetLength()
         {
             return CountCollection.Length;
         }

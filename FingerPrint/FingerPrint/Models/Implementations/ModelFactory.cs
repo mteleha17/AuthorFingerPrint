@@ -26,7 +26,7 @@ namespace FingerPrint.Models.Implementations
             {
                 throw new ArgumentException("Counts model must not be null.");
             }
-            if (counts.Length() < 1)
+            if (counts.GetLength() < 1)
             {
                 throw new ArgumentException("Counts model must not have length 0.");
             }
@@ -90,8 +90,8 @@ namespace FingerPrint.Models.Implementations
             {
                 throw new ArgumentException("Array of counts must not be null.");
             }
-            int withQuotesLength = withQuotes.Length();
-            int withoutQuotesLength = withoutQuotes.Length();
+            int withQuotesLength = withQuotes.GetLength();
+            int withoutQuotesLength = withoutQuotes.GetLength();
 
             if (withQuotesLength < 1 || withoutQuotesLength < 1)
             {

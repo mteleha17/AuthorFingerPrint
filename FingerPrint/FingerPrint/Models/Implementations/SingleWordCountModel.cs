@@ -35,7 +35,7 @@ namespace FingerPrint.Models
             _counts = counts.ToArray();
         }
 
-        public int Length()
+        public int GetLength()
         {
             return _length;
         }

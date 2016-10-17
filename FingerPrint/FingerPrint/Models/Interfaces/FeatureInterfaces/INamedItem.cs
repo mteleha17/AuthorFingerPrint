@@ -4,13 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FingerPrint.Models
+namespace FingerPrint.Models.Interfaces.FeatureInterfaces
 {
-    /// <summary>
-    /// Interface to be implemented by a class that can return its own name.
-    /// </summary>
     public interface INamedItem
     {
-        string Name { get; set; }
+        string GetName();
     }
 }

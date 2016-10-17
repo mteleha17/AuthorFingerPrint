@@ -71,15 +71,15 @@ namespace FingerPrintUnitTests.ModelTests
         [TestMethod]
         public void ValidSetName()
         {
-            groupOne.Name = "Gary";
-            Assert.AreEqual("Gary", groupOne.Name);
+            groupOne.SetName("Gary");
+            Assert.AreEqual("Gary", groupOne.GetName());
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void SetNameNull()
         {
-            groupOne.Name = null;
+            groupOne.SetName(null);
         }
 
         [TestMethod]
@@ -160,7 +160,7 @@ namespace FingerPrintUnitTests.ModelTests
         [TestMethod]
         public void CountEmptyGroup()
         {
-            var counts = groupOne.Counts();
+            var counts = groupOne.GetCounts();
             Assert.AreEqual(0, counts.GetAt(0));
             Assert.AreEqual(0, counts.GetAt(1));
             Assert.AreEqual(0, counts.GetAt(2));
@@ -172,7 +172,7 @@ namespace FingerPrintUnitTests.ModelTests
         public void CountOneText()
         {
             groupOne.Add(textOne);
-            ISingleWordCountModel counts = groupOne.Counts();
+            ISingleWordCountModel counts = groupOne.GetCounts();
             Assert.AreEqual(1, counts.GetAt(0));
             Assert.AreEqual(2, counts.GetAt(1));
             Assert.AreEqual(3, counts.GetAt(2));
@@ -185,7 +185,7 @@ namespace FingerPrintUnitTests.ModelTests
         {
             groupOne.Add(textOne);
             groupOne.Add(textTwo);
-            ISingleWordCountModel counts = groupOne.Counts();
+            ISingleWordCountModel counts = groupOne.GetCounts();
             Assert.AreEqual(4, counts.GetAt(0));
             Assert.AreEqual(5, counts.GetAt(1));
             Assert.AreEqual(6, counts.GetAt(2));
@@ -199,7 +199,7 @@ namespace FingerPrintUnitTests.ModelTests
             groupOne.Add(textOne);
             groupOne.Add(textTwo);
             groupTwo.Add(groupOne);
-            ISingleWordCountModel counts = groupTwo.Counts();
+            ISingleWordCountModel counts = groupTwo.GetCounts();
             Assert.AreEqual(4, counts.GetAt(0));
             Assert.AreEqual(5, counts.GetAt(1));
             Assert.AreEqual(6, counts.GetAt(2));
@@ -214,7 +214,7 @@ namespace FingerPrintUnitTests.ModelTests
             groupOne.Add(textTwo);
             groupTwo.Add(groupOne);
             groupTwo.Add(textThree);
-            ISingleWordCountModel counts = groupTwo.Counts();
+            ISingleWordCountModel counts = groupTwo.GetCounts();
             Assert.AreEqual(52, counts.GetAt(0));
             Assert.AreEqual(53, counts.GetAt(1));
             Assert.AreEqual(54, counts.GetAt(2));
@@ -228,9 +228,9 @@ namespace FingerPrintUnitTests.ModelTests
             groupOne.Add(textOne);
             groupOne.Add(textTwo);
             groupTwo.Add(groupOne);
-            ISingleWordCountModel counts = groupTwo.Counts();
+            ISingleWordCountModel counts = groupTwo.GetCounts();
             groupTwo.Add(textThree);
-            counts = groupTwo.Counts();
+            counts = groupTwo.GetCounts();
             Assert.AreEqual(52, counts.GetAt(0));
             Assert.AreEqual(53, counts.GetAt(1));
             Assert.AreEqual(54, counts.GetAt(2));
@@ -244,9 +244,9 @@ namespace FingerPrintUnitTests.ModelTests
             groupOne.Add(textOne);
             groupOne.Add(textTwo);
             groupTwo.Add(groupOne);
-            ISingleWordCountModel counts = groupTwo.Counts();
+            ISingleWordCountModel counts = groupTwo.GetCounts();
             groupOne.Delete(textTwo);
-            counts = groupTwo.Counts();
+            counts = groupTwo.GetCounts();
             Assert.AreEqual(1, counts.GetAt(0));
             Assert.AreEqual(2, counts.GetAt(1));
             Assert.AreEqual(3, counts.GetAt(2));

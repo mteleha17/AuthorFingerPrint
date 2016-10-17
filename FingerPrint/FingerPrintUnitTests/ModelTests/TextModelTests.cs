@@ -38,15 +38,15 @@ namespace FingerPrintUnitTests.ModelTests
         [TestMethod]
         public void ValidSetName()
         {
-            model.Name = "Gary";
-            Assert.AreEqual("Gary", model.Name);
+            model.SetName("Gary");
+            Assert.AreEqual("Gary", model.GetName());
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void SetNameNull()
         {
-            model.Name = null;
+            model.SetName(null);
         }
 
         [TestMethod]
@@ -59,16 +59,16 @@ namespace FingerPrintUnitTests.ModelTests
         [TestMethod]
         public void GetCountsWithQuotes()
         {
-            model.IncludeQuotes = true;
-            ISingleWordCountModel counts = model.Counts();
+            model.SetIncludeQuotes(true);
+            ISingleWordCountModel counts = model.GetCounts();
             Assert.AreEqual(counts.GetAt(3), 4);
         }
 
         [TestMethod]
         public void GetCountsWithoutQuotes()
         {
-            model.IncludeQuotes = false;
-            ISingleWordCountModel counts = model.Counts();
+            model.SetIncludeQuotes(false);
+            ISingleWordCountModel counts = model.GetCounts();
             Assert.AreEqual(counts.GetAt(3), 10);
         }
     }

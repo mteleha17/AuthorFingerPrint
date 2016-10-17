@@ -15,46 +15,64 @@ namespace FingerPrint.Models
     {
         private readonly int _length;
         private string _name;
+        private string _author;
+        private bool _includeQuotes;
         private IFlexibleWordCountModel<ISingleWordCountModel> _counts;
-
-        public string Name
-        {
-            get
-            {
-                return _name;
-            }
-            set
-            {
-                if (string.IsNullOrWhiteSpace(value))
-                {
-                    throw new ArgumentException("Name must not be null or whitespace.");
-                }
-                _name = value;
-            }
-        }
-        public string Author { get; set; }
-        public bool IncludeQuotes { get; set; }
 
         public TextModel(string name, IFlexibleWordCountModel<ISingleWordCountModel> counts)
         {
+            SetName(name);
+            SetIncludeQuotes(true);
             if (counts == null)
             {
                 throw new ArgumentException("counts must not be null.");
             }
-            Name = name;
             _counts = counts.Copy();
-            _length = _counts.Length();
-            IncludeQuotes = true;
+            _length = _counts.GetLength();
         }
 
-        public int Length()
+        public int GetLength()
         {
             return _length;
         }
 
-        public ISingleWordCountModel Counts()
+        public string GetName()
         {
-            if (IncludeQuotes)
+            return _name;
+        }
+
+        public void SetName(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new ArgumentException("Name must not be null or whitespace.");
+            }
+            _name = name;
+        }
+
+        public string GetAuthor()
+        {
+            return _author;
+        }
+
+        public void SetAuthor(string author)
+        {
+            _author = author;
+        }
+
+        public bool GetIncludeQuotes()
+        {
+            return _includeQuotes;
+        }
+
+        public void SetIncludeQuotes(bool value)
+        {
+            _includeQuotes = value;
+        }
+
+        public ISingleWordCountModel GetCounts()
+        {
+            if (GetIncludeQuotes())
             {
                 return _counts.CountsWithQuotes();
             }
@@ -63,5 +81,7 @@ namespace FingerPrint.Models
                 return _counts.CountsWithoutQuotes();
             }
         }
+
+        
     }
 }

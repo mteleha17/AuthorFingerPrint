@@ -61,6 +61,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="SampleTextFiles\ATaleOfTwoCitiesNormal.txt" />
+    <Content Include="SampleTextFiles\ATaleOfTwoCitiesScrambled.txt" />
     <Content Include="SampleTextFiles\MismatchedQuotationMarks.txt" />
     <Content Include="SampleTextFiles\WordSpanningMultipleLines.txt" />
   </ItemGroup>

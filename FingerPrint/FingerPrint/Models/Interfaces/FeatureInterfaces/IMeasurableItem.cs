@@ -11,6 +11,6 @@ namespace FingerPrint.Models.Interfaces
     /// </summary>
     public interface IMeasurableItem
     {
-        int Length();
+        int GetLength();
     }
 }

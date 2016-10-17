@@ -10,9 +10,9 @@ namespace FingerPrint.Models.Interfaces.TypeInterfaces
     /// Interface to be implemented by a class respresenting a text.
     /// </summary>
     /// <typeparam name="SingleCountType"></typeparam>
-    public interface ITextModel<SingleCountType> : ITextOrGroupModel<SingleCountType>
+    public interface ITextModel<SingleCountType> : ITextOrGroupModel<SingleCountType>, ITextViewModel<SingleCountType>
     {
-        string Author { get; set; }
-        bool IncludeQuotes { get; set; }
+        void SetAuthor(string author);
+        void SetIncludeQuotes(bool value);
     }
 }

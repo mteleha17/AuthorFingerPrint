@@ -1,4 +1,5 @@
 ﻿using FingerPrint.Models.Interfaces;
+using FingerPrint.Models.Interfaces.TypeInterfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,35 +19,16 @@ namespace FingerPrint.Models
         private ISingleWordCountModel _counts;
         private List<ITextOrGroupModel<ISingleWordCountModel>> _items;
 
-        public string Name
-        {
-            get
-            {
-                return _name;
-            }
-            set
-            {
-                if (string.IsNullOrWhiteSpace(value))
-                {
-                    throw new ArgumentException("Name must not be null or whitespace.");
-                }
-                _name = value;
-            }
-        }
-
         public event EventHandler Modified;
 
         public GroupModel(string name, ISingleWordCountModel wordCountModel)
         {
-            if (string.IsNullOrWhiteSpace(name))
-            {
-                throw new ArgumentException("Name must not be null or whitespace.");
-            }
+            SetName(name);
             if (wordCountModel == null)
             {
                 throw new ArgumentException("wordCountModel must not be null.");
             }
-            for (int i = 0; i < wordCountModel.Length(); i++)
+            for (int i = 0; i < wordCountModel.GetLength(); i++)
             {
                 if (wordCountModel.GetAt(i) != 0)
                 {
@@ -54,15 +36,28 @@ namespace FingerPrint.Models
                 }
             }
             _items = new List<ITextOrGroupModel<ISingleWordCountModel>>();
-            _name = name;
             _counts = wordCountModel.Copy();
-            _length = _counts.Length();
+            _length = _counts.GetLength();
             _modified = true;
         }
 
-        public int Length()
+        public int GetLength()
         {
             return _length;
+        }
+
+        public string GetName()
+        {
+            return _name;
+        }
+
+        public void SetName(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new ArgumentException("Name must not be null or whitespace.");
+            }
+            _name = name;
         }
 
         private void OnModified(object sender, EventArgs e)
@@ -72,16 +67,6 @@ namespace FingerPrint.Models
                 Modified(this, e); 
             }
             _modified = true;
-        }
-
-        public ISingleWordCountModel Counts()
-        {
-            if (_modified)
-            {
-                CalculateFingerprint();
-                _modified = false;
-            }
-            return _counts.Copy();
         }
 
         public void Add(ITextOrGroupModel<ISingleWordCountModel> item)
@@ -94,7 +79,7 @@ namespace FingerPrint.Models
             {
                 throw new ArgumentException("Cannot add null item.");
             }
-            if (item.Length() != _length)
+            if (item.GetLength() != _length)
             {
                 throw new ArgumentException("Countable item must have the same length as the group to which it is added.");
             }
@@ -133,6 +118,21 @@ namespace FingerPrint.Models
             return _items.Contains(item);
         }
 
+        public List<ITextOrGroupViewModel<ISingleWordCountModel>> GetMembers()
+        {
+            return _items.Select(x => (ITextOrGroupViewModel<ISingleWordCountModel>)x).ToList();
+        } 
+
+        public ISingleWordCountModel GetCounts()
+        {
+            if (_modified)
+            {
+                CalculateFingerprint();
+                _modified = false;
+            }
+            return _counts.Copy();
+        }
+
         private void CalculateFingerprint()
         {
             for (int i = 0; i < _length; i++)
@@ -146,7 +146,7 @@ namespace FingerPrint.Models
             //get count totals
             foreach (ITextOrGroupModel<ISingleWordCountModel> item in _items)
             {
-                var itemCounts = item.Counts();
+                var itemCounts = item.GetCounts();
                 for (int i = 0; i < _length; i++)
                 {
                     _counts.SetAt(i, _counts.GetAt(i) + itemCounts.GetAt(i));

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FingerPrint.Models.Interfaces.FeatureInterfaces;
+using FingerPrint.Models.Interfaces.TypeInterfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +11,8 @@ namespace FingerPrint.Models.Interfaces
     /// <summary>
     /// Interface to be implemented by a text or group.
     /// </summary>
-    public interface ITextOrGroupModel<SingleCountType> : INamedItem, IMeasurableItem, ICountContainer<SingleCountType>
-    {}
+    public interface ITextOrGroupModel<SingleCountType> : ITextOrGroupViewModel<SingleCountType>
+    {
+        void SetName(string name);
+    }
 }
