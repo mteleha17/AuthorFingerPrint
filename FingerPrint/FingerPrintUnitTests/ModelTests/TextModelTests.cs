@@ -2,23 +2,28 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using FingerPrint.Models;
 using FingerPrint.Models.Interfaces.TypeInterfaces;
+using FingerPrint.Models.Implementations;
 
 namespace FingerPrintUnitTests.ModelTests
 {
     [TestClass]
     public class TextModelTests
     {
+        private IModelFactory<ISingleWordCountModel, IFlexibleWordCountModel<ISingleWordCountModel>> _modelFactory;
+
         IFlexibleWordCountModel<ISingleWordCountModel> wordCountModel, nullWordCountModel;
         ITextModel<ISingleWordCountModel> model;
 
         [TestInitialize]
         public void Initialize()
         {
+            _modelFactory = new ModelFactory();
+
             int[] countsWithQuotes = new int[] { 0, 3, 1, 4, 2, 5};
             int[] countsWithoutQuotes = new int[] { 6, 9, 7, 10, 8, 11 };
-            SingleWordCountModel withQuotes = new SingleWordCountModel(countsWithQuotes);
-            SingleWordCountModel withoutQuotes = new SingleWordCountModel(countsWithoutQuotes);
-            wordCountModel = new FlexibleWordCountModel(withQuotes, withoutQuotes);
+            ISingleWordCountModel withQuotes = _modelFactory.GetSingleCountModel(countsWithQuotes);
+            ISingleWordCountModel withoutQuotes = _modelFactory.GetSingleCountModel(countsWithoutQuotes);
+            wordCountModel = _modelFactory.GetFlexibleCountModel(withQuotes, withoutQuotes);
             nullWordCountModel = null;
 
             model = new TextModel("model", wordCountModel);
@@ -33,15 +38,15 @@ namespace FingerPrintUnitTests.ModelTests
         [TestMethod]
         public void ValidSetName()
         {
-            model.Name = "Gary";
-            Assert.AreEqual("Gary", model.Name);
+            model.SetName("Gary");
+            Assert.AreEqual("Gary", model.GetName());
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void SetNameNull()
         {
-            model.Name = null;
+            model.SetName(null);
         }
 
         [TestMethod]
@@ -54,16 +59,16 @@ namespace FingerPrintUnitTests.ModelTests
         [TestMethod]
         public void GetCountsWithQuotes()
         {
-            model.IncludeQuotes = true;
-            ISingleWordCountModel counts = model.Counts();
+            model.SetIncludeQuotes(true);
+            ISingleWordCountModel counts = model.GetCounts();
             Assert.AreEqual(counts.GetAt(3), 4);
         }
 
         [TestMethod]
         public void GetCountsWithoutQuotes()
         {
-            model.IncludeQuotes = false;
-            ISingleWordCountModel counts = model.Counts();
+            model.SetIncludeQuotes(false);
+            ISingleWordCountModel counts = model.GetCounts();
             Assert.AreEqual(counts.GetAt(3), 10);
         }
     }

@@ -3,51 +3,55 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using FingerPrint.Models.Interfaces;
 using FingerPrint.Models;
 using FingerPrint.Models.Interfaces.TypeInterfaces;
+using FingerPrint.Models.Implementations;
 
 namespace FingerPrintUnitTests.ModelTests
 {
     [TestClass]
     public class GroupModelTests
     {
+        private IModelFactory<ISingleWordCountModel, IFlexibleWordCountModel<ISingleWordCountModel>> _modelFactory;
+
         ITextModel<ISingleWordCountModel> textOne, textTwo, textThree, textWrongLength;
         IGroupModel<ISingleWordCountModel> groupOne, groupTwo;
+        ISingleWordCountModel badCountInitialization;
 
         [TestInitialize]
         public void Initialize()
         {
+            _modelFactory = new ModelFactory();
+
             var countsOne = new int[] { 1, 2, 3, 4, 5 };
             var countsTwo = new int[] { 7, 8, 9, 10, 11 };
             var countsThree = new int[] { 100, 101, 102, 103, 104 };
             var countsWrongLength = new int[] { 55 };
 
-            var groupCountsOne = new int[5];
-            var groupCountsTwo = new int[5];
+            var groupCountsBadInitialization = new int[] { 7, 7, 7, 7, 7};
 
-            var countsWithQuotesOne = new SingleWordCountModel(countsOne);
-            var countsWithQuotesTwo = new SingleWordCountModel(countsTwo);
-            var countsWithQuotesThree = new SingleWordCountModel(countsThree);
-            var countsWithQuotesWrongLength = new SingleWordCountModel(countsWrongLength);
+            var countsWithQuotesOne = _modelFactory.GetSingleCountModel(countsOne);
+            var countsWithQuotesTwo = _modelFactory.GetSingleCountModel(countsTwo);
+            var countsWithQuotesThree = _modelFactory.GetSingleCountModel(countsThree);
+            var countsWithQuotesWrongLength = _modelFactory.GetSingleCountModel(countsWrongLength);
 
-            var countsWithoutQuotesOne = new SingleWordCountModel((int[])countsOne.Clone());
-            var countsWithoutQuotesTwo = new SingleWordCountModel((int[])countsTwo.Clone());
-            var countsWithoutQuotesThree = new SingleWordCountModel((int[])countsThree.Clone());
-            var countsWithoutQuotesWrongLength = new SingleWordCountModel((int[])countsWrongLength.Clone());
+            var countsWithoutQuotesOne = _modelFactory.GetSingleCountModel((int[])countsOne.Clone());
+            var countsWithoutQuotesTwo = _modelFactory.GetSingleCountModel((int[])countsTwo.Clone());
+            var countsWithoutQuotesThree = _modelFactory.GetSingleCountModel((int[])countsThree.Clone());
+            var countsWithoutQuotesWrongLength = _modelFactory.GetSingleCountModel((int[])countsWrongLength.Clone());
 
-            var singleGroupCountOne = new SingleWordCountModel(groupCountsOne);
-            var singleGroupCountTwo = new SingleWordCountModel(groupCountsTwo);
+            badCountInitialization = _modelFactory.GetSingleCountModel(groupCountsBadInitialization);
 
-            var flexibleCountsOne = new FlexibleWordCountModel(countsWithQuotesOne, countsWithoutQuotesOne);
-            var flexibleCountsTwo = new FlexibleWordCountModel(countsWithQuotesTwo, countsWithoutQuotesTwo);
-            var flexibleCountsThree = new FlexibleWordCountModel(countsWithQuotesThree, countsWithoutQuotesThree);
-            var flexibleCountsWrongLength = new FlexibleWordCountModel(countsWithQuotesWrongLength, countsWithoutQuotesWrongLength);
+            var flexibleCountsOne = _modelFactory.GetFlexibleCountModel(countsWithQuotesOne, countsWithoutQuotesOne);
+            var flexibleCountsTwo = _modelFactory.GetFlexibleCountModel(countsWithQuotesTwo, countsWithoutQuotesTwo);
+            var flexibleCountsThree = _modelFactory.GetFlexibleCountModel(countsWithQuotesThree, countsWithoutQuotesThree);
+            var flexibleCountsWrongLength = _modelFactory.GetFlexibleCountModel(countsWithQuotesWrongLength, countsWithoutQuotesWrongLength);
 
-            textOne = new TextModel("text one", flexibleCountsOne);
-            textTwo = new TextModel("text two", flexibleCountsTwo);
-            textThree = new TextModel("text three", flexibleCountsThree);
-            textWrongLength = new TextModel("text wrong length", flexibleCountsWrongLength);
+            textOne = _modelFactory.GetTextModel("text one", flexibleCountsOne);
+            textTwo = _modelFactory.GetTextModel("text two", flexibleCountsTwo);
+            textThree = _modelFactory.GetTextModel("text three", flexibleCountsThree);
+            textWrongLength = _modelFactory.GetTextModel("text wrong length", flexibleCountsWrongLength);
 
-            groupOne = new GroupModel("group one", singleGroupCountOne);
-            groupTwo = new GroupModel("group two", singleGroupCountTwo);
+            groupOne = _modelFactory.GetGroupModel("group one", 5);
+            groupTwo = _modelFactory.GetGroupModel("group two", 5);
         }
 
         [TestMethod]
@@ -58,17 +62,24 @@ namespace FingerPrintUnitTests.ModelTests
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void ConstructorBadCountInitialization()
+        {
+            groupOne = new GroupModel("bad count initialization", badCountInitialization);
+        }
+
+        [TestMethod]
         public void ValidSetName()
         {
-            groupOne.Name = "Gary";
-            Assert.AreEqual("Gary", groupOne.Name);
+            groupOne.SetName("Gary");
+            Assert.AreEqual("Gary", groupOne.GetName());
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void SetNameNull()
         {
-            groupOne.Name = null;
+            groupOne.SetName(null);
         }
 
         [TestMethod]
@@ -100,7 +111,7 @@ namespace FingerPrintUnitTests.ModelTests
             {
                 groupOne.Add(textOne);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 Assert.Fail();
             }
@@ -149,7 +160,7 @@ namespace FingerPrintUnitTests.ModelTests
         [TestMethod]
         public void CountEmptyGroup()
         {
-            var counts = groupOne.Counts();
+            var counts = groupOne.GetCounts();
             Assert.AreEqual(0, counts.GetAt(0));
             Assert.AreEqual(0, counts.GetAt(1));
             Assert.AreEqual(0, counts.GetAt(2));
@@ -161,7 +172,7 @@ namespace FingerPrintUnitTests.ModelTests
         public void CountOneText()
         {
             groupOne.Add(textOne);
-            ISingleWordCountModel counts = groupOne.Counts();
+            ISingleWordCountModel counts = groupOne.GetCounts();
             Assert.AreEqual(1, counts.GetAt(0));
             Assert.AreEqual(2, counts.GetAt(1));
             Assert.AreEqual(3, counts.GetAt(2));
@@ -174,7 +185,7 @@ namespace FingerPrintUnitTests.ModelTests
         {
             groupOne.Add(textOne);
             groupOne.Add(textTwo);
-            ISingleWordCountModel counts = groupOne.Counts();
+            ISingleWordCountModel counts = groupOne.GetCounts();
             Assert.AreEqual(4, counts.GetAt(0));
             Assert.AreEqual(5, counts.GetAt(1));
             Assert.AreEqual(6, counts.GetAt(2));
@@ -188,7 +199,7 @@ namespace FingerPrintUnitTests.ModelTests
             groupOne.Add(textOne);
             groupOne.Add(textTwo);
             groupTwo.Add(groupOne);
-            ISingleWordCountModel counts = groupTwo.Counts();
+            ISingleWordCountModel counts = groupTwo.GetCounts();
             Assert.AreEqual(4, counts.GetAt(0));
             Assert.AreEqual(5, counts.GetAt(1));
             Assert.AreEqual(6, counts.GetAt(2));
@@ -203,12 +214,44 @@ namespace FingerPrintUnitTests.ModelTests
             groupOne.Add(textTwo);
             groupTwo.Add(groupOne);
             groupTwo.Add(textThree);
-            ISingleWordCountModel counts = groupTwo.Counts();
+            ISingleWordCountModel counts = groupTwo.GetCounts();
             Assert.AreEqual(52, counts.GetAt(0));
             Assert.AreEqual(53, counts.GetAt(1));
             Assert.AreEqual(54, counts.GetAt(2));
             Assert.AreEqual(55, counts.GetAt(3));
             Assert.AreEqual(56, counts.GetAt(4));
+        }
+
+        [TestMethod]
+        public void CountBetweenAdds()
+        {
+            groupOne.Add(textOne);
+            groupOne.Add(textTwo);
+            groupTwo.Add(groupOne);
+            ISingleWordCountModel counts = groupTwo.GetCounts();
+            groupTwo.Add(textThree);
+            counts = groupTwo.GetCounts();
+            Assert.AreEqual(52, counts.GetAt(0));
+            Assert.AreEqual(53, counts.GetAt(1));
+            Assert.AreEqual(54, counts.GetAt(2));
+            Assert.AreEqual(55, counts.GetAt(3));
+            Assert.AreEqual(56, counts.GetAt(4));
+        }
+
+        [TestMethod]
+        public void DeleteFromChild()
+        {
+            groupOne.Add(textOne);
+            groupOne.Add(textTwo);
+            groupTwo.Add(groupOne);
+            ISingleWordCountModel counts = groupTwo.GetCounts();
+            groupOne.Delete(textTwo);
+            counts = groupTwo.GetCounts();
+            Assert.AreEqual(1, counts.GetAt(0));
+            Assert.AreEqual(2, counts.GetAt(1));
+            Assert.AreEqual(3, counts.GetAt(2));
+            Assert.AreEqual(4, counts.GetAt(3));
+            Assert.AreEqual(5, counts.GetAt(4));
         }
     }
 }

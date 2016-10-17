@@ -2,12 +2,15 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using FingerPrint.Models;
 using FingerPrintUnitTests.FakeModels;
+using FingerPrint.Models.Interfaces.TypeInterfaces;
+using FingerPrint.Models.Implementations;
 
 namespace FingerPrintUnitTests.ModelTests
 {
     [TestClass]
     public class FlexibleWordCountModelTests
     {
+        private IModelFactory<ISingleWordCountModel, IFlexibleWordCountModel<ISingleWordCountModel>> _modelFactory;
         ISingleWordCountModel singleCountIncludeQuotes, singleCountExcludeQuotes, singleCountNull,
             singleCountLengthZeroA, singleCountLengthZeroB, singleCountLengthOne,
             singleCountNegativeCount;
@@ -16,61 +19,62 @@ namespace FingerPrintUnitTests.ModelTests
         [TestInitialize()]
         public void Initialize()
         {
+            _modelFactory = new ModelFactory();
             int[] countsOne = new int[] { 1, 2, 3, 4, 5};
-            singleCountIncludeQuotes = new SingleWordCountModel(countsOne);
+            singleCountIncludeQuotes = _modelFactory.GetSingleCountModel(countsOne);
             int[] countsTwo = new int[] { 1, 14, 3, 28, 5 };
-            singleCountExcludeQuotes = new SingleWordCountModel(countsTwo);
+            singleCountExcludeQuotes = _modelFactory.GetSingleCountModel(countsTwo);
             singleCountNull = null;
             int[] countsLengthOne = new int[] { 55 };
-            singleCountLengthOne = new SingleWordCountModel(countsLengthOne);
+            singleCountLengthOne = _modelFactory.GetSingleCountModel(countsLengthOne);
             int[] countsLengthZeroA = new int[0];
             singleCountLengthZeroA = new FakeSingleWordCountModel(countsLengthZeroA);
             int[] countsLengthZeroB = new int[0];
             singleCountLengthZeroB = new FakeSingleWordCountModel(countsLengthZeroB);
             int[] countsWithNegative = new int[] { 1, -2, 3, 4, 5 };
             singleCountNegativeCount = new FakeSingleWordCountModel(countsWithNegative);
-            flexibleWordCountModel = new FlexibleWordCountModel(singleCountIncludeQuotes, singleCountExcludeQuotes);
+            flexibleWordCountModel = _modelFactory.GetFlexibleCountModel(singleCountIncludeQuotes, singleCountExcludeQuotes);
         }
 
         [TestMethod]
         public void ValidConstruction()
         {
-            flexibleWordCountModel = new FlexibleWordCountModel(singleCountIncludeQuotes, singleCountExcludeQuotes);
+            flexibleWordCountModel = _modelFactory.GetFlexibleCountModel(singleCountIncludeQuotes, singleCountExcludeQuotes);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void ConstructorNullInput()
         {
-            flexibleWordCountModel = new FlexibleWordCountModel(singleCountNull, singleCountExcludeQuotes);
+            flexibleWordCountModel = _modelFactory.GetFlexibleCountModel(singleCountNull, singleCountExcludeQuotes);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void ConstructorDuplicateInput()
         {
-            flexibleWordCountModel = new FlexibleWordCountModel(singleCountIncludeQuotes, singleCountIncludeQuotes);
+            flexibleWordCountModel = _modelFactory.GetFlexibleCountModel(singleCountIncludeQuotes, singleCountIncludeQuotes);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void ConstructorLengthZeroInput()
         {
-            flexibleWordCountModel = new FlexibleWordCountModel(singleCountLengthZeroA, singleCountLengthZeroB);
+            flexibleWordCountModel = _modelFactory.GetFlexibleCountModel(singleCountLengthZeroA, singleCountLengthZeroB);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void ConstructorInputUnequalLength()
         {
-            flexibleWordCountModel = new FlexibleWordCountModel(singleCountLengthOne, singleCountExcludeQuotes);
+            flexibleWordCountModel = _modelFactory.GetFlexibleCountModel(singleCountLengthOne, singleCountExcludeQuotes);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void ConstructorInputNegativeCount()
         {
-            flexibleWordCountModel = new FlexibleWordCountModel(singleCountNegativeCount, singleCountExcludeQuotes);
+            flexibleWordCountModel = _modelFactory.GetFlexibleCountModel(singleCountNegativeCount, singleCountExcludeQuotes);
         }
 
         [TestMethod]

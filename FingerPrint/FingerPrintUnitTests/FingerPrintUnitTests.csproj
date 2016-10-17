@@ -55,12 +55,15 @@
     <Compile Include="FakeModels\FakeSingleWordCountModel.cs" />
     <Compile Include="ModelTests\FlexibleWordCountModelTests.cs" />
     <Compile Include="ModelTests\GroupModelTests.cs" />
+    <Compile Include="ModelTests\ModelFactoryTests.cs" />
     <Compile Include="ModelTests\SingleWordCountModelTests.cs" />
     <Compile Include="ModelTests\TextModelTests.cs" />
-    <Compile Include="ModelTests\WordCountModelFactoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="SampleTextFiles\ATaleOfTwoCitiesNormal.txt" />
+    <Content Include="SampleTextFiles\ATaleOfTwoCitiesScrambled.txt" />
+    <Content Include="SampleTextFiles\MismatchedQuotationMarks.txt" />
     <Content Include="SampleTextFiles\WordSpanningMultipleLines.txt" />
   </ItemGroup>
   <ItemGroup>

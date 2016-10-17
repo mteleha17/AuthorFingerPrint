@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using FingerPrint.Models;
+using FingerPrint.Models.Interfaces.TypeInterfaces;
+using FingerPrint.Models.Implementations;
 
 namespace FingerPrintUnitTests.ModelTests
 {
@@ -8,52 +10,34 @@ namespace FingerPrintUnitTests.ModelTests
     public class SingleWordCountModelTests
     {
         private ISingleWordCountModel singleWordCountModel;
+        private IModelFactory<ISingleWordCountModel, IFlexibleWordCountModel<ISingleWordCountModel>> _modelFactory;
 
         [TestInitialize()]
         public void Initialize()
         {
-            singleWordCountModel = new SingleWordCountModel(new int[] { 3, 5, 4, 7, 6});
-        }
-
-        [TestMethod]
-        public void ValidConstructionByLength()
-        {
-            SingleWordCountModel model = new SingleWordCountModel(4);
+            _modelFactory = new ModelFactory();
+            singleWordCountModel = _modelFactory.GetSingleCountModel(new int[] { 3, 5, 4, 7, 6 });
         }
 
         [TestMethod]
         public void ValidConstructionUsingIntArray()
         {
             int[] input = new int[4];
-            SingleWordCountModel model = new SingleWordCountModel(input);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void ConstructorLengthZero()
-        {
-            SingleWordCountModel model = new SingleWordCountModel(0);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void ConstructorLengthLessThanZero()
-        {
-            SingleWordCountModel model = new SingleWordCountModel(-1);
+            ISingleWordCountModel model = new SingleWordCountModel(input);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void ConstructorUsingNullArray()
         {
-            SingleWordCountModel model = new SingleWordCountModel(null);
+            ISingleWordCountModel model = new SingleWordCountModel(null);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
         public void ConstructorUsingArrayLengthZero()
         {
-            SingleWordCountModel model = new SingleWordCountModel(new int[0]);
+            ISingleWordCountModel model = new SingleWordCountModel(new int[0]);
         }
 
         [TestMethod]

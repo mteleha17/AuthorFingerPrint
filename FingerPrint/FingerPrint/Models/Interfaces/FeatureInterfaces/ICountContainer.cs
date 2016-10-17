@@ -11,6 +11,6 @@ namespace FingerPrint.Models.Interfaces
     /// </summary>
     public interface ICountContainer<CollectionType>
     {
-        CollectionType Counts();
+        CollectionType GetCounts();
     }
 }
