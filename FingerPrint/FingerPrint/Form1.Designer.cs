@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Title title2 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.filesTab = new System.Windows.Forms.TabPage();
             this.editModifyGroupBox = new System.Windows.Forms.GroupBox();
@@ -60,6 +60,9 @@
             this.groupsRadioButton = new System.Windows.Forms.RadioButton();
             this.filesRadioButton = new System.Windows.Forms.RadioButton();
             this.fileGroupListViewTab3 = new System.Windows.Forms.ListView();
+            this.authorHeaderTab2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.titleHeaderTab2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.includeQuotesHeaderTab2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.groupTabLabel = new System.Windows.Forms.Label();
             this.fingerPrintTab = new System.Windows.Forms.TabPage();
             this.fingerprintAnalysisGroupBox = new System.Windows.Forms.GroupBox();
@@ -77,9 +80,9 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.analysisLineChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.authorHeaderTab2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.titleHeaderTab2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.includeQuotesHeaderTab2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.authorHeaderTab22 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.textHeaderTab22 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.includeQuotesTab22 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabControl1.SuspendLayout();
             this.filesTab.SuspendLayout();
             this.editModifyGroupBox.SuspendLayout();
@@ -291,7 +294,7 @@
             // 
             // newGroupButton
             // 
-            this.newGroupButton.Location = new System.Drawing.Point(728, 63);
+            this.newGroupButton.Location = new System.Drawing.Point(886, 60);
             this.newGroupButton.Name = "newGroupButton";
             this.newGroupButton.Size = new System.Drawing.Size(75, 23);
             this.newGroupButton.TabIndex = 8;
@@ -301,18 +304,23 @@
             // groupComboBox
             // 
             this.groupComboBox.FormattingEnabled = true;
-            this.groupComboBox.Location = new System.Drawing.Point(583, 63);
+            this.groupComboBox.Location = new System.Drawing.Point(741, 59);
             this.groupComboBox.Name = "groupComboBox";
             this.groupComboBox.Size = new System.Drawing.Size(121, 21);
             this.groupComboBox.TabIndex = 7;
             // 
             // groupListView
             // 
-            this.groupListView.Location = new System.Drawing.Point(506, 90);
+            this.groupListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.authorHeaderTab22,
+            this.textHeaderTab22,
+            this.includeQuotesTab22});
+            this.groupListView.Location = new System.Drawing.Point(637, 92);
             this.groupListView.Name = "groupListView";
-            this.groupListView.Size = new System.Drawing.Size(401, 325);
+            this.groupListView.Size = new System.Drawing.Size(435, 325);
             this.groupListView.TabIndex = 6;
             this.groupListView.UseCompatibleStateImageBehavior = false;
+            this.groupListView.View = System.Windows.Forms.View.Details;
             // 
             // deleteButtonTab3
             // 
@@ -325,7 +333,7 @@
             // 
             // removeButtonTab2
             // 
-            this.removeButtonTab2.Location = new System.Drawing.Point(425, 317);
+            this.removeButtonTab2.Location = new System.Drawing.Point(526, 328);
             this.removeButtonTab2.Name = "removeButtonTab2";
             this.removeButtonTab2.Size = new System.Drawing.Size(75, 23);
             this.removeButtonTab2.TabIndex = 4;
@@ -334,7 +342,7 @@
             // 
             // addButtonTab2
             // 
-            this.addButtonTab2.Location = new System.Drawing.Point(425, 211);
+            this.addButtonTab2.Location = new System.Drawing.Point(526, 213);
             this.addButtonTab2.Name = "addButtonTab2";
             this.addButtonTab2.Size = new System.Drawing.Size(75, 23);
             this.addButtonTab2.TabIndex = 3;
@@ -345,7 +353,7 @@
             // 
             this.radiouttonPanel.Controls.Add(this.groupsRadioButton);
             this.radiouttonPanel.Controls.Add(this.filesRadioButton);
-            this.radiouttonPanel.Location = new System.Drawing.Point(114, 42);
+            this.radiouttonPanel.Location = new System.Drawing.Point(155, 42);
             this.radiouttonPanel.Name = "radiouttonPanel";
             this.radiouttonPanel.Size = new System.Drawing.Size(200, 42);
             this.radiouttonPanel.TabIndex = 2;
@@ -380,15 +388,30 @@
             this.includeQuotesHeaderTab2});
             this.fileGroupListViewTab3.Location = new System.Drawing.Point(23, 90);
             this.fileGroupListViewTab3.Name = "fileGroupListViewTab3";
-            this.fileGroupListViewTab3.Size = new System.Drawing.Size(396, 325);
+            this.fileGroupListViewTab3.Size = new System.Drawing.Size(453, 325);
             this.fileGroupListViewTab3.TabIndex = 1;
             this.fileGroupListViewTab3.UseCompatibleStateImageBehavior = false;
             this.fileGroupListViewTab3.View = System.Windows.Forms.View.Details;
             // 
+            // authorHeaderTab2
+            // 
+            this.authorHeaderTab2.Text = "Author";
+            this.authorHeaderTab2.Width = 150;
+            // 
+            // titleHeaderTab2
+            // 
+            this.titleHeaderTab2.Text = "Text Title";
+            this.titleHeaderTab2.Width = 200;
+            // 
+            // includeQuotesHeaderTab2
+            // 
+            this.includeQuotesHeaderTab2.Text = "Include Quotes";
+            this.includeQuotesHeaderTab2.Width = 100;
+            // 
             // groupTabLabel
             // 
             this.groupTabLabel.AutoSize = true;
-            this.groupTabLabel.Location = new System.Drawing.Point(413, 16);
+            this.groupTabLabel.Location = new System.Drawing.Point(503, 16);
             this.groupTabLabel.Name = "groupTabLabel";
             this.groupTabLabel.Size = new System.Drawing.Size(98, 13);
             this.groupTabLabel.TabIndex = 0;
@@ -555,37 +578,38 @@
             // 
             // analysisLineChart
             // 
-            chartArea2.Name = "ChartArea1";
-            this.analysisLineChart.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.analysisLineChart.Legends.Add(legend2);
+            chartArea1.Name = "ChartArea1";
+            this.analysisLineChart.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.analysisLineChart.Legends.Add(legend1);
             this.analysisLineChart.Location = new System.Drawing.Point(6, 19);
             this.analysisLineChart.Name = "analysisLineChart";
             this.analysisLineChart.Size = new System.Drawing.Size(715, 551);
             this.analysisLineChart.TabIndex = 0;
-            title2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            title2.Name = "authorAnalysis";
-            title2.Text = "Author Analysis";
-            this.analysisLineChart.Titles.Add(title2);
+            title1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            title1.Name = "authorAnalysis";
+            title1.Text = "Author Analysis";
+            this.analysisLineChart.Titles.Add(title1);
             // 
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             this.openFileDialog1.Filter = "Text Files (.txt)|*.txt";
             // 
-            // authorHeaderTab2
+            // authorHeaderTab22
             // 
-            this.authorHeaderTab2.Text = "Author";
-            this.authorHeaderTab2.Width = 150;
+            this.authorHeaderTab22.Text = "Author";
+            this.authorHeaderTab22.Width = 150;
             // 
-            // titleHeaderTab2
+            // textHeaderTab22
             // 
-            this.titleHeaderTab2.Text = "Text Title";
-            this.titleHeaderTab2.Width = 200;
+            this.textHeaderTab22.Text = "Text Title";
+            this.textHeaderTab22.Width = 200;
             // 
-            // includeQuotesHeaderTab2
+            // includeQuotesTab22
             // 
-            this.includeQuotesHeaderTab2.Text = "Include Quotes";
+            this.includeQuotesTab22.Text = "Include Quotes";
+            this.includeQuotesTab22.Width = 100;
             // 
             // Form1
             // 
@@ -670,6 +694,9 @@
         private System.Windows.Forms.ColumnHeader authorHeaderTab2;
         private System.Windows.Forms.ColumnHeader titleHeaderTab2;
         private System.Windows.Forms.ColumnHeader includeQuotesHeaderTab2;
+        private System.Windows.Forms.ColumnHeader authorHeaderTab22;
+        private System.Windows.Forms.ColumnHeader textHeaderTab22;
+        private System.Windows.Forms.ColumnHeader includeQuotesTab22;
     }
 }
 
