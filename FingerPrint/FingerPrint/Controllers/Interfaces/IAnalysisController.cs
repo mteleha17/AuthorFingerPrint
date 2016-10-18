@@ -31,5 +31,12 @@ namespace FingerPrint.Controllers
         /// </summary>
         /// <param name="group">The group to be removed from the list of active groups.</param>
         void RemoveFromActiveGroups(IGroupViewModel<SingleCountType> group);
+
+        /// <summary>
+        /// Determines whether the group in question is already active.
+        /// </summary>
+        /// <param name="group">The group that is to be looked for in the active group collection.</param>
+        /// <returns>True if the group is already active, false otherwise.</returns>
+        bool GroupIsActive(IGroupViewModel<SingleCountType> group);
     }
 }

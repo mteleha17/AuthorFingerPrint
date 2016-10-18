@@ -47,6 +47,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\Implementations\AnalysisController.cs" />
+    <Compile Include="Controllers\Implementations\GroupController.cs" />
+    <Compile Include="Controllers\Implementations\TextController.cs" />
     <Compile Include="Controllers\Interfaces\IAnalysisController.cs" />
     <Compile Include="Controllers\Interfaces\IGroupController.cs" />
     <Compile Include="Controllers\Interfaces\ITextController.cs" />
