@@ -122,9 +122,9 @@ namespace FingerPrintUnitTests.ModelTests
         public void ValidDeletion()
         {
             groupOne.Add(textOne);
-            groupOne.Delete(textOne);
+            groupOne.Remove(textOne);
             groupOne.Add(groupTwo);
-            groupOne.Delete(groupTwo);
+            groupOne.Remove(groupTwo);
         }
 
         [TestMethod]
@@ -139,7 +139,7 @@ namespace FingerPrintUnitTests.ModelTests
             {
                 Assert.Fail();
             }
-            groupOne.Delete(null);
+            groupOne.Remove(null);
         }
 
         [TestMethod]
@@ -154,7 +154,7 @@ namespace FingerPrintUnitTests.ModelTests
             {
                 Assert.Fail();
             }
-            groupOne.Delete(textTwo);
+            groupOne.Remove(textTwo);
         }
 
         [TestMethod]
@@ -245,7 +245,7 @@ namespace FingerPrintUnitTests.ModelTests
             groupOne.Add(textTwo);
             groupTwo.Add(groupOne);
             ISingleWordCountModel counts = groupTwo.GetCounts();
-            groupOne.Delete(textTwo);
+            groupOne.Remove(textTwo);
             counts = groupTwo.GetCounts();
             Assert.AreEqual(1, counts.GetAt(0));
             Assert.AreEqual(2, counts.GetAt(1));
