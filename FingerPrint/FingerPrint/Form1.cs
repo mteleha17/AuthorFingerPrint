@@ -33,11 +33,18 @@ namespace FingerPrint
             model.SetName("Adventures of SON");
             model.SetIncludeQuotes(true);
             
-            //String includeQuotesl;
-            //if (model.GetIncludeQuotes)
-            //{
+            String includeQuotesl;
+            if (model.GetIncludeQuotes())
+            {
+                includeQuotesl = "Yes";
+            }
 
-            //}
+            else{
+                includeQuotesl = "No";
+            }
+            String[] row = { model.GetAuthor(), model.GetName(), includeQuotesl };
+            ListViewItem item = new ListViewItem(row);
+            fileListViewTab1.Items.Add(item); 
 
 
 

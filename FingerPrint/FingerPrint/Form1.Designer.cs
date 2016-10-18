@@ -28,16 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea5 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend5 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Title title5 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Title title2 = new System.Windows.Forms.DataVisualization.Charting.Title();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.filesTab = new System.Windows.Forms.TabPage();
             this.editModifyGroupBox = new System.Windows.Forms.GroupBox();
             this.deleteButtonTab2 = new System.Windows.Forms.Button();
             this.editButton = new System.Windows.Forms.Button();
             this.editModifyLabel = new System.Windows.Forms.Label();
-            this.fileListViewTab2 = new System.Windows.Forms.ListView();
+            this.fileListViewTab1 = new System.Windows.Forms.ListView();
+            this.authorHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.textTitleHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.includeQuotesHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.addGroupBox = new System.Windows.Forms.GroupBox();
             this.addLabel = new System.Windows.Forms.Label();
             this.selectFileButtonTab2 = new System.Windows.Forms.Button();
@@ -74,6 +77,9 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.analysisLineChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.authorHeaderTab2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.titleHeaderTab2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.includeQuotesHeaderTab2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabControl1.SuspendLayout();
             this.filesTab.SuspendLayout();
             this.editModifyGroupBox.SuspendLayout();
@@ -120,7 +126,7 @@
             this.editModifyGroupBox.Controls.Add(this.deleteButtonTab2);
             this.editModifyGroupBox.Controls.Add(this.editButton);
             this.editModifyGroupBox.Controls.Add(this.editModifyLabel);
-            this.editModifyGroupBox.Controls.Add(this.fileListViewTab2);
+            this.editModifyGroupBox.Controls.Add(this.fileListViewTab1);
             this.editModifyGroupBox.Dock = System.Windows.Forms.DockStyle.Right;
             this.editModifyGroupBox.Location = new System.Drawing.Point(534, 3);
             this.editModifyGroupBox.Name = "editModifyGroupBox";
@@ -157,13 +163,33 @@
             this.editModifyLabel.TabIndex = 1;
             this.editModifyLabel.Text = "Edit/Modify";
             // 
-            // fileListViewTab2
+            // fileListViewTab1
             // 
-            this.fileListViewTab2.Location = new System.Drawing.Point(52, 75);
-            this.fileListViewTab2.Name = "fileListViewTab2";
-            this.fileListViewTab2.Size = new System.Drawing.Size(385, 271);
-            this.fileListViewTab2.TabIndex = 0;
-            this.fileListViewTab2.UseCompatibleStateImageBehavior = false;
+            this.fileListViewTab1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.authorHeader,
+            this.textTitleHeader,
+            this.includeQuotesHeader});
+            this.fileListViewTab1.Location = new System.Drawing.Point(52, 75);
+            this.fileListViewTab1.Name = "fileListViewTab1";
+            this.fileListViewTab1.Size = new System.Drawing.Size(456, 271);
+            this.fileListViewTab1.TabIndex = 0;
+            this.fileListViewTab1.UseCompatibleStateImageBehavior = false;
+            this.fileListViewTab1.View = System.Windows.Forms.View.Details;
+            // 
+            // authorHeader
+            // 
+            this.authorHeader.Text = "Author";
+            this.authorHeader.Width = 150;
+            // 
+            // textTitleHeader
+            // 
+            this.textTitleHeader.Text = "Text Title";
+            this.textTitleHeader.Width = 200;
+            // 
+            // includeQuotesHeader
+            // 
+            this.includeQuotesHeader.Text = "Include Quotes";
+            this.includeQuotesHeader.Width = 100;
             // 
             // addGroupBox
             // 
@@ -282,9 +308,9 @@
             // 
             // groupListView
             // 
-            this.groupListView.Location = new System.Drawing.Point(559, 90);
+            this.groupListView.Location = new System.Drawing.Point(506, 90);
             this.groupListView.Name = "groupListView";
-            this.groupListView.Size = new System.Drawing.Size(296, 325);
+            this.groupListView.Size = new System.Drawing.Size(401, 325);
             this.groupListView.TabIndex = 6;
             this.groupListView.UseCompatibleStateImageBehavior = false;
             // 
@@ -348,11 +374,16 @@
             // 
             // fileGroupListViewTab3
             // 
-            this.fileGroupListViewTab3.Location = new System.Drawing.Point(64, 90);
+            this.fileGroupListViewTab3.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.authorHeaderTab2,
+            this.titleHeaderTab2,
+            this.includeQuotesHeaderTab2});
+            this.fileGroupListViewTab3.Location = new System.Drawing.Point(23, 90);
             this.fileGroupListViewTab3.Name = "fileGroupListViewTab3";
-            this.fileGroupListViewTab3.Size = new System.Drawing.Size(299, 325);
+            this.fileGroupListViewTab3.Size = new System.Drawing.Size(396, 325);
             this.fileGroupListViewTab3.TabIndex = 1;
             this.fileGroupListViewTab3.UseCompatibleStateImageBehavior = false;
+            this.fileGroupListViewTab3.View = System.Windows.Forms.View.Details;
             // 
             // groupTabLabel
             // 
@@ -394,7 +425,7 @@
             // 
             this.radioButtonContainer.Controls.Add(this.groupsRadioButtonTab3);
             this.radioButtonContainer.Controls.Add(this.filesRadioButtonTab3);
-            this.radioButtonContainer.Location = new System.Drawing.Point(114, 42);
+            this.radioButtonContainer.Location = new System.Drawing.Point(137, 42);
             this.radioButtonContainer.Name = "radioButtonContainer";
             this.radioButtonContainer.Size = new System.Drawing.Size(200, 42);
             this.radioButtonContainer.TabIndex = 9;
@@ -423,23 +454,23 @@
             // 
             // analysisListView
             // 
-            this.analysisListView.Location = new System.Drawing.Point(559, 90);
+            this.analysisListView.Location = new System.Drawing.Point(585, 90);
             this.analysisListView.Name = "analysisListView";
-            this.analysisListView.Size = new System.Drawing.Size(271, 325);
+            this.analysisListView.Size = new System.Drawing.Size(399, 325);
             this.analysisListView.TabIndex = 8;
             this.analysisListView.UseCompatibleStateImageBehavior = false;
             // 
             // filesAndGroupsListviewTab3
             // 
-            this.filesAndGroupsListviewTab3.Location = new System.Drawing.Point(64, 90);
+            this.filesAndGroupsListviewTab3.Location = new System.Drawing.Point(44, 90);
             this.filesAndGroupsListviewTab3.Name = "filesAndGroupsListviewTab3";
-            this.filesAndGroupsListviewTab3.Size = new System.Drawing.Size(299, 325);
+            this.filesAndGroupsListviewTab3.Size = new System.Drawing.Size(390, 325);
             this.filesAndGroupsListviewTab3.TabIndex = 7;
             this.filesAndGroupsListviewTab3.UseCompatibleStateImageBehavior = false;
             // 
             // executeAnalysisButton
             // 
-            this.executeAnalysisButton.Location = new System.Drawing.Point(647, 421);
+            this.executeAnalysisButton.Location = new System.Drawing.Point(736, 421);
             this.executeAnalysisButton.Name = "executeAnalysisButton";
             this.executeAnalysisButton.Size = new System.Drawing.Size(96, 23);
             this.executeAnalysisButton.TabIndex = 6;
@@ -450,7 +481,7 @@
             // removeButtonTab3
             // 
             this.removeButtonTab3.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.removeButtonTab3.Location = new System.Drawing.Point(425, 317);
+            this.removeButtonTab3.Location = new System.Drawing.Point(464, 318);
             this.removeButtonTab3.Name = "removeButtonTab3";
             this.removeButtonTab3.Size = new System.Drawing.Size(75, 23);
             this.removeButtonTab3.TabIndex = 3;
@@ -460,7 +491,7 @@
             // addButtonTab3
             // 
             this.addButtonTab3.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.addButtonTab3.Location = new System.Drawing.Point(425, 211);
+            this.addButtonTab3.Location = new System.Drawing.Point(464, 211);
             this.addButtonTab3.Name = "addButtonTab3";
             this.addButtonTab3.Size = new System.Drawing.Size(75, 23);
             this.addButtonTab3.TabIndex = 2;
@@ -472,7 +503,7 @@
             // 
             this.fALabel.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.fALabel.AutoSize = true;
-            this.fALabel.Location = new System.Drawing.Point(390, 41);
+            this.fALabel.Location = new System.Drawing.Point(440, 42);
             this.fALabel.Name = "fALabel";
             this.fALabel.Size = new System.Drawing.Size(112, 13);
             this.fALabel.TabIndex = 0;
@@ -524,23 +555,37 @@
             // 
             // analysisLineChart
             // 
-            chartArea5.Name = "ChartArea1";
-            this.analysisLineChart.ChartAreas.Add(chartArea5);
-            legend5.Name = "Legend1";
-            this.analysisLineChart.Legends.Add(legend5);
+            chartArea2.Name = "ChartArea1";
+            this.analysisLineChart.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.analysisLineChart.Legends.Add(legend2);
             this.analysisLineChart.Location = new System.Drawing.Point(6, 19);
             this.analysisLineChart.Name = "analysisLineChart";
             this.analysisLineChart.Size = new System.Drawing.Size(715, 551);
             this.analysisLineChart.TabIndex = 0;
-            title5.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            title5.Name = "authorAnalysis";
-            title5.Text = "Author Analysis";
-            this.analysisLineChart.Titles.Add(title5);
+            title2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            title2.Name = "authorAnalysis";
+            title2.Text = "Author Analysis";
+            this.analysisLineChart.Titles.Add(title2);
             // 
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             this.openFileDialog1.Filter = "Text Files (.txt)|*.txt";
+            // 
+            // authorHeaderTab2
+            // 
+            this.authorHeaderTab2.Text = "Author";
+            this.authorHeaderTab2.Width = 150;
+            // 
+            // titleHeaderTab2
+            // 
+            this.titleHeaderTab2.Text = "Text Title";
+            this.titleHeaderTab2.Width = 200;
+            // 
+            // includeQuotesHeaderTab2
+            // 
+            this.includeQuotesHeaderTab2.Text = "Include Quotes";
             // 
             // Form1
             // 
@@ -594,7 +639,7 @@
         private System.Windows.Forms.GroupBox editModifyGroupBox;
         private System.Windows.Forms.GroupBox addGroupBox;
         private System.Windows.Forms.Label editModifyLabel;
-        private System.Windows.Forms.ListView fileListViewTab2;
+        private System.Windows.Forms.ListView fileListViewTab1;
         private System.Windows.Forms.Button deleteButtonTab2;
         private System.Windows.Forms.Button editButton;
         private System.Windows.Forms.GroupBox groupsGroupBox;
@@ -619,6 +664,12 @@
         private System.Windows.Forms.ListView analysisListView;
         private System.Windows.Forms.ListView filesAndGroupsListviewTab3;
         private System.Windows.Forms.Button newGroupButton;
+        private System.Windows.Forms.ColumnHeader authorHeader;
+        private System.Windows.Forms.ColumnHeader textTitleHeader;
+        private System.Windows.Forms.ColumnHeader includeQuotesHeader;
+        private System.Windows.Forms.ColumnHeader authorHeaderTab2;
+        private System.Windows.Forms.ColumnHeader titleHeaderTab2;
+        private System.Windows.Forms.ColumnHeader includeQuotesHeaderTab2;
     }
 }
 
