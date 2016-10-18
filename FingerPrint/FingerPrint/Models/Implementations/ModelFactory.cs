@@ -126,6 +126,7 @@ namespace FingerPrint.Models.Implementations
             bool inQuotes = false;
             bool continueWord = false;
             string firstHalfOfWord = "";
+            bool mismatchedQuotationMarks = false;
             string line;
 
             while ((line = text.ReadLine()) != null)
@@ -152,7 +153,7 @@ namespace FingerPrint.Models.Implementations
                         }
                         if (!continueWord)
                         {
-                            if (currentWord[0] == '"')
+                            if (currentWord[0] == '"' || currentWord[0] == '“')
                             {
                                 inQuotes = true;
                             }
@@ -187,13 +188,17 @@ namespace FingerPrint.Models.Implementations
                                     }
                                 }
                             }
-                            if (currentWord[currentWord.Length - 1] == '"')
+                            if (currentWord[currentWord.Length - 1] == '"' || currentWord[currentWord.Length - 1] == '”')
                             {
                                 inQuotes = false;
                             }
                         }
                     }
                 }
+            }
+            if (inQuotes)
+            {
+                mismatchedQuotationMarks = true;
             }
             for (int i = 0; i < countsWithQuotes.Length; i++)
             {
