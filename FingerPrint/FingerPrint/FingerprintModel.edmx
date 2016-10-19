@@ -1,0 +1,381 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="FingerprintModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="File_Group">
+          <Key>
+            <PropertyRef Name="FileID" />
+          </Key>
+          <Property Name="FileID" Type="int" Nullable="false" />
+          <Property Name="GroupID" Type="nchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Files">
+          <Key>
+            <PropertyRef Name="FileID" />
+          </Key>
+          <Property Name="FileID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="100" Nullable="false" />
+          <Property Name="Author" Type="nchar" MaxLength="100" />
+          <Property Name="QuoteInd" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Group_Group">
+          <Key>
+            <PropertyRef Name="GG_ID" />
+          </Key>
+          <Property Name="GG_ID" Type="int" Nullable="false" />
+          <Property Name="ParentID" Type="int" />
+          <Property Name="ChildID" Type="int" />
+        </EntityType>
+        <EntityType Name="Groups">
+          <Key>
+            <PropertyRef Name="GroupID" />
+          </Key>
+          <Property Name="GroupID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="NumbersWithoutQuotes">
+          <Key>
+            <PropertyRef Name="FileID" />
+          </Key>
+          <Property Name="FileID" Type="int" Nullable="false" />
+          <Property Name="one" Type="int" />
+          <Property Name="two" Type="int" />
+          <Property Name="three" Type="int" />
+          <Property Name="four" Type="int" />
+          <Property Name="five" Type="int" />
+          <Property Name="six" Type="int" />
+          <Property Name="seven" Type="int" />
+          <Property Name="eight" Type="int" />
+          <Property Name="nine" Type="int" />
+          <Property Name="ten" Type="int" />
+          <Property Name="eleven" Type="int" />
+          <Property Name="twelve" Type="int" />
+          <Property Name="thirteen" Type="int" />
+          <Property Name="fourteen" Type="int" />
+          <Property Name="fifteen" Type="int" />
+          <Property Name="sixteen" Type="int" />
+          <Property Name="seventeen" Type="int" />
+          <Property Name="eighteen" Type="int" />
+          <Property Name="nineteen" Type="int" />
+          <Property Name="twentyPlus" Type="int" />
+        </EntityType>
+        <EntityType Name="NumbersWithQuotes">
+          <Key>
+            <PropertyRef Name="FileID" />
+          </Key>
+          <Property Name="FileID" Type="int" Nullable="false" />
+          <Property Name="one" Type="int" />
+          <Property Name="two" Type="int" />
+          <Property Name="three" Type="int" />
+          <Property Name="four" Type="int" />
+          <Property Name="five" Type="int" />
+          <Property Name="six" Type="int" />
+          <Property Name="seven" Type="int" />
+          <Property Name="eight" Type="int" />
+          <Property Name="nine" Type="int" />
+          <Property Name="ten" Type="int" />
+          <Property Name="eleven" Type="int" />
+          <Property Name="tweleve" Type="int" />
+          <Property Name="thirteen" Type="int" />
+          <Property Name="fourteen" Type="int" />
+          <Property Name="fifteen" Type="int" />
+          <Property Name="sixteen" Type="int" />
+          <Property Name="seventeen" Type="int" />
+          <Property Name="eighteen" Type="int" />
+          <Property Name="nineteen" Type="int" />
+          <Property Name="twentyPlus" Type="int" />
+        </EntityType>
+        <EntityContainer Name="FingerprintModelStoreContainer">
+          <EntitySet Name="File_Group" EntityType="Self.File_Group" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Files" EntityType="Self.Files" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Group_Group" EntityType="Self.Group_Group" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Groups" EntityType="Self.Groups" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NumbersWithoutQuotes" EntityType="Self.NumbersWithoutQuotes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NumbersWithQuotes" EntityType="Self.NumbersWithQuotes" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="FingerprintModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="File_Group">
+          <Key>
+            <PropertyRef Name="FileID" />
+          </Key>
+          <Property Name="FileID" Type="Int32" Nullable="false" />
+          <Property Name="GroupID" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Files" Relationship="FingerprintModel.File_GroupFile" FromRole="File_Group" ToRole="File" />
+          <NavigationProperty Name="Groups" Relationship="FingerprintModel.File_GroupGroup" FromRole="File_Group" ToRole="Group" />
+        </EntityType>
+        <EntityType Name="File">
+          <Key>
+            <PropertyRef Name="FileID" />
+          </Key>
+          <Property Name="FileID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Author" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="QuoteInd" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="NumbersWithQuote" Relationship="FingerprintModel.FileNumbersWithQuote" FromRole="File" ToRole="NumbersWithQuote" />
+          <NavigationProperty Name="NumbersWithoutQuote" Relationship="FingerprintModel.FileNumbersWithoutQuote" FromRole="File" ToRole="NumbersWithoutQuote" />
+          <NavigationProperty Name="File_Group" Relationship="FingerprintModel.File_GroupFile" FromRole="File" ToRole="File_Group" />
+          <Property Name="File_GroupFileID" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Group_Group">
+          <Key>
+            <PropertyRef Name="GG_ID" />
+          </Key>
+          <Property Name="GG_ID" Type="Int32" Nullable="false" />
+          <Property Name="ParentID" Type="Int32" />
+          <Property Name="ChildID" Type="Int32" />
+          <NavigationProperty Name="Group" Relationship="FingerprintModel.GroupGroup_Group" FromRole="Group_Group" ToRole="Group" />
+          <Property Name="GroupGroupID" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Group">
+          <Key>
+            <PropertyRef Name="GroupID" />
+          </Key>
+          <Property Name="GroupID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="File_Group" Relationship="FingerprintModel.File_GroupGroup" FromRole="Group" ToRole="File_Group" />
+          <NavigationProperty Name="Group_Group" Relationship="FingerprintModel.GroupGroup_Group" FromRole="Group" ToRole="Group_Group" />
+        </EntityType>
+        <EntityType Name="NumbersWithoutQuote">
+          <Key>
+            <PropertyRef Name="FileID" />
+          </Key>
+          <Property Name="FileID" Type="Int32" Nullable="false" />
+          <Property Name="one" Type="Int32" />
+          <Property Name="two" Type="Int32" />
+          <Property Name="three" Type="Int32" />
+          <Property Name="four" Type="Int32" />
+          <Property Name="five" Type="Int32" />
+          <Property Name="six" Type="Int32" />
+          <Property Name="seven" Type="Int32" />
+          <Property Name="eight" Type="Int32" />
+          <Property Name="nine" Type="Int32" />
+          <Property Name="ten" Type="Int32" />
+          <Property Name="eleven" Type="Int32" />
+          <Property Name="twelve" Type="Int32" />
+          <Property Name="thirteen" Type="Int32" />
+          <Property Name="fourteen" Type="Int32" />
+          <Property Name="fifteen" Type="Int32" />
+          <Property Name="sixteen" Type="Int32" />
+          <Property Name="seventeen" Type="Int32" />
+          <Property Name="eighteen" Type="Int32" />
+          <Property Name="nineteen" Type="Int32" />
+          <Property Name="twentyPlus" Type="Int32" />
+          <NavigationProperty Name="File" Relationship="FingerprintModel.FileNumbersWithoutQuote" FromRole="NumbersWithoutQuote" ToRole="File" />
+        </EntityType>
+        <EntityType Name="NumbersWithQuote">
+          <Key>
+            <PropertyRef Name="FileID" />
+          </Key>
+          <Property Name="FileID" Type="Int32" Nullable="false" />
+          <Property Name="one" Type="Int32" />
+          <Property Name="two" Type="Int32" />
+          <Property Name="three" Type="Int32" />
+          <Property Name="four" Type="Int32" />
+          <Property Name="five" Type="Int32" />
+          <Property Name="six" Type="Int32" />
+          <Property Name="seven" Type="Int32" />
+          <Property Name="eight" Type="Int32" />
+          <Property Name="nine" Type="Int32" />
+          <Property Name="ten" Type="Int32" />
+          <Property Name="eleven" Type="Int32" />
+          <Property Name="tweleve" Type="Int32" />
+          <Property Name="thirteen" Type="Int32" />
+          <Property Name="fourteen" Type="Int32" />
+          <Property Name="fifteen" Type="Int32" />
+          <Property Name="sixteen" Type="Int32" />
+          <Property Name="seventeen" Type="Int32" />
+          <Property Name="eighteen" Type="Int32" />
+          <Property Name="nineteen" Type="Int32" />
+          <Property Name="twentyPlus" Type="Int32" />
+          <NavigationProperty Name="File" Relationship="FingerprintModel.FileNumbersWithQuote" FromRole="NumbersWithQuote" ToRole="File" />
+        </EntityType>
+        <EntityContainer Name="FingerprintEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="File_Group" EntityType="Self.File_Group" />
+          <EntitySet Name="Files" EntityType="Self.File" />
+          <EntitySet Name="Group_Group" EntityType="Self.Group_Group" />
+          <EntitySet Name="Groups" EntityType="Self.Group" />
+          <EntitySet Name="NumbersWithoutQuotes" EntityType="Self.NumbersWithoutQuote" />
+          <EntitySet Name="NumbersWithQuotes" EntityType="Self.NumbersWithQuote" />
+          <AssociationSet Name="FileNumbersWithQuote" Association="FingerprintModel.FileNumbersWithQuote">
+            <End Role="File" EntitySet="Files" />
+            <End Role="NumbersWithQuote" EntitySet="NumbersWithQuotes" />
+          </AssociationSet>
+          <AssociationSet Name="FileNumbersWithoutQuote" Association="FingerprintModel.FileNumbersWithoutQuote">
+            <End Role="File" EntitySet="Files" />
+            <End Role="NumbersWithoutQuote" EntitySet="NumbersWithoutQuotes" />
+          </AssociationSet>
+          <AssociationSet Name="File_GroupFile" Association="FingerprintModel.File_GroupFile">
+            <End Role="File_Group" EntitySet="File_Group" />
+            <End Role="File" EntitySet="Files" />
+          </AssociationSet>
+          <AssociationSet Name="File_GroupGroup" Association="FingerprintModel.File_GroupGroup">
+            <End Role="File_Group" EntitySet="File_Group" />
+            <End Role="Group" EntitySet="Groups" />
+          </AssociationSet>
+          <AssociationSet Name="GroupGroup_Group" Association="FingerprintModel.GroupGroup_Group">
+            <End Role="Group" EntitySet="Groups" />
+            <End Role="Group_Group" EntitySet="Group_Group" />
+          </AssociationSet>
+        </EntityContainer>
+        <Association Name="FileNumbersWithQuote">
+          <End Type="FingerprintModel.File" Role="File" Multiplicity="1" />
+          <End Type="FingerprintModel.NumbersWithQuote" Role="NumbersWithQuote" Multiplicity="1" />
+        </Association>
+        <Association Name="FileNumbersWithoutQuote">
+          <End Type="FingerprintModel.File" Role="File" Multiplicity="1" />
+          <End Type="FingerprintModel.NumbersWithoutQuote" Role="NumbersWithoutQuote" Multiplicity="1" />
+        </Association>
+        <Association Name="File_GroupFile">
+          <End Type="FingerprintModel.File_Group" Role="File_Group" Multiplicity="1" />
+          <End Type="FingerprintModel.File" Role="File" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="File_Group">
+              <PropertyRef Name="FileID" />
+            </Principal>
+            <Dependent Role="File">
+              <PropertyRef Name="File_GroupFileID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="File_GroupGroup">
+          <End Type="FingerprintModel.File_Group" Role="File_Group" Multiplicity="1" />
+          <End Type="FingerprintModel.Group" Role="Group" Multiplicity="*" />
+        </Association>
+        <Association Name="GroupGroup_Group">
+          <End Type="FingerprintModel.Group" Role="Group" Multiplicity="1" />
+          <End Type="FingerprintModel.Group_Group" Role="Group_Group" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Group">
+              <PropertyRef Name="GroupID" />
+            </Principal>
+            <Dependent Role="Group_Group">
+              <PropertyRef Name="GroupGroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="FingerprintModelStoreContainer" CdmEntityContainer="FingerprintEntities">
+          <EntitySetMapping Name="File_Group">
+            <EntityTypeMapping TypeName="FingerprintModel.File_Group">
+              <MappingFragment StoreEntitySet="File_Group">
+                <ScalarProperty Name="FileID" ColumnName="FileID" />
+                <ScalarProperty Name="GroupID" ColumnName="GroupID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Files">
+            <EntityTypeMapping TypeName="FingerprintModel.File">
+              <MappingFragment StoreEntitySet="Files">
+                <ScalarProperty Name="FileID" ColumnName="FileID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Author" ColumnName="Author" />
+                <ScalarProperty Name="QuoteInd" ColumnName="QuoteInd" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Group_Group">
+            <EntityTypeMapping TypeName="FingerprintModel.Group_Group">
+              <MappingFragment StoreEntitySet="Group_Group">
+                <ScalarProperty Name="GG_ID" ColumnName="GG_ID" />
+                <ScalarProperty Name="ParentID" ColumnName="ParentID" />
+                <ScalarProperty Name="ChildID" ColumnName="ChildID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Groups">
+            <EntityTypeMapping TypeName="FingerprintModel.Group">
+              <MappingFragment StoreEntitySet="Groups">
+                <ScalarProperty Name="GroupID" ColumnName="GroupID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NumbersWithoutQuotes">
+            <EntityTypeMapping TypeName="FingerprintModel.NumbersWithoutQuote">
+              <MappingFragment StoreEntitySet="NumbersWithoutQuotes">
+                <ScalarProperty Name="FileID" ColumnName="FileID" />
+                <ScalarProperty Name="one" ColumnName="one" />
+                <ScalarProperty Name="two" ColumnName="two" />
+                <ScalarProperty Name="three" ColumnName="three" />
+                <ScalarProperty Name="four" ColumnName="four" />
+                <ScalarProperty Name="five" ColumnName="five" />
+                <ScalarProperty Name="six" ColumnName="six" />
+                <ScalarProperty Name="seven" ColumnName="seven" />
+                <ScalarProperty Name="eight" ColumnName="eight" />
+                <ScalarProperty Name="nine" ColumnName="nine" />
+                <ScalarProperty Name="ten" ColumnName="ten" />
+                <ScalarProperty Name="eleven" ColumnName="eleven" />
+                <ScalarProperty Name="twelve" ColumnName="twelve" />
+                <ScalarProperty Name="thirteen" ColumnName="thirteen" />
+                <ScalarProperty Name="fourteen" ColumnName="fourteen" />
+                <ScalarProperty Name="fifteen" ColumnName="fifteen" />
+                <ScalarProperty Name="sixteen" ColumnName="sixteen" />
+                <ScalarProperty Name="seventeen" ColumnName="seventeen" />
+                <ScalarProperty Name="eighteen" ColumnName="eighteen" />
+                <ScalarProperty Name="nineteen" ColumnName="nineteen" />
+                <ScalarProperty Name="twentyPlus" ColumnName="twentyPlus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NumbersWithQuotes">
+            <EntityTypeMapping TypeName="FingerprintModel.NumbersWithQuote">
+              <MappingFragment StoreEntitySet="NumbersWithQuotes">
+                <ScalarProperty Name="FileID" ColumnName="FileID" />
+                <ScalarProperty Name="one" ColumnName="one" />
+                <ScalarProperty Name="two" ColumnName="two" />
+                <ScalarProperty Name="three" ColumnName="three" />
+                <ScalarProperty Name="four" ColumnName="four" />
+                <ScalarProperty Name="five" ColumnName="five" />
+                <ScalarProperty Name="six" ColumnName="six" />
+                <ScalarProperty Name="seven" ColumnName="seven" />
+                <ScalarProperty Name="eight" ColumnName="eight" />
+                <ScalarProperty Name="nine" ColumnName="nine" />
+                <ScalarProperty Name="ten" ColumnName="ten" />
+                <ScalarProperty Name="eleven" ColumnName="eleven" />
+                <ScalarProperty Name="tweleve" ColumnName="tweleve" />
+                <ScalarProperty Name="thirteen" ColumnName="thirteen" />
+                <ScalarProperty Name="fourteen" ColumnName="fourteen" />
+                <ScalarProperty Name="fifteen" ColumnName="fifteen" />
+                <ScalarProperty Name="sixteen" ColumnName="sixteen" />
+                <ScalarProperty Name="seventeen" ColumnName="seventeen" />
+                <ScalarProperty Name="eighteen" ColumnName="eighteen" />
+                <ScalarProperty Name="nineteen" ColumnName="nineteen" />
+                <ScalarProperty Name="twentyPlus" ColumnName="twentyPlus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="cd6ec513952d4b1c907d76951677033a" Name="Diagram1">
+        <EntityTypeShape EntityType="FingerprintModel.File_Group" Width="1.5" PointX="1.5" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="FingerprintModel.File" Width="1.5" PointX="3.875" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="FingerprintModel.Group_Group" Width="1.5" PointX="3.875" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="FingerprintModel.Group" Width="1.5" PointX="1.5" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="FingerprintModel.NumbersWithoutQuote" Width="1.5" PointX="6.125" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="FingerprintModel.NumbersWithQuote" Width="1.5" PointX="8" PointY="1" IsExpanded="true" />
+        <AssociationConnector Association="FingerprintModel.FileNumbersWithQuote" />
+        <AssociationConnector Association="FingerprintModel.FileNumbersWithoutQuote" />
+        <AssociationConnector Association="FingerprintModel.File_GroupFile" />
+        <AssociationConnector Association="FingerprintModel.File_GroupGroup" />
+        <AssociationConnector Association="FingerprintModel.GroupGroup_Group" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
