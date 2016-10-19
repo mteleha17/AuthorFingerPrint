@@ -35,6 +35,8 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -55,6 +57,27 @@
     <Compile Include="Controllers\Interfaces\ITextController.cs" />
     <Compile Include="FakeEntities\FakeGroupEntity.cs" />
     <Compile Include="FakeEntities\FakeTextEntity.cs" />
+    <Compile Include="File.cs">
+      <DependentUpon>FingerprintDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="File_Group.cs">
+      <DependentUpon>FingerprintDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FingerprintDataModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FingerprintDataModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FingerprintDataModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FingerprintDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FingerprintDataModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FingerprintDataModel.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -66,6 +89,12 @@
     </Compile>
     <Compile Include="FormPopUpFileEdit.Designer.cs">
       <DependentUpon>FormPopUpFileEdit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Group.cs">
+      <DependentUpon>FingerprintDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Group_Group.cs">
+      <DependentUpon>FingerprintDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Implementations\FlexibleWordCountModel.cs" />
     <Compile Include="Models\Implementations\GroupModel.cs" />
@@ -85,6 +114,12 @@
     <Compile Include="Models\Implementations\TextModel.cs" />
     <Compile Include="Models\Interfaces\ViewModels\ITextOrGroupViewModel.cs" />
     <Compile Include="Models\Interfaces\ViewModels\ITextViewModel.cs" />
+    <Compile Include="NumbersWithoutQuote.cs">
+      <DependentUpon>FingerprintDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NumbersWithQuote.cs">
+      <DependentUpon>FingerprintDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Stores\IItemStore.cs" />
@@ -103,6 +138,13 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EntityDeploy Include="FingerprintDataModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>FingerprintDataModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="FingerprintDataModel.edmx.diagram">
+      <DependentUpon>FingerprintDataModel.edmx</DependentUpon>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -116,7 +158,21 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="FingerprintDataModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>FingerprintDataModel.edmx</DependentUpon>
+      <LastGenOutput>FingerprintDataModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="FingerprintDataModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>FingerprintDataModel.edmx</DependentUpon>
+      <LastGenOutput>FingerprintDataModel.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

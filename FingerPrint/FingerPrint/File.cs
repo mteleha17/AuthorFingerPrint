@@ -14,14 +14,23 @@ namespace FingerPrint
     
     public partial class File
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public File()
+        {
+            this.NumbersWithoutQuotes = new HashSet<NumbersWithoutQuote>();
+            this.NumbersWithQuotes = new HashSet<NumbersWithQuote>();
+        }
+    
         public int FileID { get; set; }
         public string Name { get; set; }
         public string Author { get; set; }
         public int QuoteInd { get; set; }
         public int File_GroupFileID { get; set; }
     
-        public virtual NumbersWithQuote NumbersWithQuote { get; set; }
-        public virtual NumbersWithoutQuote NumbersWithoutQuote { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<NumbersWithoutQuote> NumbersWithoutQuotes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<NumbersWithQuote> NumbersWithQuotes { get; set; }
         public virtual File_Group File_Group { get; set; }
     }
 }
