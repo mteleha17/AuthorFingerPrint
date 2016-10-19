@@ -1,4 +1,6 @@
-﻿using FingerPrint.Models;
+﻿using FingerPrint.Controllers;
+using FingerPrint.FakeEntities;
+using FingerPrint.Models;
 using FingerPrint.Models.Implementations;
 using FingerPrint.Models.Interfaces.TypeInterfaces;
 using System;
@@ -16,10 +18,18 @@ namespace FingerPrint
 {
     public partial class Form1 : Form
     {
-        IModelFactory<ISingleWordCountModel, IFlexibleWordCountModel<ISingleWordCountModel>> _modelFactory;
+        private IModelFactory<ISingleWordCountModel, IFlexibleWordCountModel<ISingleWordCountModel>> _modelFactory;
+        private ITextController<ISingleWordCountModel, FakeTextEntity> _textController;
+        private IGroupController<ISingleWordCountModel, FakeGroupEntity> _groupController;
+        private IAnalysisController<ISingleWordCountModel> _analysisController;
 
-        public Form1()
+        public Form1(IAnalysisController<ISingleWordCountModel> analysisController,
+            ITextController<ISingleWordCountModel, FakeTextEntity> textController,
+            IGroupController<ISingleWordCountModel, FakeGroupEntity> groupController)
         {
+            _analysisController = analysisController;
+            _textController = textController;
+            _groupController = groupController;
             InitializeComponent();
         }
 

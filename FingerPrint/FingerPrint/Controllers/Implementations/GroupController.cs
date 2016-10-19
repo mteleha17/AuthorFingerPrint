@@ -5,10 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FingerPrint.Models.Interfaces.TypeInterfaces;
+using FingerPrint.FakeEntities;
 
 namespace FingerPrint.Controllers.Implementations
 {
-    public class GroupController<GroupEntityType> : IGroupController<ISingleWordCountModel, GroupEntityType>
+    public class GroupController : IGroupController<ISingleWordCountModel, FakeGroupEntity>
     {
         public void AddToGroup(IGroupViewModel<ISingleWordCountModel> group, ITextOrGroupViewModel<ISingleWordCountModel> item)
         {
@@ -20,17 +21,17 @@ namespace FingerPrint.Controllers.Implementations
             throw new NotImplementedException();
         }
 
-        public void DeleteGroup(Func<GroupEntityType, bool> criteria)
+        public void DeleteGroup(Func<FakeGroupEntity, bool> criteria)
         {
             throw new NotImplementedException();
         }
 
-        public List<IGroupViewModel<ISingleWordCountModel>> GetGroupModels(Func<GroupEntityType, bool> criteria)
+        public List<IGroupViewModel<ISingleWordCountModel>> GetGroupModels(Func<FakeGroupEntity, bool> criteria)
         {
             throw new NotImplementedException();
         }
 
-        public bool GroupExists(Func<GroupEntityType, bool> criteria)
+        public bool GroupExists(Func<FakeGroupEntity, bool> criteria)
         {
             throw new NotImplementedException();
         }

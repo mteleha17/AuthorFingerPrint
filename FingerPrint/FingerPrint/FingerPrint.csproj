@@ -53,6 +53,8 @@
     <Compile Include="Controllers\Interfaces\IAnalysisController.cs" />
     <Compile Include="Controllers\Interfaces\IGroupController.cs" />
     <Compile Include="Controllers\Interfaces\ITextController.cs" />
+    <Compile Include="FakeEntities\FakeGroupEntity.cs" />
+    <Compile Include="FakeEntities\FakeTextEntity.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>

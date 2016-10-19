@@ -6,27 +6,28 @@ using System.Text;
 using System.Threading.Tasks;
 using FingerPrint.Models.Interfaces.TypeInterfaces;
 using System.IO;
+using FingerPrint.FakeEntities;
 
 namespace FingerPrint.Controllers.Implementations
 {
-    public class TextController<TextEntityType> : ITextController<ISingleWordCountModel, TextEntityType>
+    public class TextController : ITextController<ISingleWordCountModel, FakeTextEntity>
     {
         public void CreateText(string name, TextReader input, int length, string author = null)
         {
             throw new NotImplementedException();
         }
 
-        public void DeleteText(Func<TextEntityType, bool> criteria)
+        public void DeleteText(Func<FakeTextEntity, bool> criteria)
         {
             throw new NotImplementedException();
         }
 
-        public List<ITextViewModel<ISingleWordCountModel>> GetTextModels(Func<TextEntityType, bool> criteria)
+        public List<ITextViewModel<ISingleWordCountModel>> GetTextModels(Func<FakeTextEntity, bool> criteria)
         {
             throw new NotImplementedException();
         }
 
-        public bool TextExists(Func<TextEntityType, bool> criteria)
+        public bool TextExists(Func<FakeTextEntity, bool> criteria)
         {
             throw new NotImplementedException();
         }
