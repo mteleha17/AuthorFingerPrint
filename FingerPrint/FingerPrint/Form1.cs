@@ -1,4 +1,6 @@
-﻿using FingerPrint.Models;
+﻿using FingerPrint.Controllers;
+using FingerPrint.FakeEntities;
+using FingerPrint.Models;
 using FingerPrint.Models.Implementations;
 using FingerPrint.Models.Interfaces.TypeInterfaces;
 using System;
@@ -16,19 +18,48 @@ namespace FingerPrint
 {
     public partial class Form1 : Form
     {
-        IModelFactory<ISingleWordCountModel, IFlexibleWordCountModel<ISingleWordCountModel>> _modelFactory;
+        private IModelFactory<ISingleWordCountModel, IFlexibleWordCountModel<ISingleWordCountModel>> _modelFactory;
+        private ITextController<ISingleWordCountModel, FakeTextEntity> _textController;
+        private IGroupController<ISingleWordCountModel, FakeGroupEntity> _groupController;
+        private IAnalysisController<ISingleWordCountModel> _analysisController;
 
-        public Form1()
+        public Form1(IAnalysisController<ISingleWordCountModel> analysisController,
+            ITextController<ISingleWordCountModel, FakeTextEntity> textController,
+            IGroupController<ISingleWordCountModel, FakeGroupEntity> groupController)
         {
+            _analysisController = analysisController;
+            _textController = textController;
+            _groupController = groupController;
             InitializeComponent();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
             _modelFactory = new ModelFactory();
-            ISingleWordCountModel model2 = _modelFactory.GetSingleCountModel(10);
+            
+            IFlexibleWordCountModel<ISingleWordCountModel> wordCount = _modelFactory.GetFlexibleCountModel(10);
+            TextModel model = new TextModel("test", wordCount);
+            model.SetAuthor("Twain");
+            model.SetName("Adventures of SON");
+            model.SetIncludeQuotes(true);
+            
+            String includeQuotesl;
+            if (model.GetIncludeQuotes())
+            {
+                includeQuotesl = "Yes";
+            }
+
+            else{
+                includeQuotesl = "No";
+            }
+            String[] row = { model.GetAuthor(), model.GetName(), includeQuotesl };
+            ListViewItem item = new ListViewItem(row);
+            fileListViewTab1.Items.Add(item); 
+
+
+
             //ISingleWordCountModel model2 = new SingleWordCountModel(10);
-            int[] arrayPoints = new int[10];
+            ISingleWordCountModel model2 = _modelFactory.GetSingleCountModel(10);
             //TEST POINTS/*
             model2.SetAt(0, 150);
             model2.SetAt(1, 250);
@@ -63,39 +94,18 @@ namespace FingerPrint
             model.SetAt(9, 30);
             
             //*/
-            AnalysisLineChart.Series.Add(groupOrTitle);
-            AnalysisLineChart.Series[groupOrTitle].ChartType = SeriesChartType.Line;
+            analysisLineChart.Series.Add(groupOrTitle);
+            analysisLineChart.Series[groupOrTitle].ChartType = SeriesChartType.Line;
             for(int i = 1; i <= 10; i++)
             {
-                AnalysisLineChart.Series[groupOrTitle].Points.AddXY(i, model.GetAt(i-1));
+                analysisLineChart.Series[groupOrTitle].Points.AddXY(i, model.GetAt(i-1));
             }
-            AnalysisLineChart.Series[groupOrTitle].ChartArea = "ChartArea1";
+            analysisLineChart.Series[groupOrTitle].ChartArea = "ChartArea1";
 
 
         }
 
-        private void uploadFileButton_Click(object sender, EventArgs e)
-        {
-          
-
-            if (openFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                var onlyFileName = System.IO.Path.GetFileName(openFileDialog1.FileName);
-                var listViewItem = new ListViewItem(onlyFileName);
-                fileListViewTab1.Items.Add(listViewItem);
-
-            }  
-        }
-
-        private void addButtonTab1_Click(object sender, EventArgs e)
-        {
-            ListViewItem itemToMove = fileListViewTab1.SelectedItems[0];
-            ListViewItem itemToAdd = (ListViewItem)itemToMove.Clone();
-            analysisListViewTab1.Items.Add(itemToAdd);
-            fileListViewTab1.Items.Remove(itemToMove);
-
-
-        }
+       
 
         private void selectFileButton_Click(object sender, EventArgs e)
         {
@@ -110,10 +120,25 @@ namespace FingerPrint
 
         private void addButtonTab3_Click(object sender, EventArgs e)
         {
-            ListViewItem itemToMove = fileGroupListViewTab3.SelectedItems[0];
+            /* 
+            ListViewItem itemToMove = fileListViewTab1.SelectedItems[0];
             ListViewItem itemToAdd = (ListViewItem)itemToMove.Clone();
-            groupListView.Items.Add(itemToAdd);
-            fileGroupListViewTab3.Items.Remove(itemToMove);
+            analysisListViewTab1.Items.Add(itemToAdd);
+            fileListViewTab1.Items.Remove(itemToMove);
+            */
+
+        
+        }
+
+        private void editButton_Click(object sender, EventArgs e)
+        {
+            var form = new FormPopUpFileEdit();
+            form.Show(this);
+        }
+
+        private void saveButtonTab2_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -95,7 +95,7 @@ namespace FingerPrint.Models
             OnModified(this, EventArgs.Empty);
         }
 
-        public void Delete(ITextOrGroupModel<ISingleWordCountModel> item)
+        public void Remove(ITextOrGroupModel<ISingleWordCountModel> item)
         {
             if (item == null)
             {
