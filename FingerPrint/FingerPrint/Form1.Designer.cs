@@ -28,12 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.filesTab = new System.Windows.Forms.TabPage();
             this.editModifyGroupBox = new System.Windows.Forms.GroupBox();
@@ -77,14 +77,15 @@
             this.filesRadioButtonTab3 = new System.Windows.Forms.RadioButton();
             this.analysisListView = new System.Windows.Forms.ListView();
             this.filesAndGroupsListviewTab3 = new System.Windows.Forms.ListView();
+            this.authorHeaderTab3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.textHeaderTab3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.includeQuotesHeaderTab3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.executeAnalysisButton = new System.Windows.Forms.Button();
             this.removeButtonTab3 = new System.Windows.Forms.Button();
             this.addButtonTab3 = new System.Windows.Forms.Button();
             this.fALabel = new System.Windows.Forms.Label();
             this.analysisTab = new System.Windows.Forms.TabPage();
             this.chartGroupBox = new System.Windows.Forms.GroupBox();
-            this.analysisLineChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.dataTable = new System.Windows.Forms.DataGridView();
             this.groupOrTextHead = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.oneHead = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -97,9 +98,11 @@
             this.eightHead = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.nineHead = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tenHead = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.authorHeaderTab3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.textHeaderTab3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.includeQuotesHeaderTab3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.analysisLineChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.authorHeaderTab32 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.textHeaderTab32 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.includeQuotesTab32 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabControl1.SuspendLayout();
             this.filesTab.SuspendLayout();
             this.editModifyGroupBox.SuspendLayout();
@@ -112,8 +115,8 @@
             this.radioButtonContainer.SuspendLayout();
             this.analysisTab.SuspendLayout();
             this.chartGroupBox.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.analysisLineChart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataTable)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.analysisLineChart)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -509,11 +512,16 @@
             // 
             // analysisListView
             // 
+            this.analysisListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.authorHeaderTab32,
+            this.textHeaderTab32,
+            this.includeQuotesTab32});
             this.analysisListView.Location = new System.Drawing.Point(650, 92);
             this.analysisListView.Name = "analysisListView";
             this.analysisListView.Size = new System.Drawing.Size(444, 325);
             this.analysisListView.TabIndex = 8;
             this.analysisListView.UseCompatibleStateImageBehavior = false;
+            this.analysisListView.View = System.Windows.Forms.View.Details;
             // 
             // filesAndGroupsListviewTab3
             // 
@@ -527,6 +535,21 @@
             this.filesAndGroupsListviewTab3.TabIndex = 7;
             this.filesAndGroupsListviewTab3.UseCompatibleStateImageBehavior = false;
             this.filesAndGroupsListviewTab3.View = System.Windows.Forms.View.Details;
+            // 
+            // authorHeaderTab3
+            // 
+            this.authorHeaderTab3.Text = "Author";
+            this.authorHeaderTab3.Width = 150;
+            // 
+            // textHeaderTab3
+            // 
+            this.textHeaderTab3.Text = "Text Title";
+            this.textHeaderTab3.Width = 200;
+            // 
+            // includeQuotesHeaderTab3
+            // 
+            this.includeQuotesHeaderTab3.Text = "Include Quotes";
+            this.includeQuotesHeaderTab3.Width = 90;
             // 
             // executeAnalysisButton
             // 
@@ -588,26 +611,6 @@
             this.chartGroupBox.Size = new System.Drawing.Size(1229, 573);
             this.chartGroupBox.TabIndex = 0;
             this.chartGroupBox.TabStop = false;
-            // 
-            // analysisLineChart
-            // 
-            chartArea1.Name = "ChartArea1";
-            this.analysisLineChart.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.analysisLineChart.Legends.Add(legend1);
-            this.analysisLineChart.Location = new System.Drawing.Point(6, 19);
-            this.analysisLineChart.Name = "analysisLineChart";
-            this.analysisLineChart.Size = new System.Drawing.Size(715, 551);
-            this.analysisLineChart.TabIndex = 0;
-            title1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            title1.Name = "authorAnalysis";
-            title1.Text = "Author Analysis";
-            this.analysisLineChart.Titles.Add(title1);
-            // 
-            // openFileDialog1
-            // 
-            this.openFileDialog1.FileName = "openFileDialog1";
-            this.openFileDialog1.Filter = "Text Files (.txt)|*.txt";
             // 
             // dataTable
             // 
@@ -720,19 +723,40 @@
             this.tenHead.Name = "tenHead";
             this.tenHead.Width = 35;
             // 
-            // authorHeaderTab3
+            // analysisLineChart
             // 
-            this.authorHeaderTab3.Width = 150;
+            chartArea1.Name = "ChartArea1";
+            this.analysisLineChart.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.analysisLineChart.Legends.Add(legend1);
+            this.analysisLineChart.Location = new System.Drawing.Point(6, 19);
+            this.analysisLineChart.Name = "analysisLineChart";
+            this.analysisLineChart.Size = new System.Drawing.Size(715, 551);
+            this.analysisLineChart.TabIndex = 0;
+            title1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            title1.Name = "authorAnalysis";
+            title1.Text = "Author Analysis";
+            this.analysisLineChart.Titles.Add(title1);
             // 
-            // textHeaderTab3
+            // openFileDialog1
             // 
-            this.textHeaderTab3.Text = "Text Title";
-            this.textHeaderTab3.Width = 200;
+            this.openFileDialog1.FileName = "openFileDialog1";
+            this.openFileDialog1.Filter = "Text Files (.txt)|*.txt";
             // 
-            // includeQuotesHeaderTab3
+            // authorHeaderTab32
             // 
-            this.includeQuotesHeaderTab3.Text = "Include Quotes";
-            this.includeQuotesHeaderTab3.Width = 90;
+            this.authorHeaderTab32.Text = "Author";
+            this.authorHeaderTab32.Width = 150;
+            // 
+            // textHeaderTab32
+            // 
+            this.textHeaderTab32.Text = "Text Title";
+            this.textHeaderTab32.Width = 200;
+            // 
+            // includeQuotesTab32
+            // 
+            this.includeQuotesTab32.Text = "Include Quotes";
+            this.includeQuotesTab32.Width = 90;
             // 
             // Form1
             // 
@@ -761,8 +785,8 @@
             this.radioButtonContainer.PerformLayout();
             this.analysisTab.ResumeLayout(false);
             this.chartGroupBox.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.analysisLineChart)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataTable)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.analysisLineChart)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -835,6 +859,9 @@
         private System.Windows.Forms.ColumnHeader authorHeaderTab3;
         private System.Windows.Forms.ColumnHeader textHeaderTab3;
         private System.Windows.Forms.ColumnHeader includeQuotesHeaderTab3;
+        private System.Windows.Forms.ColumnHeader authorHeaderTab32;
+        private System.Windows.Forms.ColumnHeader textHeaderTab32;
+        private System.Windows.Forms.ColumnHeader includeQuotesTab32;
     }
 }
 
