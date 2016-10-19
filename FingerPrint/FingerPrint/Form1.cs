@@ -33,8 +33,14 @@ namespace FingerPrint
             InitializeComponent();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Form1_Load(object sender, EventArgs e)
         {
+           // _textController.GetTextModels(x => );
             _modelFactory = new ModelFactory();
             
             IFlexibleWordCountModel<ISingleWordCountModel> wordCount = _modelFactory.GetFlexibleCountModel(10);
@@ -57,55 +63,61 @@ namespace FingerPrint
             fileListViewTab1.Items.Add(item); 
 
 
-
-            //ISingleWordCountModel model2 = new SingleWordCountModel(10);
-            ISingleWordCountModel model2 = _modelFactory.GetSingleCountModel(10);
-            //TEST POINTS/*
-            model2.SetAt(0, 150);
-            model2.SetAt(1, 250);
-            model2.SetAt(2, 400);
-            model2.SetAt(3, 550);
-            model2.SetAt(4, 650);
-            model2.SetAt(5, 500);
-            model2.SetAt(6, 350);
-            model2.SetAt(7, 150);
-            model2.SetAt(8, 60);
-            model2.SetAt(9, 30);
             
         }
 
         private void executeAnalysisButton_Click(object sender, EventArgs e)
         {
-            tabControl1.SelectTab(analysisTab);
-            string groupOrTitle = "SampleData";
-            //ISingleWordCountModel model = new SingleWordCountModel(10);
-            ISingleWordCountModel model = _modelFactory.GetSingleCountModel(10);
-            int[] arrayPoints = new int[10];
-            //TEST POINTS/*
-            model.SetAt(0, 150);
-            model.SetAt(1, 250);
-            model.SetAt(2, 400);
-            model.SetAt(3, 550);
-            model.SetAt(4, 650);
-            model.SetAt(5, 500);
-            model.SetAt(6, 350);
-            model.SetAt(7, 150);
-            model.SetAt(8, 60);
-            model.SetAt(9, 30);
-            
-            //*/
+            //Fake Data, created fake text, added data
+            _modelFactory = new ModelFactory();
+            ISingleWordCountModel withQuotes = _modelFactory.GetSingleCountModel(10);
+            ISingleWordCountModel withoutQuotes = _modelFactory.GetSingleCountModel(10);
+            withoutQuotes.SetAt(0, 150);
+            withoutQuotes.SetAt(1, 250);
+            withoutQuotes.SetAt(2, 400);
+            withoutQuotes.SetAt(3, 550);
+            withoutQuotes.SetAt(4, 650);
+            withoutQuotes.SetAt(5, 500);
+            withoutQuotes.SetAt(6, 350);
+            withoutQuotes.SetAt(7, 150);
+            withoutQuotes.SetAt(8, 60);
+            withoutQuotes.SetAt(9, 30);
+            IFlexibleWordCountModel<ISingleWordCountModel> wordCount = _modelFactory.GetFlexibleCountModel(withQuotes,withoutQuotes);
+
+            TextModel model = new TextModel("test", wordCount);
+            model.SetAuthor("Twain");
+            model.SetName("Adventures of SON");
+            model.SetIncludeQuotes(false);
+            string groupOrTitle = "SampleData1";
+
+            ISingleWordCountModel wcount = model.GetCounts();
+            //graph
             analysisLineChart.Series.Add(groupOrTitle);
             analysisLineChart.Series[groupOrTitle].ChartType = SeriesChartType.Line;
             for(int i = 1; i <= 10; i++)
             {
-                analysisLineChart.Series[groupOrTitle].Points.AddXY(i, model.GetAt(i-1));
+                analysisLineChart.Series[groupOrTitle].Points.AddXY(i, wcount.GetAt(i-1));
             }
             analysisLineChart.Series[groupOrTitle].ChartArea = "ChartArea1";
 
 
+            //table
+            dataTable.Rows.Add();
+            DataGridViewRow row = (DataGridViewRow)dataTable.Rows[0].Clone();
+            DataGridViewRow rowToAdd = row;
+            dataTable.Rows.RemoveAt(0);
+            
+            row.Cells[0].Value = groupOrTitle;
+            for(int i =0; i<model.GetLength(); i++)
+            {
+                rowToAdd.Cells[i + 1].Value = wcount.GetAt(i);
+            }
+            dataTable.Rows.Add(rowToAdd);
+
+            tabControl1.SelectTab(analysisTab);
         }
 
-       
+
 
         private void selectFileButton_Click(object sender, EventArgs e)
         {
@@ -136,9 +148,5 @@ namespace FingerPrint
             form.Show(this);
         }
 
-        private void saveButtonTab2_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }
