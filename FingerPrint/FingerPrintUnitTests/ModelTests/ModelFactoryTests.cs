@@ -175,5 +175,6 @@ namespace FingerPrintUnitTests.ModelTests
             Assert.AreEqual(countsUnscrambled.GetAt(8), countsScrambled.GetAt(8));
             Assert.AreEqual(countsUnscrambled.GetAt(9), countsScrambled.GetAt(9));
         }
+
     }
 }
