@@ -23,6 +23,7 @@ namespace FingerPrint
     
         public int FileID { get; set; }
         public string GroupID { get; set; }
+        public int GroupGroupID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<File> Files { get; set; }

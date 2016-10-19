@@ -18,13 +18,17 @@ namespace FingerPrint
         public Group()
         {
             this.Group_Group = new HashSet<Group_Group>();
+            this.Group_Group1 = new HashSet<Group_Group>();
         }
     
         public int GroupID { get; set; }
         public string Name { get; set; }
+        public int File_GroupFileID { get; set; }
     
         public virtual File_Group File_Group { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Group_Group> Group_Group { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Group_Group> Group_Group1 { get; set; }
     }
 }

@@ -35,6 +35,7 @@ namespace FingerPrint
         public Nullable<int> eighteen { get; set; }
         public Nullable<int> nineteen { get; set; }
         public Nullable<int> twentyPlus { get; set; }
+        public int FileFileID { get; set; }
     
         public virtual File File { get; set; }
     }
