@@ -82,6 +82,14 @@ namespace FingerPrint.Models
             }
         }
 
-        
+        public ISingleWordCountModel GetCountsWithQuotes()
+        {
+            throw new NotImplementedException();
+        }
+
+        public ISingleWordCountModel GetCountsWithoutQuotes()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

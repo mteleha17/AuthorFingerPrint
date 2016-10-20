@@ -14,5 +14,7 @@ namespace FingerPrint.Models.Interfaces.TypeInterfaces
     {
         void SetAuthor(string author);
         void SetIncludeQuotes(bool value);
+        SingleCountType GetCountsWithQuotes();
+        SingleCountType GetCountsWithoutQuotes();
     }
 }

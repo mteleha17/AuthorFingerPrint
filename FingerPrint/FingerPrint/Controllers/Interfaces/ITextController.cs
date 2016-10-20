@@ -13,22 +13,21 @@ namespace FingerPrint.Controllers
     /// the creation, deletion, updating, and fetching of texts.
     /// </summary>
     /// <typeparam name="SingleCountType">The type of object being used to store a single collection of counts.</typeparam>
-    /// <typeparam name="TextEntityType">Temporary placeholder to be deleted when database and EF are set up.</typeparam>
-    public interface ITextController<SingleCountType, TextEntityType>
+    public interface ITextController<SingleCountType>
     {
         /// <summary>
-        /// Gets a list of texts matching some criteria.
+        /// Gets the text with the specified name.
         /// </summary>
-        /// <param name="criteria">A function taking a Text and returning a bool.</param>
-        /// <returns>A list of text view models.</returns>
-        List<ITextViewModel<SingleCountType>> GetTextModels(Func<TextEntityType, bool> criteria);
+        /// <param name="name">The name of the text.</param>
+        /// <returns>The text with the specified name or null if no such text exists.</returns>
+        ITextViewModel<SingleCountType> GetTextByName(string name);
 
         /// <summary>
-        /// Determines whether or not at least one text exists in the database matching the criteria.
+        /// Gets all texts by the specified author.
         /// </summary>
-        /// <param name="criteria">A function taking a text and returning a bool.</param>
-        /// <returns>True if such a text exists, false otherwise.</returns>
-        bool TextExists(Func<TextEntityType, bool> criteria);
+        /// <param name="author">The author of the text(s).</param>
+        /// <returns>A list of all texts by the specified author, or an empty list if there are no such texts.</returns>
+        List<ITextViewModel<SingleCountType>> GetTextByAuthor(string author);
 
         /// <summary>
         /// Adds a new text to the database.
@@ -41,10 +40,10 @@ namespace FingerPrint.Controllers
         void CreateText(string name, TextReader input, int length, string author = null);
 
         /// <summary>
-        /// Deletes the first text matching the criteria.
+        /// Deletes the text with the specified name.
         /// </summary>
-        /// <param name="criteria">A function taking a text and returning a bool</param>
-        void DeleteText(Func<TextEntityType, bool> criteria);
+        /// <param name="model">The model corresponding to the text to delete.</param>
+        void DeleteText(ITextViewModel<SingleCountType> model);
 
         /// <summary>
         /// Updates the text corresponding to the specified model by updating the specified fields.

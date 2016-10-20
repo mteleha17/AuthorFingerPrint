@@ -6,53 +6,77 @@ using System.Text;
 using System.Threading.Tasks;
 using FingerPrint.Models.Interfaces.TypeInterfaces;
 using FingerPrint.Stores;
+using FingerPrint.Models.Interfaces;
 
 namespace FingerPrint.Controllers.Implementations
 {
-    public class GroupController : IGroupController<ISingleWordCountModel, Group>
+    public class GroupController : IGroupController<ISingleWordCountModel>
     {
-        private ITextStore _textStore;
-        private IGroupStore _groupStore;
+        private ITextStore<ISingleWordCountModel> _textStore;
+        private IGroupStore<ISingleWordCountModel> _groupStore;
+        private IModelFactory<ISingleWordCountModel, IFlexibleWordCountModel<ISingleWordCountModel>> _modelFactory;
 
-        public GroupController(ITextStore textStore, IGroupStore groupStore)
+        public GroupController(ITextStore<ISingleWordCountModel> textStore,
+            IGroupStore<ISingleWordCountModel> groupStore,
+            IModelFactory<ISingleWordCountModel, IFlexibleWordCountModel<ISingleWordCountModel>> modelFatory)
         {
             _textStore = textStore;
             _groupStore = groupStore;
+            _modelFactory = modelFatory;
         }
 
-        public void AddToGroup(IGroupViewModel<ISingleWordCountModel> group, ITextOrGroupViewModel<ISingleWordCountModel> item)
+        public IGroupViewModel<ISingleWordCountModel> GetGroupByName(string name)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new ArgumentException("The name must not be null.");
+            }
+            return _groupStore.GetOne(x => x.Name == name);
         }
 
         public void CreateGroup(string name, int length)
         {
-            throw new NotImplementedException();
+            _groupStore.Add(_modelFactory.GetGroupModel(name, length));
         }
 
-        public void DeleteGroup(Func<Group, bool> criteria)
+        public void Delete(IGroupViewModel<ISingleWordCountModel> model)
         {
-            throw new NotImplementedException();
+            _groupStore.Delete((IGroupModel<ISingleWordCountModel>)model);
         }
 
-        public List<IGroupViewModel<ISingleWordCountModel>> GetGroupModels(Func<Group, bool> criteria)
+        public void AddToGroup(IGroupViewModel<ISingleWordCountModel> group, ITextOrGroupViewModel<ISingleWordCountModel> item)
         {
-            throw new NotImplementedException();
-        }
-
-        public bool GroupExists(Func<Group, bool> criteria)
-        {
-            throw new NotImplementedException();
+            if (item is ITextViewModel<ISingleWordCountModel>)
+            {
+                _groupStore.AddChildText((IGroupModel<ISingleWordCountModel>)group, (ITextModel<ISingleWordCountModel>)item);
+            }
+            else
+            {
+                _groupStore.AddChildGroup((IGroupModel<ISingleWordCountModel>)group, (IGroupModel<ISingleWordCountModel>)item);
+            }
         }
 
         public void RemoveFromGroup(IGroupViewModel<ISingleWordCountModel> group, ITextOrGroupViewModel<ISingleWordCountModel> item)
         {
-            throw new NotImplementedException();
+            if (item is ITextViewModel<ISingleWordCountModel>)
+            {
+                _groupStore.RemoveChildText((IGroupModel<ISingleWordCountModel>)group, (ITextModel<ISingleWordCountModel>)item);
+            }
+            else
+            {
+                _groupStore.RemoveChildGroup((IGroupModel<ISingleWordCountModel>)group, (IGroupModel<ISingleWordCountModel>)item);
+            }
         }
 
         public void UpdateGroup(IGroupViewModel<ISingleWordCountModel> model, string name)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new ArgumentException("Name cannot be null.");
+            }
+            IGroupModel<ISingleWordCountModel> updatedModel = (IGroupModel<ISingleWordCountModel>)model;
+            updatedModel.SetName(name);
+            _groupStore.Modify(updatedModel);
         }
     }
 }

@@ -19,13 +19,13 @@ namespace FingerPrint
     public partial class Form1 : Form
     {
         private IModelFactory<ISingleWordCountModel, IFlexibleWordCountModel<ISingleWordCountModel>> _modelFactory;
-        private ITextController<ISingleWordCountModel, File> _textController;
-        private IGroupController<ISingleWordCountModel, Group> _groupController;
+        private ITextController<ISingleWordCountModel> _textController;
+        private IGroupController<ISingleWordCountModel> _groupController;
         private IAnalysisController<ISingleWordCountModel> _analysisController;
 
         public Form1(IAnalysisController<ISingleWordCountModel> analysisController,
-            ITextController<ISingleWordCountModel, File> textController,
-            IGroupController<ISingleWordCountModel, Group> groupController)
+            ITextController<ISingleWordCountModel> textController,
+            IGroupController<ISingleWordCountModel> groupController)
         {
             _analysisController = analysisController;
             _textController = textController;
@@ -40,7 +40,6 @@ namespace FingerPrint
         /// <param name="e"></param>
         private void Form1_Load(object sender, EventArgs e)
         {
-           // _textController.GetTextModels(x => );
             _modelFactory = new ModelFactory();
             
             IFlexibleWordCountModel<ISingleWordCountModel> wordCount = _modelFactory.GetFlexibleCountModel(10);

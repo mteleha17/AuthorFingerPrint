@@ -12,23 +12,14 @@ namespace FingerPrint.Controllers
     /// creation, deletion, updating, and fetching of groups.
     /// </summary>
     /// <typeparam name="SingleCountType">The type of object being used to store a single collection of counts.</typeparam>
-    /// <typeparam name="GroupEntityType">Temporary placeholder to be deleted when database and EF are set up.</typeparam>
-    public interface IGroupController<SingleCountType, GroupEntityType>
+    public interface IGroupController<SingleCountType>
     {
         /// <summary>
-        /// Gets a list of groups that match the criteria.
+        /// Gets the group with the specified name.
         /// </summary>
-        /// <param name="criteria">A function taking a group and returning a bool.</param>
-        /// <returns>A list of group view models.</returns>
-        List<IGroupViewModel<SingleCountType>> GetGroupModels(Func<GroupEntityType, bool> criteria);
-
-        /// <summary>
-        /// Determines whether or not at least one group exists in the database
-        /// meeting the specified criteria.
-        /// </summary>
-        /// <param name="criteria">A function taking a group and returning a bool.</param>
-        /// <returns>True if such a group exists, false otherwise.</returns>
-        bool GroupExists(Func<GroupEntityType, bool> criteria);
+        /// <param name="name">The name of the group to get.</param>
+        /// <returns>The group with the specified name or null if there is no such group.</returns>
+        IGroupViewModel<SingleCountType> GetGroupByName(string name);
 
         /// <summary>
         /// Adds a new group to the database.
@@ -39,10 +30,10 @@ namespace FingerPrint.Controllers
         void CreateGroup(string name, int length);
 
         /// <summary>
-        /// Deletes the first group matching the criteria from the database.
+        /// Deletes the specified group.
         /// </summary>
-        /// <param name="criteria">A function taking a group and returning a bool.</param>
-        void DeleteGroup(Func<GroupEntityType, bool> criteria);
+        /// <param name="model">The group to delete.</param>
+        void Delete(IGroupViewModel<SingleCountType> model);
 
         /// <summary>
         /// Adds a text or group to the specified group.

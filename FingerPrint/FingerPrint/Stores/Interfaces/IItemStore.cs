@@ -12,11 +12,13 @@ namespace FingerPrint.Stores
     /// or other datastore.
     /// </summary>
     /// <typeparam name="EntityType">The type of the entity that this store handles.</typeparam>
-    public interface IItemStore<EntityType>
+    public interface IItemStore<EntityType, ModelType>
     {
-        void Add(EntityType entity);
-        void Modify(EntityType entity);
-        void Delete(EntityType entity);
-        IEnumerable<EntityType> Get(Expression<Func<EntityType, bool>> test);
+        void Add(ModelType model);
+        void Modify(ModelType model);
+        void Delete(ModelType model);
+        bool Exists(Expression<Func<EntityType, bool>> criteria);
+        ModelType GetOne(Expression<Func<EntityType, bool>> criteria);
+        IEnumerable<ModelType> GetMany(Expression<Func<EntityType, bool>> criteria);
     }
 }
