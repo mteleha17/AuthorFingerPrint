@@ -1,6 +1,7 @@
 ﻿using FingerPrint.Controllers;
 using FingerPrint.Controllers.Implementations;
 using FingerPrint.Models;
+using FingerPrint.Stores;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,9 +18,11 @@ namespace FingerPrint
         [STAThread]
         static void Main()
         {
+            ITextStore textStore = new TextStore();
+            IGroupStore groupStore = new GroupStore();
             var analysisController = new AnalysisController();
-            var textController = new TextController();
-            var groupController = new GroupController();
+            var textController = new TextController(textStore, groupStore);
+            var groupController = new GroupController(textStore, groupStore);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1(analysisController, textController, groupController));

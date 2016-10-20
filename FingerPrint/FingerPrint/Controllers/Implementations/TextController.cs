@@ -7,11 +7,21 @@ using System.Threading.Tasks;
 using FingerPrint.Models.Interfaces.TypeInterfaces;
 using System.IO;
 using FingerPrint;
+using FingerPrint.Stores;
 
 namespace FingerPrint.Controllers.Implementations
 {
     public class TextController : ITextController<ISingleWordCountModel, File>
     {
+        private ITextStore _textStore;
+        private IGroupStore _groupStore;
+
+        public TextController(ITextStore textStore, IGroupStore groupStore)
+        {
+            _textStore = textStore;
+            _groupStore = groupStore;
+        }
+
         public void CreateText(string name, TextReader input, int length, string author = null)
         {
             throw new NotImplementedException();

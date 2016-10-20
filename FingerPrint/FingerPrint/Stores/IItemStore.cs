@@ -17,6 +17,6 @@ namespace FingerPrint.Stores
         void Add(EntityType entity);
         void Modify(EntityType entity);
         void Delete(EntityType entity);
-        EntityType Get(Expression<Func<EntityType, bool>> test);
+        IEnumerable<EntityType> Get(Expression<Func<EntityType, bool>> test);
     }
 }

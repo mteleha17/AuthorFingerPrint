@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FingerPrint.Models.Interfaces.TypeInterfaces;
+using FingerPrint.Stores;
 
 namespace FingerPrint.Controllers.Implementations
 {

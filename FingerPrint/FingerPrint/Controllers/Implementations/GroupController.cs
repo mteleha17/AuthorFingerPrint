@@ -5,11 +5,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FingerPrint.Models.Interfaces.TypeInterfaces;
+using FingerPrint.Stores;
 
 namespace FingerPrint.Controllers.Implementations
 {
     public class GroupController : IGroupController<ISingleWordCountModel, Group>
     {
+        private ITextStore _textStore;
+        private IGroupStore _groupStore;
+
+        public GroupController(ITextStore textStore, IGroupStore groupStore)
+        {
+            _textStore = textStore;
+            _groupStore = groupStore;
+        }
+
         public void AddToGroup(IGroupViewModel<ISingleWordCountModel> group, ITextOrGroupViewModel<ISingleWordCountModel> item)
         {
             throw new NotImplementedException();
