@@ -26,7 +26,18 @@ namespace FingerPrint.Stores
                 throw new ArgumentException($"Cannot add text because another text already has the name {model.GetName()}");
             }
             ISingleWordCountModel withQuotes = model.GetCountsWithQuotes();
-            
+            NumbersWithQuote numbersWithQuotes = TranslateCountsWithQuotes(withQuotes);
+            db.NumbersWithQuotes.Add(numbersWithQuotes);
+            ISingleWordCountModel withoutQuotes = model.GetCountsWithoutQuotes();
+            NumbersWithoutQuote numbersWithoutQuotes = TranslateCountsWithoutQuotes(withoutQuotes);
+            db.NumbersWithoutQuotes.Add(numbersWithoutQuotes);
+            //File file = new File()
+            //{
+            //    Name = model.GetName(),
+            //    Author = model.GetAuthor(),
+            //    NumbersWithQuotes = numbersWithQuotes,
+
+            //};
         }
 
         public void Delete(ITextModel<ISingleWordCountModel> model)
@@ -64,38 +75,70 @@ namespace FingerPrint.Stores
             throw new NotImplementedException();
         }
 
-        //private NumbersWithQuote TranslateCountsWithQuotes(ISingleWordCountModel model)
-        //{
-        //    var output = new NumbersWithQuote();
-        //    List<Action<int>> actions = new List<Action<int>>()
-        //    {
-        //        i => output.one = model.GetAt(i),
-        //        i => output.two = model.GetAt(i),
-        //        i => output.three = model.GetAt(i),
-        //        i => output.four = model.GetAt(i),
-        //        i => output.five = model.GetAt(i),
-        //        i => output.six = model.GetAt(i),
-        //        i => output.seven = model.GetAt(i),
-        //        i => output.eight = model.GetAt(i),
-        //        i => output.nine = model.GetAt(i),
-        //        i => output.ten = model.GetAt(i),
-        //        i => output.eleven = model.GetAt(i),
-        //        i => output.tweleve = model.GetAt(i),
-        //        i => output.thirteen = model.GetAt(i),
-        //        i => output.fourteen = model.GetAt(i),
-        //        i => output.fifteen = model.GetAt(i),
-        //        i => output.sixteen = model.GetAt(i),
-        //        i => output.seventeen = model.GetAt(i),
-        //        i => output.eighteen = model.GetAt(i),
-        //        i => output.nineteen = model.GetAt(i),
-        //        i => output.twentyPlus = model.GetAt(i)
-        //    };
-        //    int x = 0;
-        //    for (; x < (model.GetLength() - 1); x++)
-        //    {
-        //        actions[x](x);
-        //    }
+        private NumbersWithQuote TranslateCountsWithQuotes(ISingleWordCountModel model)
+        {
+            var output = new NumbersWithQuote();
+            List<Action<int>> actions = new List<Action<int>>()
+            {
+                i => output.one = model.GetAt(i),
+                i => output.two = model.GetAt(i),
+                i => output.three = model.GetAt(i),
+                i => output.four = model.GetAt(i),
+                i => output.five = model.GetAt(i),
+                i => output.six = model.GetAt(i),
+                i => output.seven = model.GetAt(i),
+                i => output.eight = model.GetAt(i),
+                i => output.nine = model.GetAt(i),
+                i => output.ten = model.GetAt(i),
+                i => output.eleven = model.GetAt(i),
+                i => output.tweleve = model.GetAt(i),
+                i => output.thirteen = model.GetAt(i),
+                i => output.fourteen = model.GetAt(i),
+                i => output.fifteen = model.GetAt(i),
+                i => output.sixteen = model.GetAt(i),
+                i => output.seventeen = model.GetAt(i),
+                i => output.eighteen = model.GetAt(i),
+                i => output.nineteen = model.GetAt(i),
+                i => output.twentyPlus = model.GetAt(i)
+            };
+            for (int x = 0; x < (model.GetLength()); x++)
+            {
+                actions[x](x);
+            }
+            return output;
+        }
 
-        //}
+        private NumbersWithoutQuote TranslateCountsWithoutQuotes(ISingleWordCountModel model)
+        {
+            var output = new NumbersWithoutQuote();
+            List<Action<int>> actions = new List<Action<int>>()
+            {
+                i => output.one = model.GetAt(i),
+                i => output.two = model.GetAt(i),
+                i => output.three = model.GetAt(i),
+                i => output.four = model.GetAt(i),
+                i => output.five = model.GetAt(i),
+                i => output.six = model.GetAt(i),
+                i => output.seven = model.GetAt(i),
+                i => output.eight = model.GetAt(i),
+                i => output.nine = model.GetAt(i),
+                i => output.ten = model.GetAt(i),
+                i => output.eleven = model.GetAt(i),
+                i => output.twelve = model.GetAt(i),
+                i => output.thirteen = model.GetAt(i),
+                i => output.fourteen = model.GetAt(i),
+                i => output.fifteen = model.GetAt(i),
+                i => output.sixteen = model.GetAt(i),
+                i => output.seventeen = model.GetAt(i),
+                i => output.eighteen = model.GetAt(i),
+                i => output.nineteen = model.GetAt(i),
+                i => output.twentyPlus = model.GetAt(i)
+            };
+            for (int x = 0; x < (model.GetLength()); x++)
+            {
+                actions[x](x);
+            }
+            return output;
+        }
     }
 }
