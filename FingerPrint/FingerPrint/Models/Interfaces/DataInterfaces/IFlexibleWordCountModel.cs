@@ -8,20 +8,19 @@ namespace FingerPrint.Models
     /// i.e. a class that has a collection of counts including words in quotes and a collection of counts
     /// not including words in quotes.
     /// </summary>
-    /// <typeparam name="SingleCountType">The type of object being used to store a single collection of counts.</typeparam>
-    public interface IFlexibleWordCountModel<SingleCountType> : IMeasurableItem, ICopyable<IFlexibleWordCountModel<SingleCountType>>
+    public interface IFlexibleWordCountModel : IMeasurableItem, ICopyable<IFlexibleWordCountModel>
     {
         /// <summary>
         /// Gets the counts including words inside quotations.
         /// </summary>
         /// <returns>A collection of word length counts.</returns>
-        SingleCountType CountsWithQuotes();
+        ISingleWordCountModel CountsWithQuotes();
 
         /// <summary>
         /// Gets the counts excluding words inside quotations.
         /// </summary>
         /// <returns>A collection of word length counts.</returns>
-        SingleCountType CountsWithoutQuotes();
+        ISingleWordCountModel CountsWithoutQuotes();
 
         /// <summary>
         /// Gets the individual count for a given word length. Indexes are off by one from word lengths, 

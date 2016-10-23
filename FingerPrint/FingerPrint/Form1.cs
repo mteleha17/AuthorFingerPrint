@@ -18,14 +18,14 @@ namespace FingerPrint
 {
     public partial class Form1 : Form
     {
-        private IModelFactory<ISingleWordCountModel, IFlexibleWordCountModel<ISingleWordCountModel>> _modelFactory;
-        private ITextController<ISingleWordCountModel> _textController;
-        private IGroupController<ISingleWordCountModel> _groupController;
-        private IAnalysisController<ISingleWordCountModel> _analysisController;
+        private IModelFactory _modelFactory;
+        private ITextController _textController;
+        private IGroupController _groupController;
+        private IAnalysisController _analysisController;
 
-        public Form1(IAnalysisController<ISingleWordCountModel> analysisController,
-            ITextController<ISingleWordCountModel> textController,
-            IGroupController<ISingleWordCountModel> groupController)
+        public Form1(IAnalysisController analysisController,
+            ITextController textController,
+            IGroupController groupController)
         {
             _analysisController = analysisController;
             _textController = textController;
@@ -42,7 +42,7 @@ namespace FingerPrint
         {
             _modelFactory = new ModelFactory();
             
-            IFlexibleWordCountModel<ISingleWordCountModel> wordCount = _modelFactory.GetFlexibleCountModel(10);
+            IFlexibleWordCountModel wordCount = _modelFactory.GetFlexibleCountModel(10);
             TextModel model = new TextModel("test", wordCount);
             model.SetAuthor("Twain");
             model.SetName("Adventures of SON");
@@ -81,7 +81,7 @@ namespace FingerPrint
             withoutQuotes.SetAt(7, 150);
             withoutQuotes.SetAt(8, 60);
             withoutQuotes.SetAt(9, 30);
-            IFlexibleWordCountModel<ISingleWordCountModel> wordCount = _modelFactory.GetFlexibleCountModel(withQuotes,withoutQuotes);
+            IFlexibleWordCountModel wordCount = _modelFactory.GetFlexibleCountModel(withQuotes,withoutQuotes);
 
             TextModel model = new TextModel("test", wordCount);
             model.SetAuthor("Twain");

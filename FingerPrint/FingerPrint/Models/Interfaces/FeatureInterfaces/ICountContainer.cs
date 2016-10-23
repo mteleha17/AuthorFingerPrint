@@ -9,8 +9,8 @@ namespace FingerPrint.Models.Interfaces
     /// <summary>
     /// Interface to be implemented by a class that contains a collection of word-length counts. 
     /// </summary>
-    public interface ICountContainer<CollectionType>
+    public interface ICountContainer
     {
-        CollectionType GetCounts();
+        ISingleWordCountModel GetCounts();
     }
 }

@@ -7,25 +7,26 @@ using System.Threading.Tasks;
 using FingerPrint.Models.Interfaces.TypeInterfaces;
 using FingerPrint.Stores;
 using FingerPrint.Models.Interfaces;
+using FingerPrint.Models.Implementations;
 
 namespace FingerPrint.Controllers.Implementations
 {
-    public class GroupController : IGroupController<ISingleWordCountModel>
+    public class GroupController : IGroupController
     {
-        private ITextStore<ISingleWordCountModel> _textStore;
-        private IGroupStore<ISingleWordCountModel> _groupStore;
-        private IModelFactory<ISingleWordCountModel, IFlexibleWordCountModel<ISingleWordCountModel>> _modelFactory;
+        private ITextStore _textStore;
+        private IGroupStore _groupStore;
+        private IModelFactory _modelFactory;
 
-        public GroupController(ITextStore<ISingleWordCountModel> textStore,
-            IGroupStore<ISingleWordCountModel> groupStore,
-            IModelFactory<ISingleWordCountModel, IFlexibleWordCountModel<ISingleWordCountModel>> modelFatory)
+        public GroupController(ITextStore textStore,
+            IGroupStore groupStore,
+            IModelFactory modelFactory)
         {
             _textStore = textStore;
             _groupStore = groupStore;
-            _modelFactory = modelFatory;
+            _modelFactory = modelFactory;
         }
 
-        public IGroupViewModel<ISingleWordCountModel> GetGroupByName(string name)
+        public IGroupViewModel GetGroupByName(string name)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
@@ -39,42 +40,42 @@ namespace FingerPrint.Controllers.Implementations
             _groupStore.Add(_modelFactory.GetGroupModel(name, length));
         }
 
-        public void Delete(IGroupViewModel<ISingleWordCountModel> model)
+        public void Delete(IGroupViewModel model)
         {
-            _groupStore.Delete((IGroupModel<ISingleWordCountModel>)model);
+            _groupStore.Delete((IGroupModel)model);
         }
 
-        public void AddToGroup(IGroupViewModel<ISingleWordCountModel> group, ITextOrGroupViewModel<ISingleWordCountModel> item)
+        public void AddToGroup(IGroupViewModel group, ITextOrGroupViewModel item)
         {
-            if (item is ITextViewModel<ISingleWordCountModel>)
+            if (item is ITextViewModel)
             {
-                _groupStore.AddChildText((IGroupModel<ISingleWordCountModel>)group, (ITextModel<ISingleWordCountModel>)item);
+                _groupStore.AddChildText((IGroupModel)group, (ITextModel)item);
             }
             else
             {
-                _groupStore.AddChildGroup((IGroupModel<ISingleWordCountModel>)group, (IGroupModel<ISingleWordCountModel>)item);
+                _groupStore.AddChildGroup((IGroupModel)group, (IGroupModel)item);
             }
         }
 
-        public void RemoveFromGroup(IGroupViewModel<ISingleWordCountModel> group, ITextOrGroupViewModel<ISingleWordCountModel> item)
+        public void RemoveFromGroup(IGroupViewModel group, ITextOrGroupViewModel item)
         {
-            if (item is ITextViewModel<ISingleWordCountModel>)
+            if (item is ITextViewModel)
             {
-                _groupStore.RemoveChildText((IGroupModel<ISingleWordCountModel>)group, (ITextModel<ISingleWordCountModel>)item);
+                _groupStore.RemoveChildText((IGroupModel)group, (ITextModel)item);
             }
             else
             {
-                _groupStore.RemoveChildGroup((IGroupModel<ISingleWordCountModel>)group, (IGroupModel<ISingleWordCountModel>)item);
+                _groupStore.RemoveChildGroup((IGroupModel)group, (IGroupModel)item);
             }
         }
 
-        public void UpdateGroup(IGroupViewModel<ISingleWordCountModel> model, string name)
+        public void UpdateGroup(IGroupViewModel model, string name)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
                 throw new ArgumentException("Name cannot be null.");
             }
-            IGroupModel<ISingleWordCountModel> updatedModel = (IGroupModel<ISingleWordCountModel>)model;
+            IGroupModel updatedModel = (IGroupModel)model;
             updatedModel.SetName(name);
             _groupStore.Modify(updatedModel);
         }

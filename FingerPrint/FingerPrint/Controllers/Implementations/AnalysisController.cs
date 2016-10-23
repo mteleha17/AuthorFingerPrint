@@ -9,21 +9,21 @@ using FingerPrint.Stores;
 
 namespace FingerPrint.Controllers.Implementations
 {
-    public class AnalysisController : IAnalysisController<ISingleWordCountModel>
+    public class AnalysisController : IAnalysisController
     {
-        private List<IGroupViewModel<ISingleWordCountModel>> _activeGroups;
+        private List<IGroupViewModel> _activeGroups;
 
         public AnalysisController()
         {
-            _activeGroups = new List<IGroupViewModel<ISingleWordCountModel>>();
+            _activeGroups = new List<IGroupViewModel>();
         }
 
-        public List<IGroupViewModel<ISingleWordCountModel>> GetActiveGroups()
+        public List<IGroupViewModel> GetActiveGroups()
         {
             return _activeGroups.ToList();
         }
 
-        public void AddToActiveGroups(IGroupViewModel<ISingleWordCountModel> group)
+        public void AddToActiveGroups(IGroupViewModel group)
         {
             if (GroupIsActive(group))
             {
@@ -32,7 +32,7 @@ namespace FingerPrint.Controllers.Implementations
             _activeGroups.Add(group);
         }
 
-        public void RemoveFromActiveGroups(IGroupViewModel<ISingleWordCountModel> group)
+        public void RemoveFromActiveGroups(IGroupViewModel group)
         {
             if (!GroupIsActive(group))
             {
@@ -41,7 +41,7 @@ namespace FingerPrint.Controllers.Implementations
             _activeGroups.Remove(group);
         }
 
-        public bool GroupIsActive(IGroupViewModel<ISingleWordCountModel> group)
+        public bool GroupIsActive(IGroupViewModel group)
         {
             return _activeGroups.Contains(group);
         }

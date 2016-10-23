@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace FingerPrint.Stores
 {
-    public interface ITextStore<SingleCountType> : IItemStore<File, ITextModel<SingleCountType>>
+    public interface ITextStore : IItemStore<File, ITextModel>
     {
-        SingleCountType GetCountsWithQuotes();
-        SingleCountType GetCountsWithoutQuotes();
+        ISingleWordCountModel GetCountsWithQuotes();
+        ISingleWordCountModel GetCountsWithoutQuotes();
     }
 }

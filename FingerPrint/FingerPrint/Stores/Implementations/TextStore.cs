@@ -10,7 +10,7 @@ using FingerPrint;
 
 namespace FingerPrint.Stores
 {
-    public class TextStore : ITextStore<ISingleWordCountModel>
+    public class TextStore : ITextStore
     {
         private FingerprintEntities1 db;
 
@@ -19,7 +19,7 @@ namespace FingerPrint.Stores
             db = new FingerprintEntities1();
         }
 
-        public void Add(ITextModel<ISingleWordCountModel> model)
+        public void Add(ITextModel model)
         {
             if (Exists(x => x.Name == model.GetName()))
             {
@@ -40,7 +40,7 @@ namespace FingerPrint.Stores
             //};
         }
 
-        public void Delete(ITextModel<ISingleWordCountModel> model)
+        public void Delete(ITextModel model)
         {
             throw new NotImplementedException();
         }
@@ -60,17 +60,17 @@ namespace FingerPrint.Stores
             throw new NotImplementedException();
         }
 
-        public IEnumerable<ITextModel<ISingleWordCountModel>> GetMany(Expression<Func<File, bool>> criteria)
+        public IEnumerable<ITextModel> GetMany(Expression<Func<File, bool>> criteria)
         {
             throw new NotImplementedException();
         }
 
-        public ITextModel<ISingleWordCountModel> GetOne(Expression<Func<File, bool>> criteria)
+        public ITextModel GetOne(Expression<Func<File, bool>> criteria)
         {
             throw new NotImplementedException();
         }
 
-        public void Modify(ITextModel<ISingleWordCountModel> model)
+        public void Modify(ITextModel model)
         {
             throw new NotImplementedException();
         }

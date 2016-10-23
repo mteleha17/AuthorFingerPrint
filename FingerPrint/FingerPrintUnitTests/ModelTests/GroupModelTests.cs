@@ -10,10 +10,10 @@ namespace FingerPrintUnitTests.ModelTests
     [TestClass]
     public class GroupModelTests
     {
-        private IModelFactory<ISingleWordCountModel, IFlexibleWordCountModel<ISingleWordCountModel>> _modelFactory;
+        private IModelFactory _modelFactory;
 
-        ITextModel<ISingleWordCountModel> textOne, textTwo, textThree, textWrongLength;
-        IGroupModel<ISingleWordCountModel> groupOne, groupTwo;
+        ITextModel textOne, textTwo, textThree, textWrongLength;
+        IGroupModel groupOne, groupTwo;
         ISingleWordCountModel badCountInitialization;
 
         [TestInitialize]

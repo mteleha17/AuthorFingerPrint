@@ -11,16 +11,16 @@ using System.Diagnostics;
 
 namespace FingerPrint.Models.Implementations
 {
-    public class ModelFactory : IModelFactory<ISingleWordCountModel, IFlexibleWordCountModel<ISingleWordCountModel>>
+    public class ModelFactory : IModelFactory
     {
-        public ITextModel<ISingleWordCountModel> GetTextModel(string name, TextReader input, int length)
+        public ITextModel GetTextModel(string name, TextReader input, int length)
         {
             var counts = GetFlexibleCountModel(length);
             GenerateCounts(input, counts);
             return new TextModel(name, counts);
         }
 
-        public ITextModel<ISingleWordCountModel> GetTextModel(string name, IFlexibleWordCountModel<ISingleWordCountModel> counts)
+        public ITextModel GetTextModel(string name, IFlexibleWordCountModel counts)
         {
             if (counts == null)
             {
@@ -33,7 +33,7 @@ namespace FingerPrint.Models.Implementations
             return new TextModel(name, counts);
         }
 
-        public IGroupModel<ISingleWordCountModel> GetGroupModel(string name, int length)
+        public IGroupModel GetGroupModel(string name, int length)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
@@ -73,14 +73,14 @@ namespace FingerPrint.Models.Implementations
             return new SingleWordCountModel(counts);
         }
 
-        public IFlexibleWordCountModel<ISingleWordCountModel> GetFlexibleCountModel(int length)
+        public IFlexibleWordCountModel GetFlexibleCountModel(int length)
         {
             var withQuotes = GetSingleCountModel(length);
             var withoutQuotes = GetSingleCountModel(length);
             return GetFlexibleCountModel(withQuotes, withoutQuotes);
         }
 
-        public IFlexibleWordCountModel<ISingleWordCountModel> GetFlexibleCountModel(ISingleWordCountModel withQuotes, ISingleWordCountModel withoutQuotes)
+        public IFlexibleWordCountModel GetFlexibleCountModel(ISingleWordCountModel withQuotes, ISingleWordCountModel withoutQuotes)
         {
             if (withQuotes == withoutQuotes)
             {
@@ -112,12 +112,12 @@ namespace FingerPrint.Models.Implementations
         }
 
         //For test purposes. Comment out later.
-        public void GenerateCountsTestMethod(TextReader text, IFlexibleWordCountModel<ISingleWordCountModel> model)
+        public void GenerateCountsTestMethod(TextReader text, IFlexibleWordCountModel model)
         {
             GenerateCounts(text, model);
         }
 
-        private void GenerateCounts(TextReader text, IFlexibleWordCountModel<ISingleWordCountModel> model)
+        private void GenerateCounts(TextReader text, IFlexibleWordCountModel model)
         {
             int[] countsWithQuotes = new int[10];
             int[] countsWithoutQuotes = new int[10];

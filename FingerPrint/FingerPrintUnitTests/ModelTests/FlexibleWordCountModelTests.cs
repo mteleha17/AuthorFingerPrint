@@ -10,11 +10,11 @@ namespace FingerPrintUnitTests.ModelTests
     [TestClass]
     public class FlexibleWordCountModelTests
     {
-        private IModelFactory<ISingleWordCountModel, IFlexibleWordCountModel<ISingleWordCountModel>> _modelFactory;
+        private IModelFactory _modelFactory;
         ISingleWordCountModel singleCountIncludeQuotes, singleCountExcludeQuotes, singleCountNull,
             singleCountLengthZeroA, singleCountLengthZeroB, singleCountLengthOne,
             singleCountNegativeCount;
-        IFlexibleWordCountModel<ISingleWordCountModel> flexibleWordCountModel;
+        IFlexibleWordCountModel flexibleWordCountModel;
 
         [TestInitialize()]
         public void Initialize()

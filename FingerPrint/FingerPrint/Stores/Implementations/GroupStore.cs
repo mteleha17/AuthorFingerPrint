@@ -10,7 +10,7 @@ using FingerPrint.Models.Interfaces.TypeInterfaces;
 
 namespace FingerPrint.Stores
 {
-    public class GroupStore : IGroupStore<ISingleWordCountModel>
+    public class GroupStore : IGroupStore
     {
         private FingerprintEntities1 db;
 
@@ -19,22 +19,22 @@ namespace FingerPrint.Stores
             db = new FingerprintEntities1();
         }
 
-        public void Add(IGroupModel<ISingleWordCountModel> model)
+        public void Add(IGroupModel model)
         {
             throw new NotImplementedException();
         }
 
-        public void AddChildGroup(IGroupModel<ISingleWordCountModel> parent, IGroupModel<ISingleWordCountModel> child)
+        public void AddChildGroup(IGroupModel parent, IGroupModel child)
         {
             throw new NotImplementedException();
         }
 
-        public void AddChildText(IGroupModel<ISingleWordCountModel> parent, ITextModel<ISingleWordCountModel> child)
+        public void AddChildText(IGroupModel parent, ITextModel child)
         {
             throw new NotImplementedException();
         }
 
-        public void Delete(IGroupModel<ISingleWordCountModel> model)
+        public void Delete(IGroupModel model)
         {
             throw new NotImplementedException();
         }
@@ -44,37 +44,37 @@ namespace FingerPrint.Stores
             throw new NotImplementedException();
         }
 
-        public IEnumerable<IGroupModel<ISingleWordCountModel>> GetChildGroups(IGroupModel<ISingleWordCountModel> parent, Func<Group, bool> criteria)
+        public IEnumerable<IGroupModel> GetChildGroups(IGroupModel parent, Func<Group, bool> criteria)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<ITextModel<ISingleWordCountModel>> GetChildTexts(IGroupModel<ISingleWordCountModel> parent, Func<File, bool> criteria)
+        public IEnumerable<ITextModel> GetChildTexts(IGroupModel parent, Func<File, bool> criteria)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<IGroupModel<ISingleWordCountModel>> GetMany(Expression<Func<Group, bool>> criteria)
+        public IEnumerable<IGroupModel> GetMany(Expression<Func<Group, bool>> criteria)
         {
             throw new NotImplementedException();
         }
 
-        public IGroupModel<ISingleWordCountModel> GetOne(Expression<Func<Group, bool>> criteria)
+        public IGroupModel GetOne(Expression<Func<Group, bool>> criteria)
         {
             throw new NotImplementedException();
         }
 
-        public void Modify(IGroupModel<ISingleWordCountModel> model)
+        public void Modify(IGroupModel model)
         {
             throw new NotImplementedException();
         }
 
-        public void RemoveChildGroup(IGroupModel<ISingleWordCountModel> parent, IGroupModel<ISingleWordCountModel> child)
+        public void RemoveChildGroup(IGroupModel parent, IGroupModel child)
         {
             throw new NotImplementedException();
         }
 
-        public void RemoveChildText(IGroupModel<ISingleWordCountModel> parent, ITextModel<ISingleWordCountModel> child)
+        public void RemoveChildText(IGroupModel parent, ITextModel child)
         {
             throw new NotImplementedException();
         }

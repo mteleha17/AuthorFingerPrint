@@ -11,15 +11,15 @@ namespace FingerPrint.Models
     /// <summary>
     /// Class representing a text.
     /// </summary>
-    public class TextModel : ITextModel<ISingleWordCountModel>
+    public class TextModel : ITextModel
     {
         private readonly int _length;
         private string _name;
         private string _author;
         private bool _includeQuotes;
-        private IFlexibleWordCountModel<ISingleWordCountModel> _counts;
+        private IFlexibleWordCountModel _counts;
 
-        public TextModel(string name, IFlexibleWordCountModel<ISingleWordCountModel> counts)
+        public TextModel(string name, IFlexibleWordCountModel counts)
         {
             SetName(name);
             SetIncludeQuotes(true);

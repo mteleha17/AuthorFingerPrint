@@ -11,15 +11,14 @@ namespace FingerPrint.Controllers
     /// Interface to be implemented by a GroupController, i.e., by a controller that will handle the
     /// creation, deletion, updating, and fetching of groups.
     /// </summary>
-    /// <typeparam name="SingleCountType">The type of object being used to store a single collection of counts.</typeparam>
-    public interface IGroupController<SingleCountType>
+    public interface IGroupController
     {
         /// <summary>
         /// Gets the group with the specified name.
         /// </summary>
         /// <param name="name">The name of the group to get.</param>
         /// <returns>The group with the specified name or null if there is no such group.</returns>
-        IGroupViewModel<SingleCountType> GetGroupByName(string name);
+        IGroupViewModel GetGroupByName(string name);
 
         /// <summary>
         /// Adds a new group to the database.
@@ -33,27 +32,27 @@ namespace FingerPrint.Controllers
         /// Deletes the specified group.
         /// </summary>
         /// <param name="model">The group to delete.</param>
-        void Delete(IGroupViewModel<SingleCountType> model);
+        void Delete(IGroupViewModel model);
 
         /// <summary>
         /// Adds a text or group to the specified group.
         /// </summary>
         /// <param name="group">The group to which to add the text or group.</param>
         /// <param name="item">The text or group to be added.</param>
-        void AddToGroup(IGroupViewModel<SingleCountType> group, ITextOrGroupViewModel<SingleCountType> item);
+        void AddToGroup(IGroupViewModel group, ITextOrGroupViewModel item);
 
         /// <summary>
         /// Removes a text or group from the specified group.
         /// </summary>
         /// <param name="group">The group from which to remove the text or group.</param>
         /// <param name="item">The text or group to be removed.</param>
-        void RemoveFromGroup(IGroupViewModel<SingleCountType> group, ITextOrGroupViewModel<SingleCountType> item);
+        void RemoveFromGroup(IGroupViewModel group, ITextOrGroupViewModel item);
         
         /// <summary>
         /// Updates the specified group in the database.
         /// </summary>
         /// <param name="model">The group to update.</param>
         /// <param name="name">The new name.</param>
-        void UpdateGroup(IGroupViewModel<SingleCountType> model, string name);
+        void UpdateGroup(IGroupViewModel model, string name);
     }
 }

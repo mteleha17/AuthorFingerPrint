@@ -11,13 +11,13 @@ namespace FingerPrint.Models
     /// <summary>
     /// Class representing a grouping of texts and other groups.
     /// </summary>
-    public class GroupModel : IGroupModel<ISingleWordCountModel>
+    public class GroupModel : IGroupModel
     {
         private bool _modified;
         private readonly int _length;
         private string _name;
         private ISingleWordCountModel _counts;
-        private List<ITextOrGroupModel<ISingleWordCountModel>> _items;
+        private List<ITextOrGroupModel> _items;
 
         public event EventHandler Modified;
 
@@ -35,7 +35,7 @@ namespace FingerPrint.Models
                     throw new ArgumentException("wordCountModel must have counts all equal to zero upon initializing group.");
                 }
             }
-            _items = new List<ITextOrGroupModel<ISingleWordCountModel>>();
+            _items = new List<ITextOrGroupModel>();
             _counts = wordCountModel.Copy();
             _length = _counts.GetLength();
             _modified = true;
@@ -69,7 +69,7 @@ namespace FingerPrint.Models
             _modified = true;
         }
 
-        public void Add(ITextOrGroupModel<ISingleWordCountModel> item)
+        public void Add(ITextOrGroupModel item)
         {
             if (item == this)
             {
@@ -88,14 +88,14 @@ namespace FingerPrint.Models
                 throw new ArgumentException($"Item {item} cannot be added to a group that it is already a member of.");
             }
             _items.Add(item);
-            if (item is IGroupModel<ISingleWordCountModel>)
+            if (item is IGroupModel)
             {
-                ((IGroupModel<ISingleWordCountModel>)item).Modified += new EventHandler(OnModified);
+                ((IGroupModel)item).Modified += new EventHandler(OnModified);
             }
             OnModified(this, EventArgs.Empty);
         }
 
-        public void Remove(ITextOrGroupModel<ISingleWordCountModel> item)
+        public void Remove(ITextOrGroupModel item)
         {
             if (item == null)
             {
@@ -105,22 +105,22 @@ namespace FingerPrint.Models
             {
                 throw new ArgumentException($"Group does not contain item: {item}.");
             }
-            if (item is IGroupModel<ISingleWordCountModel>)
+            if (item is IGroupModel)
             {
-                ((IGroupModel<ISingleWordCountModel>)item).Modified -= new EventHandler(OnModified);
+                ((IGroupModel)item).Modified -= new EventHandler(OnModified);
             }
             _items.Remove(item);
             OnModified(this, EventArgs.Empty);
         }
 
-        public bool Contains(ITextOrGroupModel<ISingleWordCountModel> item)
+        public bool Contains(ITextOrGroupModel item)
         {
             return _items.Contains(item);
         }
 
-        public List<ITextOrGroupViewModel<ISingleWordCountModel>> GetMembers()
+        public List<ITextOrGroupViewModel> GetMembers()
         {
-            return _items.Select(x => (ITextOrGroupViewModel<ISingleWordCountModel>)x).ToList();
+            return _items.Select(x => (ITextOrGroupViewModel)x).ToList();
         } 
 
         public ISingleWordCountModel GetCounts()
@@ -144,7 +144,7 @@ namespace FingerPrint.Models
                 return;
             }
             //get count totals
-            foreach (ITextOrGroupModel<ISingleWordCountModel> item in _items)
+            foreach (ITextOrGroupModel item in _items)
             {
                 var itemCounts = item.GetCounts();
                 for (int i = 0; i < _length; i++)

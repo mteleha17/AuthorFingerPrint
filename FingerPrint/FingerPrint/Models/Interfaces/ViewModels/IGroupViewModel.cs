@@ -9,13 +9,12 @@ namespace FingerPrint.Models.Interfaces.TypeInterfaces
     /// <summary>
     /// Interface representing the methods of a group not concerned with mutation (getters not setters). 
     /// </summary>
-    /// <typeparam name="SingleCountType">The type of object being used to store a single collection of counts.</typeparam>
-    public interface IGroupViewModel<SingleCountType> : ITextOrGroupViewModel<SingleCountType>
+    public interface IGroupViewModel : ITextOrGroupViewModel
     {
         /// <summary>
         /// Gets the texts and groups that are members of this group.
         /// </summary>
         /// <returns>List of texts and groups.</returns>
-        List<ITextOrGroupViewModel<SingleCountType>> GetMembers();
+        List<ITextOrGroupViewModel> GetMembers();
     }
 }

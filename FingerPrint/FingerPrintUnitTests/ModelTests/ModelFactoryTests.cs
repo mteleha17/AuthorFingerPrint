@@ -10,7 +10,7 @@ namespace FingerPrintUnitTests.ModelTests
     [TestClass]
     public class ModelFactoryTests
     {
-        private IModelFactory<ISingleWordCountModel, IFlexibleWordCountModel<ISingleWordCountModel>> _modelFactory;
+        private IModelFactory _modelFactory;
 
         StringReader stringReader;
         StreamReader streamReader;
@@ -152,8 +152,8 @@ namespace FingerPrintUnitTests.ModelTests
         public void CountScrambledText()
         {
             int length = 10;
-            ITextModel<ISingleWordCountModel> modelUnscrambled;
-            ITextModel<ISingleWordCountModel> modelScrambled;
+            ITextModel modelUnscrambled;
+            ITextModel modelScrambled;
             using (streamReader = new StreamReader("..\\..\\SampleTextFiles\\ATaleOfTwoCitiesNormal.txt"))
             {
                 modelUnscrambled = _modelFactory.GetTextModel("unscrambled", streamReader, length);

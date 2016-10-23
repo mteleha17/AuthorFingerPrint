@@ -11,22 +11,22 @@ using FingerPrint.Stores;
 
 namespace FingerPrint.Controllers.Implementations
 {
-    public class TextController : ITextController<ISingleWordCountModel>
+    public class TextController : ITextController
     {
-        private ITextStore<ISingleWordCountModel> _textStore;
-        private IGroupStore<ISingleWordCountModel> _groupStore;
-        private IModelFactory<ISingleWordCountModel, IFlexibleWordCountModel<ISingleWordCountModel>> _modelFactory;
+        private ITextStore _textStore;
+        private IGroupStore _groupStore;
+        private IModelFactory _modelFactory;
 
-        public TextController(ITextStore<ISingleWordCountModel> textStore,
-            IGroupStore<ISingleWordCountModel> groupStore,
-            IModelFactory<ISingleWordCountModel, IFlexibleWordCountModel<ISingleWordCountModel>> modelFactory)
+        public TextController(ITextStore textStore,
+            IGroupStore groupStore,
+            IModelFactory modelFactory)
         {
             _textStore = textStore;
             _groupStore = groupStore;
             _modelFactory = modelFactory;
         }
 
-        public ITextViewModel<ISingleWordCountModel> GetTextByName(string name)
+        public ITextViewModel GetTextByName(string name)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
@@ -35,13 +35,13 @@ namespace FingerPrint.Controllers.Implementations
             return _textStore.GetOne(x => x.Name == name);
         }
 
-        public List<ITextViewModel<ISingleWordCountModel>> GetTextByAuthor(string author)
+        public List<ITextViewModel> GetTextByAuthor(string author)
         {
             if (string.IsNullOrWhiteSpace(author))
             {
                 throw new ArgumentException("Author must not be null or white space.");
             }
-            return _textStore.GetMany(x => x.Author == author).Select(x => (ITextViewModel<ISingleWordCountModel>)x).ToList();
+            return _textStore.GetMany(x => x.Author == author).Select(x => (ITextViewModel)x).ToList();
         }
 
         public void CreateText(string name, TextReader input, int length, string author = null)
@@ -54,14 +54,14 @@ namespace FingerPrint.Controllers.Implementations
             _textStore.Add(model);
         }
 
-        public void DeleteText(ITextViewModel<ISingleWordCountModel> model)
+        public void DeleteText(ITextViewModel model)
         {
-            _textStore.Delete((ITextModel<ISingleWordCountModel>)model);
+            _textStore.Delete((ITextModel)model);
         }
 
-        public void UpdateText(ITextViewModel<ISingleWordCountModel> model, string name = null, string author = null, bool? quotesOn = null)
+        public void UpdateText(ITextViewModel model, string name = null, string author = null, bool? quotesOn = null)
         {
-            var updatedModel = (ITextModel<ISingleWordCountModel>)model;
+            var updatedModel = (ITextModel)model;
             if (!string.IsNullOrWhiteSpace(name))
             {
                 updatedModel.SetName(name);

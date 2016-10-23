@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace FingerPrint.Stores
 {
-    public interface IGroupStore<SingleCountType> : IItemStore<Group, IGroupModel<SingleCountType>>
+    public interface IGroupStore : IItemStore<Group, IGroupModel>
     {
-        IEnumerable<ITextModel<SingleCountType>> GetChildTexts(IGroupModel<SingleCountType> parent, Func<File, bool> criteria);
-        void AddChildText(IGroupModel<SingleCountType> parent, ITextModel<SingleCountType> child);
-        void RemoveChildText(IGroupModel<SingleCountType> parent, ITextModel<SingleCountType> child);
-        IEnumerable<IGroupModel<SingleCountType>> GetChildGroups(IGroupModel<SingleCountType> parent, Func<Group, bool> criteria);
-        void AddChildGroup(IGroupModel<SingleCountType> parent, IGroupModel<SingleCountType> child);
-        void RemoveChildGroup(IGroupModel<SingleCountType> parent, IGroupModel<SingleCountType> child);
+        IEnumerable<ITextModel> GetChildTexts(IGroupModel parent, Func<File, bool> criteria);
+        void AddChildText(IGroupModel parent, ITextModel child);
+        void RemoveChildText(IGroupModel parent, ITextModel child);
+        IEnumerable<IGroupModel> GetChildGroups(IGroupModel parent, Func<Group, bool> criteria);
+        void AddChildGroup(IGroupModel parent, IGroupModel child);
+        void RemoveChildGroup(IGroupModel parent, IGroupModel child);
     }
 }
