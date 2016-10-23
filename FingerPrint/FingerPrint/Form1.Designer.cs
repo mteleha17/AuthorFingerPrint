@@ -76,6 +76,9 @@
             this.groupsRadioButtonTab3 = new System.Windows.Forms.RadioButton();
             this.filesRadioButtonTab3 = new System.Windows.Forms.RadioButton();
             this.analysisListView = new System.Windows.Forms.ListView();
+            this.authorHeaderTab32 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.textHeaderTab32 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.includeQuotesTab32 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.filesAndGroupsListviewTab3 = new System.Windows.Forms.ListView();
             this.authorHeaderTab3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.textHeaderTab3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -100,9 +103,6 @@
             this.tenHead = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.analysisLineChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.authorHeaderTab32 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.textHeaderTab32 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.includeQuotesTab32 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabControl1.SuspendLayout();
             this.filesTab.SuspendLayout();
             this.editModifyGroupBox.SuspendLayout();
@@ -335,7 +335,7 @@
             this.authorHeaderTab22,
             this.textHeaderTab22,
             this.includeQuotesTab22});
-            this.groupListView.Location = new System.Drawing.Point(650, 92);
+            this.groupListView.Location = new System.Drawing.Point(656, 90);
             this.groupListView.Name = "groupListView";
             this.groupListView.Size = new System.Drawing.Size(444, 325);
             this.groupListView.TabIndex = 6;
@@ -516,12 +516,27 @@
             this.authorHeaderTab32,
             this.textHeaderTab32,
             this.includeQuotesTab32});
-            this.analysisListView.Location = new System.Drawing.Point(650, 92);
+            this.analysisListView.Location = new System.Drawing.Point(656, 90);
             this.analysisListView.Name = "analysisListView";
             this.analysisListView.Size = new System.Drawing.Size(444, 325);
             this.analysisListView.TabIndex = 8;
             this.analysisListView.UseCompatibleStateImageBehavior = false;
             this.analysisListView.View = System.Windows.Forms.View.Details;
+            // 
+            // authorHeaderTab32
+            // 
+            this.authorHeaderTab32.Text = "Author";
+            this.authorHeaderTab32.Width = 150;
+            // 
+            // textHeaderTab32
+            // 
+            this.textHeaderTab32.Text = "Text Title";
+            this.textHeaderTab32.Width = 200;
+            // 
+            // includeQuotesTab32
+            // 
+            this.includeQuotesTab32.Text = "Include Quotes";
+            this.includeQuotesTab32.Width = 90;
             // 
             // filesAndGroupsListviewTab3
             // 
@@ -742,21 +757,6 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             this.openFileDialog1.Filter = "Text Files (.txt)|*.txt";
-            // 
-            // authorHeaderTab32
-            // 
-            this.authorHeaderTab32.Text = "Author";
-            this.authorHeaderTab32.Width = 150;
-            // 
-            // textHeaderTab32
-            // 
-            this.textHeaderTab32.Text = "Text Title";
-            this.textHeaderTab32.Width = 200;
-            // 
-            // includeQuotesTab32
-            // 
-            this.includeQuotesTab32.Text = "Include Quotes";
-            this.includeQuotesTab32.Width = 90;
             // 
             // Form1
             // 
