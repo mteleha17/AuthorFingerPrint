@@ -40,6 +40,8 @@ namespace FingerPrint
         /// <param name="e"></param>
         private void Form1_Load(object sender, EventArgs e)
         {
+            
+
             _modelFactory = new ModelFactory();
             
             IFlexibleWordCountModel wordCount = _modelFactory.GetFlexibleCountModel(10);
@@ -59,7 +61,10 @@ namespace FingerPrint
             }
             String[] row = { model.GetAuthor(), model.GetName(), includeQuotesl };
             ListViewItem item = new ListViewItem(row);
-            fileListViewTab1.Items.Add(item); 
+            fileListViewTab1.Items.Add(item);
+            //fileGroupListViewTab2.Items.Add(item);
+            //filesAndGroupsListviewTab3.Items.Add(item);
+
 
 
             
@@ -88,32 +93,80 @@ namespace FingerPrint
             model.SetName("Adventures of SON");
             model.SetIncludeQuotes(false);
             string groupOrTitle = "SampleData1";
-
             ISingleWordCountModel wcount = model.GetCounts();
+
+            
+            ISingleWordCountModel withQuotes2 = _modelFactory.GetSingleCountModel(10);
+            ISingleWordCountModel withoutQuotes2 = _modelFactory.GetSingleCountModel(10);
+            withoutQuotes2.SetAt(0, 300);
+            withoutQuotes2.SetAt(1, 450);
+            withoutQuotes2.SetAt(2, 600);
+            withoutQuotes2.SetAt(3, 750);
+            withoutQuotes2.SetAt(4, 900);
+            withoutQuotes2.SetAt(5, 700);
+            withoutQuotes2.SetAt(6, 450);
+            withoutQuotes2.SetAt(7, 225);
+            withoutQuotes2.SetAt(8, 90);
+            withoutQuotes2.SetAt(9, 45);
+            IFlexibleWordCountModel wordCount2 = _modelFactory.GetFlexibleCountModel(withQuotes2, withoutQuotes2);
+
+            TextModel model2 = new TextModel("test2", wordCount2);
+            model2.SetAuthor("Paul");
+            model2.SetName("Failures of Liberalism");
+            model2.SetIncludeQuotes(false);
+            string groupOrTitle2 = "SampleData2";
+            ISingleWordCountModel wcount2 = model2.GetCounts();
+
+
+
+
+
+
+
+
+
+
             //graph
             analysisLineChart.Series.Add(groupOrTitle);
+            analysisLineChart.Series.Add(groupOrTitle2);
             analysisLineChart.Series[groupOrTitle].ChartType = SeriesChartType.Line;
-            for(int i = 1; i <= 10; i++)
+            analysisLineChart.Series[groupOrTitle2].ChartType = SeriesChartType.Line;
+
+            for (int i = 1; i <= 10; i++)
             {
+                
                 analysisLineChart.Series[groupOrTitle].Points.AddXY(i, wcount.GetAt(i-1));
+                analysisLineChart.Series[groupOrTitle2].Points.AddXY(i, wcount2.GetAt(i - 1));
             }
             analysisLineChart.Series[groupOrTitle].ChartArea = "ChartArea1";
+            analysisLineChart.Series[groupOrTitle2].ChartArea = "ChartArea1";
+
+
+
+
 
 
             //table
             dataTable.Rows.Add();
             DataGridViewRow row = (DataGridViewRow)dataTable.Rows[0].Clone();
+            DataGridViewRow row2 = (DataGridViewRow)dataTable.Rows[0].Clone();
+
             DataGridViewRow rowToAdd = row;
+            DataGridViewRow rowToAdd2 = row2;
             dataTable.Rows.RemoveAt(0);
             
-            row.Cells[0].Value = groupOrTitle;
+            rowToAdd.Cells[0].Value = groupOrTitle;
+            rowToAdd2.Cells[0].Value = groupOrTitle2;
             for(int i =0; i<model.GetLength(); i++)
             {
                 rowToAdd.Cells[i + 1].Value = wcount.GetAt(i);
+                rowToAdd2.Cells[i + 1].Value = wcount2.GetAt(i);
             }
             dataTable.Rows.Add(rowToAdd);
+            dataTable.Rows.Add(rowToAdd2);
 
             tabControl1.SelectTab(analysisTab);
+            analysisTab.Visible = true;
         }
 
 
@@ -128,24 +181,52 @@ namespace FingerPrint
 
             }
         }
-
-        private void addButtonTab3_Click(object sender, EventArgs e)
-        {
-            /* 
-            ListViewItem itemToMove = fileListViewTab1.SelectedItems[0];
-            ListViewItem itemToAdd = (ListViewItem)itemToMove.Clone();
-            analysisListViewTab1.Items.Add(itemToAdd);
-            fileListViewTab1.Items.Remove(itemToMove);
-            */
-
         
-        }
+      
 
         private void editButton_Click(object sender, EventArgs e)
         {
             var form = new FormPopUpFileEdit();
             form.Show(this);
+            ListViewItem item = fileListViewTab1.SelectedItems[0];
+            newFileNameTextbox.Text = item.SubItems[0].Text;
+            newAuthorTextBox.Text = item.SubItems[1].Text;
+            
         }
 
+        private void addButtonTab2_Click(object sender, EventArgs e)
+        {
+            
+            ListViewItem itemToMove = fileGroupListViewTab2.SelectedItems[0];
+            ListViewItem itemToAdd = (ListViewItem)itemToMove.Clone();
+            groupListViewTab2.Items.Add(itemToAdd);
+            fileGroupListViewTab2.Items.Remove(itemToMove);
+            
+        }
+
+        private void addButtonTab3_Click(object sender, EventArgs e)
+        {
+            ListViewItem itemToMove = filesAndGroupsListviewTab3.SelectedItems[0];
+            ListViewItem itemToAdd = (ListViewItem)itemToMove.Clone();
+            analysisListView.Items.Add(itemToAdd);
+            filesAndGroupsListviewTab3.Items.Remove(itemToMove);
+        }
+
+        private void removeButtonTab3_Click(object sender, EventArgs e)
+        {
+            ListViewItem itemToMove = analysisListView.SelectedItems[0];
+            ListViewItem itemToAdd = (ListViewItem)itemToMove.Clone();
+            filesAndGroupsListviewTab3.Items.Add(itemToAdd);
+            analysisListView.Items.Remove(itemToMove);
+        }
+
+        private void removeButtonTab2_Click(object sender, EventArgs e)
+        {
+            ListViewItem itemToMove = fileGroupListViewTab2.SelectedItems[0];
+            ListViewItem itemToAdd = (ListViewItem)itemToMove.Clone();
+            fileGroupListViewTab2.Items.Add(itemToAdd);
+            fileGroupListViewTab2.Items.Remove(itemToMove);
+
+        }
     }
 }

@@ -28,12 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle34 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle35 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle36 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea12 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend12 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Title title12 = new System.Windows.Forms.DataVisualization.Charting.Title();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.filesTab = new System.Windows.Forms.TabPage();
             this.editModifyGroupBox = new System.Windows.Forms.GroupBox();
@@ -50,12 +50,12 @@
             this.saveButtonTab2 = new System.Windows.Forms.Button();
             this.fileLocationTextBox = new System.Windows.Forms.TextBox();
             this.newFileNameTextbox = new System.Windows.Forms.TextBox();
-            this.authorTextBox = new System.Windows.Forms.TextBox();
+            this.newAuthorTextBox = new System.Windows.Forms.TextBox();
             this.groupsTab = new System.Windows.Forms.TabPage();
             this.groupsGroupBox = new System.Windows.Forms.GroupBox();
             this.newGroupButton = new System.Windows.Forms.Button();
             this.groupComboBox = new System.Windows.Forms.ComboBox();
-            this.groupListView = new System.Windows.Forms.ListView();
+            this.groupListViewTab2 = new System.Windows.Forms.ListView();
             this.authorHeaderTab22 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.textHeaderTab22 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.includeQuotesTab22 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -65,7 +65,7 @@
             this.radiouttonPanel = new System.Windows.Forms.Panel();
             this.groupsRadioButton = new System.Windows.Forms.RadioButton();
             this.filesRadioButton = new System.Windows.Forms.RadioButton();
-            this.fileGroupListViewTab3 = new System.Windows.Forms.ListView();
+            this.fileGroupListViewTab2 = new System.Windows.Forms.ListView();
             this.authorHeaderTab2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.titleHeaderTab2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.includeQuotesHeaderTab2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -147,11 +147,13 @@
             // 
             // editModifyGroupBox
             // 
+            this.editModifyGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.editModifyGroupBox.Controls.Add(this.deleteButtonTab2);
             this.editModifyGroupBox.Controls.Add(this.editButton);
             this.editModifyGroupBox.Controls.Add(this.editModifyLabel);
             this.editModifyGroupBox.Controls.Add(this.fileListViewTab1);
-            this.editModifyGroupBox.Dock = System.Windows.Forms.DockStyle.Right;
             this.editModifyGroupBox.Location = new System.Drawing.Point(620, 3);
             this.editModifyGroupBox.Name = "editModifyGroupBox";
             this.editModifyGroupBox.Size = new System.Drawing.Size(612, 573);
@@ -160,7 +162,7 @@
             // 
             // deleteButtonTab2
             // 
-            this.deleteButtonTab2.Location = new System.Drawing.Point(361, 351);
+            this.deleteButtonTab2.Location = new System.Drawing.Point(372, 406);
             this.deleteButtonTab2.Name = "deleteButtonTab2";
             this.deleteButtonTab2.Size = new System.Drawing.Size(75, 23);
             this.deleteButtonTab2.TabIndex = 3;
@@ -169,7 +171,7 @@
             // 
             // editButton
             // 
-            this.editButton.Location = new System.Drawing.Point(280, 352);
+            this.editButton.Location = new System.Drawing.Point(291, 406);
             this.editButton.Name = "editButton";
             this.editButton.Size = new System.Drawing.Size(75, 23);
             this.editButton.TabIndex = 2;
@@ -193,9 +195,10 @@
             this.authorHeader,
             this.textTitleHeader,
             this.includeQuotesHeader});
+            this.fileListViewTab1.FullRowSelect = true;
             this.fileListViewTab1.Location = new System.Drawing.Point(52, 75);
             this.fileListViewTab1.Name = "fileListViewTab1";
-            this.fileListViewTab1.Size = new System.Drawing.Size(456, 271);
+            this.fileListViewTab1.Size = new System.Drawing.Size(444, 325);
             this.fileListViewTab1.TabIndex = 0;
             this.fileListViewTab1.UseCompatibleStateImageBehavior = false;
             this.fileListViewTab1.View = System.Windows.Forms.View.Details;
@@ -213,17 +216,20 @@
             // includeQuotesHeader
             // 
             this.includeQuotesHeader.Text = "Include Quotes";
-            this.includeQuotesHeader.Width = 100;
+            this.includeQuotesHeader.Width = 90;
             // 
             // addGroupBox
             // 
+            this.addGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.addGroupBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.addGroupBox.Controls.Add(this.addLabel);
             this.addGroupBox.Controls.Add(this.selectFileButtonTab2);
             this.addGroupBox.Controls.Add(this.saveButtonTab2);
             this.addGroupBox.Controls.Add(this.fileLocationTextBox);
             this.addGroupBox.Controls.Add(this.newFileNameTextbox);
-            this.addGroupBox.Controls.Add(this.authorTextBox);
-            this.addGroupBox.Dock = System.Windows.Forms.DockStyle.Left;
+            this.addGroupBox.Controls.Add(this.newAuthorTextBox);
             this.addGroupBox.Location = new System.Drawing.Point(3, 3);
             this.addGroupBox.Name = "addGroupBox";
             this.addGroupBox.Size = new System.Drawing.Size(611, 573);
@@ -277,11 +283,11 @@
             // 
             // authorTextBox
             // 
-            this.authorTextBox.Location = new System.Drawing.Point(6, 152);
-            this.authorTextBox.Name = "authorTextBox";
-            this.authorTextBox.Size = new System.Drawing.Size(193, 20);
-            this.authorTextBox.TabIndex = 3;
-            this.authorTextBox.Text = "Name of Author";
+            this.newAuthorTextBox.Location = new System.Drawing.Point(6, 152);
+            this.newAuthorTextBox.Name = "authorTextBox";
+            this.newAuthorTextBox.Size = new System.Drawing.Size(193, 20);
+            this.newAuthorTextBox.TabIndex = 3;
+            this.newAuthorTextBox.Text = "Name of Author";
             // 
             // groupsTab
             // 
@@ -298,12 +304,12 @@
             // 
             this.groupsGroupBox.Controls.Add(this.newGroupButton);
             this.groupsGroupBox.Controls.Add(this.groupComboBox);
-            this.groupsGroupBox.Controls.Add(this.groupListView);
+            this.groupsGroupBox.Controls.Add(this.groupListViewTab2);
             this.groupsGroupBox.Controls.Add(this.deleteButtonTab3);
             this.groupsGroupBox.Controls.Add(this.removeButtonTab2);
             this.groupsGroupBox.Controls.Add(this.addButtonTab2);
             this.groupsGroupBox.Controls.Add(this.radiouttonPanel);
-            this.groupsGroupBox.Controls.Add(this.fileGroupListViewTab3);
+            this.groupsGroupBox.Controls.Add(this.fileGroupListViewTab2);
             this.groupsGroupBox.Controls.Add(this.groupTabLabel);
             this.groupsGroupBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupsGroupBox.Location = new System.Drawing.Point(3, 3);
@@ -329,18 +335,19 @@
             this.groupComboBox.Size = new System.Drawing.Size(121, 21);
             this.groupComboBox.TabIndex = 7;
             // 
-            // groupListView
+            // groupListViewTab2
             // 
-            this.groupListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.groupListViewTab2.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.authorHeaderTab22,
             this.textHeaderTab22,
             this.includeQuotesTab22});
-            this.groupListView.Location = new System.Drawing.Point(656, 90);
-            this.groupListView.Name = "groupListView";
-            this.groupListView.Size = new System.Drawing.Size(444, 325);
-            this.groupListView.TabIndex = 6;
-            this.groupListView.UseCompatibleStateImageBehavior = false;
-            this.groupListView.View = System.Windows.Forms.View.Details;
+            this.groupListViewTab2.FullRowSelect = true;
+            this.groupListViewTab2.Location = new System.Drawing.Point(656, 90);
+            this.groupListViewTab2.Name = "groupListViewTab2";
+            this.groupListViewTab2.Size = new System.Drawing.Size(444, 325);
+            this.groupListViewTab2.TabIndex = 6;
+            this.groupListViewTab2.UseCompatibleStateImageBehavior = false;
+            this.groupListViewTab2.View = System.Windows.Forms.View.Details;
             // 
             // authorHeaderTab22
             // 
@@ -374,6 +381,7 @@
             this.removeButtonTab2.TabIndex = 4;
             this.removeButtonTab2.Text = "<- Remove";
             this.removeButtonTab2.UseVisualStyleBackColor = true;
+            this.removeButtonTab2.Click += new System.EventHandler(this.removeButtonTab2_Click);
             // 
             // addButtonTab2
             // 
@@ -383,6 +391,7 @@
             this.addButtonTab2.TabIndex = 3;
             this.addButtonTab2.Text = "Add ->";
             this.addButtonTab2.UseVisualStyleBackColor = true;
+            this.addButtonTab2.Click += new System.EventHandler(this.addButtonTab2_Click);
             // 
             // radiouttonPanel
             // 
@@ -415,18 +424,19 @@
             this.filesRadioButton.Text = "Files";
             this.filesRadioButton.UseVisualStyleBackColor = true;
             // 
-            // fileGroupListViewTab3
+            // fileGroupListViewTab2
             // 
-            this.fileGroupListViewTab3.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.fileGroupListViewTab2.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.authorHeaderTab2,
             this.titleHeaderTab2,
             this.includeQuotesHeaderTab2});
-            this.fileGroupListViewTab3.Location = new System.Drawing.Point(23, 90);
-            this.fileGroupListViewTab3.Name = "fileGroupListViewTab3";
-            this.fileGroupListViewTab3.Size = new System.Drawing.Size(444, 325);
-            this.fileGroupListViewTab3.TabIndex = 1;
-            this.fileGroupListViewTab3.UseCompatibleStateImageBehavior = false;
-            this.fileGroupListViewTab3.View = System.Windows.Forms.View.Details;
+            this.fileGroupListViewTab2.FullRowSelect = true;
+            this.fileGroupListViewTab2.Location = new System.Drawing.Point(23, 90);
+            this.fileGroupListViewTab2.Name = "fileGroupListViewTab2";
+            this.fileGroupListViewTab2.Size = new System.Drawing.Size(444, 325);
+            this.fileGroupListViewTab2.TabIndex = 1;
+            this.fileGroupListViewTab2.UseCompatibleStateImageBehavior = false;
+            this.fileGroupListViewTab2.View = System.Windows.Forms.View.Details;
             // 
             // authorHeaderTab2
             // 
@@ -516,6 +526,7 @@
             this.authorHeaderTab32,
             this.textHeaderTab32,
             this.includeQuotesTab32});
+            this.analysisListView.FullRowSelect = true;
             this.analysisListView.Location = new System.Drawing.Point(656, 90);
             this.analysisListView.Name = "analysisListView";
             this.analysisListView.Size = new System.Drawing.Size(444, 325);
@@ -544,6 +555,7 @@
             this.authorHeaderTab3,
             this.textHeaderTab3,
             this.includeQuotesHeaderTab3});
+            this.filesAndGroupsListviewTab3.FullRowSelect = true;
             this.filesAndGroupsListviewTab3.Location = new System.Drawing.Point(23, 90);
             this.filesAndGroupsListviewTab3.Name = "filesAndGroupsListviewTab3";
             this.filesAndGroupsListviewTab3.Size = new System.Drawing.Size(444, 325);
@@ -584,6 +596,7 @@
             this.removeButtonTab3.TabIndex = 3;
             this.removeButtonTab3.Text = "<- Remove";
             this.removeButtonTab3.UseVisualStyleBackColor = true;
+            this.removeButtonTab3.Click += new System.EventHandler(this.removeButtonTab3_Click);
             // 
             // addButtonTab3
             // 
@@ -608,6 +621,7 @@
             // analysisTab
             // 
             this.analysisTab.Controls.Add(this.chartGroupBox);
+            this.analysisTab.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.analysisTab.Location = new System.Drawing.Point(4, 22);
             this.analysisTab.Name = "analysisTab";
             this.analysisTab.Padding = new System.Windows.Forms.Padding(3);
@@ -631,14 +645,14 @@
             // 
             this.dataTable.AllowUserToAddRows = false;
             this.dataTable.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataTable.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle34.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle34.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle34.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle34.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle34.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle34.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle34.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataTable.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle34;
             this.dataTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataTable.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.groupOrTextHead,
@@ -652,106 +666,123 @@
             this.eightHead,
             this.nineHead,
             this.tenHead});
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataTable.DefaultCellStyle = dataGridViewCellStyle2;
-            this.dataTable.Location = new System.Drawing.Point(727, 19);
+            dataGridViewCellStyle35.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle35.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle35.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle35.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle35.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle35.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle35.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataTable.DefaultCellStyle = dataGridViewCellStyle35;
+            this.dataTable.Dock = System.Windows.Forms.DockStyle.Right;
+            this.dataTable.Location = new System.Drawing.Point(736, 16);
             this.dataTable.Name = "dataTable";
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataTable.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
-            this.dataTable.Size = new System.Drawing.Size(490, 363);
+            this.dataTable.ReadOnly = true;
+            dataGridViewCellStyle36.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle36.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle36.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle36.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle36.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle36.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle36.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataTable.RowHeadersDefaultCellStyle = dataGridViewCellStyle36;
+            this.dataTable.Size = new System.Drawing.Size(490, 554);
             this.dataTable.TabIndex = 1;
             // 
             // groupOrTextHead
             // 
             this.groupOrTextHead.HeaderText = "Text/Group";
             this.groupOrTextHead.Name = "groupOrTextHead";
+            this.groupOrTextHead.ReadOnly = true;
             // 
             // oneHead
             // 
             this.oneHead.HeaderText = "1\'s";
             this.oneHead.Name = "oneHead";
+            this.oneHead.ReadOnly = true;
             this.oneHead.Width = 35;
             // 
             // twoHead
             // 
             this.twoHead.HeaderText = "2\'s";
             this.twoHead.Name = "twoHead";
+            this.twoHead.ReadOnly = true;
             this.twoHead.Width = 35;
             // 
             // threeHead
             // 
             this.threeHead.HeaderText = "3\'s";
             this.threeHead.Name = "threeHead";
+            this.threeHead.ReadOnly = true;
             this.threeHead.Width = 35;
             // 
             // fourHead
             // 
             this.fourHead.HeaderText = "4\'s";
             this.fourHead.Name = "fourHead";
+            this.fourHead.ReadOnly = true;
             this.fourHead.Width = 35;
             // 
             // fiveHead
             // 
             this.fiveHead.HeaderText = "5\'s";
             this.fiveHead.Name = "fiveHead";
+            this.fiveHead.ReadOnly = true;
             this.fiveHead.Width = 35;
             // 
             // sixHead
             // 
             this.sixHead.HeaderText = "6\'s";
             this.sixHead.Name = "sixHead";
+            this.sixHead.ReadOnly = true;
             this.sixHead.Width = 35;
             // 
             // sevenHead
             // 
             this.sevenHead.HeaderText = "7\'s";
             this.sevenHead.Name = "sevenHead";
+            this.sevenHead.ReadOnly = true;
             this.sevenHead.Width = 35;
             // 
             // eightHead
             // 
             this.eightHead.HeaderText = "8\'s";
             this.eightHead.Name = "eightHead";
+            this.eightHead.ReadOnly = true;
             this.eightHead.Width = 35;
             // 
             // nineHead
             // 
             this.nineHead.HeaderText = "9\'s";
             this.nineHead.Name = "nineHead";
+            this.nineHead.ReadOnly = true;
             this.nineHead.Width = 35;
             // 
             // tenHead
             // 
             this.tenHead.HeaderText = "10\'s";
             this.tenHead.Name = "tenHead";
+            this.tenHead.ReadOnly = true;
             this.tenHead.Width = 35;
             // 
             // analysisLineChart
             // 
-            chartArea1.Name = "ChartArea1";
-            this.analysisLineChart.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.analysisLineChart.Legends.Add(legend1);
-            this.analysisLineChart.Location = new System.Drawing.Point(6, 19);
+            this.analysisLineChart.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            chartArea12.Name = "ChartArea1";
+            this.analysisLineChart.ChartAreas.Add(chartArea12);
+            legend12.Name = "Legend1";
+            this.analysisLineChart.Legends.Add(legend12);
+            this.analysisLineChart.Location = new System.Drawing.Point(3, 16);
+            this.analysisLineChart.MaximumSize = new System.Drawing.Size(1200, 1200);
             this.analysisLineChart.Name = "analysisLineChart";
-            this.analysisLineChart.Size = new System.Drawing.Size(715, 551);
+            this.analysisLineChart.Size = new System.Drawing.Size(715, 554);
             this.analysisLineChart.TabIndex = 0;
-            title1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            title1.Name = "authorAnalysis";
-            title1.Text = "Author Analysis";
-            this.analysisLineChart.Titles.Add(title1);
+            title12.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            title12.Name = "authorAnalysis";
+            title12.Text = "Author Analysis";
+            this.analysisLineChart.Titles.Add(title12);
             // 
             // openFileDialog1
             // 
@@ -804,7 +835,7 @@
         private System.Windows.Forms.Label fALabel;
         private System.Windows.Forms.Button saveButtonTab2;
         private System.Windows.Forms.Button selectFileButtonTab2;
-        private System.Windows.Forms.TextBox authorTextBox;
+        private System.Windows.Forms.TextBox newAuthorTextBox;
         private System.Windows.Forms.TextBox newFileNameTextbox;
         private System.Windows.Forms.TextBox fileLocationTextBox;
         private System.Windows.Forms.Label addLabel;
@@ -815,14 +846,14 @@
         private System.Windows.Forms.Button deleteButtonTab2;
         private System.Windows.Forms.Button editButton;
         private System.Windows.Forms.GroupBox groupsGroupBox;
-        private System.Windows.Forms.ListView groupListView;
+        private System.Windows.Forms.ListView groupListViewTab2;
         private System.Windows.Forms.Button deleteButtonTab3;
         private System.Windows.Forms.Button removeButtonTab2;
         private System.Windows.Forms.Button addButtonTab2;
         private System.Windows.Forms.Panel radiouttonPanel;
         private System.Windows.Forms.RadioButton groupsRadioButton;
         private System.Windows.Forms.RadioButton filesRadioButton;
-        private System.Windows.Forms.ListView fileGroupListViewTab3;
+        private System.Windows.Forms.ListView fileGroupListViewTab2;
         private System.Windows.Forms.Label groupTabLabel;
         private System.Windows.Forms.ComboBox groupComboBox;
         private System.Windows.Forms.TabPage analysisTab;
