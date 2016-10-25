@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="7e025731d8e747eda4e8df39f1abdf01" Name="Diagram1">
+        <EntityTypeShape EntityType="FingerprintV2Model.Count" Width="1.5" PointX="5.75" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="FingerprintV2Model.Group" Width="1.5" PointX="0.5" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="FingerprintV2Model.Group_Group" Width="1.5" PointX="2.875" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="FingerprintV2Model.Text" Width="1.5" PointX="3.25" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FingerprintV2Model.Text_Group" Width="1.5" PointX="0.75" PointY="3.625" IsExpanded="true" />
+        <AssociationConnector Association="FingerprintV2Model.TextCount" />
+        <AssociationConnector Association="FingerprintV2Model.TextText_Group" />
+        <AssociationConnector Association="FingerprintV2Model.Text_GroupGroup" />
+        <AssociationConnector Association="FingerprintV2Model.GroupGroup_Group" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

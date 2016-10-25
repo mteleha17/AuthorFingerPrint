@@ -12,6 +12,21 @@
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -64,11 +79,8 @@
     <Compile Include="Controllers\Interfaces\IAnalysisController.cs" />
     <Compile Include="Controllers\Interfaces\IGroupController.cs" />
     <Compile Include="Controllers\Interfaces\ITextController.cs" />
-    <Compile Include="File.cs">
-      <DependentUpon>FingerprintDataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="File_Group.cs">
-      <DependentUpon>FingerprintDataModel.tt</DependentUpon>
+    <Compile Include="Count.cs">
+      <DependentUpon>FingerprintV2Model.tt</DependentUpon>
     </Compile>
     <Compile Include="FingerprintDataModel.Context.cs">
       <AutoGen>True</AutoGen>
@@ -85,6 +97,21 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>FingerprintDataModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="FingerprintV2Model.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FingerprintV2Model.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FingerprintV2Model.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FingerprintV2Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FingerprintV2Model.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FingerprintV2Model.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -98,10 +125,10 @@
       <DependentUpon>FormPopUpFileEdit.cs</DependentUpon>
     </Compile>
     <Compile Include="Group.cs">
-      <DependentUpon>FingerprintDataModel.tt</DependentUpon>
+      <DependentUpon>FingerprintV2Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Group_Group.cs">
-      <DependentUpon>FingerprintDataModel.tt</DependentUpon>
+      <DependentUpon>FingerprintV2Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Implementations\FlexibleWordCountModel.cs" />
     <Compile Include="Models\Implementations\GroupModel.cs" />
@@ -121,12 +148,6 @@
     <Compile Include="Models\Implementations\TextModel.cs" />
     <Compile Include="Models\Interfaces\ViewModels\ITextOrGroupViewModel.cs" />
     <Compile Include="Models\Interfaces\ViewModels\ITextViewModel.cs" />
-    <Compile Include="NumbersWithoutQuote.cs">
-      <DependentUpon>FingerprintDataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="NumbersWithQuote.cs">
-      <DependentUpon>FingerprintDataModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Stores\Implementations\GroupStore.cs" />
@@ -134,6 +155,12 @@
     <Compile Include="Stores\Interfaces\IItemStore.cs" />
     <Compile Include="Stores\Interfaces\ITextStore.cs" />
     <Compile Include="Stores\Implementations\TextStore.cs" />
+    <Compile Include="Text.cs">
+      <DependentUpon>FingerprintV2Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Text_Group.cs">
+      <DependentUpon>FingerprintV2Model.tt</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -155,6 +182,13 @@
     </EntityDeploy>
     <None Include="FingerprintDataModel.edmx.diagram">
       <DependentUpon>FingerprintDataModel.edmx</DependentUpon>
+    </None>
+    <EntityDeploy Include="FingerprintV2Model.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>FingerprintV2Model.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="FingerprintV2Model.edmx.diagram">
+      <DependentUpon>FingerprintV2Model.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -181,9 +215,38 @@
       <DependentUpon>FingerprintDataModel.edmx</DependentUpon>
       <LastGenOutput>FingerprintDataModel.cs</LastGenOutput>
     </Content>
+    <Content Include="FingerprintV2.mdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="FingerprintV2Model.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>FingerprintV2Model.edmx</DependentUpon>
+      <LastGenOutput>FingerprintV2Model.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="FingerprintV2Model.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>FingerprintV2Model.edmx</DependentUpon>
+      <LastGenOutput>FingerprintV2Model.cs</LastGenOutput>
+    </Content>
+    <Content Include="FingerprintV2_log.ldf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DependentUpon>FingerprintV2.mdf</DependentUpon>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5.2 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,0 +1,296 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="FingerprintV2Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Counts">
+          <Key>
+            <PropertyRef Name="CountsID" />
+          </Key>
+          <Property Name="CountsID" Type="int" Nullable="false" />
+          <Property Name="one" Type="int" />
+          <Property Name="two" Type="int" />
+          <Property Name="three" Type="int" />
+          <Property Name="four" Type="int" />
+          <Property Name="five" Type="int" />
+          <Property Name="six" Type="int" />
+          <Property Name="seven" Type="int" />
+          <Property Name="eight" Type="int" />
+          <Property Name="nine" Type="int" />
+          <Property Name="ten" Type="int" />
+          <Property Name="eleven" Type="int" />
+          <Property Name="twelve" Type="int" />
+          <Property Name="thirteen" Type="int" />
+          <Property Name="fourteen" Type="int" />
+          <Property Name="fifteen" Type="int" />
+          <Property Name="sixteen" Type="int" />
+          <Property Name="seventeen" Type="int" />
+          <Property Name="eighteen" Type="int" />
+          <Property Name="nineteen" Type="int" />
+          <Property Name="twentyPlus" Type="int" />
+        </EntityType>
+        <EntityType Name="Group">
+          <Key>
+            <PropertyRef Name="GroupID" />
+          </Key>
+          <Property Name="GroupID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Group_Group">
+          <Key>
+            <PropertyRef Name="GG_ID" />
+          </Key>
+          <Property Name="GG_ID" Type="int" Nullable="false" />
+          <Property Name="ParentID" Type="int" />
+          <Property Name="ChildID" Type="int" />
+        </EntityType>
+        <EntityType Name="Text">
+          <Key>
+            <PropertyRef Name="TextID" />
+          </Key>
+          <Property Name="TextID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="100" />
+          <Property Name="Author" Type="nchar" MaxLength="100" />
+          <Property Name="QuoteInd" Type="nchar" MaxLength="100" />
+          <Property Name="CountsWithQuotesID" Type="nchar" MaxLength="100" />
+          <Property Name="CountsWithoutQuotesID" Type="nchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Text_Group">
+          <Key>
+            <PropertyRef Name="TextID" />
+          </Key>
+          <Property Name="TextID" Type="int" Nullable="false" />
+          <Property Name="GroupID" Type="nchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="FingerprintV2ModelStoreContainer">
+          <EntitySet Name="Counts" EntityType="Self.Counts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Group" EntityType="Self.Group" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Group_Group" EntityType="Self.Group_Group" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Text" EntityType="Self.Text" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Text_Group" EntityType="Self.Text_Group" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="FingerprintV2Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Count">
+          <Key>
+            <PropertyRef Name="CountsID" />
+          </Key>
+          <Property Name="CountsID" Type="Int32" Nullable="false" />
+          <Property Name="one" Type="Int32" />
+          <Property Name="two" Type="Int32" />
+          <Property Name="three" Type="Int32" />
+          <Property Name="four" Type="Int32" />
+          <Property Name="five" Type="Int32" />
+          <Property Name="six" Type="Int32" />
+          <Property Name="seven" Type="Int32" />
+          <Property Name="eight" Type="Int32" />
+          <Property Name="nine" Type="Int32" />
+          <Property Name="ten" Type="Int32" />
+          <Property Name="eleven" Type="Int32" />
+          <Property Name="twelve" Type="Int32" />
+          <Property Name="thirteen" Type="Int32" />
+          <Property Name="fourteen" Type="Int32" />
+          <Property Name="fifteen" Type="Int32" />
+          <Property Name="sixteen" Type="Int32" />
+          <Property Name="seventeen" Type="Int32" />
+          <Property Name="eighteen" Type="Int32" />
+          <Property Name="nineteen" Type="Int32" />
+          <Property Name="twentyPlus" Type="Int32" />
+          <NavigationProperty Name="Text" Relationship="FingerprintV2Model.TextCount" FromRole="Count" ToRole="Text" />
+        </EntityType>
+        <EntityType Name="Group">
+          <Key>
+            <PropertyRef Name="GroupID" />
+          </Key>
+          <Property Name="GroupID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Text_Group" Relationship="FingerprintV2Model.Text_GroupGroup" FromRole="Group" ToRole="Text_Group" />
+          <Property Name="Text_GroupTextID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Group_Group" Relationship="FingerprintV2Model.GroupGroup_Group" FromRole="Group" ToRole="Group_Group" />
+        </EntityType>
+        <EntityType Name="Group_Group">
+          <Key>
+            <PropertyRef Name="GG_ID" />
+          </Key>
+          <Property Name="GG_ID" Type="Int32" Nullable="false" />
+          <Property Name="ParentID" Type="Int32" />
+          <Property Name="ChildID" Type="Int32" />
+          <NavigationProperty Name="Group" Relationship="FingerprintV2Model.GroupGroup_Group" FromRole="Group_Group" ToRole="Group" />
+          <Property Name="GroupGroupID" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Text">
+          <Key>
+            <PropertyRef Name="TextID" />
+          </Key>
+          <Property Name="TextID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="Author" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="QuoteInd" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="CountsWithQuotesID" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="CountsWithoutQuotesID" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Count" Relationship="FingerprintV2Model.TextCount" FromRole="Text" ToRole="Count" />
+          <NavigationProperty Name="Text_Group" Relationship="FingerprintV2Model.TextText_Group" FromRole="Text" ToRole="Text_Group" />
+        </EntityType>
+        <EntityType Name="Text_Group">
+          <Key>
+            <PropertyRef Name="TextID" />
+          </Key>
+          <Property Name="TextID" Type="Int32" Nullable="false" />
+          <Property Name="GroupID" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Texts" Relationship="FingerprintV2Model.TextText_Group" FromRole="Text_Group" ToRole="Text" />
+          <NavigationProperty Name="Groups" Relationship="FingerprintV2Model.Text_GroupGroup" FromRole="Text_Group" ToRole="Group" />
+        </EntityType>
+        <EntityContainer Name="FingerprintV2Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Counts" EntityType="Self.Count" />
+          <EntitySet Name="Groups" EntityType="Self.Group" />
+          <EntitySet Name="Group_Group" EntityType="Self.Group_Group" />
+          <EntitySet Name="Texts" EntityType="Self.Text" />
+          <EntitySet Name="Text_Group" EntityType="Self.Text_Group" />
+          <AssociationSet Name="TextCount" Association="FingerprintV2Model.TextCount">
+            <End Role="Text" EntitySet="Texts" />
+            <End Role="Count" EntitySet="Counts" />
+          </AssociationSet>
+          <AssociationSet Name="TextText_Group" Association="FingerprintV2Model.TextText_Group">
+            <End Role="Text" EntitySet="Texts" />
+            <End Role="Text_Group" EntitySet="Text_Group" />
+          </AssociationSet>
+          <AssociationSet Name="Text_GroupGroup" Association="FingerprintV2Model.Text_GroupGroup">
+            <End Role="Text_Group" EntitySet="Text_Group" />
+            <End Role="Group" EntitySet="Groups" />
+          </AssociationSet>
+          <AssociationSet Name="GroupGroup_Group" Association="FingerprintV2Model.GroupGroup_Group">
+            <End EntitySet="Groups" Role="Group" />
+            <End EntitySet="Group_Group" Role="Group_Group" />
+          </AssociationSet>
+        </EntityContainer>
+        <Association Name="TextCount">
+          <End Type="FingerprintV2Model.Text" Role="Text" Multiplicity="1" />
+          <End Type="FingerprintV2Model.Count" Role="Count" Multiplicity="1" />
+        </Association>
+        <Association Name="TextText_Group">
+          <End Type="FingerprintV2Model.Text" Role="Text" Multiplicity="*" />
+          <End Type="FingerprintV2Model.Text_Group" Role="Text_Group" Multiplicity="1" />
+        </Association>
+        <Association Name="Text_GroupGroup">
+          <End Type="FingerprintV2Model.Text_Group" Role="Text_Group" Multiplicity="1" />
+          <End Type="FingerprintV2Model.Group" Role="Group" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Text_Group">
+              <PropertyRef Name="TextID" />
+            </Principal>
+            <Dependent Role="Group">
+              <PropertyRef Name="Text_GroupTextID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="GroupGroup_Group">
+          <End Type="FingerprintV2Model.Group" Multiplicity="1" Role="Group" />
+          <End Type="FingerprintV2Model.Group_Group" Multiplicity="*" Role="Group_Group" />
+          <ReferentialConstraint>
+            <Principal Role="Group">
+              <PropertyRef Name="GroupID" />
+            </Principal>
+            <Dependent Role="Group_Group">
+              <PropertyRef Name="GroupGroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="FingerprintV2ModelStoreContainer" CdmEntityContainer="FingerprintV2Entities">
+          <EntitySetMapping Name="Counts">
+            <EntityTypeMapping TypeName="FingerprintV2Model.Count">
+              <MappingFragment StoreEntitySet="Counts">
+                <ScalarProperty Name="CountsID" ColumnName="CountsID" />
+                <ScalarProperty Name="one" ColumnName="one" />
+                <ScalarProperty Name="two" ColumnName="two" />
+                <ScalarProperty Name="three" ColumnName="three" />
+                <ScalarProperty Name="four" ColumnName="four" />
+                <ScalarProperty Name="five" ColumnName="five" />
+                <ScalarProperty Name="six" ColumnName="six" />
+                <ScalarProperty Name="seven" ColumnName="seven" />
+                <ScalarProperty Name="eight" ColumnName="eight" />
+                <ScalarProperty Name="nine" ColumnName="nine" />
+                <ScalarProperty Name="ten" ColumnName="ten" />
+                <ScalarProperty Name="eleven" ColumnName="eleven" />
+                <ScalarProperty Name="twelve" ColumnName="twelve" />
+                <ScalarProperty Name="thirteen" ColumnName="thirteen" />
+                <ScalarProperty Name="fourteen" ColumnName="fourteen" />
+                <ScalarProperty Name="fifteen" ColumnName="fifteen" />
+                <ScalarProperty Name="sixteen" ColumnName="sixteen" />
+                <ScalarProperty Name="seventeen" ColumnName="seventeen" />
+                <ScalarProperty Name="eighteen" ColumnName="eighteen" />
+                <ScalarProperty Name="nineteen" ColumnName="nineteen" />
+                <ScalarProperty Name="twentyPlus" ColumnName="twentyPlus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Groups">
+            <EntityTypeMapping TypeName="FingerprintV2Model.Group">
+              <MappingFragment StoreEntitySet="Group">
+                <ScalarProperty Name="GroupID" ColumnName="GroupID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Group_Group">
+            <EntityTypeMapping TypeName="FingerprintV2Model.Group_Group">
+              <MappingFragment StoreEntitySet="Group_Group">
+                <ScalarProperty Name="GG_ID" ColumnName="GG_ID" />
+                <ScalarProperty Name="ParentID" ColumnName="ParentID" />
+                <ScalarProperty Name="ChildID" ColumnName="ChildID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Texts">
+            <EntityTypeMapping TypeName="FingerprintV2Model.Text">
+              <MappingFragment StoreEntitySet="Text">
+                <ScalarProperty Name="TextID" ColumnName="TextID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Author" ColumnName="Author" />
+                <ScalarProperty Name="QuoteInd" ColumnName="QuoteInd" />
+                <ScalarProperty Name="CountsWithQuotesID" ColumnName="CountsWithQuotesID" />
+                <ScalarProperty Name="CountsWithoutQuotesID" ColumnName="CountsWithoutQuotesID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Text_Group">
+            <EntityTypeMapping TypeName="FingerprintV2Model.Text_Group">
+              <MappingFragment StoreEntitySet="Text_Group">
+                <ScalarProperty Name="TextID" ColumnName="TextID" />
+                <ScalarProperty Name="GroupID" ColumnName="GroupID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -12,9 +12,9 @@ namespace FingerPrint
     using System;
     using System.Collections.Generic;
     
-    public partial class NumbersWithQuote
+    public partial class Count
     {
-        public int FileID { get; set; }
+        public int CountsID { get; set; }
         public Nullable<int> one { get; set; }
         public Nullable<int> two { get; set; }
         public Nullable<int> three { get; set; }
@@ -26,7 +26,7 @@ namespace FingerPrint
         public Nullable<int> nine { get; set; }
         public Nullable<int> ten { get; set; }
         public Nullable<int> eleven { get; set; }
-        public Nullable<int> tweleve { get; set; }
+        public Nullable<int> twelve { get; set; }
         public Nullable<int> thirteen { get; set; }
         public Nullable<int> fourteen { get; set; }
         public Nullable<int> fifteen { get; set; }
@@ -35,8 +35,7 @@ namespace FingerPrint
         public Nullable<int> eighteen { get; set; }
         public Nullable<int> nineteen { get; set; }
         public Nullable<int> twentyPlus { get; set; }
-        public int FileFileID { get; set; }
     
-        public virtual File File { get; set; }
+        public virtual Text Text { get; set; }
     }
 }
