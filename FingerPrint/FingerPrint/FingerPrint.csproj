@@ -82,21 +82,6 @@
     <Compile Include="Count.cs">
       <DependentUpon>FingerprintV2Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="FingerprintDataModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>FingerprintDataModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="FingerprintDataModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>FingerprintDataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="FingerprintDataModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>FingerprintDataModel.edmx</DependentUpon>
-    </Compile>
     <Compile Include="FingerprintV2Model.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -176,13 +161,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EntityDeploy Include="FingerprintDataModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>FingerprintDataModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="FingerprintDataModel.edmx.diagram">
-      <DependentUpon>FingerprintDataModel.edmx</DependentUpon>
-    </None>
     <EntityDeploy Include="FingerprintV2Model.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>FingerprintV2Model.Designer.cs</LastGenOutput>
@@ -205,19 +183,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="FingerprintDataModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>FingerprintDataModel.edmx</DependentUpon>
-      <LastGenOutput>FingerprintDataModel.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="FingerprintDataModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>FingerprintDataModel.edmx</DependentUpon>
-      <LastGenOutput>FingerprintDataModel.cs</LastGenOutput>
-    </Content>
-    <Content Include="FingerprintV2.mdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="FingerprintV2Model.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>FingerprintV2Model.edmx</DependentUpon>
@@ -227,10 +192,6 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>FingerprintV2Model.edmx</DependentUpon>
       <LastGenOutput>FingerprintV2Model.cs</LastGenOutput>
-    </Content>
-    <Content Include="FingerprintV2_log.ldf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <DependentUpon>FingerprintV2.mdf</DependentUpon>
     </Content>
   </ItemGroup>
   <ItemGroup>
