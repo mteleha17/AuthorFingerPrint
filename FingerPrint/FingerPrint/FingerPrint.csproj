@@ -82,6 +82,12 @@
     <Compile Include="Count.cs">
       <DependentUpon>FingerprintV2Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="ErrorMessageDisplay.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ErrorMessageDisplay.Designer.cs">
+      <DependentUpon>ErrorMessageDisplay.cs</DependentUpon>
+    </Compile>
     <Compile Include="FingerprintV2Model.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -146,6 +152,9 @@
     <Compile Include="Text_Group.cs">
       <DependentUpon>FingerprintV2Model.tt</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="ErrorMessageDisplay.resx">
+      <DependentUpon>ErrorMessageDisplay.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

@@ -59,8 +59,11 @@ namespace FingerPrint
             else{
                 includeQuotesl = "No";
             }
-            String[] row = { model.GetAuthor(), model.GetName(), includeQuotesl };
-            ListViewItem item = new ListViewItem(row);
+            
+            ListViewItem item = new ListViewItem();
+            item.Text = model.GetAuthor();
+            item.SubItems.Add(model.GetName());
+            item.SubItems.Add(includeQuotesl);
             fileListViewTab1.Items.Add(item);
             //fileGroupListViewTab2.Items.Add(item);
             //filesAndGroupsListviewTab3.Items.Add(item);
@@ -186,47 +189,76 @@ namespace FingerPrint
 
         private void editButton_Click(object sender, EventArgs e)
         {
-            var form = new FormPopUpFileEdit();
-            form.Show(this);
-            ListViewItem item = fileListViewTab1.SelectedItems[0];
-            newFileNameTextbox.Text = item.SubItems[0].Text;
-            newAuthorTextBox.Text = item.SubItems[1].Text;
+            if (fileListViewTab1.SelectedItems.Count > 0)
+            {
+                ListViewItem item = fileListViewTab1.SelectedItems[0];
+                string authorName = item.SubItems[1].Text;
+                string textName = item.SubItems[0].Text;
+                string includeQuotes = item.SubItems[2].Text;
+                var form = new FormPopUpFileEdit(authorName, textName, includeQuotes, this);
+                form.Show(this);
+            }
+
+           
+            
+  
             
         }
 
         private void addButtonTab2_Click(object sender, EventArgs e)
         {
-            
-            ListViewItem itemToMove = fileGroupListViewTab2.SelectedItems[0];
-            ListViewItem itemToAdd = (ListViewItem)itemToMove.Clone();
-            groupListViewTab2.Items.Add(itemToAdd);
-            fileGroupListViewTab2.Items.Remove(itemToMove);
-            
+            if (fileGroupListViewTab2.SelectedItems.Count > 0)
+            {
+
+                ListViewItem itemToMove = fileGroupListViewTab2.SelectedItems[0];
+                ListViewItem itemToAdd = (ListViewItem)itemToMove.Clone();
+                groupListViewTab2.Items.Add(itemToAdd);
+                fileGroupListViewTab2.Items.Remove(itemToMove);
+            }
         }
 
         private void addButtonTab3_Click(object sender, EventArgs e)
         {
-            ListViewItem itemToMove = filesAndGroupsListviewTab3.SelectedItems[0];
-            ListViewItem itemToAdd = (ListViewItem)itemToMove.Clone();
-            analysisListView.Items.Add(itemToAdd);
-            filesAndGroupsListviewTab3.Items.Remove(itemToMove);
+            if (filesAndGroupsListviewTab3.SelectedItems.Count > 0)
+            {
+
+                ListViewItem itemToMove = filesAndGroupsListviewTab3.SelectedItems[0];
+                ListViewItem itemToAdd = (ListViewItem)itemToMove.Clone();
+                analysisListView.Items.Add(itemToAdd);
+                filesAndGroupsListviewTab3.Items.Remove(itemToMove);
+            }
         }
 
         private void removeButtonTab3_Click(object sender, EventArgs e)
         {
-            ListViewItem itemToMove = analysisListView.SelectedItems[0];
-            ListViewItem itemToAdd = (ListViewItem)itemToMove.Clone();
-            filesAndGroupsListviewTab3.Items.Add(itemToAdd);
-            analysisListView.Items.Remove(itemToMove);
+            if (analysisListView.SelectedItems.Count > 0)
+            {
+
+                ListViewItem itemToMove = analysisListView.SelectedItems[0];
+                ListViewItem itemToAdd = (ListViewItem)itemToMove.Clone();
+                filesAndGroupsListviewTab3.Items.Add(itemToAdd);
+                analysisListView.Items.Remove(itemToMove);
+            }
         }
 
         private void removeButtonTab2_Click(object sender, EventArgs e)
         {
-            ListViewItem itemToMove = fileGroupListViewTab2.SelectedItems[0];
-            ListViewItem itemToAdd = (ListViewItem)itemToMove.Clone();
-            fileGroupListViewTab2.Items.Add(itemToAdd);
-            fileGroupListViewTab2.Items.Remove(itemToMove);
+            if (fileGroupListViewTab2.SelectedItems.Count > 0)
+            {
 
+                ListViewItem itemToMove = groupListViewTab2.SelectedItems[0];
+                ListViewItem itemToAdd = (ListViewItem)itemToMove.Clone();
+                fileGroupListViewTab2.Items.Add(itemToAdd);
+                groupListViewTab2.Items.Remove(itemToMove);
+            }
         }
+
+        public void updateListViews()
+        {
+          
+        }
+
+
+
     }
 }
