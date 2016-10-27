@@ -176,5 +176,45 @@ namespace FingerPrintUnitTests.ModelTests
             Assert.AreEqual(countsUnscrambled.GetAt(9), countsScrambled.GetAt(9));
         }
 
+        [TestMethod]
+        public void CountWithoutQuotesAndAcrossLines()
+        {
+            string s = "Let us consider a word spanning \"multip-\nle lines.\" Will the program handle it correctly?";
+            stringReader = new StringReader(s);
+            var textModel = _modelFactory.GetTextModel("test", stringReader, 10);
+            textModel.SetIncludeQuotes(false);
+            counts = textModel.GetCounts();
+            Assert.AreEqual(1, counts.GetAt(0));
+            Assert.AreEqual(2, counts.GetAt(1));
+            Assert.AreEqual(2, counts.GetAt(2));
+            Assert.AreEqual(2, counts.GetAt(3));
+            Assert.AreEqual(0, counts.GetAt(4));
+            Assert.AreEqual(1, counts.GetAt(5));
+            Assert.AreEqual(1, counts.GetAt(6));
+            Assert.AreEqual(2, counts.GetAt(7));
+            Assert.AreEqual(1, counts.GetAt(8));
+            Assert.AreEqual(0, counts.GetAt(9));
+        }
+
+        [TestMethod]
+        public void LineIncorrectlyEndingWithHyphen()
+        {
+            using (streamReader = new StreamReader("..\\..\\SampleTextFiles\\TheSleeper.txt"))
+            {
+                var textModel = _modelFactory.GetTextModel("test", streamReader, 10);
+                counts = textModel.GetCounts();
+                Assert.AreEqual(0, counts.GetAt(0));
+                Assert.AreEqual(0, counts.GetAt(1));
+                Assert.AreEqual(6, counts.GetAt(2));
+                Assert.AreEqual(4, counts.GetAt(3));
+                Assert.AreEqual(4, counts.GetAt(4));
+                Assert.AreEqual(1, counts.GetAt(5));
+                Assert.AreEqual(0, counts.GetAt(6));
+                Assert.AreEqual(0, counts.GetAt(7));
+                Assert.AreEqual(0, counts.GetAt(8));
+                Assert.AreEqual(0, counts.GetAt(9));
+            }
+        }
+
     }
 }
