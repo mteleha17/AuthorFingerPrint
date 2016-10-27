@@ -121,28 +121,48 @@ namespace FingerPrint.Models.Implementations
         {
             int[] countsWithQuotes = new int[10];
             int[] countsWithoutQuotes = new int[10];
-            string pattern = @"\s+";
-            Regex rgx = new Regex(pattern);
+            string delimPattern = @"\s+";
+            Regex delim = new Regex(delimPattern);
             bool inQuotes = false;
             bool continueWord = false;
             string firstHalfOfWord = "";
+            int previousWordLength = 0;
             bool mismatchedQuotationMarks = false;
             string line;
 
-            while ((line = text.ReadLine()) != null)
+            while ((line = text.ReadLine()) != null) // read text file line by line until end of line
             {
-                if (line.Length != 0)
+                if (line.Length != 0) // parse line if line isn't empty
                 {
-                    string[] wordsArray = rgx.Split(line.Trim());
+                    string[] wordsArray = delim.Split(line.Trim()); // split the line using delimiter
                     for (int i = 0; i < wordsArray.Length; i++)
                     {
                         string currentWord = wordsArray[i];
+                        // append the last word in front of the current word if the last line ended with a hyphen
                         if (continueWord)
                         {
-                            currentWord = firstHalfOfWord + currentWord;
-                            firstHalfOfWord = "";
-                            continueWord = false;
+                            if (currentWord[0] >= 'A' && currentWord[0] <= 'Z')
+                            {
+                                firstHalfOfWord = "";
+                                continueWord = false;
+                            }
+                            else
+                            {
+                                if (inQuotes)
+                                {
+                                    countsWithQuotes[previousWordLength - 1]--;
+                                }
+                                else
+                                {
+                                    countsWithQuotes[previousWordLength - 1]--;
+                                    countsWithoutQuotes[previousWordLength - 1]--;
+                                }
+                                currentWord = firstHalfOfWord + currentWord;
+                                firstHalfOfWord = "";
+                                continueWord = false;
+                            }
                         }
+                        // store current word into a variable if it ends with a hyphen, removing the hyphen
                         if (i == wordsArray.Length - 1)
                         {
                             if (currentWord[currentWord.Length - 1] == '-')
@@ -151,48 +171,47 @@ namespace FingerPrint.Models.Implementations
                                 continueWord = true;
                             }
                         }
-                        if (!continueWord)
+                        if (currentWord[0] == '"' || currentWord[0] == '“')
                         {
-                            if (currentWord[0] == '"' || currentWord[0] == '“')
+                            inQuotes = true;
+                        }
+                        string tempCurrentWord = Regex.Replace(currentWord, "[\"]", ""); // remove quotes from the current word
+                        tempCurrentWord = Regex.Replace(tempCurrentWord, "[^a-zA-Z0-9']+$", ""); // remove non-alphanumeric characters from the end of the word excluding apostrophes
+                        Debug.Print(tempCurrentWord);
+                        if (!(tempCurrentWord.Length == 0))
+                        {
+                            int wordLength = tempCurrentWord.Length;
+                            previousWordLength = wordLength;
+                            if (!inQuotes)
                             {
-                                inQuotes = true;
-                            }
-                            string tempCurrentWord = Regex.Replace(currentWord, "[\"]", "");
-                            tempCurrentWord = Regex.Replace(tempCurrentWord, "[^a-zA-Z0-9']+$", "");
-                            Debug.Print(tempCurrentWord);
-                            if (!(tempCurrentWord.Length == 0))
-                            {
-                                int wordLength = tempCurrentWord.Length;
-                                if (!inQuotes)
+                                if (wordLength < countsWithQuotes.Length)
                                 {
-                                    if (wordLength < countsWithQuotes.Length)
-                                    {
-                                        countsWithQuotes[wordLength - 1]++;
-                                        countsWithoutQuotes[wordLength - 1]++;
-                                    }
-                                    else
-                                    {
-                                        countsWithQuotes[countsWithQuotes.Length - 1]++;
-                                        countsWithoutQuotes[countsWithoutQuotes.Length - 1]++;
-                                    }
+                                    countsWithQuotes[wordLength - 1]++;
+                                    countsWithoutQuotes[wordLength - 1]++;
                                 }
                                 else
                                 {
-                                    if (wordLength < countsWithQuotes.Length)
-                                    {
-                                        countsWithQuotes[wordLength - 1]++;
-                                    }
-                                    else
-                                    {
-                                        countsWithQuotes[countsWithQuotes.Length - 1]++;
-                                    }
+                                    countsWithQuotes[countsWithQuotes.Length - 1]++;
+                                    countsWithoutQuotes[countsWithoutQuotes.Length - 1]++;
                                 }
                             }
-                            if (currentWord[currentWord.Length - 1] == '"' || currentWord[currentWord.Length - 1] == '”')
+                            else
                             {
-                                inQuotes = false;
+                                if (wordLength < countsWithQuotes.Length)
+                                {
+                                    countsWithQuotes[wordLength - 1]++;
+                                }
+                                else
+                                {
+                                    countsWithQuotes[countsWithQuotes.Length - 1]++;
+                                }
                             }
                         }
+                        if (currentWord[currentWord.Length - 1] == '"' || currentWord[currentWord.Length - 1] == '”')
+                        {
+                            inQuotes = false;
+                        }
+                        
                     }
                 }
             }
@@ -200,6 +219,7 @@ namespace FingerPrint.Models.Implementations
             {
                 mismatchedQuotationMarks = true;
             }
+            // set word length counts for the model
             for (int i = 0; i < countsWithQuotes.Length; i++)
             {
                 model.SetAt(true, i, countsWithQuotes[i]);

@@ -12,11 +12,11 @@ namespace FingerPrint.Stores
 {
     public class GroupStore : IGroupStore
     {
-        private FingerprintEntities1 db;
+        private FingerprintV2Entities db;
 
         public GroupStore()
         {
-            db = new FingerprintEntities1();
+            db = new FingerprintV2Entities();
         }
 
         public void Add(IGroupModel model)
@@ -49,7 +49,7 @@ namespace FingerPrint.Stores
             throw new NotImplementedException();
         }
 
-        public IEnumerable<ITextModel> GetChildTexts(IGroupModel parent, Func<File, bool> criteria)
+        public IEnumerable<ITextModel> GetChildTexts(IGroupModel parent, Func<Text, bool> criteria)
         {
             throw new NotImplementedException();
         }

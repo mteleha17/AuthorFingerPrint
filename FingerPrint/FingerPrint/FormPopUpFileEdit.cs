@@ -12,9 +12,28 @@ namespace FingerPrint
 {
     public partial class FormPopUpFileEdit : Form
     {
-        public FormPopUpFileEdit()
+        Form1 form1;
+        public FormPopUpFileEdit(string authorName, string textName, string includeQuotes, Form1 _form1)
         {
+            form1 = _form1;
             InitializeComponent();
+            newAuthorTextBox.Text = authorName;
+            newFileNameTextbox.Text = textName;
+            if (includeQuotes.Equals("Yes"))
+            {
+                quotesCheckbox.Checked = true;
+            }
+            else
+            {
+                quotesCheckbox.Checked = false;
+            }
+
+
+        }
+
+        private void saveChangesButton_Click(object sender, EventArgs e)
+        {
+            form1.updateListViews(); 
         }
     }
 }

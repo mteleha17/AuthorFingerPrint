@@ -68,6 +68,7 @@
             this.saveChangesButton.TabIndex = 6;
             this.saveChangesButton.Text = "Save Changes";
             this.saveChangesButton.UseVisualStyleBackColor = true;
+            this.saveChangesButton.Click += new System.EventHandler(this.saveChangesButton_Click);
             // 
             // nameOfTextLabel
             // 
