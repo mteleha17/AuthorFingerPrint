@@ -23,5 +23,6 @@ namespace FingerPrint
     
         public virtual Count Count { get; set; }
         public virtual Text_Group Text_Group { get; set; }
+        public virtual Count Count1 { get; set; }
     }
 }

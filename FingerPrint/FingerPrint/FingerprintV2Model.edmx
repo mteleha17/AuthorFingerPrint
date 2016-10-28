@@ -102,6 +102,7 @@
           <Property Name="nineteen" Type="Int32" />
           <Property Name="twentyPlus" Type="Int32" />
           <NavigationProperty Name="Text" Relationship="FingerprintV2Model.TextCount" FromRole="Count" ToRole="Text" />
+          <NavigationProperty Name="Text1" Relationship="FingerprintV2Model.TextCount1" FromRole="Count" ToRole="Text" />
         </EntityType>
         <EntityType Name="Group">
           <Key>
@@ -135,6 +136,7 @@
           <Property Name="CountsWithoutQuotesID" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
           <NavigationProperty Name="Count" Relationship="FingerprintV2Model.TextCount" FromRole="Text" ToRole="Count" />
           <NavigationProperty Name="Text_Group" Relationship="FingerprintV2Model.TextText_Group" FromRole="Text" ToRole="Text_Group" />
+          <NavigationProperty Name="Count1" Relationship="FingerprintV2Model.TextCount1" FromRole="Text" ToRole="Count" />
         </EntityType>
         <EntityType Name="Text_Group">
           <Key>
@@ -166,6 +168,10 @@
           <AssociationSet Name="GroupGroup_Group" Association="FingerprintV2Model.GroupGroup_Group">
             <End EntitySet="Groups" Role="Group" />
             <End EntitySet="Group_Group" Role="Group_Group" />
+          </AssociationSet>
+          <AssociationSet Name="TextCount1" Association="FingerprintV2Model.TextCount1">
+            <End Role="Text" EntitySet="Texts" />
+            <End Role="Count" EntitySet="Counts" />
           </AssociationSet>
         </EntityContainer>
         <Association Name="TextCount">
@@ -199,6 +205,10 @@
               <PropertyRef Name="GroupGroupID" />
             </Dependent>
           </ReferentialConstraint>
+        </Association>
+        <Association Name="TextCount1">
+          <End Type="FingerprintV2Model.Text" Role="Text" Multiplicity="1" />
+          <End Type="FingerprintV2Model.Count" Role="Count" Multiplicity="1" />
         </Association>
       </Schema>
     </edmx:ConceptualModels>

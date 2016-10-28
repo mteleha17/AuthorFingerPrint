@@ -37,5 +37,6 @@ namespace FingerPrint
         public Nullable<int> twentyPlus { get; set; }
     
         public virtual Text Text { get; set; }
+        public virtual Text Text1 { get; set; }
     }
 }
