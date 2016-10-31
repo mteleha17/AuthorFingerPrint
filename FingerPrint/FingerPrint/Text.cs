@@ -14,15 +14,22 @@ namespace FingerPrint
     
     public partial class Text
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Text()
+        {
+            this.Text_Group = new HashSet<Text_Group>();
+        }
+    
         public int TextID { get; set; }
         public string Name { get; set; }
         public string Author { get; set; }
-        public string QuoteInd { get; set; }
-        public string CountsWithQuotesID { get; set; }
-        public string CountsWithoutQuotesID { get; set; }
+        public bool QuoteInd { get; set; }
+        public int CountsWithQuotesID { get; set; }
+        public int CountsWithoutQuotesID { get; set; }
     
         public virtual Count Count { get; set; }
-        public virtual Text_Group Text_Group { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Text_Group> Text_Group { get; set; }
         public virtual Count Count1 { get; set; }
     }
 }
