@@ -10,7 +10,7 @@ using FingerPrint.Models.Interfaces.TypeInterfaces;
 
 namespace FingerPrint.Stores
 {
-    public class GroupStore : IGroupStore
+    public class GroupStore : IItemStore<Group, IGroupModel>
     {
         private FingerprintV2Entities db;
 
@@ -24,32 +24,12 @@ namespace FingerPrint.Stores
             throw new NotImplementedException();
         }
 
-        public void AddChildGroup(IGroupModel parent, IGroupModel child)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void AddChildText(IGroupModel parent, ITextModel child)
-        {
-            throw new NotImplementedException();
-        }
-
         public void Delete(IGroupModel model)
         {
             throw new NotImplementedException();
         }
 
         public bool Exists(Expression<Func<Group, bool>> criteria)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<IGroupModel> GetChildGroups(IGroupModel parent, Func<Group, bool> criteria)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<ITextModel> GetChildTexts(IGroupModel parent, Func<Text, bool> criteria)
         {
             throw new NotImplementedException();
         }
@@ -65,16 +45,6 @@ namespace FingerPrint.Stores
         }
 
         public void Modify(IGroupModel model)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void RemoveChildGroup(IGroupModel parent, IGroupModel child)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void RemoveChildText(IGroupModel parent, ITextModel child)
         {
             throw new NotImplementedException();
         }

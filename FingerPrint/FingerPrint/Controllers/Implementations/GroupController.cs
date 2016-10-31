@@ -13,12 +13,12 @@ namespace FingerPrint.Controllers.Implementations
 {
     public class GroupController : IGroupController
     {
-        private ITextStore _textStore;
-        private IGroupStore _groupStore;
+        private IItemStore<Text, ITextModel> _textStore;
+        private IItemStore<Group, IGroupModel> _groupStore;
         private IModelFactory _modelFactory;
 
-        public GroupController(ITextStore textStore,
-            IGroupStore groupStore,
+        public GroupController(IItemStore<Text, ITextModel> textStore,
+            IItemStore<Group, IGroupModel> groupStore,
             IModelFactory modelFactory)
         {
             _textStore = textStore;
@@ -47,26 +47,29 @@ namespace FingerPrint.Controllers.Implementations
 
         public void AddToGroup(IGroupViewModel group, ITextOrGroupViewModel item)
         {
-            if (item is ITextViewModel)
-            {
-                _groupStore.AddChildText((IGroupModel)group, (ITextModel)item);
-            }
-            else
-            {
-                _groupStore.AddChildGroup((IGroupModel)group, (IGroupModel)item);
-            }
+            throw new NotImplementedException();
+            //if (item is ITextViewModel)
+            //{
+            //    _groupStore.AddChildText((IGroupModel)group, (ITextModel)item);
+            //}
+            //else
+            //{
+            //    _groupStore.AddChildGroup((IGroupModel)group, (IGroupModel)item);
+            //}
         }
 
         public void RemoveFromGroup(IGroupViewModel group, ITextOrGroupViewModel item)
         {
-            if (item is ITextViewModel)
-            {
-                _groupStore.RemoveChildText((IGroupModel)group, (ITextModel)item);
-            }
-            else
-            {
-                _groupStore.RemoveChildGroup((IGroupModel)group, (IGroupModel)item);
-            }
+            throw new NotImplementedException();
+
+            //if (item is ITextViewModel)
+            //{
+            //    _groupStore.RemoveChildText((IGroupModel)group, (ITextModel)item);
+            //}
+            //else
+            //{
+            //    _groupStore.RemoveChildGroup((IGroupModel)group, (IGroupModel)item);
+            //}
         }
 
         public void UpdateGroup(IGroupViewModel model, string name)
