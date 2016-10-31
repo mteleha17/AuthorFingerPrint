@@ -15,10 +15,12 @@ namespace FingerPrint
     public partial class Group_Group
     {
         public int GG_ID { get; set; }
-        public Nullable<int> ParentID { get; set; }
-        public Nullable<int> ChildID { get; set; }
+        public int ParentID { get; set; }
+        public int ChildID { get; set; }
         public int GroupGroupID { get; set; }
+        public int GroupGroupID1 { get; set; }
     
         public virtual Group Group { get; set; }
+        public virtual Group Group1 { get; set; }
     }
 }

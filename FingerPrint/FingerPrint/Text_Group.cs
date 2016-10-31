@@ -14,19 +14,11 @@ namespace FingerPrint
     
     public partial class Text_Group
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Text_Group()
-        {
-            this.Texts = new HashSet<Text>();
-            this.Groups = new HashSet<Group>();
-        }
-    
         public int TextID { get; set; }
-        public string GroupID { get; set; }
+        public int GroupID { get; set; }
+        public int TextTextID { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Text> Texts { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Group> Groups { get; set; }
+        public virtual Text Text { get; set; }
+        public virtual Group Group { get; set; }
     }
 }
