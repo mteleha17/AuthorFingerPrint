@@ -33,7 +33,8 @@ namespace FingerPrint
 
         private void saveChangesButton_Click(object sender, EventArgs e)
         {
-            form1.updateListViews(); 
+            form1.updateListViews();
+            this.Close();
         }
     }
 }

@@ -34,6 +34,7 @@
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.filesTab = new System.Windows.Forms.TabPage();
             this.editModifyGroupBox = new System.Windows.Forms.GroupBox();
@@ -101,6 +102,9 @@
             this.eightHead = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.nineHead = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tenHead = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.elevenHead = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.twelveHead = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.thirteenHead = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.analysisLineChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.tabControl1.SuspendLayout();
@@ -321,12 +325,13 @@
             // 
             // newGroupButton
             // 
-            this.newGroupButton.Location = new System.Drawing.Point(886, 60);
+            this.newGroupButton.Location = new System.Drawing.Point(885, 57);
             this.newGroupButton.Name = "newGroupButton";
             this.newGroupButton.Size = new System.Drawing.Size(75, 23);
             this.newGroupButton.TabIndex = 8;
             this.newGroupButton.Text = "New Group";
             this.newGroupButton.UseVisualStyleBackColor = true;
+            this.newGroupButton.Click += new System.EventHandler(this.newGroupButton_Click);
             // 
             // groupComboBox
             // 
@@ -670,7 +675,10 @@
             this.sevenHead,
             this.eightHead,
             this.nineHead,
-            this.tenHead});
+            this.tenHead,
+            this.elevenHead,
+            this.twelveHead,
+            this.thirteenHead});
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -680,7 +688,7 @@
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dataTable.DefaultCellStyle = dataGridViewCellStyle2;
             this.dataTable.Dock = System.Windows.Forms.DockStyle.Right;
-            this.dataTable.Location = new System.Drawing.Point(736, 16);
+            this.dataTable.Location = new System.Drawing.Point(634, 16);
             this.dataTable.Name = "dataTable";
             this.dataTable.ReadOnly = true;
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -691,7 +699,7 @@
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dataTable.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
-            this.dataTable.Size = new System.Drawing.Size(490, 554);
+            this.dataTable.Size = new System.Drawing.Size(592, 554);
             this.dataTable.TabIndex = 1;
             // 
             // groupOrTextHead
@@ -770,6 +778,27 @@
             this.tenHead.ReadOnly = true;
             this.tenHead.Width = 35;
             // 
+            // elevenHead
+            // 
+            this.elevenHead.HeaderText = "11\'s";
+            this.elevenHead.Name = "elevenHead";
+            this.elevenHead.ReadOnly = true;
+            this.elevenHead.Width = 35;
+            // 
+            // twelveHead
+            // 
+            this.twelveHead.HeaderText = "12\'s";
+            this.twelveHead.Name = "twelveHead";
+            this.twelveHead.ReadOnly = true;
+            this.twelveHead.Width = 35;
+            // 
+            // thirteenHead
+            // 
+            this.thirteenHead.HeaderText = "13\'s";
+            this.thirteenHead.Name = "thirteenHead";
+            this.thirteenHead.ReadOnly = true;
+            this.thirteenHead.Width = 35;
+            // 
             // analysisLineChart
             // 
             this.analysisLineChart.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -782,7 +811,7 @@
             this.analysisLineChart.Location = new System.Drawing.Point(3, 16);
             this.analysisLineChart.MaximumSize = new System.Drawing.Size(1200, 1200);
             this.analysisLineChart.Name = "analysisLineChart";
-            this.analysisLineChart.Size = new System.Drawing.Size(715, 554);
+            this.analysisLineChart.Size = new System.Drawing.Size(613, 554);
             this.analysisLineChart.TabIndex = 0;
             title1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             title1.Name = "authorAnalysis";
@@ -800,8 +829,9 @@
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(1243, 605);
             this.Controls.Add(this.tabControl1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
-            this.Text = "Fingerprint Analysis";
+            this.Text = "Author\'s Fingerprint Analysis";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.tabControl1.ResumeLayout(false);
             this.filesTab.ResumeLayout(false);
@@ -881,6 +911,12 @@
         private System.Windows.Forms.ColumnHeader textHeaderTab22;
         private System.Windows.Forms.ColumnHeader includeQuotesTab22;
         private System.Windows.Forms.DataGridView dataTable;
+        private System.Windows.Forms.ColumnHeader authorHeaderTab3;
+        private System.Windows.Forms.ColumnHeader textHeaderTab3;
+        private System.Windows.Forms.ColumnHeader includeQuotesHeaderTab3;
+        private System.Windows.Forms.ColumnHeader authorHeaderTab32;
+        private System.Windows.Forms.ColumnHeader textHeaderTab32;
+        private System.Windows.Forms.ColumnHeader includeQuotesTab32;
         private System.Windows.Forms.DataGridViewTextBoxColumn groupOrTextHead;
         private System.Windows.Forms.DataGridViewTextBoxColumn oneHead;
         private System.Windows.Forms.DataGridViewTextBoxColumn twoHead;
@@ -892,12 +928,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn eightHead;
         private System.Windows.Forms.DataGridViewTextBoxColumn nineHead;
         private System.Windows.Forms.DataGridViewTextBoxColumn tenHead;
-        private System.Windows.Forms.ColumnHeader authorHeaderTab3;
-        private System.Windows.Forms.ColumnHeader textHeaderTab3;
-        private System.Windows.Forms.ColumnHeader includeQuotesHeaderTab3;
-        private System.Windows.Forms.ColumnHeader authorHeaderTab32;
-        private System.Windows.Forms.ColumnHeader textHeaderTab32;
-        private System.Windows.Forms.ColumnHeader includeQuotesTab32;
+        private System.Windows.Forms.DataGridViewTextBoxColumn elevenHead;
+        private System.Windows.Forms.DataGridViewTextBoxColumn twelveHead;
+        private System.Windows.Forms.DataGridViewTextBoxColumn thirteenHead;
     }
 }
 
