@@ -15,26 +15,19 @@ namespace FingerPrint
     public partial class Count
     {
         public int CountsID { get; set; }
-        public Nullable<int> one { get; set; }
-        public Nullable<int> two { get; set; }
-        public Nullable<int> three { get; set; }
-        public Nullable<int> four { get; set; }
-        public Nullable<int> five { get; set; }
-        public Nullable<int> six { get; set; }
-        public Nullable<int> seven { get; set; }
-        public Nullable<int> eight { get; set; }
-        public Nullable<int> nine { get; set; }
-        public Nullable<int> ten { get; set; }
-        public Nullable<int> eleven { get; set; }
-        public Nullable<int> twelve { get; set; }
-        public Nullable<int> thirteen { get; set; }
-        public Nullable<int> fourteen { get; set; }
-        public Nullable<int> fifteen { get; set; }
-        public Nullable<int> sixteen { get; set; }
-        public Nullable<int> seventeen { get; set; }
-        public Nullable<int> eighteen { get; set; }
-        public Nullable<int> nineteen { get; set; }
-        public Nullable<int> twentyPlus { get; set; }
+        public int one { get; set; }
+        public int two { get; set; }
+        public int three { get; set; }
+        public int four { get; set; }
+        public int five { get; set; }
+        public int six { get; set; }
+        public int seven { get; set; }
+        public int eight { get; set; }
+        public int nine { get; set; }
+        public int ten { get; set; }
+        public int eleven { get; set; }
+        public int twelve { get; set; }
+        public int thirteen { get; set; }
     
         public virtual Text Text { get; set; }
         public virtual Text Text1 { get; set; }
