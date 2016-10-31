@@ -73,6 +73,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AuxiliaryClasses\UniversalCountSize.cs" />
     <Compile Include="Controllers\Implementations\AnalysisController.cs" />
     <Compile Include="Controllers\Implementations\GroupController.cs" />
     <Compile Include="Controllers\Implementations\TextController.cs" />

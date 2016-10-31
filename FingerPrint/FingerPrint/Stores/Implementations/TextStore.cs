@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using FingerPrint.Models.Interfaces.TypeInterfaces;
 using FingerPrint;
+using FingerPrint.AuxiliaryClasses;
 
 namespace FingerPrint.Stores
 {
@@ -57,7 +58,7 @@ namespace FingerPrint.Stores
 
         private Count TranslateCounts(ISingleWordCountModel model)
         {
-            if (model.GetLength() != 13)
+            if (model.GetLength() != UniversalCountSize.CountSize)
             {
                 throw new ArgumentException("Please pass a model with length 13.");
             }
@@ -82,10 +83,21 @@ namespace FingerPrint.Stores
 
         private ISingleWordCountModel TranslateCounts(Count count)
         {
-            throw new NotImplementedException();
-            //ISingleWordCountModel output = _modelFactory.GetSingleCountModel(13);
-            //output.SetAt(0, count.one);
-
+            ISingleWordCountModel output = _modelFactory.GetSingleCountModel(UniversalCountSize.CountSize);
+            output.SetAt(0, count.one);
+            output.SetAt(1, count.two);
+            output.SetAt(2, count.three);
+            output.SetAt(3, count.four);
+            output.SetAt(4, count.five);
+            output.SetAt(5, count.six);
+            output.SetAt(6, count.seven);
+            output.SetAt(7, count.eight);
+            output.SetAt(8, count.nine);
+            output.SetAt(9, count.ten);
+            output.SetAt(10, count.eleven);
+            output.SetAt(11, count.twelve);
+            output.SetAt(12, count.thirteen);
+            return output;
         }
     }
 }
