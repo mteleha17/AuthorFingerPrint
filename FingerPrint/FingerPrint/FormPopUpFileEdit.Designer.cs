@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormPopUpFileEdit));
             this.newFileNameTextbox = new System.Windows.Forms.TextBox();
             this.newAuthorTextBox = new System.Windows.Forms.TextBox();
             this.quotesCheckbox = new System.Windows.Forms.CheckBox();
@@ -99,7 +100,9 @@
             this.Controls.Add(this.quotesCheckbox);
             this.Controls.Add(this.newAuthorTextBox);
             this.Controls.Add(this.newFileNameTextbox);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormPopUpFileEdit";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Edit Text Details";
             this.ResumeLayout(false);
             this.PerformLayout();
