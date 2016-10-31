@@ -10,7 +10,7 @@ namespace FingerPrint.Stores
 {
     public interface ITextStore : IItemStore<Text, ITextModel>
     {
-        ISingleWordCountModel GetCountsWithQuotes();
-        ISingleWordCountModel GetCountsWithoutQuotes();
+        //ISingleWordCountModel GetCountsWithQuotes();
+        //ISingleWordCountModel GetCountsWithoutQuotes();
     }
 }

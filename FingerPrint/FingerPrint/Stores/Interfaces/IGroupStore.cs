@@ -10,11 +10,11 @@ namespace FingerPrint.Stores
 {
     public interface IGroupStore : IItemStore<Group, IGroupModel>
     {
-        IEnumerable<ITextModel> GetChildTexts(IGroupModel parent, Func<Text, bool> criteria);
-        void AddChildText(IGroupModel parent, ITextModel child);
-        void RemoveChildText(IGroupModel parent, ITextModel child);
-        IEnumerable<IGroupModel> GetChildGroups(IGroupModel parent, Func<Group, bool> criteria);
-        void AddChildGroup(IGroupModel parent, IGroupModel child);
-        void RemoveChildGroup(IGroupModel parent, IGroupModel child);
+        //IEnumerable<ITextModel> GetChildTexts(IGroupModel parent, Func<Text, bool> criteria);
+        //void AddChildText(IGroupModel parent, ITextModel child);
+        //void RemoveChildText(IGroupModel parent, ITextModel child);
+        //IEnumerable<IGroupModel> GetChildGroups(IGroupModel parent, Func<Group, bool> criteria);
+        //void AddChildGroup(IGroupModel parent, IGroupModel child);
+        //void RemoveChildGroup(IGroupModel parent, IGroupModel child);
     }
 }

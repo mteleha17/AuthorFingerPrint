@@ -8,17 +8,18 @@ using FingerPrint.Models.Interfaces.TypeInterfaces;
 using System.IO;
 using FingerPrint;
 using FingerPrint.Stores;
+using FingerPrint.Models.Interfaces;
 
 namespace FingerPrint.Controllers.Implementations
 {
     public class TextController : ITextController
     {
-        private ITextStore _textStore;
-        private IGroupStore _groupStore;
+        private IItemStore<Text, ITextModel> _textStore;
+        private IItemStore<Group, IGroupModel> _groupStore;
         private IModelFactory _modelFactory;
 
-        public TextController(ITextStore textStore,
-            IGroupStore groupStore,
+        public TextController(IItemStore<Text, ITextModel> textStore,
+            IItemStore<Group, IGroupModel> groupStore,
             IModelFactory modelFactory)
         {
             _textStore = textStore;
