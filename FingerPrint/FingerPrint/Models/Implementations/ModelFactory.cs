@@ -132,37 +132,36 @@ namespace FingerPrint.Models.Implementations
 
             while ((line = text.ReadLine()) != null) // read text file line by line until end of line
             {
-                if (line.Length != 0) // parse line if line isn't empty
+                if (line.Length != 0) // skip line if empty
                 {
                     string[] wordsArray = delim.Split(line.Trim()); // split the line using delimiter
-                    for (int i = 0; i < wordsArray.Length; i++)
+                    for (int i = 0; i < wordsArray.Length; i++) // iterate through split array
                     {
-                        string currentWord = wordsArray[i];
-                        // append the last word in front of the current word if the last line ended with a hyphen
-                        if (continueWord)
+                        string currentWord = wordsArray[i]; // grab a single word to count from split array
+                        if (continueWord) // this conditional handles the case of if the previous line ends with a hyphen
                         {
-                            if (currentWord[0] >= 'A' && currentWord[0] <= 'Z')
+                            if (currentWord[0] >= 'A' && currentWord[0] <= 'Z') // if the first letter of the current word is uppercase it means the previous hyphen was used incorrectly. don't change the current word
                             {
                                 firstHalfOfWord = "";
                                 continueWord = false;
                             }
-                            else
+                            else // append the previous word to the front of the current word if the hyphen was used correctly
                             {
-                                if (inQuotes)
+                                currentWord = firstHalfOfWord + currentWord;
+                                firstHalfOfWord = "";
+                                continueWord = false;
+                                if (inQuotes) // uncount last wordlength count from counts with quotes if currently inside of quotations
                                 {
                                     countsWithQuotes[previousWordLength - 1]--;
                                 }
-                                else
+                                else // uncount last wordlength count for both counts if current outside of quotations
                                 {
                                     countsWithQuotes[previousWordLength - 1]--;
                                     countsWithoutQuotes[previousWordLength - 1]--;
                                 }
-                                currentWord = firstHalfOfWord + currentWord;
-                                firstHalfOfWord = "";
-                                continueWord = false;
                             }
                         }
-                        // store current word into a variable if it ends with a hyphen, removing the hyphen
+                        // if the last word of the line ends with a hyphen, store the word in a variable, removing the hyphen
                         if (i == wordsArray.Length - 1)
                         {
                             if (currentWord[currentWord.Length - 1] == '-')
@@ -171,12 +170,13 @@ namespace FingerPrint.Models.Implementations
                                 continueWord = true;
                             }
                         }
+                        // if it locates a starting quotation mark, set as in quotations
                         if (currentWord[0] == '"' || currentWord[0] == '“')
                         {
                             inQuotes = true;
                         }
                         string tempCurrentWord = Regex.Replace(currentWord, "[\"]", ""); // remove quotes from the current word
-                        tempCurrentWord = Regex.Replace(tempCurrentWord, "[^a-zA-Z0-9']+$", ""); // remove non-alphanumeric characters from the end of the word excluding apostrophes
+                        tempCurrentWord = Regex.Replace(tempCurrentWord, "[^a-zA-Z0-9']+$", ""); // remove non-alphanumeric characters from the end of the word except for apostrophes
                         Debug.Print(tempCurrentWord);
                         if (!(tempCurrentWord.Length == 0))
                         {
@@ -207,6 +207,7 @@ namespace FingerPrint.Models.Implementations
                                 }
                             }
                         }
+                        // if it locates an ending quotation mark, set as no longer within quotations
                         if (currentWord[currentWord.Length - 1] == '"' || currentWord[currentWord.Length - 1] == '”')
                         {
                             inQuotes = false;
@@ -219,7 +220,7 @@ namespace FingerPrint.Models.Implementations
             {
                 mismatchedQuotationMarks = true;
             }
-            // set word length counts for the model
+            // set wordlength counts for the model
             for (int i = 0; i < countsWithQuotes.Length; i++)
             {
                 model.SetAt(true, i, countsWithQuotes[i]);

@@ -31,7 +31,7 @@ namespace FingerPrintUnitTests.ModelTests
         }
 
         [TestMethod]
-        public void CountWithQuotes()
+        public void CountIncludingQuotes()
         {
             string s = "As Thomas Jefferson once said, \"Hey there buddy.\"";
             stringReader = new StringReader(s);
@@ -50,7 +50,7 @@ namespace FingerPrintUnitTests.ModelTests
         }
 
         [TestMethod]
-        public void CountWithoutQuotes()
+        public void CountExcludingQuotes()
         {
             string s = "As Thomas Jefferson once said, \"Hey there buddy.\"";
             stringReader = new StringReader(s);
@@ -70,7 +70,7 @@ namespace FingerPrintUnitTests.ModelTests
         }
 
         [TestMethod]
-        public void CountWithoutCurlyQuotes()
+        public void CountExcludingCurlyQuotes()
         {
             string s = "As Thomas Jefferson once said, “Hey there buddy.”";
             stringReader = new StringReader(s);
@@ -104,6 +104,26 @@ namespace FingerPrintUnitTests.ModelTests
             Assert.AreEqual(1, counts.GetAt(5));
             Assert.AreEqual(1, counts.GetAt(6));
             Assert.AreEqual(3, counts.GetAt(7));
+            Assert.AreEqual(1, counts.GetAt(8));
+            Assert.AreEqual(0, counts.GetAt(9));
+        }
+
+        [TestMethod]
+        public void CountExcludingQuotesWithWordAcrossLines()
+        {
+            string s = "Let us consider a word spanning \"multip-\nle lines.\" Will the program handle it correctly?";
+            stringReader = new StringReader(s);
+            var textModel = _modelFactory.GetTextModel("test", stringReader, 10);
+            textModel.SetIncludeQuotes(false);
+            counts = textModel.GetCounts();
+            Assert.AreEqual(1, counts.GetAt(0));
+            Assert.AreEqual(2, counts.GetAt(1));
+            Assert.AreEqual(2, counts.GetAt(2));
+            Assert.AreEqual(2, counts.GetAt(3));
+            Assert.AreEqual(0, counts.GetAt(4));
+            Assert.AreEqual(1, counts.GetAt(5));
+            Assert.AreEqual(1, counts.GetAt(6));
+            Assert.AreEqual(2, counts.GetAt(7));
             Assert.AreEqual(1, counts.GetAt(8));
             Assert.AreEqual(0, counts.GetAt(9));
         }
@@ -177,29 +197,9 @@ namespace FingerPrintUnitTests.ModelTests
         }
 
         [TestMethod]
-        public void CountWithoutQuotesAndAcrossLines()
+        public void CountWithLineIncorrectlyEndingWithHyphen()
         {
-            string s = "Let us consider a word spanning \"multip-\nle lines.\" Will the program handle it correctly?";
-            stringReader = new StringReader(s);
-            var textModel = _modelFactory.GetTextModel("test", stringReader, 10);
-            textModel.SetIncludeQuotes(false);
-            counts = textModel.GetCounts();
-            Assert.AreEqual(1, counts.GetAt(0));
-            Assert.AreEqual(2, counts.GetAt(1));
-            Assert.AreEqual(2, counts.GetAt(2));
-            Assert.AreEqual(2, counts.GetAt(3));
-            Assert.AreEqual(0, counts.GetAt(4));
-            Assert.AreEqual(1, counts.GetAt(5));
-            Assert.AreEqual(1, counts.GetAt(6));
-            Assert.AreEqual(2, counts.GetAt(7));
-            Assert.AreEqual(1, counts.GetAt(8));
-            Assert.AreEqual(0, counts.GetAt(9));
-        }
-
-        [TestMethod]
-        public void LineIncorrectlyEndingWithHyphen()
-        {
-            using (streamReader = new StreamReader("..\\..\\SampleTextFiles\\TheSleeper.txt"))
+            using (streamReader = new StreamReader("..\\..\\SampleTextFiles\\TheSleeperExcerpt.txt"))
             {
                 var textModel = _modelFactory.GetTextModel("test", streamReader, 10);
                 counts = textModel.GetCounts();
@@ -214,6 +214,45 @@ namespace FingerPrintUnitTests.ModelTests
                 Assert.AreEqual(0, counts.GetAt(8));
                 Assert.AreEqual(0, counts.GetAt(9));
             }
+        }
+
+        [TestMethod]
+        public void CountWithLineIncorrectlyEndingWithHyphenInsideQuotes()
+        {
+            string s = "The general shouted, \"No-\nWe will not give them an inch.";
+            stringReader = new StringReader(s);
+            var textModel = _modelFactory.GetTextModel("test", stringReader, 10);
+            counts = textModel.GetCounts();
+            Assert.AreEqual(0, counts.GetAt(0));
+            Assert.AreEqual(3, counts.GetAt(1));
+            Assert.AreEqual(2, counts.GetAt(2));
+            Assert.AreEqual(4, counts.GetAt(3));
+            Assert.AreEqual(0, counts.GetAt(4));
+            Assert.AreEqual(0, counts.GetAt(5));
+            Assert.AreEqual(2, counts.GetAt(6));
+            Assert.AreEqual(0, counts.GetAt(7));
+            Assert.AreEqual(0, counts.GetAt(8));
+            Assert.AreEqual(0, counts.GetAt(9));
+        }
+
+        [TestMethod]
+        public void CountExcludingQuotesWithLineIncorrectlyEndingWithHyphenInsideQuotes()
+        {
+            string s = "The general shouted, \"No-\nWe will not give them an inch.";
+            stringReader = new StringReader(s);
+            var textModel = _modelFactory.GetTextModel("test", stringReader, 10);
+            textModel.SetIncludeQuotes(false);
+            counts = textModel.GetCounts();
+            Assert.AreEqual(0, counts.GetAt(0));
+            Assert.AreEqual(0, counts.GetAt(1));
+            Assert.AreEqual(1, counts.GetAt(2));
+            Assert.AreEqual(0, counts.GetAt(3));
+            Assert.AreEqual(0, counts.GetAt(4));
+            Assert.AreEqual(0, counts.GetAt(5));
+            Assert.AreEqual(2, counts.GetAt(6));
+            Assert.AreEqual(0, counts.GetAt(7));
+            Assert.AreEqual(0, counts.GetAt(8));
+            Assert.AreEqual(0, counts.GetAt(9));
         }
 
     }
