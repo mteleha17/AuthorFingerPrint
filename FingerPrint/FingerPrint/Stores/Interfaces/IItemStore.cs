@@ -15,7 +15,6 @@ namespace FingerPrint.Stores
     public interface IItemStore<EntityType, ModelType>
     {
         void Add(ModelType model);
-        void Modify(ModelType model);
         void Delete(ModelType model);
         bool Exists(Expression<Func<EntityType, bool>> criteria);
         ModelType GetOne(Expression<Func<EntityType, bool>> criteria);

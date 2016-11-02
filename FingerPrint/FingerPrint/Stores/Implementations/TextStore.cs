@@ -11,7 +11,7 @@ using FingerPrint.AuxiliaryClasses;
 
 namespace FingerPrint.Stores
 {
-    public class TextStore : IItemStore<Text, ITextModel>
+    public class TextStore : ITextStore
     {
         private FingerprintV2Entities _db;
         private IModelFactory _modelFactory;
@@ -28,39 +28,107 @@ namespace FingerPrint.Stores
             {
                 throw new ArgumentException($"Cannot add model since a model already exists in the database with name {model.GetName()}.");
             }
-
+            Count withQuotes = TranslateCounts(model.GetCountsWithQuotes());
+            Count withoutQuotes = TranslateCounts(model.GetCountsWithoutQuotes());
+            _db.Counts.Add(withQuotes);
+            _db.Counts.Add(withoutQuotes);
+            Text text = new Text()
+            {
+                Name = model.GetName(),
+                Author = model.GetAuthor(),
+                CountsWithQuotesID = withQuotes.CountsID,
+                CountsWithoutQuotesID = withoutQuotes.CountsID,
+            };
+            _db.Texts.Add(text);
+            _db.SaveChanges();
         }
 
         public void Delete(ITextModel model)
         {
-            throw new NotImplementedException();
+            Text text = _db.Texts.FirstOrDefault(x => x.Name == model.GetName());
+            if (text == null)
+            {
+                throw new ArgumentException($"Cannot delete text {model.GetName()} since it does not exist in the database.");
+            }
+            _db.Texts.Remove(text);
+            _db.SaveChanges();
         }
 
         public bool Exists(Expression<Func<Text, bool>> criteria)
         {
-            throw new NotImplementedException();
+            return _db.Texts.Any(criteria);
         }
 
         public IEnumerable<ITextModel> GetMany(Expression<Func<Text, bool>> criteria)
         {
-            throw new NotImplementedException();
+            //List<ITextModel> output = new List<ITextModel>();
+            foreach (Text text in _db.Texts.Where(criteria))
+            {
+                IFlexibleWordCountModel counts = GetCountsFromText(text);
+                ITextModel textModel = _modelFactory.GetTextModel(text.Name, counts);
+                yield return textModel;
+                //output.Add(textModel);
+            }
+            //return output;
         }
 
         public ITextModel GetOne(Expression<Func<Text, bool>> criteria)
         {
-            throw new NotImplementedException();
+            Text text = _db.Texts.FirstOrDefault(criteria);
+            if (text == null)
+            {
+                return null;
+            }
+            IFlexibleWordCountModel counts = GetCountsFromText(text); 
+            return _modelFactory.GetTextModel(text.Name, counts);
         }
 
-        public void Modify(ITextModel model)
+        public ITextModel ModifyAuthor(ITextModel model, string newAuthor)
         {
-            throw new NotImplementedException();
+            Text text = _db.Texts.FirstOrDefault(x => x.Name == model.GetName());
+            if (text == null)
+            {
+                throw new ArgumentException("Cannot update model since no corresponding text exists in the database.");
+            }
+            if (string.IsNullOrWhiteSpace(newAuthor))
+            {
+                text.Author = null;
+            }
+            else
+            {
+                text.Author = newAuthor;
+            }
+            _db.SaveChanges();
+            IFlexibleWordCountModel counts = GetCountsFromText(text);
+            return _modelFactory.GetTextModel(text.Name, counts);
+        }
+
+        public ITextModel ModifyName(ITextModel model, string newName)
+        {
+            Text text = _db.Texts.FirstOrDefault(x => x.Name == model.GetName());
+            if (text == null)
+            {
+                throw new ArgumentException("Cannot update model since no corresponding text exists in the database.");
+            }
+            if (string.IsNullOrWhiteSpace(newName))
+            {
+                throw new ArgumentException("Cannot update model because new name is null or white space.");
+            }
+            if (_db.Texts.Any(x => x.Name == newName))
+            {
+                throw new ArgumentException($"Cannot update model since a text already exists with the name {newName}");
+            }
+            text.Name = newName;
+            _db.SaveChanges();
+            IFlexibleWordCountModel counts = GetCountsFromText(text);
+            return _modelFactory.GetTextModel(text.Name, counts);
         }
 
         private Count TranslateCounts(ISingleWordCountModel model)
         {
             if (model.GetLength() != UniversalCountSize.CountSize)
             {
-                throw new ArgumentException("Please pass a model with length 13.");
+                throw new ArgumentException($"Please pass a model with length {UniversalCountSize.CountSize}.");
             }
             Count output = new Count()
             {
@@ -98,6 +166,19 @@ namespace FingerPrint.Stores
             output.SetAt(11, count.twelve);
             output.SetAt(12, count.thirteen);
             return output;
+        }
+
+        private IFlexibleWordCountModel GetCountsFromText(Text text)
+        {
+            Count withQuotes = _db.Counts.FirstOrDefault(x => x.CountsID == text.CountsWithQuotesID);
+            Count withoutQuotes = _db.Counts.FirstOrDefault(x => x.CountsID == text.CountsWithoutQuotesID);
+            if (withQuotes == null || withoutQuotes == null)
+            {
+                throw new ArgumentException("One of the Counts entities is missing.");
+            }
+            ISingleWordCountModel withQuotesModel = TranslateCounts(withQuotes);
+            ISingleWordCountModel withoutQuotesModel = TranslateCounts(withoutQuotes);
+            return _modelFactory.GetFlexibleCountModel(withQuotesModel, withoutQuotesModel);
         }
     }
 }

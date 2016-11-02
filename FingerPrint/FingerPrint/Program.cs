@@ -23,7 +23,7 @@ namespace FingerPrint
             FingerprintV2Entities db = new FingerprintV2Entities();
             var modelFactory = new ModelFactory();
             var textStore = new TextStore(db, modelFactory);
-            var groupStore = new GroupStore();
+            var groupStore = new GroupStore(db, modelFactory);
             var analysisController = new AnalysisController();
             var textController = new TextController(textStore, groupStore, modelFactory);
             var groupController = new GroupController(textStore, groupStore, modelFactory);

@@ -10,18 +10,44 @@ using FingerPrint.Models.Interfaces.TypeInterfaces;
 
 namespace FingerPrint.Stores
 {
-    public class GroupStore : IItemStore<Group, IGroupModel>
+    public class GroupStore : IGroupStore
     {
-        private FingerprintV2Entities db;
+        private FingerprintV2Entities _db;
+        private IModelFactory _modelFactory;
 
-        public GroupStore()
+        public GroupStore(FingerprintV2Entities db, IModelFactory modelFactory)
         {
-            db = new FingerprintV2Entities();
+            _db = db;
+            _modelFactory = modelFactory;    
         }
 
         public void Add(IGroupModel model)
         {
             throw new NotImplementedException();
+            if (_db.Groups.Any(x => x.Name == model.GetName()))
+            {
+                throw new ArgumentException($"Cannot add model since a model already exists in the database with name {model.GetName()}.");
+            }
+            List<Text> texts = new List<Text>();
+            List<Group> groups = new List<Group>();
+            foreach (var item in model.GetMembers())
+            {
+                if (item is ITextModel)
+                {
+                    Text text = _db.Texts.FirstOrDefault(x => x.Name == item.GetName());
+                    if (text == null)
+                    {
+                        throw new ArgumentException($"Group model has members that do not exist in the database: text {text.Name}.");
+                    }
+                    texts.Add(text);
+                }
+                else
+                {
+                    Group group = _db.Groups.FirstOrDefault(x => x.Name == item.GetName());
+
+                }
+
+            }
         }
 
         public void Delete(IGroupModel model)
@@ -44,7 +70,7 @@ namespace FingerPrint.Stores
             throw new NotImplementedException();
         }
 
-        public void Modify(IGroupModel model)
+        public IGroupModel ModifyName(IGroupModel model, string newName)
         {
             throw new NotImplementedException();
         }

@@ -74,13 +74,14 @@ namespace FingerPrint.Controllers.Implementations
 
         public void UpdateGroup(IGroupViewModel model, string name)
         {
-            if (string.IsNullOrWhiteSpace(name))
-            {
-                throw new ArgumentException("Name cannot be null.");
-            }
-            IGroupModel updatedModel = (IGroupModel)model;
-            updatedModel.SetName(name);
-            _groupStore.Modify(updatedModel);
+            throw new NotImplementedException();
+            //if (string.IsNullOrWhiteSpace(name))
+            //{
+            //    throw new ArgumentException("Name cannot be null.");
+            //}
+            //IGroupModel updatedModel = (IGroupModel)model;
+            //updatedModel.SetName(name);
+            //_groupStore.Modify(updatedModel);
         }
     }
 }
