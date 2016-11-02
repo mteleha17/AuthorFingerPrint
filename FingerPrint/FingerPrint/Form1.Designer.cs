@@ -107,6 +107,8 @@
             this.thirteenHead = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.analysisLineChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.editGroupNameButton = new System.Windows.Forms.Button();
+            this.filesTabLabel = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.filesTab.SuspendLayout();
             this.editModifyGroupBox.SuspendLayout();
@@ -229,6 +231,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.addGroupBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.addGroupBox.Controls.Add(this.filesTabLabel);
             this.addGroupBox.Controls.Add(this.addLabel);
             this.addGroupBox.Controls.Add(this.selectFileButtonTab2);
             this.addGroupBox.Controls.Add(this.saveButtonTab2);
@@ -245,7 +248,7 @@
             // 
             this.addLabel.AutoSize = true;
             this.addLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.addLabel.Location = new System.Drawing.Point(253, 30);
+            this.addLabel.Location = new System.Drawing.Point(253, 170);
             this.addLabel.Name = "addLabel";
             this.addLabel.Size = new System.Drawing.Size(38, 20);
             this.addLabel.TabIndex = 0;
@@ -253,7 +256,7 @@
             // 
             // selectFileButtonTab2
             // 
-            this.selectFileButtonTab2.Location = new System.Drawing.Point(233, 76);
+            this.selectFileButtonTab2.Location = new System.Drawing.Point(233, 216);
             this.selectFileButtonTab2.Name = "selectFileButtonTab2";
             this.selectFileButtonTab2.Size = new System.Drawing.Size(75, 23);
             this.selectFileButtonTab2.TabIndex = 4;
@@ -263,7 +266,7 @@
             // 
             // saveButtonTab2
             // 
-            this.saveButtonTab2.Location = new System.Drawing.Point(124, 196);
+            this.saveButtonTab2.Location = new System.Drawing.Point(124, 336);
             this.saveButtonTab2.Name = "saveButtonTab2";
             this.saveButtonTab2.Size = new System.Drawing.Size(75, 23);
             this.saveButtonTab2.TabIndex = 5;
@@ -272,7 +275,7 @@
             // 
             // fileLocationTextBox
             // 
-            this.fileLocationTextBox.Location = new System.Drawing.Point(6, 79);
+            this.fileLocationTextBox.Location = new System.Drawing.Point(6, 219);
             this.fileLocationTextBox.Name = "fileLocationTextBox";
             this.fileLocationTextBox.Size = new System.Drawing.Size(193, 20);
             this.fileLocationTextBox.TabIndex = 1;
@@ -280,7 +283,7 @@
             // 
             // newFileNameTextbox
             // 
-            this.newFileNameTextbox.Location = new System.Drawing.Point(6, 114);
+            this.newFileNameTextbox.Location = new System.Drawing.Point(6, 254);
             this.newFileNameTextbox.Name = "newFileNameTextbox";
             this.newFileNameTextbox.Size = new System.Drawing.Size(193, 20);
             this.newFileNameTextbox.TabIndex = 2;
@@ -288,7 +291,7 @@
             // 
             // newAuthorTextBox
             // 
-            this.newAuthorTextBox.Location = new System.Drawing.Point(6, 152);
+            this.newAuthorTextBox.Location = new System.Drawing.Point(6, 292);
             this.newAuthorTextBox.Name = "newAuthorTextBox";
             this.newAuthorTextBox.Size = new System.Drawing.Size(193, 20);
             this.newAuthorTextBox.TabIndex = 3;
@@ -307,6 +310,7 @@
             // 
             // groupsGroupBox
             // 
+            this.groupsGroupBox.Controls.Add(this.editGroupNameButton);
             this.groupsGroupBox.Controls.Add(this.newGroupButton);
             this.groupsGroupBox.Controls.Add(this.groupComboBox);
             this.groupsGroupBox.Controls.Add(this.groupListViewTab2);
@@ -325,7 +329,7 @@
             // 
             // newGroupButton
             // 
-            this.newGroupButton.Location = new System.Drawing.Point(885, 57);
+            this.newGroupButton.Location = new System.Drawing.Point(817, 110);
             this.newGroupButton.Name = "newGroupButton";
             this.newGroupButton.Size = new System.Drawing.Size(75, 23);
             this.newGroupButton.TabIndex = 8;
@@ -336,7 +340,7 @@
             // groupComboBox
             // 
             this.groupComboBox.FormattingEnabled = true;
-            this.groupComboBox.Location = new System.Drawing.Point(741, 59);
+            this.groupComboBox.Location = new System.Drawing.Point(656, 110);
             this.groupComboBox.Name = "groupComboBox";
             this.groupComboBox.Size = new System.Drawing.Size(121, 21);
             this.groupComboBox.TabIndex = 7;
@@ -348,7 +352,7 @@
             this.textHeaderTab22,
             this.includeQuotesTab22});
             this.groupListViewTab2.FullRowSelect = true;
-            this.groupListViewTab2.Location = new System.Drawing.Point(656, 90);
+            this.groupListViewTab2.Location = new System.Drawing.Point(656, 140);
             this.groupListViewTab2.MultiSelect = false;
             this.groupListViewTab2.Name = "groupListViewTab2";
             this.groupListViewTab2.Size = new System.Drawing.Size(444, 325);
@@ -373,7 +377,7 @@
             // 
             // deleteButtonTab3
             // 
-            this.deleteButtonTab3.Location = new System.Drawing.Point(64, 422);
+            this.deleteButtonTab3.Location = new System.Drawing.Point(62, 471);
             this.deleteButtonTab3.Name = "deleteButtonTab3";
             this.deleteButtonTab3.Size = new System.Drawing.Size(75, 23);
             this.deleteButtonTab3.TabIndex = 5;
@@ -404,7 +408,7 @@
             // 
             this.radiouttonPanel.Controls.Add(this.groupsRadioButton);
             this.radiouttonPanel.Controls.Add(this.filesRadioButton);
-            this.radiouttonPanel.Location = new System.Drawing.Point(143, 42);
+            this.radiouttonPanel.Location = new System.Drawing.Point(143, 90);
             this.radiouttonPanel.Name = "radiouttonPanel";
             this.radiouttonPanel.Size = new System.Drawing.Size(200, 42);
             this.radiouttonPanel.TabIndex = 2;
@@ -438,7 +442,7 @@
             this.titleHeaderTab2,
             this.includeQuotesHeaderTab2});
             this.fileGroupListViewTab2.FullRowSelect = true;
-            this.fileGroupListViewTab2.Location = new System.Drawing.Point(23, 90);
+            this.fileGroupListViewTab2.Location = new System.Drawing.Point(23, 140);
             this.fileGroupListViewTab2.MultiSelect = false;
             this.fileGroupListViewTab2.Name = "fileGroupListViewTab2";
             this.fileGroupListViewTab2.Size = new System.Drawing.Size(444, 325);
@@ -463,12 +467,13 @@
             // 
             // groupTabLabel
             // 
-            this.groupTabLabel.AutoSize = true;
-            this.groupTabLabel.Location = new System.Drawing.Point(523, 16);
+            this.groupTabLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupTabLabel.Location = new System.Drawing.Point(184, 5);
             this.groupTabLabel.Name = "groupTabLabel";
-            this.groupTabLabel.Size = new System.Drawing.Size(98, 13);
+            this.groupTabLabel.Size = new System.Drawing.Size(887, 82);
             this.groupTabLabel.TabIndex = 0;
-            this.groupTabLabel.Text = "Text in Groups Tab";
+            this.groupTabLabel.Text = resources.GetString("groupTabLabel.Text");
+            this.groupTabLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // fingerPrintTab
             // 
@@ -501,7 +506,7 @@
             // 
             this.radioButtonContainer.Controls.Add(this.groupsRadioButtonTab3);
             this.radioButtonContainer.Controls.Add(this.filesRadioButtonTab3);
-            this.radioButtonContainer.Location = new System.Drawing.Point(143, 42);
+            this.radioButtonContainer.Location = new System.Drawing.Point(143, 90);
             this.radioButtonContainer.Name = "radioButtonContainer";
             this.radioButtonContainer.Size = new System.Drawing.Size(200, 42);
             this.radioButtonContainer.TabIndex = 9;
@@ -535,7 +540,7 @@
             this.textHeaderTab32,
             this.includeQuotesTab32});
             this.analysisListView.FullRowSelect = true;
-            this.analysisListView.Location = new System.Drawing.Point(656, 90);
+            this.analysisListView.Location = new System.Drawing.Point(656, 140);
             this.analysisListView.MultiSelect = false;
             this.analysisListView.Name = "analysisListView";
             this.analysisListView.Size = new System.Drawing.Size(444, 325);
@@ -565,7 +570,7 @@
             this.textHeaderTab3,
             this.includeQuotesHeaderTab3});
             this.filesAndGroupsListviewTab3.FullRowSelect = true;
-            this.filesAndGroupsListviewTab3.Location = new System.Drawing.Point(23, 90);
+            this.filesAndGroupsListviewTab3.Location = new System.Drawing.Point(23, 140);
             this.filesAndGroupsListviewTab3.MultiSelect = false;
             this.filesAndGroupsListviewTab3.Name = "filesAndGroupsListviewTab3";
             this.filesAndGroupsListviewTab3.Size = new System.Drawing.Size(444, 325);
@@ -620,12 +625,12 @@
             // 
             // fALabel
             // 
-            this.fALabel.AutoSize = true;
-            this.fALabel.Location = new System.Drawing.Point(509, 16);
+            this.fALabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.fALabel.Location = new System.Drawing.Point(245, 16);
             this.fALabel.Name = "fALabel";
-            this.fALabel.Size = new System.Drawing.Size(112, 13);
+            this.fALabel.Size = new System.Drawing.Size(702, 71);
             this.fALabel.TabIndex = 0;
-            this.fALabel.Text = "Text on Analysis Page";
+            this.fALabel.Text = resources.GetString("fALabel.Text");
             this.fALabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // analysisTab
@@ -823,6 +828,25 @@
             this.openFileDialog1.FileName = "openFileDialog1";
             this.openFileDialog1.Filter = "Text Files (.txt)|*.txt";
             // 
+            // editGroupNameButton
+            // 
+            this.editGroupNameButton.Location = new System.Drawing.Point(921, 110);
+            this.editGroupNameButton.Name = "editGroupNameButton";
+            this.editGroupNameButton.Size = new System.Drawing.Size(150, 23);
+            this.editGroupNameButton.TabIndex = 9;
+            this.editGroupNameButton.Text = "Edit Selected Group Name";
+            this.editGroupNameButton.UseVisualStyleBackColor = true;
+            this.editGroupNameButton.Click += new System.EventHandler(this.editGroupNameButton_Click);
+            // 
+            // filesTabLabel
+            // 
+            this.filesTabLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.filesTabLabel.Location = new System.Drawing.Point(39, 16);
+            this.filesTabLabel.Name = "filesTabLabel";
+            this.filesTabLabel.Size = new System.Drawing.Size(543, 121);
+            this.filesTabLabel.TabIndex = 6;
+            this.filesTabLabel.Text = resources.GetString("filesTabLabel.Text");
+            // 
             // Form1
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -841,12 +865,10 @@
             this.addGroupBox.PerformLayout();
             this.groupsTab.ResumeLayout(false);
             this.groupsGroupBox.ResumeLayout(false);
-            this.groupsGroupBox.PerformLayout();
             this.radiouttonPanel.ResumeLayout(false);
             this.radiouttonPanel.PerformLayout();
             this.fingerPrintTab.ResumeLayout(false);
             this.fingerprintAnalysisGroupBox.ResumeLayout(false);
-            this.fingerprintAnalysisGroupBox.PerformLayout();
             this.radioButtonContainer.ResumeLayout(false);
             this.radioButtonContainer.PerformLayout();
             this.analysisTab.ResumeLayout(false);
@@ -931,6 +953,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn elevenHead;
         private System.Windows.Forms.DataGridViewTextBoxColumn twelveHead;
         private System.Windows.Forms.DataGridViewTextBoxColumn thirteenHead;
+        private System.Windows.Forms.Button editGroupNameButton;
+        private System.Windows.Forms.Label filesTabLabel;
     }
 }
 

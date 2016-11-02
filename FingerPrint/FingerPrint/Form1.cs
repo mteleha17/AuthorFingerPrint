@@ -269,10 +269,28 @@ namespace FingerPrint
             groupComboBox.Items.Add(groupName);
         }
 
+        public void editGroupName(string groupNameOld, string groupNameNew)
+        {
+          
+            groupComboBox.Items.Remove(groupNameOld);
+            groupComboBox.Items.Add(groupNameNew);
+            groupComboBox.SelectedIndex = groupComboBox.Items.IndexOf(groupNameNew);
+            
+        }
+
         private void newGroupButton_Click(object sender, EventArgs e)
         {
             var form = new NewGroupPopUp(this);
             form.Show(this);
+        }
+
+        private void editGroupNameButton_Click(object sender, EventArgs e)
+        {
+            if (groupComboBox.SelectedItem != null)
+            {
+                var form = new EditGroupName(groupComboBox.SelectedItem.ToString(), this);
+                form.Show(this);
+            }
         }
     }
 }

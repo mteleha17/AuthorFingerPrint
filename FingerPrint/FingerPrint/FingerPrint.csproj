@@ -83,6 +83,12 @@
     <Compile Include="Count.cs">
       <DependentUpon>FingerprintV2Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="EditGroupName.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditGroupName.Designer.cs">
+      <DependentUpon>EditGroupName.cs</DependentUpon>
+    </Compile>
     <Compile Include="ErrorMessageDisplay.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -159,6 +165,9 @@
     <Compile Include="Text_Group.cs">
       <DependentUpon>FingerprintV2Model.tt</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="EditGroupName.resx">
+      <DependentUpon>EditGroupName.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ErrorMessageDisplay.resx">
       <DependentUpon>ErrorMessageDisplay.cs</DependentUpon>
     </EmbeddedResource>
