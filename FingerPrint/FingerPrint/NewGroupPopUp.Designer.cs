@@ -69,7 +69,7 @@
             this.Controls.Add(this.addNewGroupLabel);
             this.Name = "NewGroupPopUp";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "NewGroupPopUp";
+            this.Text = "New Group";
             this.ResumeLayout(false);
             this.PerformLayout();
 
