@@ -61,15 +61,10 @@ namespace FingerPrint.Stores
 
         public IEnumerable<ITextModel> GetMany(Expression<Func<Text, bool>> criteria)
         {
-            //List<ITextModel> output = new List<ITextModel>();
             foreach (Text text in _db.Texts.Where(criteria))
             {
-                IFlexibleWordCountModel counts = GetCountsFromText(text);
-                ITextModel textModel = _modelFactory.GetTextModel(text.Name, counts);
-                yield return textModel;
-                //output.Add(textModel);
+                yield return GetOne(x => x.TextID == text.TextID);
             }
-            //return output;
         }
 
         public ITextModel GetOne(Expression<Func<Text, bool>> criteria)
@@ -99,8 +94,7 @@ namespace FingerPrint.Stores
                 text.Author = newAuthor;
             }
             _db.SaveChanges();
-            IFlexibleWordCountModel counts = GetCountsFromText(text);
-            return _modelFactory.GetTextModel(text.Name, counts);
+            return GetOne(x => x.TextID == text.TextID);
         }
 
         public ITextModel ModifyName(ITextModel model, string newName)
@@ -120,8 +114,7 @@ namespace FingerPrint.Stores
             }
             text.Name = newName;
             _db.SaveChanges();
-            IFlexibleWordCountModel counts = GetCountsFromText(text);
-            return _modelFactory.GetTextModel(text.Name, counts);
+            return GetOne(x => x.TextID == text.TextID);
         }
 
         private Count TranslateCounts(ISingleWordCountModel model)
