@@ -63,7 +63,6 @@ namespace FingerPrint.Controllers.Implementations
 
         public void UpdateText(ITextViewModel model, string name = null, string author = null, bool? includeQuotes = null)
         {
-            //throw new NotImplementedException();
             var updatedModel = (ITextModel)model;
             if (!string.IsNullOrWhiteSpace(name))
             {
