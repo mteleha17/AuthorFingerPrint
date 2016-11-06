@@ -13,12 +13,12 @@ namespace FingerPrint.Controllers.Implementations
 {
     public class GroupController : IGroupController
     {
-        private IItemStore<Text, ITextModel> _textStore;
-        private IItemStore<Group, IGroupModel> _groupStore;
+        private ITextStore _textStore;
+        private IGroupStore _groupStore;
         private IModelFactory _modelFactory;
 
-        public GroupController(IItemStore<Text, ITextModel> textStore,
-            IItemStore<Group, IGroupModel> groupStore,
+        public GroupController(ITextStore textStore,
+            IGroupStore groupStore,
             IModelFactory modelFactory)
         {
             _textStore = textStore;
@@ -35,9 +35,12 @@ namespace FingerPrint.Controllers.Implementations
             return _groupStore.GetOne(x => x.Name == name);
         }
 
-        public void CreateGroup(string name, int length)
+        public IGroupViewModel CreateGroup(string name, int length)
         {
-            _groupStore.Add(_modelFactory.GetGroupModel(name, length));
+            IGroupModel model = _modelFactory.GetGroupModel(name, length);
+            _groupStore.Add(model);
+            return model;
+
         }
 
         public void Delete(IGroupViewModel model)
@@ -45,43 +48,47 @@ namespace FingerPrint.Controllers.Implementations
             _groupStore.Delete((IGroupModel)model);
         }
 
-        public void AddToGroup(IGroupViewModel group, ITextOrGroupViewModel item)
+        public void AddItemToGroup(IGroupViewModel model, ITextOrGroupViewModel item)
         {
-            throw new NotImplementedException();
-            //if (item is ITextViewModel)
-            //{
-            //    _groupStore.AddChildText((IGroupModel)group, (ITextModel)item);
-            //}
-            //else
-            //{
-            //    _groupStore.AddChildGroup((IGroupModel)group, (IGroupModel)item);
-            //}
+            AddItemsToGroup(model, new List<ITextOrGroupViewModel>() { item});
         }
 
-        public void RemoveFromGroup(IGroupViewModel group, ITextOrGroupViewModel item)
+        public void AddItemsToGroup(IGroupViewModel model, IEnumerable<ITextOrGroupViewModel> items)
         {
-            throw new NotImplementedException();
+            IGroupModel groupModel = (IGroupModel)model;
+            IEnumerable<ITextOrGroupModel> itemModels = items.Select(x => (ITextOrGroupModel)x);
+            foreach (var m in itemModels)
+            {
+                groupModel.Add(m);
+            }
+            _groupStore.AddItems(groupModel, itemModels);
+        }
 
-            //if (item is ITextViewModel)
-            //{
-            //    _groupStore.RemoveChildText((IGroupModel)group, (ITextModel)item);
-            //}
-            //else
-            //{
-            //    _groupStore.RemoveChildGroup((IGroupModel)group, (IGroupModel)item);
-            //}
+        public void RemoveItemFromGroup(IGroupViewModel model, ITextOrGroupViewModel item)
+        {
+            RemoveItemsFromGroup(model, new List<ITextOrGroupViewModel>() { item});
+        }
+
+        public void RemoveItemsFromGroup(IGroupViewModel model, IEnumerable<ITextOrGroupViewModel> items)
+        {
+            IGroupModel groupModel = (IGroupModel)model;
+            IEnumerable<ITextOrGroupModel> itemModels = items.Select(x => (ITextOrGroupModel)x);
+            foreach (var m in itemModels)
+            {
+                groupModel.Remove(m);
+            }
+            _groupStore.RemoveItems(groupModel, itemModels);
         }
 
         public void UpdateGroup(IGroupViewModel model, string name)
         {
-            throw new NotImplementedException();
-            //if (string.IsNullOrWhiteSpace(name))
-            //{
-            //    throw new ArgumentException("Name cannot be null.");
-            //}
-            //IGroupModel updatedModel = (IGroupModel)model;
-            //updatedModel.SetName(name);
-            //_groupStore.Modify(updatedModel);
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new ArgumentException("Name cannot be null.");
+            }
+            IGroupModel updatedModel = (IGroupModel)model;
+            updatedModel.SetName(name);
+            _groupStore.ModifyName(updatedModel, name);
         }
     }
 }

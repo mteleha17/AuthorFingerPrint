@@ -10,7 +10,8 @@ namespace FingerPrint.Stores
 {
     public interface ITextStore : IItemStore<Text, ITextModel>
     {
-        ITextModel ModifyName(ITextModel model, string newName);
-        ITextModel ModifyAuthor(ITextModel model, string newAuthor);
+        void ModifyName(ITextModel model, string newName);
+        void ModifyAuthor(ITextModel model, string newAuthor);
+        void ModifyIncludeQuotes(ITextModel model, bool includeQuotes);
     }
 }

@@ -78,7 +78,7 @@ namespace FingerPrint.Stores
             return _modelFactory.GetTextModel(text.Name, counts);
         }
 
-        public ITextModel ModifyAuthor(ITextModel model, string newAuthor)
+        public void ModifyAuthor(ITextModel model, string newAuthor)
         {
             Text text = _db.Texts.FirstOrDefault(x => x.Name == model.GetName());
             if (text == null)
@@ -94,10 +94,9 @@ namespace FingerPrint.Stores
                 text.Author = newAuthor;
             }
             _db.SaveChanges();
-            return GetOne(x => x.TextID == text.TextID);
         }
 
-        public ITextModel ModifyName(ITextModel model, string newName)
+        public void ModifyName(ITextModel model, string newName)
         {
             Text text = _db.Texts.FirstOrDefault(x => x.Name == model.GetName());
             if (text == null)
@@ -114,7 +113,17 @@ namespace FingerPrint.Stores
             }
             text.Name = newName;
             _db.SaveChanges();
-            return GetOne(x => x.TextID == text.TextID);
+        }
+
+        public void ModifyIncludeQuotes(ITextModel model, bool includeQuotes)
+        {
+            Text text = _db.Texts.FirstOrDefault(x => x.Name == model.GetName());
+            if (text == null)
+            {
+                throw new ArgumentException("Cannot update model since no corresponding text exists in the database.");
+            }
+            text.QuoteInd = includeQuotes;
+            _db.SaveChanges();
         }
 
         private Count TranslateCounts(ISingleWordCountModel model)

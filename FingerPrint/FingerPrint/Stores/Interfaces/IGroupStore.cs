@@ -10,7 +10,7 @@ namespace FingerPrint.Stores
 {
     public interface IGroupStore : IItemStore<Group, IGroupModel>
     {
-        IGroupModel ModifyName(IGroupModel model, string newName);
+        void ModifyName(IGroupModel model, string newName);
         void AddItem(IGroupModel model, ITextOrGroupModel item);
         void AddItems(IGroupModel model, IEnumerable<ITextOrGroupModel> items);
         void RemoveItem(IGroupModel model, ITextOrGroupModel item);

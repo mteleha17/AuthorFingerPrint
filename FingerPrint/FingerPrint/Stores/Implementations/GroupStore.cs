@@ -89,7 +89,7 @@ namespace FingerPrint.Stores
             return output;
         }
 
-        public IGroupModel ModifyName(IGroupModel model, string newName)
+        public void ModifyName(IGroupModel model, string newName)
         {
             if (string.IsNullOrWhiteSpace(newName))
             {
@@ -102,7 +102,6 @@ namespace FingerPrint.Stores
             }
             group.Name = newName;
             _db.SaveChanges();
-            return GetOne(x => x.GroupID == group.GroupID);
         }
 
         public void AddItem(IGroupModel model, ITextOrGroupModel item)
