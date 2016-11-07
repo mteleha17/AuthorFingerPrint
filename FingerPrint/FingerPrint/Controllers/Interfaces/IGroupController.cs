@@ -26,7 +26,7 @@ namespace FingerPrint.Controllers
         /// <param name="name">The group's name.</param>
         /// /// <param name="length">The word length above which further lengths will not be considered.
         /// For example, length = 10 would mean that all words of length 10+ are considered a single category.</param>
-        void CreateGroup(string name, int length);
+        IGroupViewModel CreateGroup(string name, int length);
 
         /// <summary>
         /// Deletes the specified group.
@@ -39,14 +39,18 @@ namespace FingerPrint.Controllers
         /// </summary>
         /// <param name="group">The group to which to add the text or group.</param>
         /// <param name="item">The text or group to be added.</param>
-        void AddToGroup(IGroupViewModel group, ITextOrGroupViewModel item);
+        void AddItemToGroup(IGroupViewModel model, ITextOrGroupViewModel item);
+
+        void AddItemsToGroup(IGroupViewModel model, IEnumerable<ITextOrGroupViewModel> items);
 
         /// <summary>
         /// Removes a text or group from the specified group.
         /// </summary>
         /// <param name="group">The group from which to remove the text or group.</param>
         /// <param name="item">The text or group to be removed.</param>
-        void RemoveFromGroup(IGroupViewModel group, ITextOrGroupViewModel item);
+        void RemoveItemFromGroup(IGroupViewModel model, ITextOrGroupViewModel item);
+
+        void RemoveItemsFromGroup(IGroupViewModel model, IEnumerable<ITextOrGroupViewModel> items);
         
         /// <summary>
         /// Updates the specified group in the database.

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FingerPrint.AuxiliaryClasses;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,7 @@ namespace FingerPrint.Models
     /// </summary>
     public class FlexibleWordCountModel : IFlexibleWordCountModel
     {
+        //Meaningless comment!
         public readonly int _length;
         private ISingleWordCountModel _countsWithQuotes;
         private ISingleWordCountModel _countsWithoutQuotes;
@@ -27,14 +29,13 @@ namespace FingerPrint.Models
             }
             int withQuotesLength = countsWithQuotes.GetLength();
             int withoutQuotesLength = countsWithoutQuotes.GetLength();
-
             if (withQuotesLength < 1 || withoutQuotesLength < 1)
             {
-                throw new ArgumentException("Number of counts must not be less than 1.");
+                throw new ArgumentException("The count collections must not have length zero.");
             }
             if (withQuotesLength != withoutQuotesLength)
             {
-                throw new ArgumentException("The arrays must have the same length.");
+                throw new ArgumentException($"The count collections must have the same length.");
             }
             for (int i = 0; i < withQuotesLength; i++)
             {

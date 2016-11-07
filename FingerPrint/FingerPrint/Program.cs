@@ -20,12 +20,13 @@ namespace FingerPrint
         [STAThread]
         static void Main()
         {
+            FingerprintV2Entities db = new FingerprintV2Entities();
             var modelFactory = new ModelFactory();
-            var textStore = new TextStore();
-            var groupStore = new GroupStore();
+            var textStore = new TextStore(db, modelFactory);
+            var groupStore = new GroupStore(db, modelFactory, textStore);
             var analysisController = new AnalysisController();
             var textController = new TextController(textStore, groupStore, modelFactory);
-            var groupController = new GroupController(textStore, groupStore, modelFactory);
+            var groupController = new GroupController(analysisController, textStore, groupStore, modelFactory);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1(analysisController, textController, groupController));

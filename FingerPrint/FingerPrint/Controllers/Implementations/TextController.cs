@@ -8,6 +8,7 @@ using FingerPrint.Models.Interfaces.TypeInterfaces;
 using System.IO;
 using FingerPrint;
 using FingerPrint.Stores;
+using FingerPrint.Models.Interfaces;
 
 namespace FingerPrint.Controllers.Implementations
 {
@@ -44,14 +45,15 @@ namespace FingerPrint.Controllers.Implementations
             return _textStore.GetMany(x => x.Author == author).Select(x => (ITextViewModel)x).ToList();
         }
 
-        public void CreateText(string name, TextReader input, int length, string author = null)
+        public ITextViewModel CreateText(string name, TextReader input, int length, string author = null)
         {
-            var model = _modelFactory.GetTextModel(name, input, length);
+            ITextModel model = _modelFactory.GetTextModel(name, input, length);
             if (!string.IsNullOrWhiteSpace(author))
             {
                 model.SetAuthor(author);
             }
             _textStore.Add(model);
+            return model;
         }
 
         public void DeleteText(ITextViewModel model)
@@ -59,22 +61,26 @@ namespace FingerPrint.Controllers.Implementations
             _textStore.Delete((ITextModel)model);
         }
 
-        public void UpdateText(ITextViewModel model, string name = null, string author = null, bool? quotesOn = null)
+        public void UpdateText(ITextViewModel model, string name = null, string author = null, bool? includeQuotes = null)
         {
             var updatedModel = (ITextModel)model;
             if (!string.IsNullOrWhiteSpace(name))
             {
                 updatedModel.SetName(name);
+                _textStore.ModifyName((ITextModel)model, name);
             }
             if (!string.IsNullOrWhiteSpace(author))
             {
                 updatedModel.SetAuthor(author);
+                _textStore.ModifyAuthor((ITextModel)model, author);
+
             }
-            if (quotesOn != null)
+            if (includeQuotes != null)
             {
-                updatedModel.SetIncludeQuotes((bool)quotesOn);
+                updatedModel.SetIncludeQuotes((bool)includeQuotes);
+                _textStore.ModifyIncludeQuotes((ITextModel)model, (bool)includeQuotes);
+
             }
-            _textStore.Modify(updatedModel);
         }
     }
 }

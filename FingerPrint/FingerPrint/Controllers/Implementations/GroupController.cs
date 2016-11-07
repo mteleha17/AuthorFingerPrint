@@ -13,14 +13,17 @@ namespace FingerPrint.Controllers.Implementations
 {
     public class GroupController : IGroupController
     {
+        private IAnalysisController _analysisController;
         private ITextStore _textStore;
         private IGroupStore _groupStore;
         private IModelFactory _modelFactory;
 
-        public GroupController(ITextStore textStore,
+        public GroupController(IAnalysisController analysisController,
+            ITextStore textStore,
             IGroupStore groupStore,
             IModelFactory modelFactory)
         {
+            _analysisController = analysisController;
             _textStore = textStore;
             _groupStore = groupStore;
             _modelFactory = modelFactory;
@@ -35,38 +38,53 @@ namespace FingerPrint.Controllers.Implementations
             return _groupStore.GetOne(x => x.Name == name);
         }
 
-        public void CreateGroup(string name, int length)
+        public IGroupViewModel CreateGroup(string name, int length)
         {
-            _groupStore.Add(_modelFactory.GetGroupModel(name, length));
+            IGroupModel model = _modelFactory.GetGroupModel(name, length);
+            _groupStore.Add(model);
+            return model;
+
         }
 
         public void Delete(IGroupViewModel model)
         {
+            if (_analysisController.GroupIsActive(model))
+            {
+                throw new ArgumentException($"Cannot delete group {model.GetName()} because it is active.");
+            }
             _groupStore.Delete((IGroupModel)model);
         }
 
-        public void AddToGroup(IGroupViewModel group, ITextOrGroupViewModel item)
+        public void AddItemToGroup(IGroupViewModel model, ITextOrGroupViewModel item)
         {
-            if (item is ITextViewModel)
-            {
-                _groupStore.AddChildText((IGroupModel)group, (ITextModel)item);
-            }
-            else
-            {
-                _groupStore.AddChildGroup((IGroupModel)group, (IGroupModel)item);
-            }
+            AddItemsToGroup(model, new List<ITextOrGroupViewModel>() { item});
         }
 
-        public void RemoveFromGroup(IGroupViewModel group, ITextOrGroupViewModel item)
+        public void AddItemsToGroup(IGroupViewModel model, IEnumerable<ITextOrGroupViewModel> items)
         {
-            if (item is ITextViewModel)
+            IGroupModel groupModel = (IGroupModel)model;
+            IEnumerable<ITextOrGroupModel> itemModels = items.Select(x => (ITextOrGroupModel)x);
+            foreach (var m in itemModels)
             {
-                _groupStore.RemoveChildText((IGroupModel)group, (ITextModel)item);
+                groupModel.Add(m);
             }
-            else
+            _groupStore.AddItems(groupModel, itemModels);
+        }
+
+        public void RemoveItemFromGroup(IGroupViewModel model, ITextOrGroupViewModel item)
+        {
+            RemoveItemsFromGroup(model, new List<ITextOrGroupViewModel>() { item});
+        }
+
+        public void RemoveItemsFromGroup(IGroupViewModel model, IEnumerable<ITextOrGroupViewModel> items)
+        {
+            IGroupModel groupModel = (IGroupModel)model;
+            IEnumerable<ITextOrGroupModel> itemModels = items.Select(x => (ITextOrGroupModel)x);
+            foreach (var m in itemModels)
             {
-                _groupStore.RemoveChildGroup((IGroupModel)group, (IGroupModel)item);
+                groupModel.Remove(m);
             }
+            _groupStore.RemoveItems(groupModel, itemModels);
         }
 
         public void UpdateGroup(IGroupViewModel model, string name)
@@ -77,7 +95,7 @@ namespace FingerPrint.Controllers.Implementations
             }
             IGroupModel updatedModel = (IGroupModel)model;
             updatedModel.SetName(name);
-            _groupStore.Modify(updatedModel);
+            _groupStore.ModifyName(updatedModel, name);
         }
     }
 }

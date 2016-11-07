@@ -73,6 +73,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AuxiliaryClasses\UniversalCountSize.cs" />
     <Compile Include="Controllers\Implementations\AnalysisController.cs" />
     <Compile Include="Controllers\Implementations\GroupController.cs" />
     <Compile Include="Controllers\Implementations\TextController.cs" />
@@ -81,6 +82,12 @@
     <Compile Include="Controllers\Interfaces\ITextController.cs" />
     <Compile Include="Count.cs">
       <DependentUpon>FingerprintV2Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EditGroupName.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditGroupName.Designer.cs">
+      <DependentUpon>EditGroupName.cs</DependentUpon>
     </Compile>
     <Compile Include="ErrorMessageDisplay.cs">
       <SubType>Form</SubType>
@@ -139,6 +146,12 @@
     <Compile Include="Models\Implementations\TextModel.cs" />
     <Compile Include="Models\Interfaces\ViewModels\ITextOrGroupViewModel.cs" />
     <Compile Include="Models\Interfaces\ViewModels\ITextViewModel.cs" />
+    <Compile Include="NewGroupPopUp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewGroupPopUp.Designer.cs">
+      <DependentUpon>NewGroupPopUp.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Stores\Implementations\GroupStore.cs" />
@@ -152,6 +165,9 @@
     <Compile Include="Text_Group.cs">
       <DependentUpon>FingerprintV2Model.tt</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="EditGroupName.resx">
+      <DependentUpon>EditGroupName.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ErrorMessageDisplay.resx">
       <DependentUpon>ErrorMessageDisplay.cs</DependentUpon>
     </EmbeddedResource>
@@ -160,6 +176,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormPopUpFileEdit.resx">
       <DependentUpon>FormPopUpFileEdit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewGroupPopUp.resx">
+      <DependentUpon>NewGroupPopUp.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

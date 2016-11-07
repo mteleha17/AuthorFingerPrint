@@ -10,17 +10,19 @@ using System.Windows.Forms;
 
 namespace FingerPrint
 {
-    public partial class ErrorMessageDisplay : Form
+    public partial class NewGroupPopUp : Form
     {
-        public ErrorMessageDisplay(string errorMessage)
+        Form1 form1;
+
+        public NewGroupPopUp(Form1 _form1)
         {
+            form1 = _form1;
             InitializeComponent();
-            string errorMessageToShow = errorMessage;
-            errorLabel.Text = errorMessage;
         }
 
-        private void okButton_Click(object sender, EventArgs e)
+        private void saveNewGroupButton_Click(object sender, EventArgs e)
         {
+            form1.addGroup(groupNameTextBox.Text);
             this.Close();
         }
     }

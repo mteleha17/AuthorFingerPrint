@@ -198,6 +198,12 @@ namespace FingerPrint
                 var form = new FormPopUpFileEdit(authorName, textName, includeQuotes, this);
                 form.Show(this);
             }
+            else
+            {
+                string errorMessage = "You need to select an item to edit if first!";
+                var form2 = new ErrorMessageDisplay(errorMessage);
+                form2.Show(this);
+            }
 
            
             
@@ -258,7 +264,33 @@ namespace FingerPrint
           
         }
 
+        public void addGroup(string groupName)
+        {
+            groupComboBox.Items.Add(groupName);
+        }
 
+        public void editGroupName(string groupNameOld, string groupNameNew)
+        {
+          
+            groupComboBox.Items.Remove(groupNameOld);
+            groupComboBox.Items.Add(groupNameNew);
+            groupComboBox.SelectedIndex = groupComboBox.Items.IndexOf(groupNameNew);
+            
+        }
 
+        private void newGroupButton_Click(object sender, EventArgs e)
+        {
+            var form = new NewGroupPopUp(this);
+            form.Show(this);
+        }
+
+        private void editGroupNameButton_Click(object sender, EventArgs e)
+        {
+            if (groupComboBox.SelectedItem != null)
+            {
+                var form = new EditGroupName(groupComboBox.SelectedItem.ToString(), this);
+                form.Show(this);
+            }
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FingerPrint.AuxiliaryClasses;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,7 +23,7 @@ namespace FingerPrint.Models
             }
             if (counts.Length < 1)
             {
-                throw new ArgumentException("The number of counts must be positive.");
+                throw new ArgumentException($"The count collection must not be length zero.");
             }
             foreach (int i in counts)
             {
