@@ -20,7 +20,6 @@
     [eighteen]   INT NOT NULL,
     [nineteen]   INT NOT NULL,
     [twentyPlus] INT NOT NULL,
-    PRIMARY KEY CLUSTERED ([CountsID] ASC),
-    FOREIGN KEY ([CountsID]) REFERENCES [dbo].[Text] ([TextID])
+    PRIMARY KEY CLUSTERED ([CountsID] ASC)
 );
 
