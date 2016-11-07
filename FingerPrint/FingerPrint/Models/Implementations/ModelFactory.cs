@@ -134,6 +134,7 @@ namespace FingerPrint.Models.Implementations
             {
                 if (line.Length != 0) // skip line if empty
                 {
+                    line = Regex.Replace(line, "[—]", " "); // treat em dashes as spaces since they don't link words together like hyphens or en dashes
                     string[] wordsArray = delim.Split(line.Trim()); // split the line using delimiter
                     for (int i = 0; i < wordsArray.Length; i++) // iterate through split array
                     {
@@ -175,14 +176,14 @@ namespace FingerPrint.Models.Implementations
                         {
                             inQuotes = true;
                         }
-                        string tempCurrentWord = Regex.Replace(currentWord, "[\"]", ""); // remove quotes from the current word
-                        tempCurrentWord = Regex.Replace(tempCurrentWord, "[^a-zA-Z0-9']+$", ""); // remove non-alphanumeric characters from the end of the word except for apostrophes
-                        Debug.Print(tempCurrentWord);
-                        if (!(tempCurrentWord.Length == 0))
+                        string modifiedCurrentWord = Regex.Replace(currentWord, "[\"]", ""); // remove quotes from the current word
+                        modifiedCurrentWord = Regex.Replace(modifiedCurrentWord, "[^a-zA-Z0-9']+$", ""); // remove non-alphanumeric characters from the end of the word except for apostrophes
+                        Debug.Print(modifiedCurrentWord);
+                        if (!(modifiedCurrentWord.Length == 0))
                         {
-                            int wordLength = tempCurrentWord.Length;
-                            previousWordLength = wordLength;
-                            if (!inQuotes)
+                            int wordLength = modifiedCurrentWord.Length;
+                            previousWordLength = wordLength; // variable used in case a wordlength count has to be uncounted when counting the next word
+                            if (!inQuotes) // if outside of quotations, increase count for both the count including and excluding words in quotations
                             {
                                 if (wordLength < countsWithQuotes.Length)
                                 {
@@ -195,7 +196,7 @@ namespace FingerPrint.Models.Implementations
                                     countsWithoutQuotes[countsWithoutQuotes.Length - 1]++;
                                 }
                             }
-                            else
+                            else // if inside of quotations, increase count for only the count including words in quotations
                             {
                                 if (wordLength < countsWithQuotes.Length)
                                 {
