@@ -13,14 +13,17 @@ namespace FingerPrint.Controllers.Implementations
 {
     public class GroupController : IGroupController
     {
+        private IAnalysisController _analysisController;
         private ITextStore _textStore;
         private IGroupStore _groupStore;
         private IModelFactory _modelFactory;
 
-        public GroupController(ITextStore textStore,
+        public GroupController(IAnalysisController analysisController,
+            ITextStore textStore,
             IGroupStore groupStore,
             IModelFactory modelFactory)
         {
+            _analysisController = analysisController;
             _textStore = textStore;
             _groupStore = groupStore;
             _modelFactory = modelFactory;
@@ -45,6 +48,10 @@ namespace FingerPrint.Controllers.Implementations
 
         public void Delete(IGroupViewModel model)
         {
+            if (_analysisController.GroupIsActive(model))
+            {
+                throw new ArgumentException($"Cannot delete group {model.GetName()} because it is active.");
+            }
             _groupStore.Delete((IGroupModel)model);
         }
 

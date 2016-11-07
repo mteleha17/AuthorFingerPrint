@@ -50,6 +50,10 @@ namespace FingerPrint.Stores
             {
                 throw new ArgumentException($"Cannot delete text {model.GetName()} since it does not exist in the database.");
             }
+            if (_db.Text_Group.Any(x => x.TextID == text.TextID))
+            {
+                throw new ArgumentException($"Cannot delete text {model.GetName()} because it is currently a member of a group.");
+            }
             _db.Texts.Remove(text);
             _db.SaveChanges();
         }
