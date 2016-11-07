@@ -4,4 +4,3 @@
     PRIMARY KEY CLUSTERED (TextID, GroupID),
     FOREIGN KEY ([TextID]) REFERENCES [dbo].[Text] ([TextID])
 
-	);
