@@ -37,19 +37,29 @@ namespace FingerPrint.Controllers
         /// <summary>
         /// Adds a text or group to the specified group.
         /// </summary>
-        /// <param name="group">The group to which to add the text or group.</param>
+        /// <param name="model">The group to which to add the text or group.</param>
         /// <param name="item">The text or group to be added.</param>
         void AddItemToGroup(IGroupViewModel model, ITextOrGroupViewModel item);
 
+        /// <summary>
+        /// Adds multiple texts and/or groups to the specified group.
+        /// </summary>
+        /// <param name="model">The group to which to add the specified texts and/or groups.</param>
+        /// <param name="items">The texts and/or groups to add.</param>
         void AddItemsToGroup(IGroupViewModel model, IEnumerable<ITextOrGroupViewModel> items);
 
         /// <summary>
         /// Removes a text or group from the specified group.
         /// </summary>
-        /// <param name="group">The group from which to remove the text or group.</param>
+        /// <param name="model">The group from which to remove the text or group.</param>
         /// <param name="item">The text or group to be removed.</param>
         void RemoveItemFromGroup(IGroupViewModel model, ITextOrGroupViewModel item);
 
+        /// <summary>
+        /// Removes texts and/or groups from the specified group.
+        /// </summary>
+        /// <param name="model">The group from which to remove the texts and/or groups.</param>
+        /// <param name="items">The texts and/or groups to be removed.</param>
         void RemoveItemsFromGroup(IGroupViewModel model, IEnumerable<ITextOrGroupViewModel> items);
         
         /// <summary>

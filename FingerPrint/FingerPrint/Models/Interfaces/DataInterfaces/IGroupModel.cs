@@ -13,7 +13,7 @@ namespace FingerPrint.Models.Interfaces
     public interface IGroupModel : ITextOrGroupModel, IGroupViewModel
     {
         /// <summary>
-        /// event to be used to notify parent groups when this group is modified so that they can
+        /// Event to be used to notify parent groups when this group is modified so that they can
         /// recalculate their counts accordingly.
         /// </summary>
         event EventHandler Modified;

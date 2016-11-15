@@ -11,7 +11,17 @@ namespace FingerPrint.Models.Interfaces.TypeInterfaces
     /// </summary>
     public interface ITextViewModel : ITextOrGroupViewModel
     {
+        /// <summary>
+        /// Gets the text's author field.
+        /// </summary>
+        /// <returns>The text's author.</returns>
         string GetAuthor();
+
+        /// <summary>
+        /// Gets the text's include quotes boolean.
+        /// </summary>
+        /// <returns>True if the text is set to include words inside quotations when 
+        /// giving its word counts and false otherwise.</returns>
         bool GetIncludeQuotes();
     }
 }

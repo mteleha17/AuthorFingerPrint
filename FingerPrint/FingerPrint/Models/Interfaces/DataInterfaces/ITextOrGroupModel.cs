@@ -13,6 +13,10 @@ namespace FingerPrint.Models.Interfaces
     /// </summary>
     public interface ITextOrGroupModel : ITextOrGroupViewModel
     {
+        /// <summary>
+        /// Sets the text or groups name.
+        /// </summary>
+        /// <param name="name">The text or group's new name.</param>
         void SetName(string name);
     }
 }

@@ -27,7 +27,7 @@ namespace FingerPrint.Models
         /// so index 0 correponds to words of length 1.
         /// </summary>
         /// <param name="includeQuotes">Determines whether the count to be fetched includes words in quotations.</param>
-        /// <param name="index">The word length from which to get a count.</param>
+        /// <param name="index">The word length for which to get a count.</param>
         /// <returns></returns>
         int GetAt(bool includeQuotes, int index);
 
