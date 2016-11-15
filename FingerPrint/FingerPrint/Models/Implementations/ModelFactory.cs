@@ -141,7 +141,7 @@ namespace FingerPrint.Models.Implementations
                         string currentWord = wordsArray[i]; // grab a single word to count from split array
                         if (continueWord) // this conditional handles the case of if the previous line ends with a hyphen
                         {
-                            if (currentWord[0] >= 'A' && currentWord[0] <= 'Z') // if the first letter of the current word is uppercase it means the previous hyphen was used incorrectly. don't change the current word
+                            if (currentWord[0] >= 'A' && currentWord[0] <= 'Z') // if the first letter of the current word is uppercase it means the previous hyphen was used incorrectly. don't change the current word and don't uncount the previous wordlength
                             {
                                 firstHalfOfWord = "";
                                 continueWord = false;
@@ -151,11 +151,11 @@ namespace FingerPrint.Models.Implementations
                                 currentWord = firstHalfOfWord + currentWord;
                                 firstHalfOfWord = "";
                                 continueWord = false;
-                                if (inQuotes) // uncount last wordlength count from counts with quotes if currently inside of quotations
+                                if (inQuotes) // uncount previous wordlength from counts with quotes if currently inside of quotations
                                 {
                                     countsWithQuotes[previousWordLength - 1]--;
                                 }
-                                else // uncount last wordlength count for both counts if current outside of quotations
+                                else // uncount previous wordlength for both counts if currently outside of quotations
                                 {
                                     countsWithQuotes[previousWordLength - 1]--;
                                     countsWithoutQuotes[previousWordLength - 1]--;
@@ -171,7 +171,7 @@ namespace FingerPrint.Models.Implementations
                                 continueWord = true;
                             }
                         }
-                        // if it locates a starting quotation mark, set as in quotations
+                        // if it locates a starting quotation mark, set as inside quotations
                         if (currentWord[0] == '"' || currentWord[0] == '“')
                         {
                             inQuotes = true;
@@ -208,7 +208,7 @@ namespace FingerPrint.Models.Implementations
                                 }
                             }
                         }
-                        // if it locates an ending quotation mark, set as no longer within quotations
+                        // if it locates an ending quotation mark, set as no longer inside quotations
                         if (currentWord[currentWord.Length - 1] == '"' || currentWord[currentWord.Length - 1] == '”')
                         {
                             inQuotes = false;
@@ -217,6 +217,7 @@ namespace FingerPrint.Models.Implementations
                     }
                 }
             }
+            // determines if there are mismatched quotation marks
             if (inQuotes)
             {
                 mismatchedQuotationMarks = true;
