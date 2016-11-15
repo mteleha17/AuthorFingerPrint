@@ -60,12 +60,22 @@ namespace FingerPrint.Models
             _name = name;
         }
 
+        /// <summary>
+        /// Method to be called when the group is modified (i.e. a text or child group is removed from it).
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnModified(object sender, EventArgs e)
         {
+            //Check to see if any other group has subscribed to this group's events.
+            //Strangely, this can be determined by whether or not the Modified event is null.
+            //If at least one group is subscribing, trigger the Modified event.
             if (Modified != null)
             {
                 Modified(this, e); 
             }
+            //In any case, this group has been modified and will need to recalculate its counts 
+            //if and when it is asked for them.
             _modified = true;
         }
 
@@ -133,12 +143,18 @@ namespace FingerPrint.Models
             return _counts.Copy();
         }
 
+        /// <summary>
+        /// Recalculate this group's counts.
+        /// </summary>
         private void CalculateFingerprint()
         {
+            //Reset counts.
             for (int i = 0; i < _length; i++)
             {
                 _counts.SetAt(i, 0);
             }
+            //Check to see if this group has any texts or child groups as items.
+            //If not, all counts can stay at zero.
             if (_items.Count == 0)
             {
                 return;

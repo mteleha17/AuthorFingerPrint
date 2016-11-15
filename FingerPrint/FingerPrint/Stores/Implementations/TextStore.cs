@@ -130,6 +130,11 @@ namespace FingerPrint.Stores
             _db.SaveChanges();
         }
 
+        /// <summary>
+        /// Takes a count model and returns a new Count database entity.
+        /// </summary>
+        /// <param name="model">The count model.</param>
+        /// <returns>A Count database entity.</returns>
         private Count TranslateCounts(ISingleWordCountModel model)
         {
             if (model.GetLength() != UniversalCountSize.CountSize)
@@ -155,6 +160,11 @@ namespace FingerPrint.Stores
             return output;
         }
 
+        /// <summary>
+        /// Takes a Count database entity and returns a count model.
+        /// </summary>
+        /// <param name="count">The Count database entity.</param>
+        /// <returns>A count model.</returns>
         private ISingleWordCountModel TranslateCounts(Count count)
         {
             ISingleWordCountModel output = _modelFactory.GetSingleCountModel(UniversalCountSize.CountSize);
@@ -174,6 +184,12 @@ namespace FingerPrint.Stores
             return output;
         }
 
+        /// <summary>
+        /// Takes a Text database entity and returns a flexible count model representing the
+        /// text's two sets of counts (with and without quotations).
+        /// </summary>
+        /// <param name="text">The Text entity.</param>
+        /// <returns>A flexible count model with two sets of counts (with and without quotations).</returns>
         private IFlexibleWordCountModel GetCountsFromText(Text text)
         {
             Count withQuotes = _db.Counts.FirstOrDefault(x => x.CountsID == text.CountsWithQuotesID);

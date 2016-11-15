@@ -117,6 +117,11 @@ namespace FingerPrint.Models.Implementations
             GenerateCounts(text, model);
         }
 
+        /// <summary>
+        /// The method to process a text and get the word counts.
+        /// </summary>
+        /// <param name="text">The text of the text itself.</param>
+        /// <param name="model">The flexible word count model to fill with counts.</param>
         private void GenerateCounts(TextReader text, IFlexibleWordCountModel model)
         {
             int[] countsWithQuotes = new int[10];

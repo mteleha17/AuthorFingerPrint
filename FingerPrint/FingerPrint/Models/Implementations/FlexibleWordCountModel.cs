@@ -12,7 +12,6 @@ namespace FingerPrint.Models
     /// </summary>
     public class FlexibleWordCountModel : IFlexibleWordCountModel
     {
-        //Meaningless comment!
         public readonly int _length;
         private ISingleWordCountModel _countsWithQuotes;
         private ISingleWordCountModel _countsWithoutQuotes;
