@@ -83,16 +83,16 @@
     <Compile Include="Count.cs">
       <DependentUpon>FingerprintV2Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="EditGroupName.cs">
+    <Compile Include="GUI\EditGroupName.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="EditGroupName.Designer.cs">
+    <Compile Include="GUI\EditGroupName.Designer.cs">
       <DependentUpon>EditGroupName.cs</DependentUpon>
     </Compile>
-    <Compile Include="ErrorMessageDisplay.cs">
+    <Compile Include="GUI\ErrorMessageDisplay.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ErrorMessageDisplay.Designer.cs">
+    <Compile Include="GUI\ErrorMessageDisplay.Designer.cs">
       <DependentUpon>ErrorMessageDisplay.cs</DependentUpon>
     </Compile>
     <Compile Include="FingerprintV2DataSet.cs">
@@ -118,16 +118,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>FingerprintV2Model.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Form1.cs">
+    <Compile Include="GUI\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
+    <Compile Include="GUI\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormPopUpFileEdit.cs">
+    <Compile Include="GUI\FormPopUpFileEdit.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormPopUpFileEdit.Designer.cs">
+    <Compile Include="GUI\FormPopUpFileEdit.Designer.cs">
       <DependentUpon>FormPopUpFileEdit.cs</DependentUpon>
     </Compile>
     <Compile Include="Group.cs">
@@ -154,10 +154,10 @@
     <Compile Include="Models\Implementations\TextModel.cs" />
     <Compile Include="Models\Interfaces\ViewModels\ITextOrGroupViewModel.cs" />
     <Compile Include="Models\Interfaces\ViewModels\ITextViewModel.cs" />
-    <Compile Include="NewGroupPopUp.cs">
+    <Compile Include="GUI\NewGroupPopUp.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="NewGroupPopUp.Designer.cs">
+    <Compile Include="GUI\NewGroupPopUp.Designer.cs">
       <DependentUpon>NewGroupPopUp.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
@@ -173,19 +173,19 @@
     <Compile Include="Text_Group.cs">
       <DependentUpon>FingerprintV2Model.tt</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="EditGroupName.resx">
+    <EmbeddedResource Include="GUI\EditGroupName.resx">
       <DependentUpon>EditGroupName.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ErrorMessageDisplay.resx">
+    <EmbeddedResource Include="GUI\ErrorMessageDisplay.resx">
       <DependentUpon>ErrorMessageDisplay.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form1.resx">
+    <EmbeddedResource Include="GUI\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormPopUpFileEdit.resx">
+    <EmbeddedResource Include="GUI\FormPopUpFileEdit.resx">
       <DependentUpon>FormPopUpFileEdit.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="NewGroupPopUp.resx">
+    <EmbeddedResource Include="GUI\NewGroupPopUp.resx">
       <DependentUpon>NewGroupPopUp.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
