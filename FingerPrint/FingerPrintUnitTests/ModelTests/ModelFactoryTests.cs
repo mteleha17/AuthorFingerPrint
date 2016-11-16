@@ -255,5 +255,24 @@ namespace FingerPrintUnitTests.ModelTests
             Assert.AreEqual(0, counts.GetAt(9));
         }
 
+        [TestMethod]
+        public void CountWithEmDashes()
+        {
+            string s = "So fitfully—so fearfully— So fitfully—so fearfully—";
+            stringReader = new StringReader(s);
+            var textModel = _modelFactory.GetTextModel("test", stringReader, 10);
+            counts = textModel.GetCounts();
+            Assert.AreEqual(0, counts.GetAt(0)); 
+            Assert.AreEqual(4, counts.GetAt(1));
+            Assert.AreEqual(0, counts.GetAt(2));
+            Assert.AreEqual(0, counts.GetAt(3));
+            Assert.AreEqual(0, counts.GetAt(4));
+            Assert.AreEqual(0, counts.GetAt(5));
+            Assert.AreEqual(0, counts.GetAt(6));
+            Assert.AreEqual(2, counts.GetAt(7));
+            Assert.AreEqual(2, counts.GetAt(8));
+            Assert.AreEqual(0, counts.GetAt(9));
+        }
+
     }
 }

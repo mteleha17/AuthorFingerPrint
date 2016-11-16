@@ -36,7 +36,7 @@ namespace FingerPrint.Controllers
         /// <param name="input">TextReader object storing the contents of the text.</param>
         /// <param name="length">The word length above which further lengths will not be considered.
         /// For example, length = 10 would mean that all words of length 10+ are considered a single category.</param>
-        /// <param name="author">Author name.</param>
+        /// <param name="author">Author name (optional).</param>
         ITextViewModel CreateText(string name, TextReader input, int length, string author = null);
 
         /// <summary>
