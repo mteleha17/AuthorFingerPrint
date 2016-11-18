@@ -82,5 +82,10 @@ namespace FingerPrint.Controllers.Implementations
 
             }
         }
+
+        public List<ITextViewModel> GetAllTexts()
+        {
+            return _textStore.GetMany(x => true).Select(x => (ITextViewModel)x).ToList();
+        }
     }
 }

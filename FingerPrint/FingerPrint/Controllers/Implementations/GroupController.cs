@@ -97,5 +97,10 @@ namespace FingerPrint.Controllers.Implementations
             updatedModel.SetName(name);
             _groupStore.ModifyName(updatedModel, name);
         }
+
+        public List<IGroupViewModel> GetAllGroups()
+        {
+            return _groupStore.GetMany(x => true).Select(x => ((IGroupViewModel)x)).ToList();
+        }
     }
 }

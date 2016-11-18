@@ -21,6 +21,12 @@ namespace FingerPrint.Controllers
         IGroupViewModel GetGroupByName(string name);
 
         /// <summary>
+        /// Gets all groups that exist in the database.
+        /// </summary>
+        /// <returns>A list of groups.</returns>
+        List<IGroupViewModel> GetAllGroups();
+
+        /// <summary>
         /// Adds a new group to the database.
         /// </summary>
         /// <param name="name">The group's name.</param>

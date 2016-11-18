@@ -97,6 +97,10 @@ namespace FingerPrint.Models
             {
                 throw new ArgumentException($"Item {item} cannot be added to a group that it is already a member of.");
             }
+            if (item is IGroupModel && ((IGroupModel)item).ContainsRecursive(this))
+            {
+                throw new ArgumentException("Cannot add a group as a child to its own child or a child of its child.");
+            }
             _items.Add(item);
             if (item is IGroupModel)
             {
@@ -174,6 +178,25 @@ namespace FingerPrint.Models
             {
                 _counts.SetAt(i, _counts.GetAt(i) / numberOfItems);
             }
+        }
+
+        public bool ContainsRecursive(ITextOrGroupViewModel item)
+        {
+            if (_items.Contains(item))
+            {
+                return true;
+            }
+            foreach (ITextOrGroupModel model in _items)
+            {
+                if (model is IGroupModel)
+                {
+                    if (((IGroupModel)model).ContainsRecursive(item))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
     }
 }

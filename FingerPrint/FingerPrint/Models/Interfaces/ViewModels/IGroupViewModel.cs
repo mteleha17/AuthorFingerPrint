@@ -16,5 +16,6 @@ namespace FingerPrint.Models.Interfaces.TypeInterfaces
         /// </summary>
         /// <returns>List of texts and groups.</returns>
         List<ITextOrGroupViewModel> GetMembers();
+        bool ContainsRecursive(ITextOrGroupViewModel item);
     }
 }

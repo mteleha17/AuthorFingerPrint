@@ -30,6 +30,12 @@ namespace FingerPrint.Controllers
         List<ITextViewModel> GetTextByAuthor(string author);
 
         /// <summary>
+        /// Gets all texts that exist in the database.
+        /// </summary>
+        /// <returns>A list of texts.</returns>
+        List<ITextViewModel> GetAllTexts();
+
+        /// <summary>
         /// Adds a new text to the database.
         /// </summary>
         /// <param name="name">Text name.</param>
