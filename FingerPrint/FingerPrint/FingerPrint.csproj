@@ -230,6 +230,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="DatabaseScripts\dbo.Script_Order.sql" />
+    <Content Include="DatabaseScripts\dbo.Database.sql" />
     <Content Include="DatabaseScripts\dbo.Counts.sql" />
     <Content Include="DatabaseScripts\dbo.Group.sql" />
     <Content Include="DatabaseScripts\dbo.Group_Group.sql" />
