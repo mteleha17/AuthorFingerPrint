@@ -1,4 +1,5 @@
 ﻿using FingerPrint;
+using FingerPrint.AuxiliaryClasses;
 using FingerPrint.Controllers;
 using FingerPrint.Models;
 using FingerPrint.Models.Implementations;
@@ -8,6 +9,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,7 +24,7 @@ namespace FingerPrint
         private ITextController _textController;
         private IGroupController _groupController;
         private IAnalysisController _analysisController;
-
+        
         public Form1(IAnalysisController analysisController,
             ITextController textController,
             IGroupController groupController)
@@ -291,6 +293,12 @@ namespace FingerPrint
                 var form = new EditGroupName(groupComboBox.SelectedItem.ToString(), this);
                 form.Show(this);
             }
+        }
+
+        private void saveButtonTab1_Click(object sender, EventArgs e)
+        {
+            StreamReader input = new StreamReader(fileLocationTextBox.Text);
+            ITextViewModel model = _textController.CreateText(newFileNameTextbox.Text, input, UniversalCountSize.CountSize, newAuthorTextBox.Text);
         }
     }
 }

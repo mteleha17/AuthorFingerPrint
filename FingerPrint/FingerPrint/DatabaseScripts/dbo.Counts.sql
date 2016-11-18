@@ -13,13 +13,6 @@
     [eleven]     INT NOT NULL,
     [twelve]     INT NOT NULL,
     [thirteen]   INT NOT NULL,
-    [fourteen]   INT NOT NULL,
-    [fifteen]    INT NOT NULL,
-    [sixteen]    INT NOT NULL,
-    [seventeen]  INT NOT NULL,
-    [eighteen]   INT NOT NULL,
-    [nineteen]   INT NOT NULL,
-    [twentyPlus] INT NOT NULL,
     PRIMARY KEY CLUSTERED ([CountsID] ASC)
 );
 
