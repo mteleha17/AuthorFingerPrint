@@ -28,8 +28,8 @@ namespace FingerPrint
         public int eleven { get; set; }
         public int twelve { get; set; }
         public int thirteen { get; set; }
+        public int TextTextID { get; set; }
     
         public virtual Text Text { get; set; }
-        public virtual Text Text1 { get; set; }
     }
 }

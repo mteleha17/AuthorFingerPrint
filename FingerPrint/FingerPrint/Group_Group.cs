@@ -14,13 +14,19 @@ namespace FingerPrint
     
     public partial class Group_Group
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Group_Group()
+        {
+            this.Groups = new HashSet<Group>();
+        }
+    
         public int GG_ID { get; set; }
         public int ParentID { get; set; }
         public int ChildID { get; set; }
         public int GroupGroupID { get; set; }
         public int GroupGroupID1 { get; set; }
     
-        public virtual Group Group { get; set; }
-        public virtual Group Group1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Group> Groups { get; set; }
     }
 }

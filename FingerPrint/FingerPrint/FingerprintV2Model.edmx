@@ -176,10 +176,6 @@
           <EntitySet Name="Group_Group" EntityType="FingerprintV2Model.Group_Group" />
           <EntitySet Name="Texts" EntityType="FingerprintV2Model.Text" />
           <EntitySet Name="Text_Group" EntityType="FingerprintV2Model.Text_Group" />
-          <AssociationSet Name="TextCount" Association="FingerprintV2Model.TextCount">
-            <End Role="Text" EntitySet="Texts" />
-            <End Role="Count" EntitySet="Counts" />
-          </AssociationSet>
           <AssociationSet Name="TextText_Group" Association="FingerprintV2Model.TextText_Group">
             <End Role="Text" EntitySet="Texts" />
             <End Role="Text_Group" EntitySet="Text_Group" />
@@ -188,17 +184,13 @@
             <End Role="Text_Group" EntitySet="Text_Group" />
             <End Role="Group" EntitySet="Groups" />
           </AssociationSet>
+          <AssociationSet Name="TextCount" Association="FingerprintV2Model.TextCount">
+            <End Role="Text" EntitySet="Texts" />
+            <End Role="Count" EntitySet="Counts" />
+          </AssociationSet>
           <AssociationSet Name="GroupGroup_Group" Association="FingerprintV2Model.GroupGroup_Group">
             <End Role="Group" EntitySet="Groups" />
             <End Role="Group_Group" EntitySet="Group_Group" />
-          </AssociationSet>
-          <AssociationSet Name="GroupGroup_Group1" Association="FingerprintV2Model.GroupGroup_Group1">
-            <End Role="Group" EntitySet="Groups" />
-            <End Role="Group_Group" EntitySet="Group_Group" />
-          </AssociationSet>
-          <AssociationSet Name="TextCount1" Association="FingerprintV2Model.TextCount1">
-            <End Role="Text" EntitySet="Texts" />
-            <End Role="Count" EntitySet="Counts" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Count">
@@ -220,7 +212,7 @@
           <Property Name="twelve" Type="Int32" Nullable="false" />
           <Property Name="thirteen" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Text" Relationship="FingerprintV2Model.TextCount" FromRole="Count" ToRole="Text" />
-          <NavigationProperty Name="Text1" Relationship="FingerprintV2Model.TextCount1" FromRole="Count" ToRole="Text" />
+          <Property Name="TextTextID" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Group">
           <Key>
@@ -230,7 +222,6 @@
           <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="true" Unicode="true" />
           <NavigationProperty Name="Text_Group" Relationship="FingerprintV2Model.Text_GroupGroup" FromRole="Group" ToRole="Text_Group" />
           <NavigationProperty Name="Group_Group" Relationship="FingerprintV2Model.GroupGroup_Group" FromRole="Group" ToRole="Group_Group" />
-          <NavigationProperty Name="Group_Group1" Relationship="FingerprintV2Model.GroupGroup_Group1" FromRole="Group" ToRole="Group_Group" />
         </EntityType>
         <EntityType Name="Group_Group">
           <Key>
@@ -239,10 +230,9 @@
           <Property Name="GG_ID" Type="Int32" Nullable="false" />
           <Property Name="ParentID" Type="Int32" Nullable="false" />
           <Property Name="ChildID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Group" Relationship="FingerprintV2Model.GroupGroup_Group" FromRole="Group_Group" ToRole="Group" />
           <Property Name="GroupGroupID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Group1" Relationship="FingerprintV2Model.GroupGroup_Group1" FromRole="Group_Group" ToRole="Group" />
           <Property Name="GroupGroupID1" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Groups" Relationship="FingerprintV2Model.GroupGroup_Group" FromRole="Group_Group" ToRole="Group" />
         </EntityType>
         <EntityType Name="Text">
           <Key>
@@ -254,9 +244,8 @@
           <Property Name="QuoteInd" Type="Boolean" Nullable="false" />
           <Property Name="CountsWithQuotesID" Type="Int32" Nullable="false" />
           <Property Name="CountsWithoutQuotesID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Count" Relationship="FingerprintV2Model.TextCount" FromRole="Text" ToRole="Count" />
           <NavigationProperty Name="Text_Group" Relationship="FingerprintV2Model.TextText_Group" FromRole="Text" ToRole="Text_Group" />
-          <NavigationProperty Name="Count1" Relationship="FingerprintV2Model.TextCount1" FromRole="Text" ToRole="Count" />
+          <NavigationProperty Name="Counts" Relationship="FingerprintV2Model.TextCount" FromRole="Text" ToRole="Count" />
         </EntityType>
         <EntityType Name="Text_Group">
           <Key>
@@ -268,10 +257,6 @@
           <Property Name="TextTextID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Group" Relationship="FingerprintV2Model.Text_GroupGroup" FromRole="Text_Group" ToRole="Group" />
         </EntityType>
-        <Association Name="TextCount">
-          <End Type="FingerprintV2Model.Text" Role="Text" Multiplicity="1" />
-          <End Type="FingerprintV2Model.Count" Role="Count" Multiplicity="1" />
-        </Association>
         <Association Name="TextText_Group">
           <End Type="FingerprintV2Model.Text" Role="Text" Multiplicity="1" />
           <End Type="FingerprintV2Model.Text_Group" Role="Text_Group" Multiplicity="*" />
@@ -288,33 +273,21 @@
           <End Type="FingerprintV2Model.Text_Group" Role="Text_Group" Multiplicity="*" />
           <End Type="FingerprintV2Model.Group" Role="Group" Multiplicity="1" />
         </Association>
-        <Association Name="GroupGroup_Group">
-          <End Type="FingerprintV2Model.Group" Role="Group" Multiplicity="1" />
-          <End Type="FingerprintV2Model.Group_Group" Role="Group_Group" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Group">
-              <PropertyRef Name="GroupID" />
-            </Principal>
-            <Dependent Role="Group_Group">
-              <PropertyRef Name="GroupGroupID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="GroupGroup_Group1">
-          <End Type="FingerprintV2Model.Group" Role="Group" Multiplicity="1" />
-          <End Type="FingerprintV2Model.Group_Group" Role="Group_Group" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Group">
-              <PropertyRef Name="GroupID" />
-            </Principal>
-            <Dependent Role="Group_Group">
-              <PropertyRef Name="GroupGroupID1" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="TextCount1">
+        <Association Name="TextCount">
           <End Type="FingerprintV2Model.Text" Role="Text" Multiplicity="1" />
-          <End Type="FingerprintV2Model.Count" Role="Count" Multiplicity="1" />
+          <End Type="FingerprintV2Model.Count" Role="Count" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Text">
+              <PropertyRef Name="TextID" />
+            </Principal>
+            <Dependent Role="Count">
+              <PropertyRef Name="TextTextID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="GroupGroup_Group">
+          <End Type="FingerprintV2Model.Group" Role="Group" Multiplicity="*" />
+          <End Type="FingerprintV2Model.Group_Group" Role="Group_Group" Multiplicity="*" />
         </Association>
         </Schema>
     </edmx:ConceptualModels>
@@ -382,27 +355,11 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <AssociationSetMapping Name="TextCount" TypeName="FingerprintV2Model.TextCount" StoreEntitySet="Texts">
-      <EndProperty Name="Count">
-        <ScalarProperty Name="CountsID" ColumnName="Count_CountsID" />
-      </EndProperty>
-      <EndProperty Name="Text">
-        <ScalarProperty Name="TextID" ColumnName="TextID" />
-      </EndProperty>
-    </AssociationSetMapping>
     <AssociationSetMapping Name="Text_GroupGroup" TypeName="FingerprintV2Model.Text_GroupGroup" StoreEntitySet="Text_Group">
       <EndProperty Name="Group">
         <ScalarProperty Name="GroupID" ColumnName="Group_GroupID" />
       </EndProperty>
       <EndProperty Name="Text_Group">
-        <ScalarProperty Name="TextID" ColumnName="TextID" />
-      </EndProperty>
-    </AssociationSetMapping>
-    <AssociationSetMapping Name="TextCount1" TypeName="FingerprintV2Model.TextCount1" StoreEntitySet="Texts">
-      <EndProperty Name="Count">
-        <ScalarProperty Name="CountsID" ColumnName="Count1_CountsID" />
-      </EndProperty>
-      <EndProperty Name="Text">
         <ScalarProperty Name="TextID" ColumnName="TextID" />
       </EndProperty>
     </AssociationSetMapping>

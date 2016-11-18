@@ -18,6 +18,7 @@ namespace FingerPrint
         public Text()
         {
             this.Text_Group = new HashSet<Text_Group>();
+            this.Counts = new HashSet<Count>();
         }
     
         public int TextID { get; set; }
@@ -27,9 +28,9 @@ namespace FingerPrint
         public int CountsWithQuotesID { get; set; }
         public int CountsWithoutQuotesID { get; set; }
     
-        public virtual Count Count { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Text_Group> Text_Group { get; set; }
-        public virtual Count Count1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Count> Counts { get; set; }
     }
 }
