@@ -26,7 +26,8 @@ namespace FingerPrint.Stores
 
         public void Add(IGroupModel model)
         {
-            if (_db.Groups.Any(x => x.Name == model.GetName()))
+            string name = model.GetName();
+            if (_db.Groups.Any(x => x.Name == name))
             {
                 throw new ArgumentException($"Cannot add model since a model already exists in the database with name {model.GetName()}.");
             }
@@ -41,7 +42,8 @@ namespace FingerPrint.Stores
 
         public void Delete(IGroupModel model)
         {
-            Group group = _db.Groups.FirstOrDefault(x => x.Name == model.GetName());
+            string name = model.GetName();
+            Group group = _db.Groups.FirstOrDefault(x => x.Name == name);
             if (group == null)
             {
                 throw new ArgumentException("Cannot delete group because it does not exist in the database.");
@@ -95,7 +97,8 @@ namespace FingerPrint.Stores
             {
                 throw new ArgumentException("Cannot update group name to null or white space.");
             }
-            Group group = _db.Groups.FirstOrDefault(x => x.Name == model.GetName());
+            string name = model.GetName();
+            Group group = _db.Groups.FirstOrDefault(x => x.Name == name);
             if (group == null)
             {
                 throw new ArgumentException("Cannot update group name because group does not exist in the database.");
@@ -111,7 +114,8 @@ namespace FingerPrint.Stores
 
         public void AddItems(IGroupModel model, IEnumerable<ITextOrGroupModel> items)
         {
-            Group parentGroup = _db.Groups.FirstOrDefault(x => x.Name == model.GetName());
+            string name = model.GetName();
+            Group parentGroup = _db.Groups.FirstOrDefault(x => x.Name == name);
             if (parentGroup == null)
             {
                 throw new ArgumentException("Cannot add items to group because the group is not in the database.");
@@ -126,7 +130,8 @@ namespace FingerPrint.Stores
                 }
                 if (item is ITextModel)
                 {
-                    Text text = _db.Texts.FirstOrDefault(x => x.Name == item.GetName());
+                    string textName = item.GetName();
+                    Text text = _db.Texts.FirstOrDefault(x => x.Name == textName);
                     if (text == null)
                     {
                         throw new ArgumentException($"Cannot add item to group because it does not exist in the database: text {text.Name}.");
@@ -135,7 +140,8 @@ namespace FingerPrint.Stores
                 }
                 else
                 {
-                    Group group = _db.Groups.FirstOrDefault(x => x.Name == item.GetName());
+                    string groupName = item.GetName();
+                    Group group = _db.Groups.FirstOrDefault(x => x.Name == groupName);
                     if (group == null)
                     {
                         throw new ArgumentException($"Cannot add item to group because it does not exist in the database: group {group.Name}.");
@@ -172,7 +178,8 @@ namespace FingerPrint.Stores
 
         public void RemoveItems(IGroupModel model, IEnumerable<ITextOrGroupModel> items)
         {
-            Group parentGroup = _db.Groups.FirstOrDefault(x => x.Name == model.GetName());
+            string name = model.GetName();
+            Group parentGroup = _db.Groups.FirstOrDefault(x => x.Name == name);
             if (parentGroup == null)
             {
                 throw new ArgumentException("Cannot add items to group because the group is not in the database.");
@@ -187,7 +194,8 @@ namespace FingerPrint.Stores
                 }
                 if (item is ITextModel)
                 {
-                    Text text = _db.Texts.FirstOrDefault(x => x.Name == item.GetName());
+                    string textName = item.GetName();
+                    Text text = _db.Texts.FirstOrDefault(x => x.Name == textName);
                     if (text == null)
                     {
                         throw new ArgumentException($"Cannot add item to group because it does not exist in the database: text {text.Name}.");
@@ -201,7 +209,8 @@ namespace FingerPrint.Stores
                 }
                 else
                 {
-                    Group child = _db.Groups.FirstOrDefault(x => x.Name == item.GetName());
+                    string groupName = item.GetName();
+                    Group child = _db.Groups.FirstOrDefault(x => x.Name == groupName);
                     if (child == null)
                     {
                         throw new ArgumentException($"Cannot add item to group because it does not exist in the database: group {child.Name}.");

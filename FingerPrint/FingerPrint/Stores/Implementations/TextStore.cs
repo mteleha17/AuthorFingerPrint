@@ -24,7 +24,8 @@ namespace FingerPrint.Stores
 
         public void Add(ITextModel model)
         {
-            if (_db.Texts.Any(x => x.Name == model.GetName()))
+            string name = model.GetName();
+            if (_db.Texts.Any(x => x.Name == name))
             {
                 throw new ArgumentException($"Cannot add model since a model already exists in the database with name {model.GetName()}.");
             }
@@ -45,7 +46,8 @@ namespace FingerPrint.Stores
 
         public void Delete(ITextModel model)
         {
-            Text text = _db.Texts.FirstOrDefault(x => x.Name == model.GetName());
+            string name = model.GetName();
+            Text text = _db.Texts.FirstOrDefault(x => x.Name == name);
             if (text == null)
             {
                 throw new ArgumentException($"Cannot delete text {model.GetName()} since it does not exist in the database.");
@@ -84,7 +86,8 @@ namespace FingerPrint.Stores
 
         public void ModifyAuthor(ITextModel model, string newAuthor)
         {
-            Text text = _db.Texts.FirstOrDefault(x => x.Name == model.GetName());
+            string name = model.GetName();
+            Text text = _db.Texts.FirstOrDefault(x => x.Name == name);
             if (text == null)
             {
                 throw new ArgumentException("Cannot update model since no corresponding text exists in the database.");
@@ -102,7 +105,8 @@ namespace FingerPrint.Stores
 
         public void ModifyName(ITextModel model, string newName)
         {
-            Text text = _db.Texts.FirstOrDefault(x => x.Name == model.GetName());
+            string name = model.GetName();
+            Text text = _db.Texts.FirstOrDefault(x => x.Name == name);
             if (text == null)
             {
                 throw new ArgumentException("Cannot update model since no corresponding text exists in the database.");
@@ -121,7 +125,8 @@ namespace FingerPrint.Stores
 
         public void ModifyIncludeQuotes(ITextModel model, bool includeQuotes)
         {
-            Text text = _db.Texts.FirstOrDefault(x => x.Name == model.GetName());
+            string name = model.GetName();
+            Text text = _db.Texts.FirstOrDefault(x => x.Name == name);
             if (text == null)
             {
                 throw new ArgumentException("Cannot update model since no corresponding text exists in the database.");

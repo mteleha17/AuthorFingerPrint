@@ -84,12 +84,12 @@ namespace FingerPrint.Models
 
         public ISingleWordCountModel GetCountsWithQuotes()
         {
-            throw new NotImplementedException();
+            return _counts.CountsWithQuotes();
         }
 
         public ISingleWordCountModel GetCountsWithoutQuotes()
         {
-            throw new NotImplementedException();
+            return _counts.CountsWithoutQuotes();
         }
     }
 }
