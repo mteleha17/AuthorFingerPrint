@@ -80,9 +80,6 @@
     <Compile Include="Controllers\Interfaces\IAnalysisController.cs" />
     <Compile Include="Controllers\Interfaces\IGroupController.cs" />
     <Compile Include="Controllers\Interfaces\ITextController.cs" />
-    <Compile Include="Count.cs">
-      <DependentUpon>FingerprintV2Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="GUI\EditGroupName.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -130,12 +127,6 @@
     <Compile Include="GUI\FormPopUpFileEdit.Designer.cs">
       <DependentUpon>FormPopUpFileEdit.cs</DependentUpon>
     </Compile>
-    <Compile Include="Group.cs">
-      <DependentUpon>FingerprintV2Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Group_Group.cs">
-      <DependentUpon>FingerprintV2Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Implementations\FlexibleWordCountModel.cs" />
     <Compile Include="Models\Implementations\GroupModel.cs" />
     <Compile Include="Models\Implementations\ModelFactory.cs" />
@@ -167,12 +158,6 @@
     <Compile Include="Stores\Interfaces\IItemStore.cs" />
     <Compile Include="Stores\Interfaces\ITextStore.cs" />
     <Compile Include="Stores\Implementations\TextStore.cs" />
-    <Compile Include="Text.cs">
-      <DependentUpon>FingerprintV2Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Text_Group.cs">
-      <DependentUpon>FingerprintV2Model.tt</DependentUpon>
-    </Compile>
     <EmbeddedResource Include="GUI\EditGroupName.resx">
       <DependentUpon>EditGroupName.cs</DependentUpon>
     </EmbeddedResource>

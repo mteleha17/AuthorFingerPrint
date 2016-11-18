@@ -14,6 +14,7 @@
         <AssociationConnector Association="FingerprintV2Model.Text_GroupGroup" />
         <AssociationConnector Association="FingerprintV2Model.TextCount" />
         <AssociationConnector Association="FingerprintV2Model.GroupGroup_Group" />
+        <AssociationConnector Association="FingerprintV2Model.GroupGroup_Group1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
