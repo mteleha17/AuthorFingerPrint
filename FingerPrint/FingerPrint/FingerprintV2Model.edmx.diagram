@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="7e025731d8e747eda4e8df39f1abdf01" Name="Diagram1">
+      <Diagram DiagramId="7e025731d8e747eda4e8df39f1abdf01" Name="Diagram1" ZoomLevel="131">
         <EntityTypeShape EntityType="FingerprintV2Model.Count" Width="1.5" PointX="1.875" PointY="1.375" />
         <EntityTypeShape EntityType="FingerprintV2Model.Group" Width="1.5" PointX="6.5" PointY="4.5" />
         <EntityTypeShape EntityType="FingerprintV2Model.Group_Group" Width="1.5" PointX="4.25" PointY="4.375" />

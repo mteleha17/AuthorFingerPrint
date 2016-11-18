@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[Counts] (
-    [CountsID]   INT NOT NULL,
+    [CountsID]   INT IDENTITY (1, 1) NOT NULL,
     [one]        INT NOT NULL,
     [two]        INT NOT NULL,
     [three]      INT NOT NULL,
