@@ -263,6 +263,45 @@ namespace FingerPrint
 
         public void updateListViews()
         {
+            updateTextListViews(fileListViewTab1);
+                if (filesRadioButton.Checked == true)
+                {
+                updateTextListViews(fileGroupListViewTab2);
+
+                }
+                if (filesRadioButton.Checked == true)
+                {
+                updateTextListViews(fileGroupListViewTab3);
+                }
+
+                if (groupsRadioButton.Checked == true)
+                {
+                    updateGroupLists(fileGroupListViewTab2);
+
+                }
+                if(groupsRadioButtonTab3.Checked == true)
+                {
+                    updateGroupLists(fileGroupListViewTab3);
+                }
+           
+            }
+        
+
+        public void updateGroupLists(ListView listView)
+        {
+            List<IGroupViewModel> groupList = _groupController.GetAllGroups();
+            ListViewItem itemGroup = new ListViewItem();
+            foreach (IGroupViewModel groupEntry in groupList)
+            {
+                itemGroup.Text = groupEntry.GetName();
+                itemGroup.SubItems.Add("");
+                itemGroup.SubItems.Add("");
+                listView.Items.Add(itemGroup);
+              
+            }
+        }
+        public void updateTextListViews(ListView listView)
+        {
             List<ITextViewModel> textList = _textController.GetAllTexts();
             ListViewItem item = new ListViewItem();
             foreach (ITextViewModel textEntry in textList)
@@ -280,48 +319,10 @@ namespace FingerPrint
                     includeQuotesl = "No";
                 }
                 item.SubItems.Add(includeQuotesl);
-                fileListViewTab1.Items.Add(item);
-                if (filesRadioButton.Checked == true)
-                {
-                    fileGroupListViewTab2.Items.Add(item);
-
-                }
-                if (filesRadioButton.Checked == true)
-                {
-                    fileGroupListViewTab3.Items.Add(item);
-                }
-
-                if (groupsRadioButton.Checked == true || groupsRadioButtonTab3.Checked == true)
-                {
-                    updateGroupLists();
-
-                }
-           
+                listView.Items.Add(item);
             }
+
         }
-
-        public void updateGroupLists()
-        {
-            List<IGroupViewModel> groupList = _groupController.GetAllGroups();
-            ListViewItem itemGroup = new ListViewItem();
-            foreach (IGroupViewModel groupEntry in groupList)
-            {
-                itemGroup.Text = groupEntry.GetName();
-                itemGroup.SubItems.Add("");
-                itemGroup.SubItems.Add("");
-                fileGroupListViewTab2.Items.Add(itemGroup);
-                fileGroupListViewTab3.Items.Add(itemGroup);
-
-            }
-        }
-
-
-
-
-
-
-
-
 
         
 
