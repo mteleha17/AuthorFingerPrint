@@ -126,6 +126,9 @@ namespace FingerPrint.Models.Implementations
         {
             int[] countsWithQuotes = new int[10];
             int[] countsWithoutQuotes = new int[10];
+            int[] frequencyWithQuotes = new int[10];
+            int[] frequencyWithoutQuotes = new int[10];
+            int totalWordCount = 0;
             string delimPattern = @"\s+";
             Regex delim = new Regex(delimPattern);
             bool inQuotes = false;
@@ -139,7 +142,7 @@ namespace FingerPrint.Models.Implementations
             {
                 if (line.Length != 0) // skip line if empty
                 {
-                    line = Regex.Replace(line, "[—]", " "); // treat em dashes as spaces since they don't link words together like hyphens or en dashes
+                    line = Regex.Replace(line, "[–—]", " "); // treat em dashes as spaces since they don't link words together like hyphens or en dashes
                     string[] wordsArray = delim.Split(line.Trim()); // split the line using delimiter
                     for (int i = 0; i < wordsArray.Length; i++) // iterate through split array
                     {
@@ -186,6 +189,7 @@ namespace FingerPrint.Models.Implementations
                         Debug.Print(modifiedCurrentWord);
                         if (!(modifiedCurrentWord.Length == 0))
                         {
+                            totalWordCount++;
                             int wordLength = modifiedCurrentWord.Length;
                             previousWordLength = wordLength; // variable used in case a wordlength count has to be uncounted when counting the next word
                             if (!inQuotes) // if outside of quotations, increase count for both the count including and excluding words in quotations
@@ -221,6 +225,11 @@ namespace FingerPrint.Models.Implementations
                         
                     }
                 }
+            }
+            for (int i = 0; i < countsWithQuotes.Length; i++)
+            {
+                frequencyWithQuotes[i] = countsWithQuotes[i] / totalWordCount;
+                frequencyWithoutQuotes[i] = countsWithQuotes[i] / totalWordCount;
             }
             // determines if there are mismatched quotation marks
             if (inQuotes)
