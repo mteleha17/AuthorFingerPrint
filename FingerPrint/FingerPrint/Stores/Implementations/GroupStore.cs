@@ -13,11 +13,11 @@ namespace FingerPrint.Stores
 {
     public class GroupStore : IGroupStore
     {
-        private FingerprintV2Entities _db;
+        private FingerprintV3Entities _db;
         private IModelFactory _modelFactory;
         private ITextStore _textStore;
 
-        public GroupStore(FingerprintV2Entities db, IModelFactory modelFactory, ITextStore textStore)
+        public GroupStore(FingerprintV3Entities db, IModelFactory modelFactory, ITextStore textStore)
         {
             _db = db;
             _modelFactory = modelFactory;
@@ -70,9 +70,9 @@ namespace FingerPrint.Stores
         {
             Group group = _db.Groups.FirstOrDefault(criteria);
             IGroupModel output = _modelFactory.GetGroupModel(group.Name, UniversalCountSize.CountSize);
-            foreach (Text_Group textGroup in _db.Text_Group.Where(x => x.GroupID == group.GroupID))
+            foreach (Text text in group.Texts)
             {
-                ITextModel textModel = _textStore.GetOne(x => x.TextID == textGroup.TextID);
+                ITextModel textModel = _textStore.GetOne(x => x.TextID == text.TextID);
                 if (textModel == null)
                 {
                     throw new ArgumentException("Cannot get group since it contains a reference to a nonexistant text.");
@@ -120,6 +120,7 @@ namespace FingerPrint.Stores
             {
                 throw new ArgumentException("Cannot add items to group because the group is not in the database.");
             }
+            List<Text> texts = new List<Text>();
             List<int> textIds = new List<int>();
             List<int> groupIds = new List<int>();
             foreach (var item in items)
@@ -136,6 +137,7 @@ namespace FingerPrint.Stores
                     {
                         throw new ArgumentException($"Cannot add item to group because it does not exist in the database: text {text.Name}.");
                     }
+                    texts.Add(text);
                     textIds.Add(text.TextID);
                 }
                 else
@@ -149,16 +151,21 @@ namespace FingerPrint.Stores
                     groupIds.Add(group.GroupID);
                 }
             }
-            foreach (int id in textIds)
+            foreach (Text t in texts)
             {
-                Text_Group textGroup = new Text_Group()
-                {
-                    GroupID = parentGroup.GroupID,
-                    TextID = id
-                };
-                _db.Text_Group.Add(textGroup);
+                parentGroup.Texts.Add(t);
                 _db.SaveChanges();
             }
+            //foreach (int id in textIds)
+            //{
+            //    Text_Group textGroup = new Text_Group()
+            //    {
+            //        GroupID = parentGroup.GroupID,
+            //        TextID = id
+            //    };
+            //    _db.Text_Group.Add(textGroup);
+            //    _db.SaveChanges();
+            //}
             foreach (int id in groupIds)
             {
                 Group_Group groupGroup = new Group_Group()
@@ -184,6 +191,7 @@ namespace FingerPrint.Stores
             {
                 throw new ArgumentException("Cannot add items to group because the group is not in the database.");
             }
+            List<Text> texts = new List<Text>();
             List<int> textGroupIds = new List<int>();
             List<int> groupGroupIds = new List<int>();
             foreach (var item in items)
@@ -200,12 +208,17 @@ namespace FingerPrint.Stores
                     {
                         throw new ArgumentException($"Cannot add item to group because it does not exist in the database: text {text.Name}.");
                     }
-                    Text_Group textGroup = _db.Text_Group.FirstOrDefault(x => x.GroupID == parentGroup.GroupID && x.TextID == text.TextID);
-                    if (textGroup == null)
+                    if (!parentGroup.Texts.Contains(text))
                     {
                         throw new ArgumentException("Cannot remove item from group because it is not a member of the group.");
                     }
-                    textGroupIds.Add(textGroup.TextTextID);
+                    texts.Add(text);
+                    //Text_Group textGroup = _db.Text_Group.FirstOrDefault(x => x.GroupID == parentGroup.GroupID && x.TextID == text.TextID);
+                    //if (textGroup == null)
+                    //{
+                    //    throw new ArgumentException("Cannot remove item from group because it is not a member of the group.");
+                    //}
+                   // textGroupIds.Add(textGroup.TextTextID);
                 }
                 else
                 {
@@ -220,18 +233,23 @@ namespace FingerPrint.Stores
                     {
                         throw new ArgumentException("Cannot remove item from group because it is not a member of the group.");
                     }
-                    groupGroupIds.Add(groupGroup.GroupGroupID);
+                 //   groupGroupIds.Add(groupGroup.GroupGroupID);
                 }
             }
-            foreach (int id in textGroupIds)
+            foreach (Text t in texts)
             {
-                Text_Group textGroup = _db.Text_Group.FirstOrDefault(x => x.TextTextID == id);
-                _db.Text_Group.Remove(textGroup);
+                parentGroup.Texts.Remove(t);
                 _db.SaveChanges();
             }
+            //foreach (int id in textGroupIds)
+            //{
+            //    //   Text_Group textGroup = _db.Text_Group.FirstOrDefault(x => x.TextTextID == id);
+            //    //   _db.Text_Group.Remfove(textGroup);
+            //    _db.SaveChanges();
+            //}
             foreach (int id in groupGroupIds)
             {
-                Group_Group groupGroup = _db.Group_Group.FirstOrDefault(x => x.GroupGroupID == id);
+                Group_Group groupGroup = _db.Group_Group.FirstOrDefault(x => x.GG_ID == id);
                 _db.Group_Group.Remove(groupGroup);
                 _db.SaveChanges();
             }

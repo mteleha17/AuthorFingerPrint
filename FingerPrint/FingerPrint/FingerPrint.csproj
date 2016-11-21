@@ -80,6 +80,35 @@
     <Compile Include="Controllers\Interfaces\IAnalysisController.cs" />
     <Compile Include="Controllers\Interfaces\IGroupController.cs" />
     <Compile Include="Controllers\Interfaces\ITextController.cs" />
+    <Compile Include="Count.cs">
+      <DependentUpon>FingerprintV3Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FingerprintV3DataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FingerprintV3DataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="FingerprintV3Model.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FingerprintV3Model.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FingerprintV3Model.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FingerprintV3Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FingerprintV3Model.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FingerprintV3Model.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Group.cs">
+      <DependentUpon>FingerprintV3Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Group_Group.cs">
+      <DependentUpon>FingerprintV3Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="GUI\EditGroupName.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -91,29 +120,6 @@
     </Compile>
     <Compile Include="GUI\ErrorMessageDisplay.Designer.cs">
       <DependentUpon>ErrorMessageDisplay.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FingerprintV2DataSet.cs">
-      <DependentUpon>FingerprintV2DataSet.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="FingerprintV2DataSet.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>FingerprintV2DataSet.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="FingerprintV2Model.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>FingerprintV2Model.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="FingerprintV2Model.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>FingerprintV2Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="FingerprintV2Model.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>FingerprintV2Model.edmx</DependentUpon>
     </Compile>
     <Compile Include="GUI\Form1.cs">
       <SubType>Form</SubType>
@@ -158,6 +164,9 @@
     <Compile Include="Stores\Interfaces\IItemStore.cs" />
     <Compile Include="Stores\Interfaces\ITextStore.cs" />
     <Compile Include="Stores\Implementations\TextStore.cs" />
+    <Compile Include="Text.cs">
+      <DependentUpon>FingerprintV3Model.tt</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="GUI\EditGroupName.resx">
       <DependentUpon>EditGroupName.cs</DependentUpon>
     </EmbeddedResource>
@@ -182,23 +191,23 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EntityDeploy Include="FingerprintV2Model.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>FingerprintV2Model.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="FingerprintV2DataSet.xsc">
-      <DependentUpon>FingerprintV2DataSet.xsd</DependentUpon>
+    <None Include="FingerprintV3DataSet.xsc">
+      <DependentUpon>FingerprintV3DataSet.xsd</DependentUpon>
     </None>
-    <None Include="FingerprintV2DataSet.xsd">
+    <None Include="FingerprintV3DataSet.xsd">
       <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>FingerprintV2DataSet.Designer.cs</LastGenOutput>
+      <LastGenOutput>FingerprintV3DataSet.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </None>
-    <None Include="FingerprintV2DataSet.xss">
-      <DependentUpon>FingerprintV2DataSet.xsd</DependentUpon>
+    <None Include="FingerprintV3DataSet.xss">
+      <DependentUpon>FingerprintV3DataSet.xsd</DependentUpon>
     </None>
-    <None Include="FingerprintV2Model.edmx.diagram">
-      <DependentUpon>FingerprintV2Model.edmx</DependentUpon>
+    <EntityDeploy Include="FingerprintV3Model.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>FingerprintV3Model.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="FingerprintV3Model.edmx.diagram">
+      <DependentUpon>FingerprintV3Model.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -222,23 +231,23 @@
     <Content Include="DatabaseScripts\dbo.Group_Group.sql" />
     <Content Include="DatabaseScripts\dbo.Text.sql" />
     <Content Include="DatabaseScripts\dbo.Text_Group.sql" />
-    <Content Include="FingerprintV2.mdf">
+    <Content Include="FingerprintV3.mdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="FingerprintV2Model.Context.tt">
+    <Content Include="FingerprintV3Model.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>FingerprintV2Model.edmx</DependentUpon>
-      <LastGenOutput>FingerprintV2Model.Context.cs</LastGenOutput>
+      <DependentUpon>FingerprintV3Model.edmx</DependentUpon>
+      <LastGenOutput>FingerprintV3Model.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="FingerprintV2Model.edmx.sql" />
-    <Content Include="FingerprintV2Model.tt">
+    <Content Include="FingerprintV3Model.edmx.sql" />
+    <Content Include="FingerprintV3Model.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>FingerprintV2Model.edmx</DependentUpon>
-      <LastGenOutput>FingerprintV2Model.cs</LastGenOutput>
+      <DependentUpon>FingerprintV3Model.edmx</DependentUpon>
+      <LastGenOutput>FingerprintV3Model.cs</LastGenOutput>
     </Content>
-    <Content Include="FingerprintV2_log.ldf">
+    <Content Include="FingerprintV3_log.ldf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <DependentUpon>FingerprintV2.mdf</DependentUpon>
+      <DependentUpon>FingerprintV3.mdf</DependentUpon>
     </Content>
   </ItemGroup>
   <ItemGroup>

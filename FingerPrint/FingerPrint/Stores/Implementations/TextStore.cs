@@ -13,10 +13,10 @@ namespace FingerPrint.Stores
 {
     public class TextStore : ITextStore
     {
-        private FingerprintV2Entities _db;
+        private FingerprintV3Entities _db;
         private IModelFactory _modelFactory;
 
-        public TextStore(FingerprintV2Entities db, IModelFactory modelFactory)
+        public TextStore(FingerprintV3Entities db, IModelFactory modelFactory)
         {
             _db = db;
             _modelFactory = modelFactory;
@@ -52,7 +52,11 @@ namespace FingerPrint.Stores
             {
                 throw new ArgumentException($"Cannot delete text {model.GetName()} since it does not exist in the database.");
             }
-            if (_db.Text_Group.Any(x => x.TextID == text.TextID))
+            //if (_db.Text_Group.Any(x => x.TextID == text.TextID))
+            //{
+            //    throw new ArgumentException($"Cannot delete text {model.GetName()} because it is currently a member of a group.");
+            //}
+            if (_db.Groups.Any(x => x.Texts.Contains(text)))
             {
                 throw new ArgumentException($"Cannot delete text {model.GetName()} because it is currently a member of a group.");
             }
