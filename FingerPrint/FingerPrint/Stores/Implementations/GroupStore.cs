@@ -70,9 +70,9 @@ namespace FingerPrint.Stores
         {
             Group group = _db.Groups.FirstOrDefault(criteria);
             IGroupModel output = _modelFactory.GetGroupModel(group.Name, UniversalCountSize.CountSize);
-            foreach (Text_Group textGroup in _db.Text_Group.Where(x => x.GroupID == group.GroupID))
+            foreach (Text text in group.Texts)
             {
-                ITextModel textModel = _textStore.GetOne(x => x.TextID == textGroup.TextID);
+                ITextModel textModel = _textStore.GetOne(x => x.TextID == text.TextID);
                 if (textModel == null)
                 {
                     throw new ArgumentException("Cannot get group since it contains a reference to a nonexistant text.");
@@ -120,6 +120,7 @@ namespace FingerPrint.Stores
             {
                 throw new ArgumentException("Cannot add items to group because the group is not in the database.");
             }
+            List<Text> texts = new List<Text>();
             List<int> textIds = new List<int>();
             List<int> groupIds = new List<int>();
             foreach (var item in items)
@@ -136,6 +137,7 @@ namespace FingerPrint.Stores
                     {
                         throw new ArgumentException($"Cannot add item to group because it does not exist in the database: text {text.Name}.");
                     }
+                    texts.Add(text);
                     textIds.Add(text.TextID);
                 }
                 else
@@ -149,16 +151,21 @@ namespace FingerPrint.Stores
                     groupIds.Add(group.GroupID);
                 }
             }
-            foreach (int id in textIds)
+            foreach (Text t in texts)
             {
-                Text_Group textGroup = new Text_Group()
-                {
-                    GroupID = parentGroup.GroupID,
-                    TextID = id
-                };
-                _db.Text_Group.Add(textGroup);
+                parentGroup.Texts.Add(t);
                 _db.SaveChanges();
             }
+            //foreach (int id in textIds)
+            //{
+            //    Text_Group textGroup = new Text_Group()
+            //    {
+            //        GroupID = parentGroup.GroupID,
+            //        TextID = id
+            //    };
+            //    _db.Text_Group.Add(textGroup);
+            //    _db.SaveChanges();
+            //}
             foreach (int id in groupIds)
             {
                 Group_Group groupGroup = new Group_Group()
@@ -200,11 +207,15 @@ namespace FingerPrint.Stores
                     {
                         throw new ArgumentException($"Cannot add item to group because it does not exist in the database: text {text.Name}.");
                     }
-                    Text_Group textGroup = _db.Text_Group.FirstOrDefault(x => x.GroupID == parentGroup.GroupID && x.TextID == text.TextID);
-                    if (textGroup == null)
+                    if (!parentGroup.Texts.Contains(text))
                     {
                         throw new ArgumentException("Cannot remove item from group because it is not a member of the group.");
                     }
+                    //Text_Group textGroup = _db.Text_Group.FirstOrDefault(x => x.GroupID == parentGroup.GroupID && x.TextID == text.TextID);
+                    //if (textGroup == null)
+                    //{
+                    //    throw new ArgumentException("Cannot remove item from group because it is not a member of the group.");
+                    //}
                    // textGroupIds.Add(textGroup.TextTextID);
                 }
                 else
@@ -231,8 +242,8 @@ namespace FingerPrint.Stores
             }
             foreach (int id in groupGroupIds)
             {
-             //   Group_Group groupGroup = _db.Group_Group.FirstOrDefault(x => x.GroupGroupID == id);
-             //   _db.Group_Group.Remove(groupGroup);
+                Group_Group groupGroup = _db.Group_Group.FirstOrDefault(x => x.GG_ID == id);
+                _db.Group_Group.Remove(groupGroup);
                 _db.SaveChanges();
             }
         }
