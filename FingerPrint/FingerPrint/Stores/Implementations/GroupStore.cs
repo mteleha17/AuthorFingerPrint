@@ -13,11 +13,11 @@ namespace FingerPrint.Stores
 {
     public class GroupStore : IGroupStore
     {
-        private FingerprintV2Entities _db;
+        private FingerprintV3Entities _db;
         private IModelFactory _modelFactory;
         private ITextStore _textStore;
 
-        public GroupStore(FingerprintV2Entities db, IModelFactory modelFactory, ITextStore textStore)
+        public GroupStore(FingerprintV3Entities db, IModelFactory modelFactory, ITextStore textStore)
         {
             _db = db;
             _modelFactory = modelFactory;
@@ -205,7 +205,7 @@ namespace FingerPrint.Stores
                     {
                         throw new ArgumentException("Cannot remove item from group because it is not a member of the group.");
                     }
-                    textGroupIds.Add(textGroup.TextTextID);
+                   // textGroupIds.Add(textGroup.TextTextID);
                 }
                 else
                 {
@@ -220,19 +220,19 @@ namespace FingerPrint.Stores
                     {
                         throw new ArgumentException("Cannot remove item from group because it is not a member of the group.");
                     }
-                    groupGroupIds.Add(groupGroup.GroupGroupID);
+                 //   groupGroupIds.Add(groupGroup.GroupGroupID);
                 }
             }
             foreach (int id in textGroupIds)
             {
-                Text_Group textGroup = _db.Text_Group.FirstOrDefault(x => x.TextTextID == id);
-                _db.Text_Group.Remove(textGroup);
+             //   Text_Group textGroup = _db.Text_Group.FirstOrDefault(x => x.TextTextID == id);
+             //   _db.Text_Group.Remove(textGroup);
                 _db.SaveChanges();
             }
             foreach (int id in groupGroupIds)
             {
-                Group_Group groupGroup = _db.Group_Group.FirstOrDefault(x => x.GroupGroupID == id);
-                _db.Group_Group.Remove(groupGroup);
+             //   Group_Group groupGroup = _db.Group_Group.FirstOrDefault(x => x.GroupGroupID == id);
+             //   _db.Group_Group.Remove(groupGroup);
                 _db.SaveChanges();
             }
         }
