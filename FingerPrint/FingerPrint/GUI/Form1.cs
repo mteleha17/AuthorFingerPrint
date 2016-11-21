@@ -227,13 +227,13 @@ namespace FingerPrint
 
         private void addButtonTab3_Click(object sender, EventArgs e)
         {
-            if (filesAndGroupsListviewTab3.SelectedItems.Count > 0)
+            if (fileGroupListViewTab3.SelectedItems.Count > 0)
             {
 
-                ListViewItem itemToMove = filesAndGroupsListviewTab3.SelectedItems[0];
+                ListViewItem itemToMove = fileGroupListViewTab3.SelectedItems[0];
                 ListViewItem itemToAdd = (ListViewItem)itemToMove.Clone();
                 analysisListView.Items.Add(itemToAdd);
-                filesAndGroupsListviewTab3.Items.Remove(itemToMove);
+                fileGroupListViewTab3.Items.Remove(itemToMove);
             }
         }
 
@@ -244,7 +244,7 @@ namespace FingerPrint
 
                 ListViewItem itemToMove = analysisListView.SelectedItems[0];
                 ListViewItem itemToAdd = (ListViewItem)itemToMove.Clone();
-                filesAndGroupsListviewTab3.Items.Add(itemToAdd);
+                fileGroupListViewTab3.Items.Add(itemToAdd);
                 analysisListView.Items.Remove(itemToMove);
             }
         }
@@ -263,8 +263,68 @@ namespace FingerPrint
 
         public void updateListViews()
         {
-          
+            updateTextListViews(fileListViewTab1);
+                if (filesRadioButton.Checked == true)
+                {
+                updateTextListViews(fileGroupListViewTab2);
+
+                }
+                if (filesRadioButton.Checked == true)
+                {
+                updateTextListViews(fileGroupListViewTab3);
+                }
+
+                if (groupsRadioButton.Checked == true)
+                {
+                    updateGroupLists(fileGroupListViewTab2);
+
+                }
+                if(groupsRadioButtonTab3.Checked == true)
+                {
+                    updateGroupLists(fileGroupListViewTab3);
+                }
+           
+            }
+        
+
+        public void updateGroupLists(ListView listView)
+        {
+            List<IGroupViewModel> groupList = _groupController.GetAllGroups();
+            ListViewItem itemGroup = new ListViewItem();
+            foreach (IGroupViewModel groupEntry in groupList)
+            {
+                itemGroup.Text = groupEntry.GetName();
+                itemGroup.SubItems.Add("");
+                itemGroup.SubItems.Add("");
+                listView.Items.Add(itemGroup);
+              
+            }
         }
+        public void updateTextListViews(ListView listView)
+        {
+            List<ITextViewModel> textList = _textController.GetAllTexts();
+            ListViewItem item = new ListViewItem();
+            foreach (ITextViewModel textEntry in textList)
+            {
+                item.Text = textEntry.GetAuthor();
+                item.SubItems.Add(textEntry.GetName());
+                String includeQuotesl;
+                if (textEntry.GetIncludeQuotes())
+                {
+                    includeQuotesl = "Yes";
+                }
+
+                else
+                {
+                    includeQuotesl = "No";
+                }
+                item.SubItems.Add(includeQuotesl);
+                listView.Items.Add(item);
+            }
+
+        }
+
+        
 
         public void addGroup(string groupName)
         {
