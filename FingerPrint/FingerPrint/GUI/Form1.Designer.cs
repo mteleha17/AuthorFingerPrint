@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Title title4 = new System.Windows.Forms.DataVisualization.Charting.Title();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.filesTab = new System.Windows.Forms.TabPage();
             this.editModifyGroupBox = new System.Windows.Forms.GroupBox();
@@ -443,10 +443,12 @@
             this.groupsRadioButton.TabStop = true;
             this.groupsRadioButton.Text = "Groups";
             this.groupsRadioButton.UseVisualStyleBackColor = true;
+            this.groupsRadioButton.CheckedChanged += new System.EventHandler(this.groupsRadioButton_CheckedChanged);
             // 
             // filesRadioButton
             // 
             this.filesRadioButton.AutoSize = true;
+            this.filesRadioButton.Checked = true;
             this.filesRadioButton.Location = new System.Drawing.Point(4, 21);
             this.filesRadioButton.Name = "filesRadioButton";
             this.filesRadioButton.Size = new System.Drawing.Size(46, 17);
@@ -541,10 +543,12 @@
             this.groupsRadioButtonTab3.TabStop = true;
             this.groupsRadioButtonTab3.Text = "Groups";
             this.groupsRadioButtonTab3.UseVisualStyleBackColor = true;
+            this.groupsRadioButtonTab3.CheckedChanged += new System.EventHandler(this.groupsRadioButtonTab3_CheckedChanged);
             // 
             // filesRadioButtonTab3
             // 
             this.filesRadioButtonTab3.AutoSize = true;
+            this.filesRadioButtonTab3.Checked = true;
             this.filesRadioButtonTab3.Location = new System.Drawing.Point(4, 21);
             this.filesRadioButtonTab3.Name = "filesRadioButtonTab3";
             this.filesRadioButtonTab3.Size = new System.Drawing.Size(46, 17);
@@ -680,14 +684,14 @@
             // 
             this.dataTable.AllowUserToAddRows = false;
             this.dataTable.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataTable.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataTable.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
             this.dataTable.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataTable.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.groupOrTextHead,
@@ -704,26 +708,26 @@
             this.elevenHead,
             this.twelveHead,
             this.thirteenHead});
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataTable.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataTable.DefaultCellStyle = dataGridViewCellStyle11;
             this.dataTable.Dock = System.Windows.Forms.DockStyle.Right;
             this.dataTable.Location = new System.Drawing.Point(634, 16);
             this.dataTable.Name = "dataTable";
             this.dataTable.ReadOnly = true;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataTable.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataTable.RowHeadersDefaultCellStyle = dataGridViewCellStyle12;
             this.dataTable.Size = new System.Drawing.Size(592, 554);
             this.dataTable.TabIndex = 1;
             // 
@@ -829,19 +833,19 @@
             this.analysisLineChart.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            chartArea1.Name = "ChartArea1";
-            this.analysisLineChart.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.analysisLineChart.Legends.Add(legend1);
+            chartArea4.Name = "ChartArea1";
+            this.analysisLineChart.ChartAreas.Add(chartArea4);
+            legend4.Name = "Legend1";
+            this.analysisLineChart.Legends.Add(legend4);
             this.analysisLineChart.Location = new System.Drawing.Point(3, 16);
             this.analysisLineChart.MaximumSize = new System.Drawing.Size(1200, 1200);
             this.analysisLineChart.Name = "analysisLineChart";
             this.analysisLineChart.Size = new System.Drawing.Size(613, 554);
             this.analysisLineChart.TabIndex = 0;
-            title1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            title1.Name = "authorAnalysis";
-            title1.Text = "Author Analysis";
-            this.analysisLineChart.Titles.Add(title1);
+            title4.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            title4.Name = "authorAnalysis";
+            title4.Text = "Author Analysis";
+            this.analysisLineChart.Titles.Add(title4);
             // 
             // openFileDialog1
             // 

@@ -42,10 +42,13 @@ namespace FingerPrint
         /// <param name="e"></param>
         private void Form1_Load(object sender, EventArgs e)
         {
-            
+          
 
             _modelFactory = new ModelFactory();
-            
+            // updateListViews(); // Fill listviews
+            // fillGroupComboBox(); // Fill Group comboBox
+
+            //TestData
             IFlexibleWordCountModel wordCount = _modelFactory.GetFlexibleCountModel(10);
             TextModel model = new TextModel("test", wordCount);
             model.SetAuthor("Twain");
@@ -69,16 +72,73 @@ namespace FingerPrint
             fileListViewTab1.Items.Add(item);
             //fileGroupListViewTab2.Items.Add(item);
             //filesAndGroupsListviewTab3.Items.Add(item);
-
-
+            
+            
 
             
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void executeAnalysisButton_Click(object sender, EventArgs e)
         {
+            
             //Fake Data, created fake text, added data
             _modelFactory = new ModelFactory();
+            ModelFactory modelFactory = new ModelFactory();
+            StreamReader input = new StreamReader(fileLocationTextBox.Text);
+            IFlexibleWordCountModel wordCountModel = _modelFactory.GetFlexibleCountModel(10); 
+            modelFactory.GenerateCountsTestMethod(input, wordCountModel);
+            TextModel model = new TextModel("Tales", wordCountModel);
+
+            //table
+            dataTable.Rows.Add();
+            DataGridViewRow row = (DataGridViewRow)dataTable.Rows[0].Clone();
+            DataGridViewRow row2 = (DataGridViewRow)dataTable.Rows[0].Clone();
+
+            DataGridViewRow rowToAdd = row;
+            DataGridViewRow rowToAdd2 = row2;
+            dataTable.Rows.RemoveAt(0);
+
+            rowToAdd.Cells[0].Value = "Tail";
+     
+            for (int i = 0; i < model.GetLength(); i++)
+            {
+                rowToAdd.Cells[i + 1].Value = wordCountModel.GetAt(false,i);
+               
+            }
+            dataTable.Rows.Add(rowToAdd);
+        
+
+            tabControl1.SelectTab(analysisTab);
+            analysisTab.Visible = true;
+
+            //graph
+            analysisLineChart.Series.Add("Tails");
+          
+            analysisLineChart.Series["Tails"].ChartType = SeriesChartType.Line;
+         
+
+            for (int i = 1; i <= 10; i++)
+            {
+
+                analysisLineChart.Series["Tails"].Points.AddXY(i, wordCountModel.GetAt(false,i - 1));
+             
+            }
+            analysisLineChart.Series["Tails"].ChartArea = "ChartArea1";
+        
+
+
+
+
+
+
+
+
+            /*
             ISingleWordCountModel withQuotes = _modelFactory.GetSingleCountModel(10);
             ISingleWordCountModel withoutQuotes = _modelFactory.GetSingleCountModel(10);
             withoutQuotes.SetAt(0, 150);
@@ -123,14 +183,6 @@ namespace FingerPrint
             ISingleWordCountModel wcount2 = model2.GetCounts();
 
 
-
-
-
-
-
-
-
-
             //graph
             analysisLineChart.Series.Add(groupOrTitle);
             analysisLineChart.Series.Add(groupOrTitle2);
@@ -145,9 +197,6 @@ namespace FingerPrint
             }
             analysisLineChart.Series[groupOrTitle].ChartArea = "ChartArea1";
             analysisLineChart.Series[groupOrTitle2].ChartArea = "ChartArea1";
-
-
-
 
 
 
@@ -172,6 +221,42 @@ namespace FingerPrint
 
             tabControl1.SelectTab(analysisTab);
             analysisTab.Visible = true;
+
+
+
+
+
+
+
+            //ACTUAL PROCESS
+
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            //
+
+    */
+
+
+
+
+
         }
 
 
@@ -360,5 +445,54 @@ namespace FingerPrint
             StreamReader input = new StreamReader(fileLocationTextBox.Text);
             ITextViewModel model = _textController.CreateText(newFileNameTextbox.Text, input, UniversalCountSize.CountSize, newAuthorTextBox.Text);
         }
+
+        private void groupsRadioButtonTab3_CheckedChanged(object sender, EventArgs e)
+        {
+            if (groupsRadioButtonTab3.Checked)
+            {
+                authorHeaderTab3.Text = "Group Name";
+                textHeaderTab3.Text = "";
+                includeQuotesHeaderTab3.Text = "";
+                //updateListViews();
+            }
+            if (filesRadioButtonTab3.Checked)
+            {
+                authorHeaderTab3.Text = "Author";
+                textHeaderTab3.Text = "Text Title";
+                includeQuotesHeaderTab3.Text = "Include Quotes";
+                //updateListViews();
+            }
+        }
+
+        private void groupsRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (groupsRadioButton.Checked)
+            {
+                authorHeaderTab2.Text = "Group Name";
+                titleHeaderTab2.Text = "";
+                includeQuotesHeaderTab2.Text = "";
+                //updateListViews();
+            }
+            if (filesRadioButton.Checked)
+            {
+                authorHeaderTab2.Text = "Author";
+                titleHeaderTab2.Text = "Text Title";
+                includeQuotesHeaderTab2.Text = "Include Quotes";
+                //updateListViews();
+            }
+        }
+
+
+        private void fillGroupComboBox()
+        {
+            List<IGroupViewModel> groupList = _groupController.GetAllGroups();
+            
+            foreach (IGroupViewModel groupEntry in groupList)
+            {
+                groupComboBox.Items.Add(groupEntry.GetName());
+
+            }
+        }
+
     }
 }
