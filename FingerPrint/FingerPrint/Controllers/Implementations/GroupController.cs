@@ -13,6 +13,8 @@ namespace FingerPrint.Controllers.Implementations
 {
     public class GroupController : IGroupController
     {
+        private List<IGroupViewModel> _tempDbGroup;
+        private List<ITextViewModel> _tempDbText;
         private IAnalysisController _analysisController;
         //private ITextStore _textStore;
         //private IGroupStore _groupStore;
@@ -23,6 +25,8 @@ namespace FingerPrint.Controllers.Implementations
             IGroupStore groupStore,
             IModelFactory modelFactory)
         {
+            _tempDbGroup = new List<IGroupViewModel>();
+            _tempDbText = new List<ITextViewModel>();
             _analysisController = analysisController;
             //_textStore = textStore;
             //_groupStore = groupStore;
@@ -31,30 +35,31 @@ namespace FingerPrint.Controllers.Implementations
 
         public IGroupViewModel GetGroupByName(string name)
         {
-            throw new NotImplementedException();
-            //if (string.IsNullOrWhiteSpace(name))
-            //{
-            //    throw new ArgumentException("The name must not be null.");
-            //}
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new ArgumentException("The name must not be null.");
+            }
             //return _groupStore.GetOne(x => x.Name == name);
+            return _tempDbGroup.FirstOrDefault(x => x.GetName() == name);
         }
 
         public IGroupViewModel CreateGroup(string name, int length)
         {
             IGroupModel model = _modelFactory.GetGroupModel(name, length);
             //_groupStore.Add(model);
+            _tempDbGroup.Add(model);
             return model;
 
         }
 
         public void Delete(IGroupViewModel model)
         {
-            throw new NotImplementedException();
-            //if (_analysisController.GroupIsActive(model))
-            //{
-            //    throw new ArgumentException($"Cannot delete group {model.GetName()} because it is active.");
-            //}
+            if (_analysisController.GroupIsActive(model))
+            {
+                throw new ArgumentException($"Cannot delete group {model.GetName()} because it is active.");
+            }
             //_groupStore.Delete((IGroupModel)model);
+            _tempDbGroup.Remove(model);
         }
 
         public void AddItemToGroup(IGroupViewModel model, ITextOrGroupViewModel item)
@@ -102,8 +107,8 @@ namespace FingerPrint.Controllers.Implementations
 
         public List<IGroupViewModel> GetAllGroups()
         {
-            throw new NotImplementedException();
             //return _groupStore.GetMany(x => true).Select(x => ((IGroupViewModel)x)).ToList();
+            return _tempDbGroup.Where(x => true).Select(x => ((IGroupViewModel)x)).ToList();
         }
     }
 }

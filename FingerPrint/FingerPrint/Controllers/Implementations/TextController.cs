@@ -14,6 +14,7 @@ namespace FingerPrint.Controllers.Implementations
 {
     public class TextController : ITextController
     {
+        private List<ITextViewModel> _temporaryDatabase;
         //private ITextStore _textStore;
         //private IGroupStore _groupStore;
         private IModelFactory _modelFactory;
@@ -22,6 +23,7 @@ namespace FingerPrint.Controllers.Implementations
             IGroupStore groupStore,
             IModelFactory modelFactory)
         {
+            _temporaryDatabase = new List<ITextViewModel>();
             //_textStore = textStore;
             //_groupStore = groupStore;
             _modelFactory = modelFactory;
@@ -29,22 +31,22 @@ namespace FingerPrint.Controllers.Implementations
 
         public ITextViewModel GetTextByName(string name)
         {
-            throw new NotImplementedException();
-            //if (string.IsNullOrWhiteSpace(name))
-            //{
-            //    throw new ArgumentException("Text name must not be null or white space.");
-            //}
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new ArgumentException("Text name must not be null or white space.");
+            }
             //return _textStore.GetOne(x => x.Name == name);
+            return _temporaryDatabase.FirstOrDefault(x => x.GetName() == name);
         }
 
         public List<ITextViewModel> GetTextByAuthor(string author)
         {
-            throw new NotImplementedException();
-            //if (string.IsNullOrWhiteSpace(author))
-            //{
-            //    throw new ArgumentException("Author must not be null or white space.");
-            //}
+            if (string.IsNullOrWhiteSpace(author))
+            {
+                throw new ArgumentException("Author must not be null or white space.");
+            }
             //return _textStore.GetMany(x => x.Author == author).Select(x => (ITextViewModel)x).ToList();
+            return _temporaryDatabase.Where(x => x.GetAuthor() == author).Select(x => (ITextViewModel)x).ToList();
         }
 
         public ITextViewModel CreateText(string name, TextReader input, int length, string author = null)
@@ -55,13 +57,14 @@ namespace FingerPrint.Controllers.Implementations
                 model.SetAuthor(author);
             }
             //_textStore.Add(model);
+            _temporaryDatabase.Add(model);
             return model;
         }
 
         public void DeleteText(ITextViewModel model)
         {
-            throw new NotImplementedException();
             //_textStore.Delete((ITextModel)model);
+            _temporaryDatabase.Remove(model);
         }
 
         public void UpdateText(ITextViewModel model, string name = null, string author = null, bool? includeQuotes = null)
@@ -87,8 +90,8 @@ namespace FingerPrint.Controllers.Implementations
 
         public List<ITextViewModel> GetAllTexts()
         {
-            throw new NotImplementedException();
             //return _textStore.GetMany(x => true).Select(x => (ITextViewModel)x).ToList();
+            return _temporaryDatabase.Where(x => true).Select(x => (ITextViewModel)x).ToList();
         }
     }
 }
