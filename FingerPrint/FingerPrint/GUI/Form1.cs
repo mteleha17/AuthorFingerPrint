@@ -70,13 +70,24 @@ namespace FingerPrint
         }
         private void saveButtonTab1_Click(object sender, EventArgs e)
         {
-            StreamReader input = new StreamReader(fileLocationTextBox.Text);
-            ITextViewModel model = _textController.CreateText(newFileNameTextbox.Text, input, UniversalCountSize.CountSize, newAuthorTextBox.Text);
-            //IGroupViewModel group = _groupController.CreateGroup("group" + model.GetName(), UniversalCountSize.CountSize);
-            ListViewItem item = new ListViewItem();
-            item.Text = model.GetAuthor();
-            item.SubItems.Add(model.GetName());
-            updateTextListView(fileListViewTab1);
+            try
+            {
+                StreamReader input = new StreamReader(fileLocationTextBox.Text);
+                ITextViewModel model = _textController.CreateText(newFileNameTextbox.Text, input, UniversalCountSize.CountSize, newAuthorTextBox.Text);
+                //IGroupViewModel group = _groupController.CreateGroup("group" + model.GetName(), UniversalCountSize.CountSize);
+                ListViewItem item = new ListViewItem();
+                item.Text = model.GetAuthor();
+                item.SubItems.Add(model.GetName());
+                updateTextListView(fileListViewTab1);
+            }
+            catch
+            {
+                string errorMessage = "You need to select a valid .txt file";
+                var form2 = new ErrorMessageDisplay(errorMessage);
+                form2.Show(this);
+            }
+           
+            
 
             if (filesRadioButton.Checked == true)
             {
@@ -194,10 +205,9 @@ namespace FingerPrint
             if (fileListViewTab1.SelectedItems.Count > 0)
             {
                 ListViewItem item = fileListViewTab1.SelectedItems[0];
-                string authorName = item.SubItems[1].Text;
-                string textName = item.SubItems[0].Text;
-                string includeQuotes = item.SubItems[2].Text;
-                var form = new FormPopUpFileEdit(authorName, textName, includeQuotes, this);
+                string textName = item.SubItems[1].Text;
+                ITextViewModel model = _textController.GetTextByName(textName);
+                var form = new FormPopUpFileEdit(model, _textController, this);
                 form.Show(this);
             }
             else
@@ -260,24 +270,29 @@ namespace FingerPrint
 
         public void updateListViews()
         {
+            fileListViewTab1.Items.Clear();
             updateTextListView(fileListViewTab1);
             if (filesRadioButton.Checked == true)
             {
+                fileGroupListViewTab2.Items.Clear();
                 updateTextListView(fileGroupListViewTab2);
 
             }
             if (filesRadioButtonTab3.Checked == true)
             {
+                fileGroupListViewTab3.Items.Clear();
                 updateTextListView(fileGroupListViewTab3);
             }
 
             if (groupsRadioButton.Checked == true)
             {
+                fileGroupListViewTab2.Items.Clear();
                 updateGroupListView(fileGroupListViewTab2);
 
             }
             if (groupsRadioButtonTab3.Checked == true)
             {
+                fileGroupListViewTab3.Items.Clear();
                 updateGroupListView(fileGroupListViewTab3);
             }
 
@@ -330,14 +345,16 @@ namespace FingerPrint
 
         public void addGroup(string groupName)
         {
+            _groupController.CreateGroup(groupName, UniversalCountSize.CountSize);
             groupComboBox.Items.Add(groupName);
         }
 
         public void editGroupName(string groupNameOld, string groupNameNew)
         {
-          
-            groupComboBox.Items.Remove(groupNameOld);
-            groupComboBox.Items.Add(groupNameNew);
+            IGroupViewModel group = _groupController.GetGroupByName(groupNameOld);
+            _groupController.UpdateGroup(group, groupNameNew);
+            groupComboBox.Items.Clear();
+            fillGroupComboBox();
             groupComboBox.SelectedIndex = groupComboBox.Items.IndexOf(groupNameNew);
             
         }
@@ -412,6 +429,25 @@ namespace FingerPrint
             }
         }
 
+        private void deleteButtonTab2_Click(object sender, EventArgs e)
+        {
+            if (fileListViewTab1.SelectedItems.Count > 0)
+            {
+                ListViewItem item = fileListViewTab1.SelectedItems[0];
+                string textName = item.SubItems[1].Text;
+                ITextViewModel model = _textController.GetTextByName(textName);
+                _textController.DeleteText(model);
+                updateListViews();
+                
+            }
+            else
+            {
+                string errorMessage = "You need to select an item to delete it first!";
+                var form2 = new ErrorMessageDisplay(errorMessage);
+                form2.Show(this);
+            }
+            
+        }
     }
 }
 
