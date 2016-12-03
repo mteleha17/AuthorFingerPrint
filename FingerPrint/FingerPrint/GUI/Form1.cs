@@ -77,9 +77,16 @@ namespace FingerPrint
                 //IGroupViewModel group = _groupController.CreateGroup("group" + model.GetName(), UniversalCountSize.CountSize);
                 updateTextListView(fileListViewTab1);
             }
-            catch
+            catch(System.IO.FileNotFoundException)
             {
                 string errorMessage = "You need to select a valid .txt file";
+                var form2 = new ErrorMessageDisplay(errorMessage);
+                form2.Show(this);
+            }
+            catch (ArgumentException)
+            {
+
+                string errorMessage = "You cannot add a file with the same name as another file";
                 var form2 = new ErrorMessageDisplay(errorMessage);
                 form2.Show(this);
             }
@@ -223,53 +230,92 @@ namespace FingerPrint
             {
                 IGroupViewModel model = _groupController.GetGroupByName(groupComboBox.Text);
                 ListViewItem itemToMove = fileGroupListViewTab2.SelectedItems[0];
-                ListViewItem itemToAdd = (ListViewItem)itemToMove.Clone();
+               
                 if (filesRadioButton.Checked)
                 {
-                    _groupController.AddItemToGroup(model, _textController.GetTextByName(itemToAdd.SubItems[1].Text));
+                    _groupController.AddItemToGroup(model, _textController.GetTextByName(itemToMove.SubItems[1].Text));
                 }
                 else
                 {
-                    _groupController.AddItemToGroup(model, _groupController.GetGroupByName(itemToAdd.Text));
+                    _groupController.AddItemToGroup(model, _groupController.GetGroupByName(itemToMove.Text));
 
                 }
                 groupComboBox_SelectedIndexChanged(sender, e);
                 fileGroupListViewTab2.Items.Remove(itemToMove);
             }
-           catch
+            catch(ArgumentException)
             {
-                if (fileGroupListViewTab2.SelectedItems.Count < 0)
-                {
-                    string errorMessage = "You need to select an item to edit if first!";
-                    var form2 = new ErrorMessageDisplay(errorMessage);
-                    form2.Show(this);
-                }
-                else if (groupComboBox.Text == null)
+
+                if (groupComboBox.Text == "")
                 {
                     string errorMessage = "You need to select a group or create one first!";
                     var form2 = new ErrorMessageDisplay(errorMessage);
                     form2.Show(this);
                 }
-                else
+                else if (fileGroupListViewTab2.SelectedItems.Count < 0)
                 {
-                    string errorMessage = "You cannot add a group to itself!";
+                    string errorMessage = "You need to select an item to edit if first!";
                     var form2 = new ErrorMessageDisplay(errorMessage);
                     form2.Show(this);
                 }
-            }
-            
+                else
+                {
+                    
+                    string errorMessage = "You cannot add a group to itself, or a text to a group that already contains it!";
+                    var form2 = new ErrorMessageDisplay(errorMessage);
+                    form2.Show(this);
+                }
+             
+             
+                }
+
         }
 
         private void addButtonTab3_Click(object sender, EventArgs e)
         {
-            if (fileGroupListViewTab3.SelectedItems.Count > 0)
+            try
+            {
+                IGroupViewModel model = _groupController.GetGroupByName(groupComboBox.Text);
+                ListViewItem itemToMove = fileGroupListViewTab2.SelectedItems[0];
+
+                if (filesRadioButton.Checked)
+                {
+                    _groupController.AddItemToGroup(model, _textController.GetTextByName(itemToMove.SubItems[1].Text));
+                }
+                else
+                {
+                    _groupController.AddItemToGroup(model, _groupController.GetGroupByName(itemToMove.Text));
+
+                }
+                groupComboBox_SelectedIndexChanged(sender, e);
+                fileGroupListViewTab2.Items.Remove(itemToMove);
+            }
+            catch (ArgumentException)
             {
 
-                ListViewItem itemToMove = fileGroupListViewTab3.SelectedItems[0];
-                ListViewItem itemToAdd = (ListViewItem)itemToMove.Clone();
-                analysisListView.Items.Add(itemToAdd);
-                fileGroupListViewTab3.Items.Remove(itemToMove);
+                if (groupComboBox.Text == "")
+                {
+                    string errorMessage = "You need to select a group or create one first!";
+                    var form2 = new ErrorMessageDisplay(errorMessage);
+                    form2.Show(this);
+                }
+                else if (fileGroupListViewTab2.SelectedItems.Count < 0)
+                {
+                    string errorMessage = "You need to select an item to edit if first!";
+                    var form2 = new ErrorMessageDisplay(errorMessage);
+                    form2.Show(this);
+                }
+                else
+                {
+
+                    string errorMessage = "You cannot add a group to itself, or a text to a group that already contains it!";
+                    var form2 = new ErrorMessageDisplay(errorMessage);
+                    form2.Show(this);
+                }
+
+
             }
+
         }
 
         private void removeButtonTab3_Click(object sender, EventArgs e)
@@ -288,11 +334,13 @@ namespace FingerPrint
         {
             if (fileGroupListViewTab2.SelectedItems.Count > 0)
             {
-
                 ListViewItem itemToMove = groupListViewTab2.SelectedItems[0];
-                ListViewItem itemToAdd = (ListViewItem)itemToMove.Clone();
-                fileGroupListViewTab2.Items.Add(itemToAdd);
+                IGroupViewModel model = _groupController.GetGroupByName(groupComboBox.Text);
+                _groupController.RemoveItemFromGroup(model, _groupController.GetGroupByName(itemToMove.Text));
                 groupListViewTab2.Items.Remove(itemToMove);
+                fillGroupComboBox();
+                updateListViews();
+               
             }
         }
 
