@@ -43,8 +43,22 @@ namespace FingerPrint.Controllers.Implementations
             return _tempDbGroup.FirstOrDefault(x => x.GetName() == name);
         }
 
+        public bool AnyByName(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new ArgumentException("The name must not be null.");
+            }
+            //return _groupStore.Any(x => x.Name == name);
+            return _tempDbGroup.Any(x => x.GetName() == name);
+        }
+
         public IGroupViewModel CreateGroup(string name, int length)
         {
+            if (AnyByName(name))
+            {
+                throw new ArgumentException($"Cannot create group because another group in the database already has the name {name}.");
+            }
             IGroupModel model = _modelFactory.GetGroupModel(name, length);
             //_groupStore.Add(model);
             _tempDbGroup.Add(model);
