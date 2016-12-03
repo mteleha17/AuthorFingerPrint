@@ -221,7 +221,7 @@ namespace FingerPrint
         {
             try
             {
-                IGroupViewModel model = _groupController.GetGroupByName(groupComboBox.SelectedText);
+                IGroupViewModel model = _groupController.GetGroupByName(groupComboBox.Text);
                 ListViewItem itemToMove = fileGroupListViewTab2.SelectedItems[0];
                 ListViewItem itemToAdd = (ListViewItem)itemToMove.Clone();
                 if (filesRadioButton.Checked)
@@ -233,7 +233,7 @@ namespace FingerPrint
                     _groupController.AddItemToGroup(model, _groupController.GetGroupByName(itemToAdd.Text));
 
                 }
-                groupListViewTab2.Items.Add(itemToAdd);
+                groupComboBox_SelectedIndexChanged(sender, e);
                 fileGroupListViewTab2.Items.Remove(itemToMove);
             }
            catch
@@ -244,12 +244,13 @@ namespace FingerPrint
                     var form2 = new ErrorMessageDisplay(errorMessage);
                     form2.Show(this);
                 }
-                else
+                else if(groupComboBox.Text == null)
                 {
                     string errorMessage = "You need to select a group or create one first!";
                     var form2 = new ErrorMessageDisplay(errorMessage);
                     form2.Show(this);
                 }
+                else if()
             }
             
         }
@@ -297,13 +298,15 @@ namespace FingerPrint
             if (filesRadioButton.Checked == true)
             {
                 fileGroupListViewTab2.Items.Clear();
+               
                 updateTextListView(fileGroupListViewTab2);
 
             }
             if (filesRadioButtonTab3.Checked == true)
             {
                 fileGroupListViewTab3.Items.Clear();
-                updateTextListView(fileGroupListViewTab3);
+               
+                    updateTextListView(fileGroupListViewTab3);
             }
 
             if (groupsRadioButton.Checked == true)
@@ -323,10 +326,12 @@ namespace FingerPrint
 
         public void updateGroupListView(ListView listView)
         {
+            listView.Items.Clear();
             List<IGroupViewModel> groupList = _groupController.GetAllGroups();
-            ListViewItem itemGroup = new ListViewItem();
             foreach (IGroupViewModel groupEntry in groupList)
             {
+                ListViewItem itemGroup = new ListViewItem();
+
                 itemGroup.Text = groupEntry.GetName();
                 itemGroup.SubItems.Add("");
                 itemGroup.SubItems.Add("");
@@ -476,14 +481,15 @@ namespace FingerPrint
 
         private void groupComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            IGroupViewModel model = _groupController.GetGroupByName(groupComboBox.SelectedText);
+            IGroupViewModel model = _groupController.GetGroupByName(groupComboBox.Text);
             groupListViewTab2.Items.Clear();
             List<ITextOrGroupViewModel> list = model.GetMembers();
-            ListViewItem item = new ListViewItem();
+            
             foreach(ITextOrGroupViewModel textOrGroup in list)
             {
+                ListViewItem item = new ListViewItem();
                 item.Text = textOrGroup.GetName();
-               groupListViewTab2.Items.Add(item);
+                 groupListViewTab2.Items.Add(item);
             }
             
 
