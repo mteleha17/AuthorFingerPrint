@@ -273,48 +273,49 @@ namespace FingerPrint
 
         private void addButtonTab3_Click(object sender, EventArgs e)
         {
-            try
-            {
-                IGroupViewModel model = _groupController.GetGroupByName(groupComboBox.Text);
-                ListViewItem itemToMove = fileGroupListViewTab2.SelectedItems[0];
+           // try
+            //{
+                
+                ListViewItem itemToMove = fileGroupListViewTab3.SelectedItems[0];
 
-                if (filesRadioButton.Checked)
+                if (filesRadioButtonTab3.Checked)
                 {
+                    IGroupViewModel model = _groupController.CreateGroup(itemToMove.SubItems[1].Text+" group", UniversalCountSize.CountSize);
                     _groupController.AddItemToGroup(model, _textController.GetTextByName(itemToMove.SubItems[1].Text));
+                    _analysisController.AddToActiveGroups(model);
+                    
                 }
                 else
                 {
-                    _groupController.AddItemToGroup(model, _groupController.GetGroupByName(itemToMove.Text));
+                    _analysisController.AddToActiveGroups(_groupController.GetGroupByName(itemToMove.Text));
 
                 }
-                groupComboBox_SelectedIndexChanged(sender, e);
-                fileGroupListViewTab2.Items.Remove(itemToMove);
-            }
-            catch (ArgumentException)
-            {
-
-                if (groupComboBox.Text == "")
+                
+                fileGroupListViewTab3.Items.Remove(itemToMove);
+                fillGroupComboBox();
+                analysisListView.Items.Clear();
+                List<IGroupViewModel> groupList = _analysisController.GetActiveGroups();
+                foreach (IGroupViewModel groupEntry in groupList)
                 {
-                    string errorMessage = "You need to select a group or create one first!";
-                    var form2 = new ErrorMessageDisplay(errorMessage);
-                    form2.Show(this);
+                    ListViewItem itemGroup = new ListViewItem();
+
+                   itemGroup.Text = groupEntry.GetName();
+                   analysisListView.Items.Add(itemGroup);
+
                 }
-                else if (fileGroupListViewTab2.SelectedItems.Count < 0)
+
+            //}
+            //catch (ArgumentException)
+            //{
+
+                 if (fileGroupListViewTab3.SelectedItems.Count < 0)
                 {
                     string errorMessage = "You need to select an item to edit if first!";
                     var form2 = new ErrorMessageDisplay(errorMessage);
                     form2.Show(this);
                 }
-                else
-                {
-
-                    string errorMessage = "You cannot add a group to itself, or a text to a group that already contains it!";
-                    var form2 = new ErrorMessageDisplay(errorMessage);
-                    form2.Show(this);
-                }
-
-
-            }
+                
+            //}
 
         }
 
@@ -324,10 +325,21 @@ namespace FingerPrint
             {
 
                 ListViewItem itemToMove = analysisListView.SelectedItems[0];
-                ListViewItem itemToAdd = (ListViewItem)itemToMove.Clone();
-                fileGroupListViewTab3.Items.Add(itemToAdd);
-                analysisListView.Items.Remove(itemToMove);
+                _analysisController.RemoveFromActiveGroups(_groupController.GetGroupByName(itemToMove.Text));
+
+                analysisListView.Items.Clear();
+                List<IGroupViewModel> groupList = _analysisController.GetActiveGroups();
+                foreach (IGroupViewModel groupEntry in groupList)
+                {
+                    ListViewItem itemGroup = new ListViewItem();
+
+                    itemGroup.Text = groupEntry.GetName();
+                    analysisListView.Items.Add(itemGroup);
+
+                }
+                updateListViews();
             }
+
         }
 
         private void removeButtonTab2_Click(object sender, EventArgs e)
@@ -542,7 +554,7 @@ namespace FingerPrint
             {
                 ListViewItem item = new ListViewItem();
                 item.Text = textOrGroup.GetName();
-                 groupListViewTab2.Items.Add(item);
+                groupListViewTab2.Items.Add(item);
             }
             
 

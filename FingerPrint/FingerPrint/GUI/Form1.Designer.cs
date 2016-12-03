@@ -77,9 +77,7 @@
             this.groupsRadioButtonTab3 = new System.Windows.Forms.RadioButton();
             this.filesRadioButtonTab3 = new System.Windows.Forms.RadioButton();
             this.analysisListView = new System.Windows.Forms.ListView();
-            this.authorHeaderTab32 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.textHeaderTab32 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.includeQuotesTab32 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.groupNameTab3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.fileGroupListViewTab3 = new System.Windows.Forms.ListView();
             this.authorHeaderTab3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.textHeaderTab3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -546,9 +544,7 @@
             // analysisListView
             // 
             this.analysisListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.authorHeaderTab32,
-            this.textHeaderTab32,
-            this.includeQuotesTab32});
+            this.groupNameTab3});
             this.analysisListView.FullRowSelect = true;
             this.analysisListView.Location = new System.Drawing.Point(656, 141);
             this.analysisListView.MultiSelect = false;
@@ -558,20 +554,10 @@
             this.analysisListView.UseCompatibleStateImageBehavior = false;
             this.analysisListView.View = System.Windows.Forms.View.Details;
             // 
-            // authorHeaderTab32
+            // groupNameTab3
             // 
-            this.authorHeaderTab32.Text = "Author";
-            this.authorHeaderTab32.Width = 150;
-            // 
-            // textHeaderTab32
-            // 
-            this.textHeaderTab32.Text = "Text Title";
-            this.textHeaderTab32.Width = 200;
-            // 
-            // includeQuotesTab32
-            // 
-            this.includeQuotesTab32.Text = "Include Quotes";
-            this.includeQuotesTab32.Width = 90;
+            this.groupNameTab3.Text = "Group Name";
+            this.groupNameTab3.Width = 435;
             // 
             // fileGroupListViewTab3
             // 
@@ -925,9 +911,7 @@
         private System.Windows.Forms.ColumnHeader authorHeaderTab3;
         private System.Windows.Forms.ColumnHeader textHeaderTab3;
         private System.Windows.Forms.ColumnHeader includeQuotesHeaderTab3;
-        private System.Windows.Forms.ColumnHeader authorHeaderTab32;
-        private System.Windows.Forms.ColumnHeader textHeaderTab32;
-        private System.Windows.Forms.ColumnHeader includeQuotesTab32;
+        private System.Windows.Forms.ColumnHeader groupNameTab3;
         private System.Windows.Forms.DataGridViewTextBoxColumn groupOrTextHead;
         private System.Windows.Forms.DataGridViewTextBoxColumn oneHead;
         private System.Windows.Forms.DataGridViewTextBoxColumn twoHead;
