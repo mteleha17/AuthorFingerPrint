@@ -73,11 +73,8 @@ namespace FingerPrint
             try
             {
                 StreamReader input = new StreamReader(fileLocationTextBox.Text);
-                ITextViewModel model = _textController.CreateText(newFileNameTextbox.Text, input, UniversalCountSize.CountSize, newAuthorTextBox.Text);
+                ITextViewModel model = _textController.CreateText(initialFileNameTextbox.Text, input, UniversalCountSize.CountSize, initialAuthorTextBox.Text);
                 //IGroupViewModel group = _groupController.CreateGroup("group" + model.GetName(), UniversalCountSize.CountSize);
-                ListViewItem item = new ListViewItem();
-                item.Text = model.GetAuthor();
-                item.SubItems.Add(model.GetName());
                 updateTextListView(fileListViewTab1);
             }
             catch
@@ -222,14 +219,39 @@ namespace FingerPrint
 
         private void addButtonTab2_Click(object sender, EventArgs e)
         {
-            if (fileGroupListViewTab2.SelectedItems.Count > 0)
+            try
             {
-
+                IGroupViewModel model = _groupController.GetGroupByName(groupComboBox.SelectedText);
                 ListViewItem itemToMove = fileGroupListViewTab2.SelectedItems[0];
                 ListViewItem itemToAdd = (ListViewItem)itemToMove.Clone();
+                if (filesRadioButton.Checked)
+                {
+                    _groupController.AddItemToGroup(model, _textController.GetTextByName(itemToAdd.SubItems[1].Text));
+                }
+                else
+                {
+                    _groupController.AddItemToGroup(model, _groupController.GetGroupByName(itemToAdd.Text));
+
+                }
                 groupListViewTab2.Items.Add(itemToAdd);
                 fileGroupListViewTab2.Items.Remove(itemToMove);
             }
+           catch
+            {
+                if (fileGroupListViewTab2.SelectedItems.Count < 0)
+                {
+                    string errorMessage = "You need to select an item to edit if first!";
+                    var form2 = new ErrorMessageDisplay(errorMessage);
+                    form2.Show(this);
+                }
+                else
+                {
+                    string errorMessage = "You need to select a group or create one first!";
+                    var form2 = new ErrorMessageDisplay(errorMessage);
+                    form2.Show(this);
+                }
+            }
+            
         }
 
         private void addButtonTab3_Click(object sender, EventArgs e)
@@ -314,10 +336,12 @@ namespace FingerPrint
         }
         public void updateTextListView(ListView listView)
         {
+            listView.Items.Clear();
             List<ITextViewModel> textList = _textController.GetAllTexts();
-            ListViewItem item = new ListViewItem();
+           
             foreach (ITextViewModel textEntry in textList)
             {
+                 ListViewItem item = new ListViewItem();
                 item.Text = textEntry.GetAuthor();
                 item.SubItems.Add(textEntry.GetName());
                 String includeQuotesl;
@@ -347,6 +371,7 @@ namespace FingerPrint
         {
             _groupController.CreateGroup(groupName, UniversalCountSize.CountSize);
             groupComboBox.Items.Add(groupName);
+
         }
 
         public void editGroupName(string groupNameOld, string groupNameNew)
@@ -447,6 +472,22 @@ namespace FingerPrint
                 form2.Show(this);
             }
             
+        }
+
+        private void groupComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            IGroupViewModel model = _groupController.GetGroupByName(groupComboBox.SelectedText);
+            groupListViewTab2.Items.Clear();
+            List<ITextOrGroupViewModel> list = model.GetMembers();
+            ListViewItem item = new ListViewItem();
+            foreach(ITextOrGroupViewModel textOrGroup in list)
+            {
+                item.Text = textOrGroup.GetName();
+               groupListViewTab2.Items.Add(item);
+            }
+            
+
+
         }
     }
 }
