@@ -20,6 +20,8 @@ namespace FingerPrint.Controllers
         /// <returns>The group with the specified name or null if there is no such group.</returns>
         IGroupViewModel GetGroupByName(string name);
 
+        bool AnyByName(string name);
+
         /// <summary>
         /// Gets all groups that exist in the database.
         /// </summary>

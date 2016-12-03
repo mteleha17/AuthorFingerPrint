@@ -22,12 +22,16 @@ namespace FingerPrint.Controllers
         /// <returns>The text with the specified name or null if no such text exists.</returns>
         ITextViewModel GetTextByName(string name);
 
+        bool AnyByName(string name);
+
         /// <summary>
         /// Gets all texts by the specified author.
         /// </summary>
         /// <param name="author">The author of the text(s).</param>
         /// <returns>A list of all texts by the specified author, or an empty list if there are no such texts.</returns>
         List<ITextViewModel> GetTextByAuthor(string author);
+
+        bool AnyByAuthor(string author);
 
         /// <summary>
         /// Gets all texts that exist in the database.
