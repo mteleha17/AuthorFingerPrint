@@ -117,15 +117,15 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="fALabel.Text" xml:space="preserve">
-    <value>This is the analyis set-up page. Please select the items that you wish to be included in the analysis by selecting the groups and texts in the list on the left and then pressing the add button. Once you have chosen all of the items you wish to include, hit the select button to begin the analysis.
-</value>
-  </data>
   <data name="filesTabLabel.Text" xml:space="preserve">
     <value>This is the file tab. You can add individual texts to the program by pressing on the select file button. From there you can navigate to the file you wish to add and then once you have named it and added an author, you can hit the save button to add it to the database. This will then populate the list on the right so that you can select any text and change its name, author, or whether you would like words in quotations to be included in an item's count. </value>
   </data>
   <data name="groupTabLabel.Text" xml:space="preserve">
     <value>This is the group creation and edit tab. Here you can select individual texts and groups in the list on the left and then press the add button to include them in the group that is selected in the list on the right. By pressing the drop-down box above the right list, you can select a group to add or remove items from and also create a group or edit the name of one. You may manage individual texts and groups by selecting them in the left list and pressing the delete button
+</value>
+  </data>
+  <data name="fALabel.Text" xml:space="preserve">
+    <value>This is the analyis set-up page. Please select the items that you wish to be included in the analysis by selecting the groups and texts in the list on the left and then pressing the add button. Once you have chosen all of the items you wish to include, hit the select button to begin the analysis.
 </value>
   </data>
   <metadata name="groupOrTextHead.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">

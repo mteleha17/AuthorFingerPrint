@@ -110,95 +110,52 @@ namespace FingerPrint
 
         private void executeAnalysisButton_Click(object sender, EventArgs e)
         {
-
-            //Fake Data, created fake text, added data
-            _modelFactory = new ModelFactory();
-            ModelFactory modelFactory = new ModelFactory();
-            StreamReader input = new StreamReader(fileLocationTextBox.Text);
-            IFlexibleWordCountModel wordCountModel = _modelFactory.GetFlexibleCountModel(10);
-            modelFactory.GenerateCountsTestMethod(input, wordCountModel);
-            TextModel model = new TextModel("Tales", wordCountModel);
-
-            //table
-            dataTable.Rows.Add();
-            DataGridViewRow row = (DataGridViewRow)dataTable.Rows[0].Clone();
-            DataGridViewRow row2 = (DataGridViewRow)dataTable.Rows[0].Clone();
-
-            DataGridViewRow rowToAdd = row;
-            DataGridViewRow rowToAdd2 = row2;
-            dataTable.Rows.RemoveAt(0);
-
-            rowToAdd.Cells[0].Value = "Tail";
-
-            for (int i = 0; i < model.GetLength(); i++)
-            {
-                rowToAdd.Cells[i + 1].Value = wordCountModel.GetAt(false, i);
-
-            }
-            dataTable.Rows.Add(rowToAdd);
+            //try
+            //{
 
 
-            tabControl1.SelectTab(analysisTab);
-            analysisTab.Visible = true;
+                List<IGroupViewModel> groupList = _analysisController.GetActiveGroups();
+           
 
-            //graph
-            analysisLineChart.Series.Add("Tails");
-
-            analysisLineChart.Series["Tails"].ChartType = SeriesChartType.Line;
-
-
-            for (int i = 1; i <= 10; i++)
-            {
-
-                analysisLineChart.Series["Tails"].Points.AddXY(i, wordCountModel.GetAt(false, i - 1));
-
-            }
-            analysisLineChart.Series["Tails"].ChartArea = "ChartArea1";
-
-            //ACTUAL PROCESS
-
-            //table
-            DataGridViewRow rowTemp = (DataGridViewRow)dataTable.Rows[0].Clone();
-            dataTable.Rows.RemoveAt(0);
-            ITextViewModel textToAdd;
-
-
-
-            foreach (ListViewItem item in analysisListView.Items)
-            {
-                dataTable.Rows.Add();
-                DataGridViewRow rowItem = rowTemp;
-                textToAdd = _textController.GetTextByName(item.Text);
-                rowToAdd.Cells[0].Value = textToAdd.GetName();
-
-                for (int i = 0; i < model.GetLength(); i++)
+                foreach (IGroupViewModel groupEntry in groupList)
+               
                 {
-                    rowToAdd.Cells[i + 1].Value = wordCountModel.GetAt(false, i);
+                //table
+                int rowId = dataTable.Rows.Add();
+                DataGridViewRow row = dataTable.Rows[rowId];
+                ISingleWordCountModel model = groupEntry.GetCounts();
+                    
+                    row.Cells[0].Value = groupEntry.GetName();
+                    for (int i = 0; i < groupEntry.GetLength(); i++)
+                    {
+                        row.Cells[i + 1].Value = model.GetAt(i);
+
+                    }
+                    //graph
+                    analysisLineChart.Series.Add(groupEntry.GetName());
+
+                    analysisLineChart.Series[groupEntry.GetName()].ChartType = SeriesChartType.Line;
+                    for (int i = 0; i < UniversalCountSize.CountSize; i++)
+                    {
+
+                        analysisLineChart.Series[groupEntry.GetName()].Points.AddXY(i, model.GetAt(i));
+
+                    }
+                    analysisLineChart.Series[groupEntry.GetName()].ChartArea = "Analysis Chart";
+
 
                 }
-                dataTable.Rows.Add(rowItem);
-
-            }
-
+                tabControl1.SelectTab(analysisTab);
+                this.WindowState = FormWindowState.Maximized;
 
 
-
-            tabControl1.SelectTab(analysisTab);
-            analysisTab.Visible = true;
-
-            //graph
-            analysisLineChart.Series.Add("Tails");
-
-            analysisLineChart.Series["Tails"].ChartType = SeriesChartType.Line;
-
-
-            for (int i = 1; i <= 10; i++)
-            {
-
-                analysisLineChart.Series["Tails"].Points.AddXY(i, wordCountModel.GetAt(false, i - 1));
-
-            }
-            analysisLineChart.Series["Tails"].ChartArea = "ChartArea1";
+            // }
+            //// catch
+            // //{
+            //     string errorMessage = "You need to add groups to be analyzed!";
+            //     var form2 = new ErrorMessageDisplay(errorMessage);
+            //     form2.Show(this);
+            // //}
 
         }
 
@@ -273,8 +230,8 @@ namespace FingerPrint
 
         private void addButtonTab3_Click(object sender, EventArgs e)
         {
-           // try
-            //{
+           try
+            {
                 
                 ListViewItem itemToMove = fileGroupListViewTab3.SelectedItems[0];
 
@@ -304,18 +261,25 @@ namespace FingerPrint
 
                 }
 
-            //}
-            //catch (ArgumentException)
-            //{
+            }
+            catch (ArgumentException)
+            {
 
                  if (fileGroupListViewTab3.SelectedItems.Count < 0)
                 {
                     string errorMessage = "You need to select an item to edit if first!";
                     var form2 = new ErrorMessageDisplay(errorMessage);
                     form2.Show(this);
+
+                }
+                else
+                {
+                    string errorMessage = "Group already exists within the analysis group";
+                    var form2 = new ErrorMessageDisplay(errorMessage);
+                    form2.Show(this);
                 }
                 
-            //}
+            }
 
         }
 
@@ -677,4 +641,12 @@ dataTable.Rows.Add(rowToAdd2);
 tabControl1.SelectTab(analysisTab);
 analysisTab.Visible = true;
 
+
+    /Fake Data, created fake text, added data
+            _modelFactory = new ModelFactory();
+            ModelFactory modelFactory = new ModelFactory();
+            StreamReader input = new StreamReader(fileLocationTextBox.Text);
+            IFlexibleWordCountModel wordCountModel = _modelFactory.GetFlexibleCountModel(10);
+            modelFactory.GenerateCountsTestMethod(input, wordCountModel);
+            TextModel model = new TextModel("Tales", wordCountModel);
 */
