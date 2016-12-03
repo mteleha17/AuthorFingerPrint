@@ -8,11 +8,15 @@
         <EntityTypeShape EntityType="FingerprintV3Model.Count" Width="1.5" PointX="2.875" PointY="1.25" IsExpanded="true" />
         <EntityTypeShape EntityType="FingerprintV3Model.Group" Width="1.5" PointX="7.5" PointY="4.75" IsExpanded="true" />
         <EntityTypeShape EntityType="FingerprintV3Model.Group_Group" Width="1.5" PointX="5" PointY="4.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="FingerprintV3Model.Text" Width="1.5" PointX="5.375" PointY="1.375" IsExpanded="true" />
-        <AssociationConnector Association="FingerprintV3Model.FK__Counts__CountsID__32E0915F" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="FingerprintV3Model.Text" Width="1.5" PointX="5.875" PointY="1.375" IsExpanded="true" />
         <AssociationConnector Association="FingerprintV3Model.FK__Group_Gro__Child__403A8C7D" ManuallyRouted="false" />
         <AssociationConnector Association="FingerprintV3Model.FK__Group_Gro__Paren__412EB0B6" ManuallyRouted="false" />
         <AssociationConnector Association="FingerprintV3Model.Text_Group1" />
+        <EntityTypeShape EntityType="FingerprintV3Model.Group1" Width="1.5" PointX="7.375" PointY="8.125" />
+        <EntityTypeShape EntityType="FingerprintV3Model.Text1" Width="1.5" PointX="9.625" PointY="8" />
+        <AssociationConnector Association="FingerprintV3Model.FK__Group_Gro__Child__403A8C7D1" />
+        <AssociationConnector Association="FingerprintV3Model.FK__Group_Gro__Paren__412EB0B61" />
+        <AssociationConnector Association="FingerprintV3Model.Text_Group" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

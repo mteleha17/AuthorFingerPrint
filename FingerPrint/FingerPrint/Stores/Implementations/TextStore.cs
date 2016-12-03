@@ -30,8 +30,9 @@ namespace FingerPrint.Stores
                 throw new ArgumentException($"Cannot add model since a model already exists in the database with name {model.GetName()}.");
             }
             Count withQuotes = TranslateCounts(model.GetCountsWithQuotes());
-            Count withoutQuotes = TranslateCounts(model.GetCountsWithoutQuotes());
             _db.Counts.Add(withQuotes);
+            Count withoutQuotes = TranslateCounts(model.GetCountsWithoutQuotes());
+            
             _db.Counts.Add(withoutQuotes);
             Text text = new Text()
             {
