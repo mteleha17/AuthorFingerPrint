@@ -244,13 +244,18 @@ namespace FingerPrint
                     var form2 = new ErrorMessageDisplay(errorMessage);
                     form2.Show(this);
                 }
-                else if(groupComboBox.Text == null)
+                else if (groupComboBox.Text == null)
                 {
                     string errorMessage = "You need to select a group or create one first!";
                     var form2 = new ErrorMessageDisplay(errorMessage);
                     form2.Show(this);
                 }
-                else if()
+                else
+                {
+                    string errorMessage = "You cannot add a group to itself!";
+                    var form2 = new ErrorMessageDisplay(errorMessage);
+                    form2.Show(this);
+                }
             }
             
         }
