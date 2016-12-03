@@ -9,5 +9,6 @@ namespace FingerPrint.AuxiliaryClasses
     public static class UniversalCountSize
     {
         public readonly static int CountSize = 13;
+        public readonly static int ConstantMultiplier = 1000;
     }
 }
