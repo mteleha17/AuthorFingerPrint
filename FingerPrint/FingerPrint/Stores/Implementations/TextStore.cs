@@ -146,9 +146,9 @@ namespace FingerPrint.Stores
         /// <returns>A Count database entity.</returns>
         private Count TranslateCounts(ISingleWordCountModel model)
         {
-            if (model.GetLength() != UniversalCountSize.CountSize)
+            if (model.GetLength() != UniversalConstants.CountSize)
             {
-                throw new ArgumentException($"Please pass a model with length {UniversalCountSize.CountSize}.");
+                throw new ArgumentException($"Please pass a model with length {UniversalConstants.CountSize}.");
             }
             Count output = new Count()
             {
@@ -176,7 +176,7 @@ namespace FingerPrint.Stores
         /// <returns>A count model.</returns>
         private ISingleWordCountModel TranslateCounts(Count count)
         {
-            ISingleWordCountModel output = _modelFactory.GetSingleCountModel(UniversalCountSize.CountSize);
+            ISingleWordCountModel output = _modelFactory.GetSingleCountModel(UniversalConstants.CountSize);
             output.SetAt(0, count.one);
             output.SetAt(1, count.two);
             output.SetAt(2, count.three);

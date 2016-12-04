@@ -443,7 +443,7 @@ namespace FingerPrint
         private void saveButtonTab1_Click(object sender, EventArgs e)
         {
             StreamReader input = new StreamReader(fileLocationTextBox.Text);
-            ITextViewModel model = _textController.CreateText(newFileNameTextbox.Text, input, UniversalCountSize.CountSize, newAuthorTextBox.Text);
+            ITextViewModel model = _textController.CreateText(newFileNameTextbox.Text, input, UniversalConstants.CountSize, newAuthorTextBox.Text);
         }
 
         private void groupsRadioButtonTab3_CheckedChanged(object sender, EventArgs e)
