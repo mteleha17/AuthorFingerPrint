@@ -1,4 +1,7 @@
-﻿using System;
+﻿using FingerPrint.Controllers;
+using FingerPrint.Controllers.Implementations;
+using FingerPrint.Models.Interfaces.TypeInterfaces;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,27 +15,27 @@ namespace FingerPrint
 {
     public partial class FormPopUpFileEdit : Form
     {
+        ITextViewModel model;
+        private ITextController _textController;
         Form1 form1;
-        public FormPopUpFileEdit(string authorName, string textName, string includeQuotes, Form1 _form1)
+        public FormPopUpFileEdit(ITextViewModel _model,   ITextController textController, Form1 _form1)
         {
+            _textController = textController;
             form1 = _form1;
+            model = _model;
+            
             InitializeComponent();
-            newAuthorTextBox.Text = authorName;
-            newFileNameTextbox.Text = textName;
-            if (includeQuotes.Equals("Yes"))
-            {
-                quotesCheckbox.Checked = true;
-            }
-            else
-            {
-                quotesCheckbox.Checked = false;
-            }
-
+            
+            quotesCheckbox.Checked = model.GetIncludeQuotes();
+            newAuthorTextBox.Text = model.GetAuthor();
+            newFileNameTextbox.Text = model.GetName();
+              
 
         }
 
         private void saveChangesButton_Click(object sender, EventArgs e)
         {
+            _textController.UpdateText(model, newFileNameTextbox.Text, newAuthorTextBox.Text, quotesCheckbox.Checked);
             form1.updateListViews();
             this.Close();
         }
