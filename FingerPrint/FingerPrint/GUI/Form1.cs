@@ -73,7 +73,7 @@ namespace FingerPrint
             try
             {
                 StreamReader input = new StreamReader(fileLocationTextBox.Text);
-                ITextViewModel model = _textController.CreateText(initialFileNameTextbox.Text, input, UniversalCountSize.CountSize, initialAuthorTextBox.Text);
+                ITextViewModel model = _textController.CreateText(initialFileNameTextbox.Text, input, UniversalConstants.CountSize, initialAuthorTextBox.Text);
                 //IGroupViewModel group = _groupController.CreateGroup("group" + model.GetName(), UniversalCountSize.CountSize);
                 updateTextListView(fileListViewTab1);
             }
@@ -135,7 +135,7 @@ namespace FingerPrint
                     analysisLineChart.Series.Add(groupEntry.GetName());
 
                     analysisLineChart.Series[groupEntry.GetName()].ChartType = SeriesChartType.Line;
-                    for (int i = 0; i < UniversalCountSize.CountSize; i++)
+                    for (int i = 0; i < UniversalConstants.CountSize; i++)
                     {
 
                         analysisLineChart.Series[groupEntry.GetName()].Points.AddXY(i, model.GetAt(i));
@@ -237,7 +237,7 @@ namespace FingerPrint
 
                 if (filesRadioButtonTab3.Checked)
                 {
-                    IGroupViewModel model = _groupController.CreateGroup(itemToMove.SubItems[1].Text+" group", UniversalCountSize.CountSize);
+                    IGroupViewModel model = _groupController.CreateGroup(itemToMove.SubItems[1].Text+" group", UniversalConstants.CountSize);
                     _groupController.AddItemToGroup(model, _textController.GetTextByName(itemToMove.SubItems[1].Text));
                     _analysisController.AddToActiveGroups(model);
                     
@@ -403,7 +403,7 @@ namespace FingerPrint
 
         public void addGroup(string groupName)
         {
-            _groupController.CreateGroup(groupName, UniversalCountSize.CountSize);
+            _groupController.CreateGroup(groupName, UniversalConstants.CountSize);
             groupComboBox.Items.Add(groupName);
 
         }
