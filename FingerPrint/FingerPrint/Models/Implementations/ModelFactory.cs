@@ -1,9 +1,5 @@
 ﻿using FingerPrint.Models.Interfaces.TypeInterfaces;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using FingerPrint.Models.Interfaces;
 using System.IO;
 using System.Text.RegularExpressions;
@@ -125,13 +121,14 @@ namespace FingerPrint.Models.Implementations
         /// <param name="model">The flexible word count model to fill with counts.</param>
         private void GenerateCounts(TextReader text, IFlexibleWordCountModel model)
         {
-            int arraySize = UniversalCountSize.CountSize;
-            int multiplier = UniversalCountSize.ConstantMultiplier;
+            int arraySize = UniversalConstants.CountSize;
+            int multiplier = UniversalConstants.ConstantMultiplier;
             int[] countsWithQuotes = new int[arraySize];
             int[] countsWithoutQuotes = new int[arraySize];
-            double[] frequencyWithQuotes = new double[arraySize];
-            double[] frequencyWithoutQuotes = new double[arraySize];
-            int totalWordCount = 0;
+            int[] frequencyWithQuotes = new int[arraySize];
+            int[] frequencyWithoutQuotes = new int[arraySize];
+            int totalWordCountWithQuotes = 0;
+            int totalWordCountWithoutQuotes = 0;
             string delimPattern = @"\s+";
             Regex delim = new Regex(delimPattern);
             bool inQuotes = false;
@@ -165,11 +162,14 @@ namespace FingerPrint.Models.Implementations
                                 if (inQuotes) // uncount previous wordlength from counts with quotes if currently inside of quotations
                                 {
                                     countsWithQuotes[previousWordLength - 1]--;
+                                    totalWordCountWithQuotes--;
                                 }
                                 else // uncount previous wordlength for both counts if currently outside of quotations
                                 {
                                     countsWithQuotes[previousWordLength - 1]--;
                                     countsWithoutQuotes[previousWordLength - 1]--;
+                                    totalWordCountWithQuotes--;
+                                    totalWordCountWithoutQuotes--;
                                 }
                             }
                         }
@@ -189,15 +189,15 @@ namespace FingerPrint.Models.Implementations
                         }
                         string modifiedCurrentWord = Regex.Replace(currentWord, "[\"]", ""); // remove quotes from the current word
                         modifiedCurrentWord = Regex.Replace(modifiedCurrentWord, "[^a-zA-Z0-9']+$", ""); // remove non-alphanumeric characters from the end of the word except for apostrophes
-                        Debug.Print(modifiedCurrentWord);
+                        // Debug.Print(modifiedCurrentWord);
                         if (!(modifiedCurrentWord.Length == 0))
                         {
-                            totalWordCount++;
-                            Debug.Print(totalWordCount.ToString());
                             int wordLength = modifiedCurrentWord.Length;
                             previousWordLength = wordLength; // variable used in case a wordlength count has to be uncounted when counting the next word
                             if (!inQuotes) // if outside of quotations, increase count for both the count including and excluding words in quotations
                             {
+                                totalWordCountWithQuotes++;
+                                totalWordCountWithoutQuotes++;
                                 if (wordLength < countsWithQuotes.Length)
                                 {
                                     countsWithQuotes[wordLength - 1]++;
@@ -211,6 +211,7 @@ namespace FingerPrint.Models.Implementations
                             }
                             else // if inside of quotations, increase count for only the count including words in quotations
                             {
+                                totalWordCountWithQuotes++;
                                 if (wordLength < countsWithQuotes.Length)
                                 {
                                     countsWithQuotes[wordLength - 1]++;
@@ -225,31 +226,31 @@ namespace FingerPrint.Models.Implementations
                         if (currentWord[currentWord.Length - 1] == '"' || currentWord[currentWord.Length - 1] == '”')
                         {
                             inQuotes = false;
-                        }
-                        
+                        }  
                     }
                 }
             }
-            // calculates percentage of each wordlength count
+            // calculates frequency per 1000 words
             for (int i = 0; i < countsWithQuotes.Length; i++)
             {
-                frequencyWithQuotes[i] = (countsWithQuotes[i] / (double)totalWordCount) * multiplier;
-                frequencyWithoutQuotes[i] = (countsWithoutQuotes[i] / (double)totalWordCount) * multiplier;
-                Debug.Write(frequencyWithoutQuotes[i] + "\n");
+                frequencyWithQuotes[i] = (int)(((double)countsWithQuotes[i] / totalWordCountWithQuotes) * multiplier);
+                frequencyWithoutQuotes[i] = (int)(((double)countsWithoutQuotes[i] / totalWordCountWithoutQuotes) * multiplier);
             }
+            Debug.Write("\nTotal with quotes: " + totalWordCountWithQuotes);
+            Debug.Write("\nTotal without quotes: " + totalWordCountWithoutQuotes);
             // determines if there are mismatched quotation marks
             if (inQuotes)
             {
                 mismatchedQuotationMarks = true;
             }
             // set wordlength counts for the model
-            for (int i = 0; i < countsWithQuotes.Length; i++)
+            for (int i = 0; i < frequencyWithQuotes.Length; i++)
             {
-                model.SetAt(true, i, countsWithQuotes[i]);
+                model.SetAt(true, i, frequencyWithQuotes[i]);
             }
-            for (int i = 0; i < countsWithoutQuotes.Length; i++)
+            for (int i = 0; i < frequencyWithoutQuotes.Length; i++)
             {
-                model.SetAt(false, i, countsWithoutQuotes[i]);
+                model.SetAt(false, i, frequencyWithoutQuotes[i]);
             }
         }
     }

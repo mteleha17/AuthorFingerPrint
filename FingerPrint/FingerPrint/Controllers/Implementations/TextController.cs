@@ -35,8 +35,19 @@ namespace FingerPrint.Controllers.Implementations
             {
                 throw new ArgumentException("Text name must not be null or white space.");
             }
+
             //return _textStore.GetOne(x => x.Name == name);
             return _temporaryDatabase.FirstOrDefault(x => x.GetName() == name);
+        }
+
+        public bool AnyByName(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new ArgumentException("Text name must not be null or white space.");
+            }
+            //return _textStore.Any(x => x.Name == name);
+            return _temporaryDatabase.Any(x => x.GetName() == name);
         }
 
         public List<ITextViewModel> GetTextByAuthor(string author)
@@ -49,8 +60,22 @@ namespace FingerPrint.Controllers.Implementations
             return _temporaryDatabase.Where(x => x.GetAuthor() == author).Select(x => (ITextViewModel)x).ToList();
         }
 
+        public bool AnyByAuthor(string author)
+        {
+            if (string.IsNullOrWhiteSpace(author))
+            {
+                throw new ArgumentException("Author must not be null or white space.");
+            }
+            //return _textStore.Any(x => x.Author == author);
+            return _temporaryDatabase.Any(x => x.GetAuthor() == author);
+        }
+
         public ITextViewModel CreateText(string name, TextReader input, int length, string author = null)
         {
+            if (AnyByName(name))
+            {
+                throw new ArgumentException($"Cannot create text because another text in the database already has the name {name}.");
+            }
             ITextModel model = _modelFactory.GetTextModel(name, input, length);
             if (!string.IsNullOrWhiteSpace(author))
             {

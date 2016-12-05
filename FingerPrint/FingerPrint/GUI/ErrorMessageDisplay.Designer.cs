@@ -6,7 +6,6 @@
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
-
         /// <summary>
         /// Clean up any resources being used.
         /// </summary>
@@ -19,9 +18,7 @@
             }
             base.Dispose(disposing);
         }
-
         #region Windows Form Designer generated code
-
         /// <summary>
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
@@ -38,7 +35,7 @@
             this.errorLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.errorLabel.Location = new System.Drawing.Point(14, 29);
             this.errorLabel.Name = "errorLabel";
-            this.errorLabel.Size = new System.Drawing.Size(350, 13);
+            this.errorLabel.Size = new System.Drawing.Size(350, 36);
             this.errorLabel.TabIndex = 0;
             this.errorLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -65,11 +62,8 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Error";
             this.ResumeLayout(false);
-
         }
-
         #endregion
-
         private System.Windows.Forms.Label errorLabel;
         private System.Windows.Forms.Button okButton;
     }

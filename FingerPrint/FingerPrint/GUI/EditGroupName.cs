@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
 namespace FingerPrint
 {
     public partial class EditGroupName : Form
@@ -21,12 +20,10 @@ namespace FingerPrint
             groupNameTextBox.Text = groupName;
             groupNameOld = groupName;
         }
-
         private void saveChangesButton_Click(object sender, EventArgs e)
         {
             form1.editGroupName(groupNameOld, groupNameTextBox.Text);
             this.Close();
-
         }
     }
 }
