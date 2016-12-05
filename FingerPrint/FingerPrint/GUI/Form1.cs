@@ -355,7 +355,16 @@ namespace FingerPrint
             _groupController.UpdateGroup(group, groupNameNew);
             fillGroupComboBox();
             groupComboBox.SelectedIndex = groupComboBox.Items.IndexOf(groupNameNew);
-        }
+            analysisListView.Items.Clear();
+            fillGroupComboBox();
+            List<IGroupViewModel> groupList = _analysisController.GetActiveGroups();
+            foreach (IGroupViewModel groupEntry in groupList)
+            {
+                ListViewItem itemGroup = new ListViewItem();
+                itemGroup.Text = groupEntry.GetName();
+                analysisListView.Items.Add(itemGroup);
+            }
+         }
         private void newGroupButton_Click(object sender, EventArgs e) //used to open the newGroup popup
         {
             var form = new NewGroupPopUp(this);
@@ -488,6 +497,8 @@ namespace FingerPrint
                 form2.Show(this);
             }
         }
+
+        
     }
 }
 /*
