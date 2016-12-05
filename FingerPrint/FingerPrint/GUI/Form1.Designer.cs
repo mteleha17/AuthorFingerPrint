@@ -85,7 +85,6 @@
             this.fALabel = new System.Windows.Forms.Label();
             this.analysisTab = new System.Windows.Forms.TabPage();
             this.chartGroupBox = new System.Windows.Forms.GroupBox();
-            this.averageLabel = new System.Windows.Forms.Label();
             this.dataTable = new System.Windows.Forms.DataGridView();
             this.groupOrTextHead = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.oneHead = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -103,6 +102,7 @@
             this.thirteenHead = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.analysisLineChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.averageLabel = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.filesTab.SuspendLayout();
             this.editModifyGroupBox.SuspendLayout();
@@ -653,21 +653,10 @@
             this.chartGroupBox.TabIndex = 0;
             this.chartGroupBox.TabStop = false;
             // 
-            // averageLabel
-            // 
-            this.averageLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.averageLabel.Location = new System.Drawing.Point(484, 16);
-            this.averageLabel.Name = "averageLabel";
-            this.averageLabel.Size = new System.Drawing.Size(702, 24);
-            this.averageLabel.TabIndex = 2;
-            this.averageLabel.Text = "These are the averages of each word count per 1000 words";
-            this.averageLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
             // dataTable
             // 
             this.dataTable.AllowUserToAddRows = false;
             this.dataTable.AllowUserToDeleteRows = false;
-            this.dataTable.Anchor = System.Windows.Forms.AnchorStyles.Left;
             dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -700,7 +689,8 @@
             dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dataTable.DefaultCellStyle = dataGridViewCellStyle5;
-            this.dataTable.Location = new System.Drawing.Point(436, 43);
+            this.dataTable.Dock = System.Windows.Forms.DockStyle.Right;
+            this.dataTable.Location = new System.Drawing.Point(443, 16);
             this.dataTable.Name = "dataTable";
             this.dataTable.ReadOnly = true;
             dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -711,7 +701,7 @@
             dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dataTable.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
-            this.dataTable.Size = new System.Drawing.Size(796, 530);
+            this.dataTable.Size = new System.Drawing.Size(783, 554);
             this.dataTable.TabIndex = 1;
             // 
             // groupOrTextHead
@@ -821,10 +811,10 @@
             this.analysisLineChart.Cursor = System.Windows.Forms.Cursors.Default;
             legend2.Name = "Legend1";
             this.analysisLineChart.Legends.Add(legend2);
-            this.analysisLineChart.Location = new System.Drawing.Point(3, 16);
+            this.analysisLineChart.Location = new System.Drawing.Point(3, 56);
             this.analysisLineChart.MaximumSize = new System.Drawing.Size(1200, 1200);
             this.analysisLineChart.Name = "analysisLineChart";
-            this.analysisLineChart.Size = new System.Drawing.Size(421, 554);
+            this.analysisLineChart.Size = new System.Drawing.Size(434, 514);
             this.analysisLineChart.TabIndex = 0;
             title2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             title2.Name = "authorAnalysis";
@@ -835,6 +825,16 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             this.openFileDialog1.Filter = "Text Files (.txt)|*.txt";
+            // 
+            // averageLabel
+            // 
+            this.averageLabel.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.averageLabel.AutoSize = true;
+            this.averageLabel.Location = new System.Drawing.Point(49, 16);
+            this.averageLabel.Name = "averageLabel";
+            this.averageLabel.Size = new System.Drawing.Size(357, 13);
+            this.averageLabel.TabIndex = 2;
+            this.averageLabel.Text = "The table contains the counts for each text/group average for 1000 words";
             // 
             // Form1
             // 
@@ -862,6 +862,7 @@
             this.radioButtonContainer.PerformLayout();
             this.analysisTab.ResumeLayout(false);
             this.chartGroupBox.ResumeLayout(false);
+            this.chartGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataTable)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.analysisLineChart)).EndInit();
             this.ResumeLayout(false);
