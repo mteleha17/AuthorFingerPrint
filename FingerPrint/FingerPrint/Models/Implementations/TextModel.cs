@@ -19,6 +19,8 @@ namespace FingerPrint.Models
         private bool _includeQuotes;
         private IFlexibleWordCountModel _counts;
 
+        public event EventHandler Modified;
+
         public TextModel(string name, IFlexibleWordCountModel counts)
         {
             SetName(name);
@@ -29,6 +31,17 @@ namespace FingerPrint.Models
             }
             _counts = counts.Copy();
             _length = _counts.GetLength();
+        }
+
+        private void OnModified(object sender, EventArgs e)
+        {
+            //Check to see if any  group has subscribed to this text's events.
+            //Strangely, this can be determined by whether or not the Modified event is null.
+            //If at least one group is subscribing, trigger the Modified event.
+            if (Modified != null)
+            {
+                Modified(this, e);
+            }
         }
 
         public int GetLength()
@@ -67,6 +80,7 @@ namespace FingerPrint.Models
 
         public void SetIncludeQuotes(bool value)
         {
+            OnModified(this, EventArgs.Empty);
             _includeQuotes = value;
         }
 

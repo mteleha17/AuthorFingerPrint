@@ -16,7 +16,7 @@ namespace FingerPrint.Models.Interfaces
         /// Event to be used to notify parent groups when this group is modified so that they can
         /// recalculate their counts accordingly.
         /// </summary>
-        event EventHandler Modified;
+        //event EventHandler Modified;
 
         /// <summary>
         /// Adds a text or group to this group.
