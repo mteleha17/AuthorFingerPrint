@@ -6,7 +6,6 @@
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
-
         /// <summary>
         /// Clean up any resources being used.
         /// </summary>
@@ -19,9 +18,7 @@
             }
             base.Dispose(disposing);
         }
-
         #region Windows Form Designer generated code
-
         /// <summary>
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
@@ -356,6 +353,7 @@
             // 
             // groupComboBox
             // 
+            this.groupComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.groupComboBox.FormattingEnabled = true;
             this.groupComboBox.Location = new System.Drawing.Point(656, 110);
             this.groupComboBox.Name = "groupComboBox";
@@ -808,6 +806,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             chartArea1.Name = "Analysis Chart";
             this.analysisLineChart.ChartAreas.Add(chartArea1);
+            this.analysisLineChart.Cursor = System.Windows.Forms.Cursors.Default;
             legend1.Name = "Legend1";
             this.analysisLineChart.Legends.Add(legend1);
             this.analysisLineChart.Location = new System.Drawing.Point(3, 16);
@@ -854,11 +853,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataTable)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.analysisLineChart)).EndInit();
             this.ResumeLayout(false);
-
         }
-
         #endregion
-
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage fingerPrintTab;
         private System.Windows.Forms.TabPage filesTab;

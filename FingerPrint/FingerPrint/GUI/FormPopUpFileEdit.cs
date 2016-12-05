@@ -10,7 +10,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
 namespace FingerPrint
 {
     public partial class FormPopUpFileEdit : Form
@@ -25,16 +24,11 @@ namespace FingerPrint
             _groupController = groupController;
             form1 = _form1;
             model = _model;
-            
             InitializeComponent();
-            
             quotesCheckbox.Checked = model.GetIncludeQuotes();
             newAuthorTextBox.Text = model.GetAuthor();
             newFileNameTextbox.Text = model.GetName();
-              
-
         }
-
         private void saveChangesButton_Click(object sender, EventArgs e)
         {
             _textController.UpdateText(model, newFileNameTextbox.Text, newAuthorTextBox.Text, quotesCheckbox.Checked);
@@ -46,7 +40,6 @@ namespace FingerPrint
                     _groupController.RemoveItemFromGroup(groupEntry, model);
                     _groupController.AddItemToGroup(groupEntry, model);
                 }
-
             }
             form1.updateListViews();
             this.Close();

@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
 namespace FingerPrint
 {
     public partial class ErrorMessageDisplay : Form
@@ -18,7 +17,6 @@ namespace FingerPrint
             string errorMessageToShow = errorMessage;
             errorLabel.Text = errorMessage;
         }
-
         private void okButton_Click(object sender, EventArgs e)
         {
             this.Close();
