@@ -13,10 +13,10 @@ namespace FingerPrint.Stores
 {
     public class TextStore : ITextStore
     {
-        private FingerprintV3Entities _db;
+        private FingerprintV4Entities _db;
         private IModelFactory _modelFactory;
 
-        public TextStore(FingerprintV3Entities db, IModelFactory modelFactory)
+        public TextStore(FingerprintV4Entities db, IModelFactory modelFactory)
         {
             _db = db;
             _modelFactory = modelFactory;

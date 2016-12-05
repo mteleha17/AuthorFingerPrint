@@ -14,7 +14,8 @@ namespace FingerPrint
     
     public partial class Count
     {
-        public int CountsID { get; set; }
+        public System.Guid CountsID { get; set; }
+        public System.Guid countID { get; set; }
         public int one { get; set; }
         public int two { get; set; }
         public int three { get; set; }
@@ -28,7 +29,5 @@ namespace FingerPrint
         public int eleven { get; set; }
         public int twelve { get; set; }
         public int thirteen { get; set; }
-    
-        public virtual Text Text { get; set; }
     }
 }

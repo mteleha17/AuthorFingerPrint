@@ -14,9 +14,9 @@ namespace FingerPrint
     
     public partial class Group_Group
     {
-        public int GG_ID { get; set; }
-        public int ParentID { get; set; }
-        public int ChildID { get; set; }
+        public System.Guid GG_ID { get; set; }
+        public System.Guid ParentID { get; set; }
+        public System.Guid ChildID { get; set; }
     
         public virtual Group Group { get; set; }
         public virtual Group Group1 { get; set; }
