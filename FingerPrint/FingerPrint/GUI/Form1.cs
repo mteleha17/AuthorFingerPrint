@@ -548,7 +548,7 @@ namespace FingerPrint
                 else
                 {
                     ListViewItem item = fileGroupListViewTab2.SelectedItems[0];
-                    string textName = item.SubItems[1].Text;
+                    string textName = item.SubItems[0].Text;
 
                     _groupController.Delete(_groupController.GetGroupByName(textName));
 
