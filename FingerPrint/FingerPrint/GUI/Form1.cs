@@ -549,7 +549,10 @@ namespace FingerPrint
                 {
                     ListViewItem item = fileGroupListViewTab2.SelectedItems[0];
                     string textName = item.SubItems[0].Text;
-
+                    if (_analysisController.GroupIsActive(_groupController.GetGroupByName(textName))){
+                        _analysisController.RemoveFromActiveGroups(_groupController.GetGroupByName(textName));
+                        analysisListView.Items.Clear();
+                    }
                     _groupController.Delete(_groupController.GetGroupByName(textName));
 
                     
