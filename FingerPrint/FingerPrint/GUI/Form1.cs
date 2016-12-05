@@ -552,6 +552,18 @@ namespace FingerPrint
                     if (_analysisController.GroupIsActive(_groupController.GetGroupByName(textName))){
                         _analysisController.RemoveFromActiveGroups(_groupController.GetGroupByName(textName));
                         analysisListView.Items.Clear();
+
+                        fillGroupComboBox();
+                       
+                        List<IGroupViewModel> groupList = _analysisController.GetActiveGroups();
+                        foreach (IGroupViewModel groupEntry in groupList)
+                        {
+                            ListViewItem itemGroup = new ListViewItem();
+
+                            itemGroup.Text = groupEntry.GetName();
+                            analysisListView.Items.Add(itemGroup);
+
+                        }
                     }
                     _groupController.Delete(_groupController.GetGroupByName(textName));
 
