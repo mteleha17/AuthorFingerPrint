@@ -372,6 +372,7 @@ namespace FingerPrint
                 itemGroup.Text = groupEntry.GetName();
                 analysisListView.Items.Add(itemGroup);
             }
+            updateListViews();
          }
         private void newGroupButton_Click(object sender, EventArgs e) //used to open the newGroup popup
         {
