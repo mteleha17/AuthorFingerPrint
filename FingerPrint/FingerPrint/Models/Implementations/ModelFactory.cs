@@ -189,7 +189,7 @@ namespace FingerPrint.Models.Implementations
                         }
                         string modifiedCurrentWord = Regex.Replace(currentWord, "[\"]", ""); // remove quotes from the current word
                         modifiedCurrentWord = Regex.Replace(modifiedCurrentWord, "[^a-zA-Z0-9']+$", ""); // remove non-alphanumeric characters from the end of the word except for apostrophes
-                        Debug.Print(modifiedCurrentWord);
+                        // Debug.Print(modifiedCurrentWord);
                         if (!(modifiedCurrentWord.Length == 0))
                         {
                             int wordLength = modifiedCurrentWord.Length;
@@ -235,9 +235,9 @@ namespace FingerPrint.Models.Implementations
             {
                 frequencyWithQuotes[i] = (int)(((double)countsWithQuotes[i] / totalWordCountWithQuotes) * multiplier);
                 frequencyWithoutQuotes[i] = (int)(((double)countsWithoutQuotes[i] / totalWordCountWithoutQuotes) * multiplier);
-                Debug.Write(frequencyWithQuotes[i] + "\n");
             }
-            Debug.Write(totalWordCountWithoutQuotes);
+            Debug.Write("\nTotal with quotes: " + totalWordCountWithQuotes);
+            Debug.Write("\nTotal without quotes: " + totalWordCountWithoutQuotes);
             // determines if there are mismatched quotation marks
             if (inQuotes)
             {
