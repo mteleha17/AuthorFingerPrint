@@ -8,6 +8,14 @@ using System.IO;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 namespace FingerPrint
+
+
+
+
+// fix when a group is deleting that it updates combo box
+//fix 
+
+
 {
     public partial class Form1 : Form
     {
@@ -368,6 +376,7 @@ namespace FingerPrint
                 itemGroup.Text = groupEntry.GetName();
                 analysisListView.Items.Add(itemGroup);
             }
+            updateListViews();
          }
         private void newGroupButton_Click(object sender, EventArgs e) //used to open the newGroup popup
         {
@@ -454,6 +463,7 @@ namespace FingerPrint
         }
         private void groupComboBox_SelectedIndexChanged(object sender, EventArgs e) //makes the selected group the target group
         {
+            
             IGroupViewModel model = _groupController.GetGroupByName(groupComboBox.Text);
             groupListViewTab2.Items.Clear();
             //changed -JG
@@ -494,6 +504,7 @@ namespace FingerPrint
                     }
                     _groupController.Delete(_groupController.GetGroupByName(textName));
                 }
+                fillGroupComboBox();
                 updateListViews();
             }
             else
