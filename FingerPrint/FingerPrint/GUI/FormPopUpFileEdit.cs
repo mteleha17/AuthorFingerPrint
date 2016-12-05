@@ -17,10 +17,12 @@ namespace FingerPrint
     {
         ITextViewModel model;
         private ITextController _textController;
+        private IGroupController _groupController;
         Form1 form1;
-        public FormPopUpFileEdit(ITextViewModel _model,   ITextController textController, Form1 _form1)
+        public FormPopUpFileEdit(ITextViewModel _model,   ITextController textController, IGroupController groupController, Form1 _form1)
         {
             _textController = textController;
+            _groupController = groupController;
             form1 = _form1;
             model = _model;
             
@@ -36,6 +38,16 @@ namespace FingerPrint
         private void saveChangesButton_Click(object sender, EventArgs e)
         {
             _textController.UpdateText(model, newFileNameTextbox.Text, newAuthorTextBox.Text, quotesCheckbox.Checked);
+            List<IGroupViewModel> groupList = _groupController.GetAllGroups();
+            foreach (IGroupViewModel groupEntry in groupList)
+            {
+                if (groupEntry.GetMembers().Contains(model))
+                {
+                    _groupController.RemoveItemFromGroup(groupEntry, model);
+                    _groupController.AddItemToGroup(groupEntry, model);
+                }
+
+            }
             form1.updateListViews();
             this.Close();
         }

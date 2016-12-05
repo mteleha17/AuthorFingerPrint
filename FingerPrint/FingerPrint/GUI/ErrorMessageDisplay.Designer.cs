@@ -38,7 +38,7 @@
             this.errorLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.errorLabel.Location = new System.Drawing.Point(14, 29);
             this.errorLabel.Name = "errorLabel";
-            this.errorLabel.Size = new System.Drawing.Size(350, 13);
+            this.errorLabel.Size = new System.Drawing.Size(350, 36);
             this.errorLabel.TabIndex = 0;
             this.errorLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 

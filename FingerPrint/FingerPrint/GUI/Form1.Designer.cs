@@ -38,7 +38,7 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.filesTab = new System.Windows.Forms.TabPage();
             this.editModifyGroupBox = new System.Windows.Forms.GroupBox();
-            this.deleteButtonTab2 = new System.Windows.Forms.Button();
+            this.deleteButtonTab1 = new System.Windows.Forms.Button();
             this.editButton = new System.Windows.Forms.Button();
             this.editModifyLabel = new System.Windows.Forms.Label();
             this.fileListViewTab1 = new System.Windows.Forms.ListView();
@@ -60,7 +60,7 @@
             this.groupComboBox = new System.Windows.Forms.ComboBox();
             this.groupListViewTab2 = new System.Windows.Forms.ListView();
             this.textOrGroupNameTab2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.deleteButtonTab3 = new System.Windows.Forms.Button();
+            this.deleteButtonTab2 = new System.Windows.Forms.Button();
             this.removeButtonTab2 = new System.Windows.Forms.Button();
             this.addButtonTab2 = new System.Windows.Forms.Button();
             this.radiouttonPanel = new System.Windows.Forms.Panel();
@@ -89,8 +89,6 @@
             this.analysisTab = new System.Windows.Forms.TabPage();
             this.chartGroupBox = new System.Windows.Forms.GroupBox();
             this.dataTable = new System.Windows.Forms.DataGridView();
-            this.analysisLineChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.groupOrTextHead = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.oneHead = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.twoHead = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -105,6 +103,8 @@
             this.elevenHead = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.twelveHead = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.thirteenHead = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.analysisLineChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.tabControl1.SuspendLayout();
             this.filesTab.SuspendLayout();
             this.editModifyGroupBox.SuspendLayout();
@@ -152,7 +152,7 @@
             this.editModifyGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.editModifyGroupBox.Controls.Add(this.deleteButtonTab2);
+            this.editModifyGroupBox.Controls.Add(this.deleteButtonTab1);
             this.editModifyGroupBox.Controls.Add(this.editButton);
             this.editModifyGroupBox.Controls.Add(this.editModifyLabel);
             this.editModifyGroupBox.Controls.Add(this.fileListViewTab1);
@@ -162,15 +162,15 @@
             this.editModifyGroupBox.TabIndex = 7;
             this.editModifyGroupBox.TabStop = false;
             // 
-            // deleteButtonTab2
+            // deleteButtonTab1
             // 
-            this.deleteButtonTab2.Location = new System.Drawing.Point(372, 406);
-            this.deleteButtonTab2.Name = "deleteButtonTab2";
-            this.deleteButtonTab2.Size = new System.Drawing.Size(75, 23);
-            this.deleteButtonTab2.TabIndex = 3;
-            this.deleteButtonTab2.Text = "Delete";
-            this.deleteButtonTab2.UseVisualStyleBackColor = true;
-            this.deleteButtonTab2.Click += new System.EventHandler(this.deleteButtonTab2_Click);
+            this.deleteButtonTab1.Location = new System.Drawing.Point(372, 406);
+            this.deleteButtonTab1.Name = "deleteButtonTab1";
+            this.deleteButtonTab1.Size = new System.Drawing.Size(75, 23);
+            this.deleteButtonTab1.TabIndex = 3;
+            this.deleteButtonTab1.Text = "Delete";
+            this.deleteButtonTab1.UseVisualStyleBackColor = true;
+            this.deleteButtonTab1.Click += new System.EventHandler(this.deleteButtonTab_Click);
             // 
             // editButton
             // 
@@ -321,7 +321,7 @@
             this.groupsGroupBox.Controls.Add(this.newGroupButton);
             this.groupsGroupBox.Controls.Add(this.groupComboBox);
             this.groupsGroupBox.Controls.Add(this.groupListViewTab2);
-            this.groupsGroupBox.Controls.Add(this.deleteButtonTab3);
+            this.groupsGroupBox.Controls.Add(this.deleteButtonTab2);
             this.groupsGroupBox.Controls.Add(this.removeButtonTab2);
             this.groupsGroupBox.Controls.Add(this.addButtonTab2);
             this.groupsGroupBox.Controls.Add(this.radiouttonPanel);
@@ -381,14 +381,15 @@
             this.textOrGroupNameTab2.Text = "Text Or Group Name";
             this.textOrGroupNameTab2.Width = 437;
             // 
-            // deleteButtonTab3
+            // deleteButtonTab2
             // 
-            this.deleteButtonTab3.Location = new System.Drawing.Point(62, 471);
-            this.deleteButtonTab3.Name = "deleteButtonTab3";
-            this.deleteButtonTab3.Size = new System.Drawing.Size(75, 23);
-            this.deleteButtonTab3.TabIndex = 5;
-            this.deleteButtonTab3.Text = "Delete";
-            this.deleteButtonTab3.UseVisualStyleBackColor = true;
+            this.deleteButtonTab2.Location = new System.Drawing.Point(62, 471);
+            this.deleteButtonTab2.Name = "deleteButtonTab2";
+            this.deleteButtonTab2.Size = new System.Drawing.Size(75, 23);
+            this.deleteButtonTab2.TabIndex = 5;
+            this.deleteButtonTab2.Text = "Delete";
+            this.deleteButtonTab2.UseVisualStyleBackColor = true;
+            this.deleteButtonTab2.Click += new System.EventHandler(this.deleteButtonTab2_Click);
             // 
             // removeButtonTab2
             // 
@@ -703,30 +704,6 @@
             this.dataTable.Size = new System.Drawing.Size(796, 554);
             this.dataTable.TabIndex = 1;
             // 
-            // analysisLineChart
-            // 
-            this.analysisLineChart.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            chartArea1.Name = "Analysis Chart";
-            this.analysisLineChart.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.analysisLineChart.Legends.Add(legend1);
-            this.analysisLineChart.Location = new System.Drawing.Point(3, 16);
-            this.analysisLineChart.MaximumSize = new System.Drawing.Size(1200, 1200);
-            this.analysisLineChart.Name = "analysisLineChart";
-            this.analysisLineChart.Size = new System.Drawing.Size(421, 554);
-            this.analysisLineChart.TabIndex = 0;
-            title1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            title1.Name = "authorAnalysis";
-            title1.Text = "Author Analysis";
-            this.analysisLineChart.Titles.Add(title1);
-            // 
-            // openFileDialog1
-            // 
-            this.openFileDialog1.FileName = "openFileDialog1";
-            this.openFileDialog1.Filter = "Text Files (.txt)|*.txt";
-            // 
             // groupOrTextHead
             // 
             this.groupOrTextHead.HeaderText = "Text/Group";
@@ -824,6 +801,30 @@
             this.thirteenHead.ReadOnly = true;
             this.thirteenHead.Width = 50;
             // 
+            // analysisLineChart
+            // 
+            this.analysisLineChart.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            chartArea1.Name = "Analysis Chart";
+            this.analysisLineChart.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.analysisLineChart.Legends.Add(legend1);
+            this.analysisLineChart.Location = new System.Drawing.Point(3, 16);
+            this.analysisLineChart.MaximumSize = new System.Drawing.Size(1200, 1200);
+            this.analysisLineChart.Name = "analysisLineChart";
+            this.analysisLineChart.Size = new System.Drawing.Size(421, 554);
+            this.analysisLineChart.TabIndex = 0;
+            title1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            title1.Name = "authorAnalysis";
+            title1.Text = "Author Analysis";
+            this.analysisLineChart.Titles.Add(title1);
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            this.openFileDialog1.Filter = "Text Files (.txt)|*.txt";
+            // 
             // Form1
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -877,11 +878,11 @@
         private System.Windows.Forms.GroupBox addGroupBox;
         private System.Windows.Forms.Label editModifyLabel;
         private System.Windows.Forms.ListView fileListViewTab1;
-        private System.Windows.Forms.Button deleteButtonTab2;
+        private System.Windows.Forms.Button deleteButtonTab1;
         private System.Windows.Forms.Button editButton;
         private System.Windows.Forms.GroupBox groupsGroupBox;
         private System.Windows.Forms.ListView groupListViewTab2;
-        private System.Windows.Forms.Button deleteButtonTab3;
+        private System.Windows.Forms.Button deleteButtonTab2;
         private System.Windows.Forms.Button removeButtonTab2;
         private System.Windows.Forms.Button addButtonTab2;
         private System.Windows.Forms.Panel radiouttonPanel;
