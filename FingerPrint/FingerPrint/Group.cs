@@ -22,7 +22,7 @@ namespace FingerPrint
             this.Texts = new HashSet<Text>();
         }
     
-        public System.Guid GroupID { get; set; }
+        public int GroupID { get; set; }
         public string Name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

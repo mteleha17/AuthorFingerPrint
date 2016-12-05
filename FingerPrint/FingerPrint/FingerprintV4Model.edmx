@@ -4,13 +4,12 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="FingerprintV4Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="FingerprintV4Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Counts">
           <Key>
             <PropertyRef Name="CountsID" />
           </Key>
-          <Property Name="CountsID" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="countID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CountsID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="one" Type="int" Nullable="false" />
           <Property Name="two" Type="int" Nullable="false" />
           <Property Name="three" Type="int" Nullable="false" />
@@ -29,43 +28,37 @@
           <Key>
             <PropertyRef Name="GroupID" />
           </Key>
-          <Property Name="GroupID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="GroupID" Type="int" Nullable="false" />
           <Property Name="Name" Type="nchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="Group_Group">
           <Key>
             <PropertyRef Name="GG_ID" />
           </Key>
-          <Property Name="GG_ID" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="ParentID" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="ChildID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="GG_ID" Type="int" Nullable="false" />
+          <Property Name="ParentID" Type="int" Nullable="false" />
+          <Property Name="ChildID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Text">
           <Key>
             <PropertyRef Name="TextID" />
           </Key>
-          <Property Name="TextID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="TextID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nchar" MaxLength="100" />
           <Property Name="Author" Type="nchar" MaxLength="100" />
           <Property Name="QuoteInd" Type="bit" />
-          <Property Name="CountsWithQuotesID" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="CountsWithoutQuotesID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="CountsWithQuotesID" Type="int" Nullable="false" />
+          <Property Name="CountsWithoutQuotesID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Text_Group">
           <Key>
             <PropertyRef Name="TextID" />
             <PropertyRef Name="GroupID" />
           </Key>
-          <Property Name="TextID" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="GroupID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="TextID" Type="int" Nullable="false" />
+          <Property Name="GroupID" Type="int" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6035: The relationship 'FK__Counts__countID__5DCAEF64' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-        <Association Name="FK__Counts__countID__5DCAEF64" />-->
-        <!--Errors Found During Generation:
-warning 6035: The relationship 'FK__Counts__countID__5EBF139D' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-        <Association Name="FK__Counts__countID__5EBF139D" />-->
-        <Association Name="FK__Group_Gro__Child__3E52440B">
+        <Association Name="FK__Group_Gro__Child__0E6E26BF">
           <End Role="Group" Type="Self.Group" Multiplicity="1" />
           <End Role="Group_Group" Type="Self.Group_Group" Multiplicity="*" />
           <ReferentialConstraint>
@@ -77,7 +70,7 @@ warning 6035: The relationship 'FK__Counts__countID__5EBF139D' has columns that 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Group_Gro__Paren__3F466844">
+        <Association Name="FK__Group_Gro__Paren__0F624AF8">
           <End Role="Group" Type="Self.Group" Multiplicity="1" />
           <End Role="Group_Group" Type="Self.Group_Group" Multiplicity="*" />
           <ReferentialConstraint>
@@ -86,6 +79,30 @@ warning 6035: The relationship 'FK__Counts__countID__5EBF139D' has columns that 
             </Principal>
             <Dependent Role="Group_Group">
               <PropertyRef Name="ParentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Text__CountsWith__29221CFB">
+          <End Role="Counts" Type="Self.Counts" Multiplicity="1" />
+          <End Role="Text" Type="Self.Text" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Counts">
+              <PropertyRef Name="CountsID" />
+            </Principal>
+            <Dependent Role="Text">
+              <PropertyRef Name="CountsWithQuotesID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Text__CountsWith__2A164134">
+          <End Role="Counts" Type="Self.Counts" Multiplicity="1" />
+          <End Role="Text" Type="Self.Text" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Counts">
+              <PropertyRef Name="CountsID" />
+            </Principal>
+            <Dependent Role="Text">
+              <PropertyRef Name="CountsWithoutQuotesID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -119,13 +136,21 @@ warning 6035: The relationship 'FK__Counts__countID__5EBF139D' has columns that 
           <EntitySet Name="Group_Group" EntityType="Self.Group_Group" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Text" EntityType="Self.Text" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Text_Group" EntityType="Self.Text_Group" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Group_Gro__Child__3E52440B" Association="Self.FK__Group_Gro__Child__3E52440B">
+          <AssociationSet Name="FK__Group_Gro__Child__0E6E26BF" Association="Self.FK__Group_Gro__Child__0E6E26BF">
             <End Role="Group" EntitySet="Group" />
             <End Role="Group_Group" EntitySet="Group_Group" />
           </AssociationSet>
-          <AssociationSet Name="FK__Group_Gro__Paren__3F466844" Association="Self.FK__Group_Gro__Paren__3F466844">
+          <AssociationSet Name="FK__Group_Gro__Paren__0F624AF8" Association="Self.FK__Group_Gro__Paren__0F624AF8">
             <End Role="Group" EntitySet="Group" />
             <End Role="Group_Group" EntitySet="Group_Group" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Text__CountsWith__29221CFB" Association="Self.FK__Text__CountsWith__29221CFB">
+            <End Role="Counts" EntitySet="Counts" />
+            <End Role="Text" EntitySet="Text" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Text__CountsWith__2A164134" Association="Self.FK__Text__CountsWith__2A164134">
+            <End Role="Counts" EntitySet="Counts" />
+            <End Role="Text" EntitySet="Text" />
           </AssociationSet>
           <AssociationSet Name="Group_id" Association="Self.Group_id">
             <End Role="Group" EntitySet="Group" />
@@ -136,7 +161,8 @@ warning 6035: The relationship 'FK__Counts__countID__5EBF139D' has columns that 
             <End Role="Text_Group" EntitySet="Text_Group" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="FingerprintV4Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -144,8 +170,7 @@ warning 6035: The relationship 'FK__Counts__countID__5EBF139D' has columns that 
           <Key>
             <PropertyRef Name="CountsID" />
           </Key>
-          <Property Name="CountsID" Type="Guid" Nullable="false" />
-          <Property Name="countID" Type="Guid" Nullable="false" />
+          <Property Name="CountsID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="one" Type="Int32" Nullable="false" />
           <Property Name="two" Type="Int32" Nullable="false" />
           <Property Name="three" Type="Int32" Nullable="false" />
@@ -159,40 +184,68 @@ warning 6035: The relationship 'FK__Counts__countID__5EBF139D' has columns that 
           <Property Name="eleven" Type="Int32" Nullable="false" />
           <Property Name="twelve" Type="Int32" Nullable="false" />
           <Property Name="thirteen" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Texts" Relationship="Self.FK__Text__CountsWith__29221CFB" FromRole="Counts" ToRole="Text" />
+          <NavigationProperty Name="Texts1" Relationship="Self.FK__Text__CountsWith__2A164134" FromRole="Counts" ToRole="Text" />
         </EntityType>
         <EntityType Name="Group">
           <Key>
             <PropertyRef Name="GroupID" />
           </Key>
-          <Property Name="GroupID" Type="Guid" Nullable="false" />
+          <Property Name="GroupID" Type="Int32" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
-          <NavigationProperty Name="Group_Group" Relationship="Self.FK__Group_Gro__Child__3E52440B" FromRole="Group" ToRole="Group_Group" />
-          <NavigationProperty Name="Group_Group1" Relationship="Self.FK__Group_Gro__Paren__3F466844" FromRole="Group" ToRole="Group_Group" />
+          <NavigationProperty Name="Group_Group" Relationship="Self.FK__Group_Gro__Child__0E6E26BF" FromRole="Group" ToRole="Group_Group" />
+          <NavigationProperty Name="Group_Group1" Relationship="Self.FK__Group_Gro__Paren__0F624AF8" FromRole="Group" ToRole="Group_Group" />
           <NavigationProperty Name="Texts" Relationship="Self.Text_Group" FromRole="Group" ToRole="Text" />
         </EntityType>
         <EntityType Name="Group_Group">
           <Key>
             <PropertyRef Name="GG_ID" />
           </Key>
-          <Property Name="GG_ID" Type="Guid" Nullable="false" />
-          <Property Name="ParentID" Type="Guid" Nullable="false" />
-          <Property Name="ChildID" Type="Guid" Nullable="false" />
-          <NavigationProperty Name="Group" Relationship="Self.FK__Group_Gro__Child__3E52440B" FromRole="Group_Group" ToRole="Group" />
-          <NavigationProperty Name="Group1" Relationship="Self.FK__Group_Gro__Paren__3F466844" FromRole="Group_Group" ToRole="Group" />
+          <Property Name="GG_ID" Type="Int32" Nullable="false" />
+          <Property Name="ParentID" Type="Int32" Nullable="false" />
+          <Property Name="ChildID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Group" Relationship="Self.FK__Group_Gro__Child__0E6E26BF" FromRole="Group_Group" ToRole="Group" />
+          <NavigationProperty Name="Group1" Relationship="Self.FK__Group_Gro__Paren__0F624AF8" FromRole="Group_Group" ToRole="Group" />
         </EntityType>
         <EntityType Name="Text">
           <Key>
             <PropertyRef Name="TextID" />
           </Key>
-          <Property Name="TextID" Type="Guid" Nullable="false" />
+          <Property Name="TextID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
           <Property Name="Author" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
           <Property Name="QuoteInd" Type="Boolean" />
-          <Property Name="CountsWithQuotesID" Type="Guid" Nullable="false" />
-          <Property Name="CountsWithoutQuotesID" Type="Guid" Nullable="false" />
+          <Property Name="CountsWithQuotesID" Type="Int32" Nullable="false" />
+          <Property Name="CountsWithoutQuotesID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Count" Relationship="Self.FK__Text__CountsWith__29221CFB" FromRole="Text" ToRole="Counts" />
+          <NavigationProperty Name="Count1" Relationship="Self.FK__Text__CountsWith__2A164134" FromRole="Text" ToRole="Counts" />
           <NavigationProperty Name="Groups" Relationship="Self.Text_Group" FromRole="Text" ToRole="Group" />
         </EntityType>
-        <Association Name="FK__Group_Gro__Child__3E52440B">
+        <Association Name="FK__Text__CountsWith__29221CFB">
+          <End Role="Counts" Type="Self.Count" Multiplicity="1" />
+          <End Role="Text" Type="Self.Text" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Counts">
+              <PropertyRef Name="CountsID" />
+            </Principal>
+            <Dependent Role="Text">
+              <PropertyRef Name="CountsWithQuotesID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Text__CountsWith__2A164134">
+          <End Role="Counts" Type="Self.Count" Multiplicity="1" />
+          <End Role="Text" Type="Self.Text" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Counts">
+              <PropertyRef Name="CountsID" />
+            </Principal>
+            <Dependent Role="Text">
+              <PropertyRef Name="CountsWithoutQuotesID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Group_Gro__Child__0E6E26BF">
           <End Role="Group" Type="Self.Group" Multiplicity="1" />
           <End Role="Group_Group" Type="Self.Group_Group" Multiplicity="*" />
           <ReferentialConstraint>
@@ -204,7 +257,7 @@ warning 6035: The relationship 'FK__Counts__countID__5EBF139D' has columns that 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Group_Gro__Paren__3F466844">
+        <Association Name="FK__Group_Gro__Paren__0F624AF8">
           <End Role="Group" Type="Self.Group" Multiplicity="1" />
           <End Role="Group_Group" Type="Self.Group_Group" Multiplicity="*" />
           <ReferentialConstraint>
@@ -220,16 +273,24 @@ warning 6035: The relationship 'FK__Counts__countID__5EBF139D' has columns that 
           <End Role="Group" Type="Self.Group" Multiplicity="*" />
           <End Role="Text" Type="Self.Text" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="FingerprintV4Entities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="FingerprintV4Entities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Counts" EntityType="Self.Count" />
           <EntitySet Name="Groups" EntityType="Self.Group" />
           <EntitySet Name="Group_Group" EntityType="Self.Group_Group" />
           <EntitySet Name="Texts" EntityType="Self.Text" />
-          <AssociationSet Name="FK__Group_Gro__Child__3E52440B" Association="Self.FK__Group_Gro__Child__3E52440B">
+          <AssociationSet Name="FK__Text__CountsWith__29221CFB" Association="Self.FK__Text__CountsWith__29221CFB">
+            <End Role="Counts" EntitySet="Counts" />
+            <End Role="Text" EntitySet="Texts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Text__CountsWith__2A164134" Association="Self.FK__Text__CountsWith__2A164134">
+            <End Role="Counts" EntitySet="Counts" />
+            <End Role="Text" EntitySet="Texts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Group_Gro__Child__0E6E26BF" Association="Self.FK__Group_Gro__Child__0E6E26BF">
             <End Role="Group" EntitySet="Groups" />
             <End Role="Group_Group" EntitySet="Group_Group" />
           </AssociationSet>
-          <AssociationSet Name="FK__Group_Gro__Paren__3F466844" Association="Self.FK__Group_Gro__Paren__3F466844">
+          <AssociationSet Name="FK__Group_Gro__Paren__0F624AF8" Association="Self.FK__Group_Gro__Paren__0F624AF8">
             <End Role="Group" EntitySet="Groups" />
             <End Role="Group_Group" EntitySet="Group_Group" />
           </AssociationSet>
@@ -243,12 +304,11 @@ warning 6035: The relationship 'FK__Counts__countID__5EBF139D' has columns that 
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="FingerprintV4ModelStoreContainer" CdmEntityContainer="FingerprintV4Entities">
+        <EntityContainerMapping StorageEntityContainer="FingerprintV4ModelStoreContainer" CdmEntityContainer="FingerprintV4Entities1">
           <EntitySetMapping Name="Counts">
             <EntityTypeMapping TypeName="FingerprintV4Model.Count">
               <MappingFragment StoreEntitySet="Counts">
                 <ScalarProperty Name="CountsID" ColumnName="CountsID" />
-                <ScalarProperty Name="countID" ColumnName="countID" />
                 <ScalarProperty Name="one" ColumnName="one" />
                 <ScalarProperty Name="two" ColumnName="two" />
                 <ScalarProperty Name="three" ColumnName="three" />

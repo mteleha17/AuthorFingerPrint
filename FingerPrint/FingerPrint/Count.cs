@@ -14,8 +14,14 @@ namespace FingerPrint
     
     public partial class Count
     {
-        public System.Guid CountsID { get; set; }
-        public System.Guid countID { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Count()
+        {
+            this.Texts = new HashSet<Text>();
+            this.Texts1 = new HashSet<Text>();
+        }
+    
+        public int CountsID { get; set; }
         public int one { get; set; }
         public int two { get; set; }
         public int three { get; set; }
@@ -29,5 +35,10 @@ namespace FingerPrint
         public int eleven { get; set; }
         public int twelve { get; set; }
         public int thirteen { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Text> Texts { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Text> Texts1 { get; set; }
     }
 }
