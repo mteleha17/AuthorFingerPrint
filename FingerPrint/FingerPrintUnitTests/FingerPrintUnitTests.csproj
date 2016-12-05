@@ -75,6 +75,7 @@
     <Content Include="SampleTextFiles\Eragon.txt" />
     <Content Include="SampleTextFiles\Misery-Stephen_King.txt" />
     <Content Include="SampleTextFiles\MismatchedQuotationMarks.txt" />
+    <Content Include="SampleTextFiles\TheSleeper.txt" />
     <Content Include="SampleTextFiles\TheSleeperExcerpt.txt" />
     <Content Include="SampleTextFiles\WordSpanningMultipleLines.txt" />
   </ItemGroup>
