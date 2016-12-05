@@ -8,6 +8,7 @@ using FingerPrint.Models.Interfaces;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
+using FingerPrint.AuxiliaryClasses;
 
 namespace FingerPrint.Models.Implementations
 {
@@ -124,10 +125,12 @@ namespace FingerPrint.Models.Implementations
         /// <param name="model">The flexible word count model to fill with counts.</param>
         private void GenerateCounts(TextReader text, IFlexibleWordCountModel model)
         {
-            int[] countsWithQuotes = new int[10];
-            int[] countsWithoutQuotes = new int[10];
-            int[] frequencyWithQuotes = new int[10];
-            int[] frequencyWithoutQuotes = new int[10];
+            int arraySize = UniversalCountSize.CountSize;
+            int multiplier = UniversalCountSize.ConstantMultiplier;
+            int[] countsWithQuotes = new int[arraySize];
+            int[] countsWithoutQuotes = new int[arraySize];
+            double[] frequencyWithQuotes = new double[arraySize];
+            double[] frequencyWithoutQuotes = new double[arraySize];
             int totalWordCount = 0;
             string delimPattern = @"\s+";
             Regex delim = new Regex(delimPattern);
@@ -142,7 +145,7 @@ namespace FingerPrint.Models.Implementations
             {
                 if (line.Length != 0) // skip line if empty
                 {
-                    line = Regex.Replace(line, "[–—]", " "); // treat em dashes as spaces since they don't link words together like hyphens or en dashes
+                    line = Regex.Replace(line, "[–—]", " "); // treat em dashes and en dashes as spaces since they don't link words together like hyphens
                     string[] wordsArray = delim.Split(line.Trim()); // split the line using delimiter
                     for (int i = 0; i < wordsArray.Length; i++) // iterate through split array
                     {
@@ -190,6 +193,7 @@ namespace FingerPrint.Models.Implementations
                         if (!(modifiedCurrentWord.Length == 0))
                         {
                             totalWordCount++;
+                            Debug.Print(totalWordCount.ToString());
                             int wordLength = modifiedCurrentWord.Length;
                             previousWordLength = wordLength; // variable used in case a wordlength count has to be uncounted when counting the next word
                             if (!inQuotes) // if outside of quotations, increase count for both the count including and excluding words in quotations
@@ -226,10 +230,12 @@ namespace FingerPrint.Models.Implementations
                     }
                 }
             }
+            // calculates percentage of each wordlength count
             for (int i = 0; i < countsWithQuotes.Length; i++)
             {
-                frequencyWithQuotes[i] = countsWithQuotes[i] / totalWordCount;
-                frequencyWithoutQuotes[i] = countsWithQuotes[i] / totalWordCount;
+                frequencyWithQuotes[i] = (countsWithQuotes[i] / (double)totalWordCount) * multiplier;
+                frequencyWithoutQuotes[i] = (countsWithoutQuotes[i] / (double)totalWordCount) * multiplier;
+                Debug.Write(frequencyWithoutQuotes[i] + "\n");
             }
             // determines if there are mismatched quotation marks
             if (inQuotes)

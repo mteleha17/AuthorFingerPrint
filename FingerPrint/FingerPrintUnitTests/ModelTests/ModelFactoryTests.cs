@@ -20,14 +20,14 @@ namespace FingerPrintUnitTests.ModelTests
         public void Initialize()
         {
             _modelFactory = new ModelFactory();
-            counts = _modelFactory.GetSingleCountModel(10);
+            counts = _modelFactory.GetSingleCountModel(13);
         }
 
         [TestMethod]
         public void GetSingleCountsByLength()
         {
-            ISingleWordCountModel output = _modelFactory.GetSingleCountModel(10);
-            Assert.AreEqual(output.GetLength(), 10);
+            ISingleWordCountModel output = _modelFactory.GetSingleCountModel(13);
+            Assert.AreEqual(output.GetLength(), 13);
         }
 
         [TestMethod]
@@ -35,7 +35,7 @@ namespace FingerPrintUnitTests.ModelTests
         {
             string s = "As Thomas Jefferson once said, \"Hey there buddy.\"";
             stringReader = new StringReader(s);
-            var textModel = _modelFactory.GetTextModel("test", stringReader, 10);
+            var textModel = _modelFactory.GetTextModel("test", stringReader, 13);
             counts = textModel.GetCounts();
             Assert.AreEqual(0, counts.GetAt(0));
             Assert.AreEqual(1, counts.GetAt(1));
@@ -47,6 +47,9 @@ namespace FingerPrintUnitTests.ModelTests
             Assert.AreEqual(0, counts.GetAt(7));
             Assert.AreEqual(1, counts.GetAt(8));
             Assert.AreEqual(0, counts.GetAt(9));
+            Assert.AreEqual(0, counts.GetAt(10));
+            Assert.AreEqual(0, counts.GetAt(11));
+            Assert.AreEqual(0, counts.GetAt(12));
         }
 
         [TestMethod]
@@ -54,7 +57,7 @@ namespace FingerPrintUnitTests.ModelTests
         {
             string s = "As Thomas Jefferson once said, \"Hey there buddy.\"";
             stringReader = new StringReader(s);
-            var textModel = _modelFactory.GetTextModel("test", stringReader, 10);
+            var textModel = _modelFactory.GetTextModel("test", stringReader, 13);
             textModel.SetIncludeQuotes(false);
             counts = textModel.GetCounts();
             Assert.AreEqual(0, counts.GetAt(0));
@@ -67,6 +70,9 @@ namespace FingerPrintUnitTests.ModelTests
             Assert.AreEqual(0, counts.GetAt(7));
             Assert.AreEqual(1, counts.GetAt(8));
             Assert.AreEqual(0, counts.GetAt(9));
+            Assert.AreEqual(0, counts.GetAt(10));
+            Assert.AreEqual(0, counts.GetAt(11));
+            Assert.AreEqual(0, counts.GetAt(12));
         }
 
         [TestMethod]
@@ -74,7 +80,7 @@ namespace FingerPrintUnitTests.ModelTests
         {
             string s = "As Thomas Jefferson once said, “Hey there buddy.”";
             stringReader = new StringReader(s);
-            var textModel = _modelFactory.GetTextModel("test", stringReader, 10);
+            var textModel = _modelFactory.GetTextModel("test", stringReader, 13);
             textModel.SetIncludeQuotes(false);
             counts = textModel.GetCounts();
             Assert.AreEqual(0, counts.GetAt(0));
@@ -87,6 +93,9 @@ namespace FingerPrintUnitTests.ModelTests
             Assert.AreEqual(0, counts.GetAt(7));
             Assert.AreEqual(1, counts.GetAt(8));
             Assert.AreEqual(0, counts.GetAt(9));
+            Assert.AreEqual(0, counts.GetAt(10));
+            Assert.AreEqual(0, counts.GetAt(11));
+            Assert.AreEqual(0, counts.GetAt(12));
         }
 
         [TestMethod]
@@ -94,7 +103,7 @@ namespace FingerPrintUnitTests.ModelTests
         {
             string s = "Let us consider a word spanning multip-\nle lines. Will the program handle it correctly?";
             stringReader = new StringReader(s);
-            var textModel = _modelFactory.GetTextModel("test", stringReader, 10);
+            var textModel = _modelFactory.GetTextModel("test", stringReader, 13);
             counts = textModel.GetCounts();
             Assert.AreEqual(1, counts.GetAt(0));
             Assert.AreEqual(2, counts.GetAt(1));
@@ -106,6 +115,9 @@ namespace FingerPrintUnitTests.ModelTests
             Assert.AreEqual(3, counts.GetAt(7));
             Assert.AreEqual(1, counts.GetAt(8));
             Assert.AreEqual(0, counts.GetAt(9));
+            Assert.AreEqual(0, counts.GetAt(10));
+            Assert.AreEqual(0, counts.GetAt(11));
+            Assert.AreEqual(0, counts.GetAt(12));
         }
 
         [TestMethod]
@@ -113,7 +125,7 @@ namespace FingerPrintUnitTests.ModelTests
         {
             string s = "Let us consider a word spanning \"multip-\nle lines.\" Will the program handle it correctly?";
             stringReader = new StringReader(s);
-            var textModel = _modelFactory.GetTextModel("test", stringReader, 10);
+            var textModel = _modelFactory.GetTextModel("test", stringReader, 13);
             textModel.SetIncludeQuotes(false);
             counts = textModel.GetCounts();
             Assert.AreEqual(1, counts.GetAt(0));
@@ -126,6 +138,9 @@ namespace FingerPrintUnitTests.ModelTests
             Assert.AreEqual(2, counts.GetAt(7));
             Assert.AreEqual(1, counts.GetAt(8));
             Assert.AreEqual(0, counts.GetAt(9));
+            Assert.AreEqual(0, counts.GetAt(10));
+            Assert.AreEqual(0, counts.GetAt(11));
+            Assert.AreEqual(0, counts.GetAt(12));
         }
 
         [TestMethod]
@@ -133,7 +148,7 @@ namespace FingerPrintUnitTests.ModelTests
         {
             using (streamReader = new StreamReader("..\\..\\SampleTextFiles\\WordSpanningMultipleLines.txt"))
             {
-                var textModel = _modelFactory.GetTextModel("test", streamReader, 10);
+                var textModel = _modelFactory.GetTextModel("test", streamReader, 13);
                 counts = textModel.GetCounts();
                 Assert.AreEqual(1, counts.GetAt(0));
                 Assert.AreEqual(2, counts.GetAt(1));
@@ -145,6 +160,9 @@ namespace FingerPrintUnitTests.ModelTests
                 Assert.AreEqual(3, counts.GetAt(7));
                 Assert.AreEqual(1, counts.GetAt(8));
                 Assert.AreEqual(0, counts.GetAt(9));
+                Assert.AreEqual(0, counts.GetAt(10));
+                Assert.AreEqual(0, counts.GetAt(11));
+                Assert.AreEqual(0, counts.GetAt(12));
             }
         }
 
@@ -153,7 +171,7 @@ namespace FingerPrintUnitTests.ModelTests
         {
             using (streamReader = new StreamReader("..\\..\\SampleTextFiles\\MismatchedQuotationMarks.txt"))
             {
-                var textModel = _modelFactory.GetTextModel("test", streamReader, 10);
+                var textModel = _modelFactory.GetTextModel("test", streamReader, 13);
                 counts = textModel.GetCounts();
                 Assert.AreEqual(0, counts.GetAt(0));
                 Assert.AreEqual(0, counts.GetAt(1));
@@ -165,13 +183,16 @@ namespace FingerPrintUnitTests.ModelTests
                 Assert.AreEqual(0, counts.GetAt(7));
                 Assert.AreEqual(1, counts.GetAt(8));
                 Assert.AreEqual(1, counts.GetAt(9));
+                Assert.AreEqual(0, counts.GetAt(10));
+                Assert.AreEqual(0, counts.GetAt(11));
+                Assert.AreEqual(0, counts.GetAt(12));
             }
         }
 
         [TestMethod]
         public void CountScrambledText()
         {
-            int length = 10;
+            int length = 13;
             ITextModel modelUnscrambled;
             ITextModel modelScrambled;
             using (streamReader = new StreamReader("..\\..\\SampleTextFiles\\ATaleOfTwoCitiesNormal.txt"))
@@ -194,6 +215,9 @@ namespace FingerPrintUnitTests.ModelTests
             Assert.AreEqual(countsUnscrambled.GetAt(7), countsScrambled.GetAt(7));
             Assert.AreEqual(countsUnscrambled.GetAt(8), countsScrambled.GetAt(8));
             Assert.AreEqual(countsUnscrambled.GetAt(9), countsScrambled.GetAt(9));
+            Assert.AreEqual(countsUnscrambled.GetAt(10), countsScrambled.GetAt(10));
+            Assert.AreEqual(countsUnscrambled.GetAt(11), countsScrambled.GetAt(11));
+            Assert.AreEqual(countsUnscrambled.GetAt(12), countsScrambled.GetAt(12));
         }
 
         [TestMethod]
@@ -201,7 +225,7 @@ namespace FingerPrintUnitTests.ModelTests
         {
             using (streamReader = new StreamReader("..\\..\\SampleTextFiles\\TheSleeperExcerpt.txt"))
             {
-                var textModel = _modelFactory.GetTextModel("test", streamReader, 10);
+                var textModel = _modelFactory.GetTextModel("test", streamReader, 13);
                 counts = textModel.GetCounts();
                 Assert.AreEqual(0, counts.GetAt(0));
                 Assert.AreEqual(0, counts.GetAt(1));
@@ -213,6 +237,9 @@ namespace FingerPrintUnitTests.ModelTests
                 Assert.AreEqual(0, counts.GetAt(7));
                 Assert.AreEqual(0, counts.GetAt(8));
                 Assert.AreEqual(0, counts.GetAt(9));
+                Assert.AreEqual(0, counts.GetAt(10));
+                Assert.AreEqual(0, counts.GetAt(11));
+                Assert.AreEqual(0, counts.GetAt(12));
             }
         }
 
@@ -221,7 +248,7 @@ namespace FingerPrintUnitTests.ModelTests
         {
             string s = "The general shouted, \"No-\nWe will not give them an inch.";
             stringReader = new StringReader(s);
-            var textModel = _modelFactory.GetTextModel("test", stringReader, 10);
+            var textModel = _modelFactory.GetTextModel("test", stringReader, 13);
             counts = textModel.GetCounts();
             Assert.AreEqual(0, counts.GetAt(0));
             Assert.AreEqual(3, counts.GetAt(1));
@@ -233,6 +260,9 @@ namespace FingerPrintUnitTests.ModelTests
             Assert.AreEqual(0, counts.GetAt(7));
             Assert.AreEqual(0, counts.GetAt(8));
             Assert.AreEqual(0, counts.GetAt(9));
+            Assert.AreEqual(0, counts.GetAt(10));
+            Assert.AreEqual(0, counts.GetAt(11));
+            Assert.AreEqual(0, counts.GetAt(12));
         }
 
         [TestMethod]
@@ -240,7 +270,7 @@ namespace FingerPrintUnitTests.ModelTests
         {
             string s = "The general shouted, \"No-\nWe will not give them an inch.";
             stringReader = new StringReader(s);
-            var textModel = _modelFactory.GetTextModel("test", stringReader, 10);
+            var textModel = _modelFactory.GetTextModel("test", stringReader, 13);
             textModel.SetIncludeQuotes(false);
             counts = textModel.GetCounts();
             Assert.AreEqual(0, counts.GetAt(0));
@@ -253,6 +283,9 @@ namespace FingerPrintUnitTests.ModelTests
             Assert.AreEqual(0, counts.GetAt(7));
             Assert.AreEqual(0, counts.GetAt(8));
             Assert.AreEqual(0, counts.GetAt(9));
+            Assert.AreEqual(0, counts.GetAt(10));
+            Assert.AreEqual(0, counts.GetAt(11));
+            Assert.AreEqual(0, counts.GetAt(12));
         }
 
         [TestMethod]
@@ -260,7 +293,7 @@ namespace FingerPrintUnitTests.ModelTests
         {
             string s = "So fitfully—so fearfully— So fitfully—so fearfully—";
             stringReader = new StringReader(s);
-            var textModel = _modelFactory.GetTextModel("test", stringReader, 10);
+            var textModel = _modelFactory.GetTextModel("test", stringReader, 13);
             counts = textModel.GetCounts();
             Assert.AreEqual(0, counts.GetAt(0)); 
             Assert.AreEqual(4, counts.GetAt(1));
@@ -272,6 +305,9 @@ namespace FingerPrintUnitTests.ModelTests
             Assert.AreEqual(2, counts.GetAt(7));
             Assert.AreEqual(2, counts.GetAt(8));
             Assert.AreEqual(0, counts.GetAt(9));
+            Assert.AreEqual(0, counts.GetAt(10));
+            Assert.AreEqual(0, counts.GetAt(11));
+            Assert.AreEqual(0, counts.GetAt(12));
         }
 
     }

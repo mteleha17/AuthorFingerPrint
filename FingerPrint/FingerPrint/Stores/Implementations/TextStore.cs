@@ -76,6 +76,10 @@ namespace FingerPrint.Stores
             {
                 yield return GetOne(x => x.TextID == text.TextID);
             }
+            for (int i = 0; i < 1; i++)
+            {
+                yield return null;
+            }
         }
 
         public ITextModel GetOne(Expression<Func<Text, bool>> criteria)
@@ -85,7 +89,7 @@ namespace FingerPrint.Stores
             {
                 return null;
             }
-            IFlexibleWordCountModel counts = GetCountsFromText(text); 
+            IFlexibleWordCountModel counts = GetCountsFromText(text);
             return _modelFactory.GetTextModel(text.Name, counts);
         }
 
