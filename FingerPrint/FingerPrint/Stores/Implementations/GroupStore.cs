@@ -13,11 +13,11 @@ namespace FingerPrint.Stores
 {
     public class GroupStore : IGroupStore
     {
-        private FingerprintV4Entities _db;
+        private FingerprintV4Entities1 _db;
         private IModelFactory _modelFactory;
         private ITextStore _textStore;
 
-        public GroupStore(FingerprintV4Entities db, IModelFactory modelFactory, ITextStore textStore)
+        public GroupStore(FingerprintV4Entities1 db, IModelFactory modelFactory, ITextStore textStore)
         {
             _db = db;
             _modelFactory = modelFactory;
