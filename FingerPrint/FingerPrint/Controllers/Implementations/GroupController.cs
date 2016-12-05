@@ -68,7 +68,7 @@ namespace FingerPrint.Controllers.Implementations
 
         public void Delete(IGroupViewModel model)
         {
-            if (_analysisController.GroupIsActive(model))
+            if (_analysisController.ItemIsActive(model))
             {
                 throw new ArgumentException($"Cannot delete group {model.GetName()} because it is active.");
             }

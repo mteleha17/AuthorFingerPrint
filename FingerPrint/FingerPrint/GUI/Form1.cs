@@ -74,13 +74,14 @@ namespace FingerPrint
         }
         private void executeAnalysisButton_Click(object sender, EventArgs e)
         {
-            if (_analysisController.GetActiveGroups().Count > 0)
+            if (_analysisController.GetActiveItems().Count > 0)
             {
                 try
                 {
                     dataTable.Rows.Clear(); //clear any previous analysis
                     analysisLineChart.Series.Clear();
-                    List<IGroupViewModel> groupList = _analysisController.GetActiveGroups(); //gets any texts/groups that have been added to the analysis group
+                    //changed -JG
+                    List<ITextOrGroupViewModel> groupList = _analysisController.GetActiveItems(); //gets any texts/groups that have been added to the analysis group
                     foreach (IGroupViewModel groupEntry in groupList)
                     {
                         //table
@@ -194,16 +195,17 @@ namespace FingerPrint
                     {
                      model = _groupController.GetGroupByName(itemToMove.SubItems[1].Text + " group");
                     }
-                _analysisController.AddToActiveGroups(model);
+                _analysisController.AddToActiveItems(model);
                 }   
                 else
                 {
-                    _analysisController.AddToActiveGroups(_groupController.GetGroupByName(itemToMove.Text));
+                    _analysisController.AddToActiveItems(_groupController.GetGroupByName(itemToMove.Text));
                 }
                 fileGroupListViewTab3.Items.Remove(itemToMove);
                 fillGroupComboBox();
                 analysisListView.Items.Clear();
-                List<IGroupViewModel> groupList = _analysisController.GetActiveGroups();
+                //changed -JG
+                List<ITextOrGroupViewModel> groupList = _analysisController.GetActiveItems();
                 foreach (IGroupViewModel groupEntry in groupList)
                 {
                     ListViewItem itemGroup = new ListViewItem();
@@ -232,9 +234,10 @@ namespace FingerPrint
             if (analysisListView.SelectedItems.Count > 0)
             {
                 ListViewItem itemToMove = analysisListView.SelectedItems[0];
-                _analysisController.RemoveFromActiveGroups(_groupController.GetGroupByName(itemToMove.Text));
+                _analysisController.RemoveFromActiveItems(_groupController.GetGroupByName(itemToMove.Text));
                 analysisListView.Items.Clear();
-                List<IGroupViewModel> groupList = _analysisController.GetActiveGroups();
+                //changed -JG
+                List<ITextOrGroupViewModel> groupList = _analysisController.GetActiveItems();
                 foreach (IGroupViewModel groupEntry in groupList)
                 {
                     ListViewItem itemGroup = new ListViewItem();
@@ -357,7 +360,8 @@ namespace FingerPrint
             groupComboBox.SelectedIndex = groupComboBox.Items.IndexOf(groupNameNew);
             analysisListView.Items.Clear();
             fillGroupComboBox();
-            List<IGroupViewModel> groupList = _analysisController.GetActiveGroups();
+            //changed -JG
+            List<ITextOrGroupViewModel> groupList = _analysisController.GetActiveItems();
             foreach (IGroupViewModel groupEntry in groupList)
             {
                 ListViewItem itemGroup = new ListViewItem();
@@ -452,6 +456,7 @@ namespace FingerPrint
         {
             IGroupViewModel model = _groupController.GetGroupByName(groupComboBox.Text);
             groupListViewTab2.Items.Clear();
+            //changed -JG
             List<ITextOrGroupViewModel> list = model.GetMembers();
             foreach(ITextOrGroupViewModel textOrGroup in list)
             {
@@ -474,11 +479,12 @@ namespace FingerPrint
                 {
                     ListViewItem item = fileGroupListViewTab2.SelectedItems[0];
                     string textName = item.SubItems[0].Text;
-                    if (_analysisController.GroupIsActive(_groupController.GetGroupByName(textName))){
-                        _analysisController.RemoveFromActiveGroups(_groupController.GetGroupByName(textName));
+                    if (_analysisController.ItemIsActive(_groupController.GetGroupByName(textName))){
+                        _analysisController.RemoveFromActiveItems(_groupController.GetGroupByName(textName));
                         analysisListView.Items.Clear();
                         fillGroupComboBox();
-                        List<IGroupViewModel> groupList = _analysisController.GetActiveGroups();
+                        //changed -JG
+                        List<ITextOrGroupViewModel> groupList = _analysisController.GetActiveItems();
                         foreach (IGroupViewModel groupEntry in groupList)
                         {
                             ListViewItem itemGroup = new ListViewItem();
