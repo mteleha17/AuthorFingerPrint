@@ -12,8 +12,7 @@ namespace FingerPrint
 
 
 
-// fix when a group is deleting that it updates combo box
-//fix 
+//fix duplicate entries in analysis 
 
 
 {
