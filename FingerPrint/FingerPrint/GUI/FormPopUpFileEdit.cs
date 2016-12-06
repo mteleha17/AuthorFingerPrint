@@ -38,16 +38,16 @@ namespace FingerPrint
         private void saveChangesButton_Click(object sender, EventArgs e)
         {
             _textController.UpdateText(model, newFileNameTextbox.Text, newAuthorTextBox.Text, quotesCheckbox.Checked);
-            List<IGroupViewModel> groupList = _groupController.GetAllGroups();
-            foreach (IGroupViewModel groupEntry in groupList)
-            {
-                if (groupEntry.GetMembers().Contains(model))
-                {
-                    _groupController.RemoveItemFromGroup(groupEntry, model);
-                    _groupController.AddItemToGroup(groupEntry, model);
-                }
+            //List<IGroupViewModel> groupList = _groupController.GetAllGroups();        // meant to trigger recalulation, obselete
+            //foreach (IGroupViewModel groupEntry in groupList)
+            //{
+            //    if (groupEntry.GetMembers().Contains(model))
+            //    {
+            //        _groupController.RemoveItemFromGroup(groupEntry, model);
+            //        _groupController.AddItemToGroup(groupEntry, model);
+            //    }
 
-            }
+            //}
             form1.updateListViews();
             this.Close();
         }

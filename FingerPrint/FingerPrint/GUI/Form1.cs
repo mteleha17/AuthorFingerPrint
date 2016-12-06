@@ -56,8 +56,12 @@ namespace FingerPrint
             try
             {
                 StreamReader input = new StreamReader(fileLocationTextBox.Text);
-                ITextViewModel model = _textController.CreateText(initialFileNameTextbox.Text, input, UniversalConstants.CountSize, initialAuthorTextBox.Text); //creates the text in the db
-                updateTextListView(fileListViewTab1); 
+                ITextViewModel model = _textController.CreateText(initialFileNameTextBox.Text, input, UniversalConstants.CountSize, initialAuthorTextBox.Text); //creates the text in the db
+                updateTextListView(fileListViewTab1);
+                initialFileNameTextBox.Text = "New File Name";
+                initialAuthorTextBox.Text = "Name of Author";
+                fileLocationTextBox.Text = "File location";
+               
             }
             catch(System.IO.FileNotFoundException)
             {
@@ -90,7 +94,7 @@ namespace FingerPrint
                     analysisLineChart.Series.Clear();
                     //changed -JG
                     List<ITextOrGroupViewModel> groupList = _analysisController.GetActiveItems(); //gets any texts/groups that have been added to the analysis group
-                    foreach (IGroupViewModel groupEntry in groupList)
+                    foreach (ITextOrGroupViewModel groupEntry in groupList)
                     {
                         //table
                         int rowId = dataTable.Rows.Add(); //new row created to make sure formatting in present
@@ -128,6 +132,7 @@ namespace FingerPrint
                 var form2 = new ErrorMessageDisplay(errorMessage);
                 form2.Show(this);
             }
+
         }
         private void editButton_Click(object sender, EventArgs e)
         {
@@ -191,35 +196,20 @@ namespace FingerPrint
            try
             {
             ListViewItem itemToMove = fileGroupListViewTab3.SelectedItems[0];
-            IGroupViewModel model;
+            
                 if (filesRadioButtonTab3.Checked)
                  {
-                    if (null == _groupController.GetGroupByName(itemToMove.SubItems[1].Text + " group"))
-                    {
-                    model = _groupController.CreateGroup(itemToMove.SubItems[1].Text + " group", UniversalConstants.CountSize);
-                    _groupController.AddItemToGroup(model, _textController.GetTextByName(itemToMove.SubItems[1].Text));
-                    }
-                    else
-                    {
-                     model = _groupController.GetGroupByName(itemToMove.SubItems[1].Text + " group");
-                    }
-                _analysisController.AddToActiveItems(model);
+                    _analysisController.AddToActiveItems(_textController.GetTextByName(itemToMove.SubItems[1].Text));
+                               
                 }   
                 else
                 {
                     _analysisController.AddToActiveItems(_groupController.GetGroupByName(itemToMove.Text));
                 }
-                fileGroupListViewTab3.Items.Remove(itemToMove);
-                fillGroupComboBox();
+                
                 analysisListView.Items.Clear();
-                //changed -JG
-                List<ITextOrGroupViewModel> groupList = _analysisController.GetActiveItems();
-                foreach (IGroupViewModel groupEntry in groupList)
-                {
-                    ListViewItem itemGroup = new ListViewItem();
-                   itemGroup.Text = groupEntry.GetName();
-                   analysisListView.Items.Add(itemGroup);
-                }
+                updateAnalysisGroups();
+                updateListViews();
             }
             catch (ArgumentException)
             {
@@ -242,16 +232,17 @@ namespace FingerPrint
             if (analysisListView.SelectedItems.Count > 0)
             {
                 ListViewItem itemToMove = analysisListView.SelectedItems[0];
-                _analysisController.RemoveFromActiveItems(_groupController.GetGroupByName(itemToMove.Text));
+                if(null != _groupController.GetGroupByName(itemToMove.Text))
+                {
+                    _analysisController.RemoveFromActiveItems(_groupController.GetGroupByName(itemToMove.Text));
+                }
+                else
+                {
+                    _analysisController.RemoveFromActiveItems(_textController.GetTextByName(itemToMove.Text));
+                }
                 analysisListView.Items.Clear();
                 //changed -JG
-                List<ITextOrGroupViewModel> groupList = _analysisController.GetActiveItems();
-                foreach (IGroupViewModel groupEntry in groupList)
-                {
-                    ListViewItem itemGroup = new ListViewItem();
-                    itemGroup.Text = groupEntry.GetName();
-                    analysisListView.Items.Add(itemGroup);
-                }
+                updateAnalysisGroups();
                 updateListViews();
                 fillGroupComboBox();
             }
@@ -351,7 +342,7 @@ namespace FingerPrint
             try
             {
                 _groupController.CreateGroup(groupName, UniversalConstants.CountSize);
-                groupComboBox.Items.Add(groupName);
+                fillGroupComboBox();
             }
             catch
             {
@@ -369,13 +360,7 @@ namespace FingerPrint
             analysisListView.Items.Clear();
             fillGroupComboBox();
             //changed -JG
-            List<ITextOrGroupViewModel> groupList = _analysisController.GetActiveItems();
-            foreach (IGroupViewModel groupEntry in groupList)
-            {
-                ListViewItem itemGroup = new ListViewItem();
-                itemGroup.Text = groupEntry.GetName();
-                analysisListView.Items.Add(itemGroup);
-            }
+            updateAnalysisGroups();
             updateListViews();
          }
         private void newGroupButton_Click(object sender, EventArgs e) //used to open the newGroup popup
@@ -433,6 +418,7 @@ namespace FingerPrint
         }
         private void fillGroupComboBox()    //gets all groups to add to the combo box
         {
+            groupListViewTab2.Items.Clear();
             groupComboBox.Items.Clear();
             List<IGroupViewModel> groupList = _groupController.GetAllGroups();
             foreach (IGroupViewModel groupEntry in groupList)
@@ -494,13 +480,7 @@ namespace FingerPrint
                         analysisListView.Items.Clear();
                         fillGroupComboBox();
                         //changed -JG
-                        List<ITextOrGroupViewModel> groupList = _analysisController.GetActiveItems();
-                        foreach (IGroupViewModel groupEntry in groupList)
-                        {
-                            ListViewItem itemGroup = new ListViewItem();
-                            itemGroup.Text = groupEntry.GetName();
-                            analysisListView.Items.Add(itemGroup);
-                        }
+                        updateAnalysisGroups();
                     }
                     _groupController.Delete(_groupController.GetGroupByName(textName));
                 }
@@ -512,6 +492,16 @@ namespace FingerPrint
                 string errorMessage = "You need to select an item to delete it first!";
                 var form2 = new ErrorMessageDisplay(errorMessage);
                 form2.Show(this);
+            }
+        }
+        public void updateAnalysisGroups()
+        {
+            List<ITextOrGroupViewModel> groupList = _analysisController.GetActiveItems();
+            foreach (ITextOrGroupViewModel groupEntry in groupList)
+            {
+                ListViewItem itemGroup = new ListViewItem();
+                itemGroup.Text = groupEntry.GetName();
+                analysisListView.Items.Add(itemGroup);
             }
         }
 

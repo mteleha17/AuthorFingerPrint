@@ -48,7 +48,7 @@
             this.selectFileButtonTab2 = new System.Windows.Forms.Button();
             this.saveButtonTab1 = new System.Windows.Forms.Button();
             this.fileLocationTextBox = new System.Windows.Forms.TextBox();
-            this.initialFileNameTextbox = new System.Windows.Forms.TextBox();
+            this.initialFileNameTextBox = new System.Windows.Forms.TextBox();
             this.initialAuthorTextBox = new System.Windows.Forms.TextBox();
             this.groupsTab = new System.Windows.Forms.TabPage();
             this.groupsGroupBox = new System.Windows.Forms.GroupBox();
@@ -231,7 +231,7 @@
             this.addGroupBox.Controls.Add(this.selectFileButtonTab2);
             this.addGroupBox.Controls.Add(this.saveButtonTab1);
             this.addGroupBox.Controls.Add(this.fileLocationTextBox);
-            this.addGroupBox.Controls.Add(this.initialFileNameTextbox);
+            this.addGroupBox.Controls.Add(this.initialFileNameTextBox);
             this.addGroupBox.Controls.Add(this.initialAuthorTextBox);
             this.addGroupBox.Location = new System.Drawing.Point(3, 3);
             this.addGroupBox.Name = "addGroupBox";
@@ -286,13 +286,13 @@
             this.fileLocationTextBox.TabIndex = 1;
             this.fileLocationTextBox.Text = "File location";
             // 
-            // initialFileNameTextbox
+            // initialFileNameTextBox
             // 
-            this.initialFileNameTextbox.Location = new System.Drawing.Point(6, 254);
-            this.initialFileNameTextbox.Name = "initialFileNameTextbox";
-            this.initialFileNameTextbox.Size = new System.Drawing.Size(193, 20);
-            this.initialFileNameTextbox.TabIndex = 2;
-            this.initialFileNameTextbox.Text = "New File Name";
+            this.initialFileNameTextBox.Location = new System.Drawing.Point(6, 254);
+            this.initialFileNameTextBox.Name = "initialFileNameTextBox";
+            this.initialFileNameTextBox.Size = new System.Drawing.Size(193, 20);
+            this.initialFileNameTextBox.TabIndex = 2;
+            this.initialFileNameTextBox.Text = "New File Name";
             // 
             // initialAuthorTextBox
             // 
@@ -881,7 +881,7 @@
         private System.Windows.Forms.Button saveButtonTab1;
         private System.Windows.Forms.Button selectFileButtonTab2;
         private System.Windows.Forms.TextBox initialAuthorTextBox;
-        private System.Windows.Forms.TextBox initialFileNameTextbox;
+        private System.Windows.Forms.TextBox initialFileNameTextBox;
         private System.Windows.Forms.TextBox fileLocationTextBox;
         private System.Windows.Forms.Label addLabel;
         private System.Windows.Forms.GroupBox editModifyGroupBox;
