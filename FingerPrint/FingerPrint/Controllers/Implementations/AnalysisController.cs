@@ -26,25 +26,25 @@ namespace FingerPrint.Controllers.Implementations
 
         public void AddToActiveItems(ITextOrGroupViewModel item)
         {
-            if (ItemIsActive(item))
+            if (ItemIsActive(item.GetName()))
             {
                 throw new ArgumentException("Cannot add group to active groups since group is already active.");
             }
             _activeItems.Add(item);
         }
 
-        public void RemoveFromActiveItems(ITextOrGroupViewModel item)
+        public void RemoveFromActiveItems(string name)
         {
-            if (!ItemIsActive(item))
+            if (!ItemIsActive(name))
             {
                 throw new ArgumentException("Cannot remove group from active groups since it is not active.");
             }
-            _activeItems.Remove(item);
+            _activeItems.Remove(_activeItems.FirstOrDefault(x => x.GetName() == name));
         }
 
-        public bool ItemIsActive(ITextOrGroupViewModel item)
+        public bool ItemIsActive(string name)
         {
-            return _activeItems.Contains(item);
+            return _activeItems.Any(x => x.GetName() == name);
         }
     }
 }

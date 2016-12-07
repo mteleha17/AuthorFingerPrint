@@ -21,12 +21,14 @@ namespace FingerPrint.Controllers.Implementations
         private IModelFactory _modelFactory;
 
         public GroupController(IAnalysisController analysisController,
+            List<ITextViewModel> textTempDb,
+            List<IGroupViewModel> groupTempDb,
             ITextStore textStore,
             IGroupStore groupStore,
             IModelFactory modelFactory)
         {
-            _tempDbGroup = new List<IGroupViewModel>();
-            _tempDbText = new List<ITextViewModel>();
+            _tempDbText = textTempDb;
+            _tempDbGroup = groupTempDb;
             _analysisController = analysisController;
             //_textStore = textStore;
             //_groupStore = groupStore;
@@ -55,9 +57,9 @@ namespace FingerPrint.Controllers.Implementations
 
         public IGroupViewModel CreateGroup(string name, int length)
         {
-            if (AnyByName(name))
+            if (AnyByName(name) || _tempDbText.Any(x => x.GetName() == name))
             {
-                throw new ArgumentException($"Cannot create group because another group in the database already has the name {name}.");
+                throw new ArgumentException($"Cannot create group because another item in the database already has the name {name}.");
             }
             IGroupModel model = _modelFactory.GetGroupModel(name, length);
             //_groupStore.Add(model);
@@ -68,7 +70,7 @@ namespace FingerPrint.Controllers.Implementations
 
         public void Delete(IGroupViewModel model)
         {
-            if (_analysisController.ItemIsActive(model))
+            if (_analysisController.ItemIsActive(model.GetName()))
             {
                 throw new ArgumentException($"Cannot delete group {model.GetName()} because it is active.");
             }

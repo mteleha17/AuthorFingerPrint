@@ -14,16 +14,20 @@ namespace FingerPrint.Controllers.Implementations
 {
     public class TextController : ITextController
     {
-        private List<ITextViewModel> _temporaryDatabase;
+        private List<ITextViewModel> _textTempDb;
+        private List<IGroupViewModel> _groupTempDb;
         //private ITextStore _textStore;
         //private IGroupStore _groupStore;
         private IModelFactory _modelFactory;
 
-        public TextController(ITextStore textStore,
+        public TextController(List<ITextViewModel> textTempDb,
+            List<IGroupViewModel> groupTempDb, 
+            ITextStore textStore,
             IGroupStore groupStore,
             IModelFactory modelFactory)
         {
-            _temporaryDatabase = new List<ITextViewModel>();
+            _textTempDb = textTempDb;
+            _groupTempDb = groupTempDb;
             //_textStore = textStore;
             //_groupStore = groupStore;
             _modelFactory = modelFactory;
@@ -37,7 +41,7 @@ namespace FingerPrint.Controllers.Implementations
             }
 
             //return _textStore.GetOne(x => x.Name == name);
-            return _temporaryDatabase.FirstOrDefault(x => x.GetName() == name);
+            return _textTempDb.FirstOrDefault(x => x.GetName() == name);
         }
 
         public bool AnyByName(string name)
@@ -47,7 +51,7 @@ namespace FingerPrint.Controllers.Implementations
                 throw new ArgumentException("Text name must not be null or white space.");
             }
             //return _textStore.Any(x => x.Name == name);
-            return _temporaryDatabase.Any(x => x.GetName() == name);
+            return _textTempDb.Any(x => x.GetName() == name);
         }
 
         public List<ITextViewModel> GetTextByAuthor(string author)
@@ -57,7 +61,7 @@ namespace FingerPrint.Controllers.Implementations
                 throw new ArgumentException("Author must not be null or white space.");
             }
             //return _textStore.GetMany(x => x.Author == author).Select(x => (ITextViewModel)x).ToList();
-            return _temporaryDatabase.Where(x => x.GetAuthor() == author).Select(x => (ITextViewModel)x).ToList();
+            return _textTempDb.Where(x => x.GetAuthor() == author).Select(x => (ITextViewModel)x).ToList();
         }
 
         public bool AnyByAuthor(string author)
@@ -67,14 +71,14 @@ namespace FingerPrint.Controllers.Implementations
                 throw new ArgumentException("Author must not be null or white space.");
             }
             //return _textStore.Any(x => x.Author == author);
-            return _temporaryDatabase.Any(x => x.GetAuthor() == author);
+            return _textTempDb.Any(x => x.GetAuthor() == author);
         }
 
         public ITextViewModel CreateText(string name, TextReader input, int length, string author = null)
         {
-            if (AnyByName(name))
+            if (AnyByName(name) || _groupTempDb.Any(x => x.GetName() == name))
             {
-                throw new ArgumentException($"Cannot create text because another text in the database already has the name {name}.");
+                throw new ArgumentException($"Cannot create text because another item in the database already has the name {name}.");
             }
             ITextModel model = _modelFactory.GetTextModel(name, input, length);
             if (!string.IsNullOrWhiteSpace(author))
@@ -82,14 +86,14 @@ namespace FingerPrint.Controllers.Implementations
                 model.SetAuthor(author);
             }
             //_textStore.Add(model);
-            _temporaryDatabase.Add(model);
+            _textTempDb.Add(model);
             return model;
         }
 
         public void DeleteText(ITextViewModel model)
         {
             //_textStore.Delete((ITextModel)model);
-            _temporaryDatabase.Remove(model);
+            _textTempDb.Remove(model);
         }
 
         public void UpdateText(ITextViewModel model, string name = null, string author = null, bool? includeQuotes = null)
@@ -116,7 +120,7 @@ namespace FingerPrint.Controllers.Implementations
         public List<ITextViewModel> GetAllTexts()
         {
             //return _textStore.GetMany(x => true).Select(x => (ITextViewModel)x).ToList();
-            return _temporaryDatabase.Where(x => true).Select(x => (ITextViewModel)x).ToList();
+            return _textTempDb.Where(x => true).Select(x => (ITextViewModel)x).ToList();
         }
     }
 }
