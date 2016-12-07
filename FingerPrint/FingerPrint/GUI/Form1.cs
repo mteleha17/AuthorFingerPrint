@@ -231,14 +231,7 @@ namespace FingerPrint
             if (analysisListView.SelectedItems.Count > 0)
             {
                 ListViewItem itemToMove = analysisListView.SelectedItems[0];
-                if(null != _groupController.GetGroupByName(itemToMove.Text))
-                {
-                    _analysisController.RemoveFromActiveItems(_groupController.GetGroupByName(itemToMove.Text));
-                }
-                else
-                {
-                    _analysisController.RemoveFromActiveItems(_textController.GetTextByName(itemToMove.Text));
-                }
+                _analysisController.RemoveFromActiveItems(itemToMove.Text);
                 analysisListView.Items.Clear();
                 //changed -JG
                 updateAnalysisGroups();
@@ -481,8 +474,8 @@ namespace FingerPrint
                 {
                     ListViewItem item = fileGroupListViewTab2.SelectedItems[0];
                     string textName = item.SubItems[0].Text;
-                    if (_analysisController.ItemIsActive(_groupController.GetGroupByName(textName))){
-                        _analysisController.RemoveFromActiveItems(_groupController.GetGroupByName(textName));
+                    if (_analysisController.ItemIsActive(textName)){
+                        _analysisController.RemoveFromActiveItems(textName);
                         analysisListView.Items.Clear();
                         fillGroupComboBox();
                         //changed -JG
