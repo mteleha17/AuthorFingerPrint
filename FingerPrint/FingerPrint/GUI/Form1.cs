@@ -251,6 +251,7 @@ namespace FingerPrint
             try {
                 ListViewItem itemToMove = groupListViewTab2.SelectedItems[0];
                 IGroupViewModel model = _groupController.GetGroupByName(groupComboBox.Text);
+                
                 if(_groupController.GetGroupByName(itemToMove.Text) != null)
                 {
                     _groupController.RemoveItemFromGroup(model, _groupController.GetGroupByName(itemToMove.Text));
@@ -342,6 +343,8 @@ namespace FingerPrint
             {
                 _groupController.CreateGroup(groupName, UniversalConstants.CountSize);
                 fillGroupComboBox();
+                
+               
             }
             catch
             {
@@ -349,7 +352,11 @@ namespace FingerPrint
                     var form2 = new ErrorMessageDisplay(errorMessage);
                     form2.Show(this);
             }
+            
         }
+
+        
+
         public void editGroupName(string groupNameOld, string groupNameNew) // edit method used by the editGroup popup
         {
             IGroupViewModel group = _groupController.GetGroupByName(groupNameOld);
@@ -394,7 +401,7 @@ namespace FingerPrint
                 updateTextListView(fileGroupListViewTab3);
             }
         }
-        private void groupsRadioButton_CheckedChanged(object sender, EventArgs e) //makes changes to listviews when radiobuttons are selected
+        public void groupsRadioButton_CheckedChanged(object sender, EventArgs e) //makes changes to listviews when radiobuttons are selected
         {
             {
                 if (groupsRadioButton.Checked)
