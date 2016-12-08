@@ -336,14 +336,24 @@ namespace FingerPrint
             {
                 _groupController.CreateGroup(groupName, UniversalConstants.CountSize);
                 fillGroupComboBox();
+                groupComboBox.SelectedIndex = groupComboBox.FindStringExact(groupName);
                 
-               
+                              
             }
             catch
             {
+                if (_textController.GetTextByName(groupName) != null) {
+                    string errorMessage = "You cannot name a group the same name as one of the saved texts!";
+                    var form2 = new ErrorMessageDisplay(errorMessage);
+                    form2.Show(this);
+                }
+                else if(_groupController.GetGroupByName(groupName) != null)
+                {
                     string errorMessage = "You have already created that group!";
                     var form2 = new ErrorMessageDisplay(errorMessage);
                     form2.Show(this);
+                }
+                    
             }
             
         }
