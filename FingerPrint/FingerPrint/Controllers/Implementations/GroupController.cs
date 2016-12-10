@@ -16,8 +16,8 @@ namespace FingerPrint.Controllers.Implementations
         private List<IGroupViewModel> _tempDbGroup;
         private List<ITextViewModel> _tempDbText;
         private IAnalysisController _analysisController;
-        //private ITextStore _textStore;
-        //private IGroupStore _groupStore;
+        private ITextStore _textStore;//group2
+        private IGroupStore _groupStore;//group2
         private IModelFactory _modelFactory;
 
         public GroupController(IAnalysisController analysisController,
@@ -28,8 +28,8 @@ namespace FingerPrint.Controllers.Implementations
             _tempDbGroup = new List<IGroupViewModel>();
             _tempDbText = new List<ITextViewModel>();
             _analysisController = analysisController;
-            //_textStore = textStore;
-            //_groupStore = groupStore;
+            _textStore = textStore;//group2
+            _groupStore = groupStore;//group2
             _modelFactory = modelFactory;
         }
 
@@ -39,8 +39,8 @@ namespace FingerPrint.Controllers.Implementations
             {
                 throw new ArgumentException("The name must not be null.");
             }
-            //return _groupStore.GetOne(x => x.Name == name);
-            return _tempDbGroup.FirstOrDefault(x => x.GetName() == name);
+            return _groupStore.GetOne(x => x.Name == name);//group2
+            //return _tempDbGroup.FirstOrDefault(x => x.GetName() == name);//group1
         }
 
         public bool AnyByName(string name)
@@ -49,8 +49,8 @@ namespace FingerPrint.Controllers.Implementations
             {
                 throw new ArgumentException("The name must not be null.");
             }
-            //return _groupStore.Any(x => x.Name == name);
-            return _tempDbGroup.Any(x => x.GetName() == name);
+            return _groupStore.Exists(x => x.Name == name);//group2
+            //return _tempDbGroup.Any(x => x.GetName() == name);//group1
         }
 
         public IGroupViewModel CreateGroup(string name, int length)
@@ -60,8 +60,8 @@ namespace FingerPrint.Controllers.Implementations
                 throw new ArgumentException($"Cannot create group because another group in the database already has the name {name}.");
             }
             IGroupModel model = _modelFactory.GetGroupModel(name, length);
-            //_groupStore.Add(model);
-            _tempDbGroup.Add(model);
+            _groupStore.Add(model);//group2
+            //_tempDbGroup.Add(model);//group1
             return model;
 
         }
@@ -72,8 +72,8 @@ namespace FingerPrint.Controllers.Implementations
             {
                 throw new ArgumentException($"Cannot delete group {model.GetName()} because it is active.");
             }
-            //_groupStore.Delete((IGroupModel)model);
-            _tempDbGroup.Remove(model);
+            _groupStore.Delete((IGroupModel)model);//group2
+            //_tempDbGroup.Remove(model);//group1
         }
 
         public void AddItemToGroup(IGroupViewModel model, ITextOrGroupViewModel item)
@@ -89,7 +89,7 @@ namespace FingerPrint.Controllers.Implementations
             {
                 groupModel.Add(m);
             }
-            //_groupStore.AddItems(groupModel, itemModels);
+            _groupStore.AddItems(groupModel, itemModels);//group2
         }
 
         public void RemoveItemFromGroup(IGroupViewModel model, ITextOrGroupViewModel item)
@@ -105,7 +105,7 @@ namespace FingerPrint.Controllers.Implementations
             {
                 groupModel.Remove(m);
             }
-            //_groupStore.RemoveItems(groupModel, itemModels);
+            _groupStore.RemoveItems(groupModel, itemModels);//group2
         }
 
         public void UpdateGroup(IGroupViewModel model, string name)
@@ -116,13 +116,13 @@ namespace FingerPrint.Controllers.Implementations
             }
             IGroupModel updatedModel = (IGroupModel)model;
             updatedModel.SetName(name);
-            //_groupStore.ModifyName(updatedModel, name);
+            _groupStore.ModifyName(updatedModel, name);//group2
         }
 
         public List<IGroupViewModel> GetAllGroups()
         {
-            //return _groupStore.GetMany(x => true).Select(x => ((IGroupViewModel)x)).ToList();
-            return _tempDbGroup.Where(x => true).Select(x => ((IGroupViewModel)x)).ToList();
+            return _groupStore.GetMany(x => true).Select(x => ((IGroupViewModel)x)).ToList();//group2
+            //return _tempDbGroup.Where(x => true).Select(x => ((IGroupViewModel)x)).ToList();//group1
         }
     }
 }

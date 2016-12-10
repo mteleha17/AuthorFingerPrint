@@ -80,9 +80,6 @@
     <Compile Include="Controllers\Interfaces\IAnalysisController.cs" />
     <Compile Include="Controllers\Interfaces\IGroupController.cs" />
     <Compile Include="Controllers\Interfaces\ITextController.cs" />
-    <Compile Include="Count.cs">
-      <DependentUpon>FingerprintV4Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="FingerprintV4Model.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -97,12 +94,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>FingerprintV4Model.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Group.cs">
-      <DependentUpon>FingerprintV4Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Group_Group.cs">
-      <DependentUpon>FingerprintV4Model.tt</DependentUpon>
     </Compile>
     <Compile Include="GUI\EditGroupName.cs">
       <SubType>Form</SubType>
@@ -159,9 +150,6 @@
     <Compile Include="Stores\Interfaces\IItemStore.cs" />
     <Compile Include="Stores\Interfaces\ITextStore.cs" />
     <Compile Include="Stores\Implementations\TextStore.cs" />
-    <Compile Include="Text.cs">
-      <DependentUpon>FingerprintV4Model.tt</DependentUpon>
-    </Compile>
     <EmbeddedResource Include="GUI\EditGroupName.resx">
       <DependentUpon>EditGroupName.cs</DependentUpon>
     </EmbeddedResource>
@@ -205,7 +193,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="DatabaseScripts\dbo.Script_Order.sql" />

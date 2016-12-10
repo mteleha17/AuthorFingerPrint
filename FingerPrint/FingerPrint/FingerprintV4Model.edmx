@@ -47,8 +47,8 @@
           <Property Name="Name" Type="nchar" MaxLength="100" />
           <Property Name="Author" Type="nchar" MaxLength="100" />
           <Property Name="QuoteInd" Type="bit" />
-          <Property Name="CountsWithQuotesID" Type="int" Nullable="false" />
-          <Property Name="CountsWithoutQuotesID" Type="int" Nullable="false" />
+          <Property Name="CountsWithQuotesID" Type="int" />
+          <Property Name="CountsWithoutQuotesID" Type="int" />
         </EntityType>
         <EntityType Name="Text_Group">
           <Key>
@@ -82,20 +82,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Text__CountsWith__29221CFB">
-          <End Role="Counts" Type="Self.Counts" Multiplicity="1" />
-          <End Role="Text" Type="Self.Text" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Counts">
-              <PropertyRef Name="CountsID" />
-            </Principal>
-            <Dependent Role="Text">
-              <PropertyRef Name="CountsWithQuotesID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Text__CountsWith__2A164134">
-          <End Role="Counts" Type="Self.Counts" Multiplicity="1" />
+        <Association Name="FK__Text__CountsWith__3C34F16F">
+          <End Role="Counts" Type="Self.Counts" Multiplicity="0..1" />
           <End Role="Text" Type="Self.Text" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Counts">
@@ -103,6 +91,18 @@
             </Principal>
             <Dependent Role="Text">
               <PropertyRef Name="CountsWithoutQuotesID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Text__CountsWith__3D2915A8">
+          <End Role="Counts" Type="Self.Counts" Multiplicity="0..1" />
+          <End Role="Text" Type="Self.Text" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Counts">
+              <PropertyRef Name="CountsID" />
+            </Principal>
+            <Dependent Role="Text">
+              <PropertyRef Name="CountsWithQuotesID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -144,11 +144,11 @@
             <End Role="Group" EntitySet="Group" />
             <End Role="Group_Group" EntitySet="Group_Group" />
           </AssociationSet>
-          <AssociationSet Name="FK__Text__CountsWith__29221CFB" Association="Self.FK__Text__CountsWith__29221CFB">
+          <AssociationSet Name="FK__Text__CountsWith__3C34F16F" Association="Self.FK__Text__CountsWith__3C34F16F">
             <End Role="Counts" EntitySet="Counts" />
             <End Role="Text" EntitySet="Text" />
           </AssociationSet>
-          <AssociationSet Name="FK__Text__CountsWith__2A164134" Association="Self.FK__Text__CountsWith__2A164134">
+          <AssociationSet Name="FK__Text__CountsWith__3D2915A8" Association="Self.FK__Text__CountsWith__3D2915A8">
             <End Role="Counts" EntitySet="Counts" />
             <End Role="Text" EntitySet="Text" />
           </AssociationSet>
@@ -214,8 +214,8 @@
           <Property Name="Name" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
           <Property Name="Author" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
           <Property Name="QuoteInd" Type="Boolean" />
-          <Property Name="CountsWithQuotesID" Type="Int32" Nullable="false" />
-          <Property Name="CountsWithoutQuotesID" Type="Int32" Nullable="false" />
+          <Property Name="CountsWithQuotesID" Type="Int32" />
+          <Property Name="CountsWithoutQuotesID" Type="Int32" />
           <NavigationProperty Name="Count" Relationship="Self.FK__Text__CountsWith__29221CFB" FromRole="Text" ToRole="Counts" />
           <NavigationProperty Name="Count1" Relationship="Self.FK__Text__CountsWith__2A164134" FromRole="Text" ToRole="Counts" />
           <NavigationProperty Name="Groups" Relationship="Self.Text_Group" FromRole="Text" ToRole="Group" />

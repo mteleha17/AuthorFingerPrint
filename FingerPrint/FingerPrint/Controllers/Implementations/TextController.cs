@@ -15,8 +15,8 @@ namespace FingerPrint.Controllers.Implementations
     public class TextController : ITextController
     {
         private List<ITextViewModel> _temporaryDatabase;
-        //private ITextStore _textStore;
-        //private IGroupStore _groupStore;
+        private ITextStore _textStore;//group2
+        private IGroupStore _groupStore;//group2
         private IModelFactory _modelFactory;
 
         public TextController(ITextStore textStore,
@@ -24,8 +24,8 @@ namespace FingerPrint.Controllers.Implementations
             IModelFactory modelFactory)
         {
             _temporaryDatabase = new List<ITextViewModel>();
-            //_textStore = textStore;
-            //_groupStore = groupStore;
+            _textStore = textStore;//group2
+            _groupStore = groupStore;//group2
             _modelFactory = modelFactory;
         }
 
@@ -36,8 +36,8 @@ namespace FingerPrint.Controllers.Implementations
                 throw new ArgumentException("Text name must not be null or white space.");
             }
 
-            //return _textStore.GetOne(x => x.Name == name);
-            return _temporaryDatabase.FirstOrDefault(x => x.GetName() == name);
+            return _textStore.GetOne(x => x.Name == name);//group2
+            //return _temporaryDatabase.FirstOrDefault(x => x.GetName() == name);//gorup1
         }
 
         public bool AnyByName(string name)
@@ -46,8 +46,8 @@ namespace FingerPrint.Controllers.Implementations
             {
                 throw new ArgumentException("Text name must not be null or white space.");
             }
-            //return _textStore.Any(x => x.Name == name);
-            return _temporaryDatabase.Any(x => x.GetName() == name);
+            return _textStore.Exists(x => x.Name == name);//group2
+            //return _temporaryDatabase.Any(x => x.GetName() == name);//group1
         }
 
         public List<ITextViewModel> GetTextByAuthor(string author)
@@ -56,8 +56,8 @@ namespace FingerPrint.Controllers.Implementations
             {
                 throw new ArgumentException("Author must not be null or white space.");
             }
-            //return _textStore.GetMany(x => x.Author == author).Select(x => (ITextViewModel)x).ToList();
-            return _temporaryDatabase.Where(x => x.GetAuthor() == author).Select(x => (ITextViewModel)x).ToList();
+            return _textStore.GetMany(x => x.Author == author).Select(x => (ITextViewModel)x).ToList();//group2
+            //return _temporaryDatabase.Where(x => x.GetAuthor() == author).Select(x => (ITextViewModel)x).ToList();//group1
         }
 
         public bool AnyByAuthor(string author)
@@ -66,8 +66,8 @@ namespace FingerPrint.Controllers.Implementations
             {
                 throw new ArgumentException("Author must not be null or white space.");
             }
-            //return _textStore.Any(x => x.Author == author);
-            return _temporaryDatabase.Any(x => x.GetAuthor() == author);
+            return _textStore.Exists(x => x.Author == author);//group2
+            //return _temporaryDatabase.Any(x => x.GetAuthor() == author);//group1
         }
 
         public ITextViewModel CreateText(string name, TextReader input, int length, string author = null)
@@ -81,15 +81,15 @@ namespace FingerPrint.Controllers.Implementations
             {
                 model.SetAuthor(author);
             }
-            //_textStore.Add(model);
-            _temporaryDatabase.Add(model);
+            _textStore.Add(model);//group2
+            //_temporaryDatabase.Add(model);//group1
             return model;
         }
 
         public void DeleteText(ITextViewModel model)
         {
-            //_textStore.Delete((ITextModel)model);
-            _temporaryDatabase.Remove(model);
+            _textStore.Delete((ITextModel)model);//group2
+            //_temporaryDatabase.Remove(model);//group1
         }
 
         public void UpdateText(ITextViewModel model, string name = null, string author = null, bool? includeQuotes = null)
@@ -98,25 +98,25 @@ namespace FingerPrint.Controllers.Implementations
             if (!string.IsNullOrWhiteSpace(name))
             {
                 updatedModel.SetName(name);
-                //_textStore.ModifyName((ITextModel)model, name);
+                _textStore.ModifyName((ITextModel)model, name);//group2
             }
             if (!string.IsNullOrWhiteSpace(author))
             {
                 updatedModel.SetAuthor(author);
-                //_textStore.ModifyAuthor((ITextModel)model, author);
+                _textStore.ModifyAuthor((ITextModel)model, author);//group2
 
             }
             if (includeQuotes != null)
             {
                 updatedModel.SetIncludeQuotes((bool)includeQuotes);
-                //_textStore.ModifyIncludeQuotes((ITextModel)model, (bool)includeQuotes);
+                _textStore.ModifyIncludeQuotes((ITextModel)model, (bool)includeQuotes);//group2
             }
         }
 
         public List<ITextViewModel> GetAllTexts()
         {
-            //return _textStore.GetMany(x => true).Select(x => (ITextViewModel)x).ToList();
-            return _temporaryDatabase.Where(x => true).Select(x => (ITextViewModel)x).ToList();
+            return _textStore.GetMany(x => true).Select(x => (ITextViewModel)x).ToList();//group2
+            //return _temporaryDatabase.Where(x => true).Select(x => (ITextViewModel)x).ToList();//group1
         }
     }
 }
