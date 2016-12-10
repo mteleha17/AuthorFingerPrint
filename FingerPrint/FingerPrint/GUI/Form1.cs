@@ -476,7 +476,7 @@ namespace FingerPrint
                 ListViewItem item = fileListViewTab1.SelectedItems[0];
                 string textName = item.SubItems[1].Text;
                 ITextViewModel model = _textController.GetTextByName(textName);
-                if(null != _groupController.GetGroupByName(textName+ " group"))
+                if(_groupController.AnyByName(textName+ " group"))
                 {
                     _groupController.Delete(_groupController.GetGroupByName(textName + " group"));
                 }
@@ -547,8 +547,6 @@ namespace FingerPrint
                 analysisListView.Items.Add(itemGroup);
             }
         }
-
-        
     }
 }
 /*

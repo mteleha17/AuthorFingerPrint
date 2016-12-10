@@ -4,11 +4,11 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="7e16c1077e8841348741ddaaa1c46356" Name="Diagram1">
-        <EntityTypeShape EntityType="FingerprintV8Model.Count" Width="1.5" PointX="3.75" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="FingerprintV8Model.Group" Width="1.5" PointX="0.75" PointY="2.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="FingerprintV8Model.Group_Group" Width="1.5" PointX="3" PointY="2.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="FingerprintV8Model.Text" Width="1.5" PointX="6" PointY="2.5" IsExpanded="true" />
+      <Diagram DiagramId="7e16c1077e8841348741ddaaa1c46356" Name="Diagram1" ZoomLevel="74">
+        <EntityTypeShape EntityType="FingerprintV8Model.Count" Width="1.5" PointX="7.5" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="FingerprintV8Model.Group" Width="1.5" PointX="3" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="FingerprintV8Model.Group_Group" Width="1.5" PointX="0.875" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="FingerprintV8Model.Text" Width="1.5" PointX="5.375" PointY="2.5" IsExpanded="true" />
         <AssociationConnector Association="FingerprintV8Model.FK__Text__CountsWith__2F10007B" ManuallyRouted="false" />
         <AssociationConnector Association="FingerprintV8Model.FK__Text__CountsWith__300424B4" ManuallyRouted="false" />
         <AssociationConnector Association="FingerprintV8Model.FK__Group_Gro__Child__2D27B809" ManuallyRouted="false" />

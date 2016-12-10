@@ -210,13 +210,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="DatabaseScripts\dbo.Script_Order.sql" />
-    <Content Include="DatabaseScripts\dbo.Database.sql" />
-    <Content Include="DatabaseScripts\dbo.Counts.sql" />
-    <Content Include="DatabaseScripts\dbo.Group.sql" />
-    <Content Include="DatabaseScripts\dbo.Group_Group.sql" />
-    <Content Include="DatabaseScripts\dbo.Text.sql" />
-    <Content Include="DatabaseScripts\dbo.Text_Group.sql" />
     <Content Include="FingerprintV8Model.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>FingerprintV8Model.edmx</DependentUpon>

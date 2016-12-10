@@ -69,6 +69,10 @@ namespace FingerPrint.Stores
         public IGroupModel GetOne(Expression<Func<Group, bool>> criteria)
         {
             Group group = _db.Groups.FirstOrDefault(criteria);
+            if (group == null)
+            {
+                return null;
+            }
             IGroupModel output = _modelFactory.GetGroupModel(group.Name, UniversalConstants.CountSize);
             foreach (Text text in group.Texts)
             {
