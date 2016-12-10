@@ -8,6 +8,13 @@ using System.IO;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 namespace FingerPrint
+
+
+
+
+//fix duplicate entries in analysis 
+
+
 {
     public partial class Form1 : Form
     {
@@ -48,8 +55,12 @@ namespace FingerPrint
             try
             {
                 StreamReader input = new StreamReader(fileLocationTextBox.Text);
-                ITextViewModel model = _textController.CreateText(initialFileNameTextbox.Text, input, UniversalConstants.CountSize, initialAuthorTextBox.Text); //creates the text in the db
-                updateTextListView(fileListViewTab1); 
+                ITextViewModel model = _textController.CreateText(initialFileNameTextBox.Text, input, UniversalConstants.CountSize, initialAuthorTextBox.Text); //creates the text in the db
+                updateTextListView(fileListViewTab1);
+                initialFileNameTextBox.Text = "New File Name";
+                initialAuthorTextBox.Text = "Name of Author";
+                fileLocationTextBox.Text = "File location";
+               
             }
             catch(System.IO.FileNotFoundException)
             {
@@ -57,11 +68,21 @@ namespace FingerPrint
                 var form2 = new ErrorMessageDisplay(errorMessage);
                 form2.Show(this);
             }
-            catch (ArgumentException)
+            catch 
             {
-                string errorMessage = "You cannot add a file with the same name as another file";
-                var form2 = new ErrorMessageDisplay(errorMessage);
-                form2.Show(this);
+                if(initialFileNameTextBox.Text =="")
+                {
+                    string errorMessage = "You cannot add a text without a file name";
+                    var form2 = new ErrorMessageDisplay(errorMessage);
+                    form2.Show(this);
+                }
+                else if (_textController.GetTextByName(initialFileNameTextBox.Text) != null)
+                {
+                    string errorMessage = "You cannot add a file with the same name as another file";
+                    var form2 = new ErrorMessageDisplay(errorMessage);
+                    form2.Show(this);
+                }
+                
             }
             if (filesRadioButton.Checked == true)
             {
@@ -74,14 +95,15 @@ namespace FingerPrint
         }
         private void executeAnalysisButton_Click(object sender, EventArgs e)
         {
-            if (_analysisController.GetActiveGroups().Count > 0)
+            if (_analysisController.GetActiveItems().Count > 0)
             {
                 try
                 {
                     dataTable.Rows.Clear(); //clear any previous analysis
                     analysisLineChart.Series.Clear();
-                    List<IGroupViewModel> groupList = _analysisController.GetActiveGroups(); //gets any texts/groups that have been added to the analysis group
-                    foreach (IGroupViewModel groupEntry in groupList)
+                    //changed -JG
+                    List<ITextOrGroupViewModel> groupList = _analysisController.GetActiveItems(); //gets any texts/groups that have been added to the analysis group
+                    foreach (ITextOrGroupViewModel groupEntry in groupList)
                     {
                         //table
                         int rowId = dataTable.Rows.Add(); //new row created to make sure formatting in present
@@ -115,10 +137,11 @@ namespace FingerPrint
             }
             else
             {
-                string errorMessage = "There are no groups being analyzed. Please add a group before executing.";
+                string errorMessage = "There are no groups or texts being analyzed. Please add a text or group before executing.";
                 var form2 = new ErrorMessageDisplay(errorMessage);
                 form2.Show(this);
             }
+
         }
         private void editButton_Click(object sender, EventArgs e)
         {
@@ -132,7 +155,7 @@ namespace FingerPrint
             }
             else
             {
-                string errorMessage = "You need to select an item to edit if first!";
+                string errorMessage = "You need to select an item to edit it first!";
                 var form2 = new ErrorMessageDisplay(errorMessage);
                 form2.Show(this);
             }
@@ -165,7 +188,7 @@ namespace FingerPrint
                 }
                 else if (fileGroupListViewTab2.SelectedItems.Count <= 0)
                 {
-                    string errorMessage = "You need to select an item to edit if first!";
+                    string errorMessage = "You need to select an item to add it!";
                     var form2 = new ErrorMessageDisplay(errorMessage);
                     form2.Show(this);
                 }
@@ -175,41 +198,27 @@ namespace FingerPrint
                     var form2 = new ErrorMessageDisplay(errorMessage);
                     form2.Show(this);
                 }
-                }
+             }
         }
         private void addButtonTab3_Click(object sender, EventArgs e)    //allows groups and texts to be added to an analysis
         {
            try
             {
             ListViewItem itemToMove = fileGroupListViewTab3.SelectedItems[0];
-            IGroupViewModel model;
+            
                 if (filesRadioButtonTab3.Checked)
                  {
-                    if (null == _groupController.GetGroupByName(itemToMove.SubItems[1].Text + " group"))
-                    {
-                    model = _groupController.CreateGroup(itemToMove.SubItems[1].Text + " group", UniversalConstants.CountSize);
-                    _groupController.AddItemToGroup(model, _textController.GetTextByName(itemToMove.SubItems[1].Text));
-                    }
-                    else
-                    {
-                     model = _groupController.GetGroupByName(itemToMove.SubItems[1].Text + " group");
-                    }
-                _analysisController.AddToActiveGroups(model);
+                    _analysisController.AddToActiveItems(_textController.GetTextByName(itemToMove.SubItems[1].Text));
+                               
                 }   
                 else
                 {
-                    _analysisController.AddToActiveGroups(_groupController.GetGroupByName(itemToMove.Text));
+                    _analysisController.AddToActiveItems(_groupController.GetGroupByName(itemToMove.Text));
                 }
-                fileGroupListViewTab3.Items.Remove(itemToMove);
-                fillGroupComboBox();
+                
                 analysisListView.Items.Clear();
-                List<IGroupViewModel> groupList = _analysisController.GetActiveGroups();
-                foreach (IGroupViewModel groupEntry in groupList)
-                {
-                    ListViewItem itemGroup = new ListViewItem();
-                   itemGroup.Text = groupEntry.GetName();
-                   analysisListView.Items.Add(itemGroup);
-                }
+                updateAnalysisGroups();
+                updateListViews();
             }
             catch (ArgumentException)
             {
@@ -229,20 +238,24 @@ namespace FingerPrint
         }
         private void removeButtonTab3_Click(object sender, EventArgs e) //removes texts from the analysis group
         {
-            if (analysisListView.SelectedItems.Count > 0)
+            try
             {
                 ListViewItem itemToMove = analysisListView.SelectedItems[0];
-                _analysisController.RemoveFromActiveGroups(_groupController.GetGroupByName(itemToMove.Text));
+                _analysisController.RemoveFromActiveItems(itemToMove.Text);
                 analysisListView.Items.Clear();
-                List<IGroupViewModel> groupList = _analysisController.GetActiveGroups();
-                foreach (IGroupViewModel groupEntry in groupList)
-                {
-                    ListViewItem itemGroup = new ListViewItem();
-                    itemGroup.Text = groupEntry.GetName();
-                    analysisListView.Items.Add(itemGroup);
-                }
+                //changed -JG
+                updateAnalysisGroups();
                 updateListViews();
                 fillGroupComboBox();
+            }
+            catch (Exception)
+            {
+                if (analysisListView.SelectedItems.Count <= 0)
+                {
+                    string errorMessage = "You need to select an item to remove it!";
+                    var form2 = new ErrorMessageDisplay(errorMessage);
+                    form2.Show(this);
+                }
             }
         }
         private void removeButtonTab2_Click(object sender, EventArgs e) //removes texts and groups from selected group
@@ -250,6 +263,7 @@ namespace FingerPrint
             try {
                 ListViewItem itemToMove = groupListViewTab2.SelectedItems[0];
                 IGroupViewModel model = _groupController.GetGroupByName(groupComboBox.Text);
+                
                 if(_groupController.GetGroupByName(itemToMove.Text) != null)
                 {
                     _groupController.RemoveItemFromGroup(model, _groupController.GetGroupByName(itemToMove.Text));
@@ -264,9 +278,9 @@ namespace FingerPrint
             }
             catch(Exception)
             {
-                if(groupListViewTab2.SelectedItems.Count > 0)
+                if(groupListViewTab2.SelectedItems.Count <= 0)
                 {
-                    string errorMessage = "You need to select an item to edit if first!";
+                    string errorMessage = "You need to select an item to remove it!";
                     var form2 = new ErrorMessageDisplay(errorMessage);
                     form2.Show(this);
                 }
@@ -340,29 +354,56 @@ namespace FingerPrint
             try
             {
                 _groupController.CreateGroup(groupName, UniversalConstants.CountSize);
-                groupComboBox.Items.Add(groupName);
+                fillGroupComboBox();
+                groupComboBox.SelectedIndex = groupComboBox.FindStringExact(groupName);
+                
+                              
             }
             catch
             {
+                if (_textController.GetTextByName(groupName) != null) {
+                    string errorMessage = "You cannot name a group the same name as one of the saved texts!";
+                    var form2 = new ErrorMessageDisplay(errorMessage);
+                    form2.Show(this);
+                }
+                else if(_groupController.GetGroupByName(groupName) != null)
+                {
                     string errorMessage = "You have already created that group!";
                     var form2 = new ErrorMessageDisplay(errorMessage);
                     form2.Show(this);
+                }
+                else
+                {
+                    string errorMessage = "You must not leave the group name blank!";
+                    var form2 = new ErrorMessageDisplay(errorMessage);
+                    form2.Show(this);
+                }
+                
+                    
             }
+            
         }
+
+        
+
         public void editGroupName(string groupNameOld, string groupNameNew) // edit method used by the editGroup popup
         {
-            IGroupViewModel group = _groupController.GetGroupByName(groupNameOld);
-            _groupController.UpdateGroup(group, groupNameNew);
-            fillGroupComboBox();
-            groupComboBox.SelectedIndex = groupComboBox.Items.IndexOf(groupNameNew);
-            analysisListView.Items.Clear();
-            fillGroupComboBox();
-            List<IGroupViewModel> groupList = _analysisController.GetActiveGroups();
-            foreach (IGroupViewModel groupEntry in groupList)
+            if (_groupController.GetGroupByName(groupNameNew) == null)
             {
-                ListViewItem itemGroup = new ListViewItem();
-                itemGroup.Text = groupEntry.GetName();
-                analysisListView.Items.Add(itemGroup);
+                IGroupViewModel group = _groupController.GetGroupByName(groupNameOld);
+                _groupController.UpdateGroup(group, groupNameNew);
+                fillGroupComboBox();
+                groupComboBox.SelectedIndex = groupComboBox.Items.IndexOf(groupNameNew);
+                analysisListView.Items.Clear();
+                fillGroupComboBox();
+                updateAnalysisGroups();
+                updateListViews();
+            }
+            else
+            {
+                string errorMessage = "You cannot change a group name to one that already exists!";
+                var form2 = new ErrorMessageDisplay(errorMessage);
+                form2.Show(this);
             }
          }
         private void newGroupButton_Click(object sender, EventArgs e) //used to open the newGroup popup
@@ -397,7 +438,7 @@ namespace FingerPrint
                 updateTextListView(fileGroupListViewTab3);
             }
         }
-        private void groupsRadioButton_CheckedChanged(object sender, EventArgs e) //makes changes to listviews when radiobuttons are selected
+        public void groupsRadioButton_CheckedChanged(object sender, EventArgs e) //makes changes to listviews when radiobuttons are selected
         {
             {
                 if (groupsRadioButton.Checked)
@@ -420,6 +461,7 @@ namespace FingerPrint
         }
         private void fillGroupComboBox()    //gets all groups to add to the combo box
         {
+            groupListViewTab2.Items.Clear();
             groupComboBox.Items.Clear();
             List<IGroupViewModel> groupList = _groupController.GetAllGroups();
             foreach (IGroupViewModel groupEntry in groupList)
@@ -450,8 +492,10 @@ namespace FingerPrint
         }
         private void groupComboBox_SelectedIndexChanged(object sender, EventArgs e) //makes the selected group the target group
         {
+            
             IGroupViewModel model = _groupController.GetGroupByName(groupComboBox.Text);
             groupListViewTab2.Items.Clear();
+            //changed -JG
             List<ITextOrGroupViewModel> list = model.GetMembers();
             foreach(ITextOrGroupViewModel textOrGroup in list)
             {
@@ -474,20 +518,16 @@ namespace FingerPrint
                 {
                     ListViewItem item = fileGroupListViewTab2.SelectedItems[0];
                     string textName = item.SubItems[0].Text;
-                    if (_analysisController.GroupIsActive(_groupController.GetGroupByName(textName))){
-                        _analysisController.RemoveFromActiveGroups(_groupController.GetGroupByName(textName));
+                    if (_analysisController.ItemIsActive(textName)){
+                        _analysisController.RemoveFromActiveItems(textName);
                         analysisListView.Items.Clear();
                         fillGroupComboBox();
-                        List<IGroupViewModel> groupList = _analysisController.GetActiveGroups();
-                        foreach (IGroupViewModel groupEntry in groupList)
-                        {
-                            ListViewItem itemGroup = new ListViewItem();
-                            itemGroup.Text = groupEntry.GetName();
-                            analysisListView.Items.Add(itemGroup);
-                        }
+                        //changed -JG
+                        updateAnalysisGroups();
                     }
                     _groupController.Delete(_groupController.GetGroupByName(textName));
                 }
+                fillGroupComboBox();
                 updateListViews();
             }
             else
@@ -495,6 +535,16 @@ namespace FingerPrint
                 string errorMessage = "You need to select an item to delete it first!";
                 var form2 = new ErrorMessageDisplay(errorMessage);
                 form2.Show(this);
+            }
+        }
+        public void updateAnalysisGroups()
+        {
+            List<ITextOrGroupViewModel> groupList = _analysisController.GetActiveItems();
+            foreach (ITextOrGroupViewModel groupEntry in groupList)
+            {
+                ListViewItem itemGroup = new ListViewItem();
+                itemGroup.Text = groupEntry.GetName();
+                analysisListView.Items.Add(itemGroup);
             }
         }
 

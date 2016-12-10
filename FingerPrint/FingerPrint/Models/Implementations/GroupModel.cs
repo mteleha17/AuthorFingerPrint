@@ -102,10 +102,11 @@ namespace FingerPrint.Models
                 throw new ArgumentException("Cannot add a group as a child to its own child or a child of its child.");
             }
             _items.Add(item);
-            if (item is IGroupModel)
-            {
-                ((IGroupModel)item).Modified += new EventHandler(OnModified);
-            }
+            //if (item is IGroupModel)
+            //{
+            //    ((IGroupModel)item).Modified += new EventHandler(OnModified);
+            //}
+            item.Modified += new EventHandler(OnModified);
             OnModified(this, EventArgs.Empty);
         }
 
@@ -119,10 +120,11 @@ namespace FingerPrint.Models
             {
                 throw new ArgumentException($"Group does not contain item: {item}.");
             }
-            if (item is IGroupModel)
-            {
-                ((IGroupModel)item).Modified -= new EventHandler(OnModified);
-            }
+            //if (item is IGroupModel)
+            //{
+            //    ((IGroupModel)item).Modified -= new EventHandler(OnModified);
+            //}
+            item.Modified -= new EventHandler(OnModified);
             _items.Remove(item);
             OnModified(this, EventArgs.Empty);
         }

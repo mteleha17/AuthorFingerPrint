@@ -37,19 +37,18 @@ namespace FingerPrint
 
         private void saveChangesButton_Click(object sender, EventArgs e)
         {
-            _textController.UpdateText(model, newFileNameTextbox.Text, newAuthorTextBox.Text, quotesCheckbox.Checked);
-            List<IGroupViewModel> groupList = _groupController.GetAllGroups();
-            foreach (IGroupViewModel groupEntry in groupList)
+            if (_textController.GetTextByName(newFileNameTextbox.Text) == null)
             {
-                if (groupEntry.GetMembers().Contains(model))
-                {
-                    _groupController.RemoveItemFromGroup(groupEntry, model);
-                    _groupController.AddItemToGroup(groupEntry, model);
-                }
-
+                _textController.UpdateText(model, newFileNameTextbox.Text, newAuthorTextBox.Text, quotesCheckbox.Checked);
+                form1.updateListViews();
+                this.Close();
             }
-            form1.updateListViews();
-            this.Close();
+            else
+            {
+                string errorMessage = "You cannot change a text's name to one that already exists";
+                var form2 = new ErrorMessageDisplay(errorMessage);
+                form2.Show(this);
+            }
         }
     }
 }

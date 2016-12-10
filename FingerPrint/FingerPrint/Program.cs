@@ -25,8 +25,12 @@ namespace FingerPrint
             var textStore = new TextStore(db, modelFactory);
             var groupStore = new GroupStore(db, modelFactory, textStore);
             var analysisController = new AnalysisController();
-            var textController = new TextController(textStore, groupStore, modelFactory);
-            var groupController = new GroupController(analysisController, textStore, groupStore, modelFactory);
+
+            var textTempDb = new List<ITextViewModel>();
+            var groupTempDb = new List<IGroupViewModel>();
+
+            var textController = new TextController(textTempDb, groupTempDb, textStore, groupStore, modelFactory);
+            var groupController = new GroupController(analysisController, textTempDb, groupTempDb, textStore, groupStore, modelFactory);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1(analysisController, textController, groupController));

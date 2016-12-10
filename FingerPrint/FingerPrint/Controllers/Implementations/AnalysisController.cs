@@ -6,44 +6,45 @@ using System.Text;
 using System.Threading.Tasks;
 using FingerPrint.Models.Interfaces.TypeInterfaces;
 using FingerPrint.Stores;
+using FingerPrint.AuxiliaryClasses;
 
 namespace FingerPrint.Controllers.Implementations
 {
     public class AnalysisController : IAnalysisController
     {
-        private List<IGroupViewModel> _activeGroups;
+        private List<ITextOrGroupViewModel> _activeItems;
 
         public AnalysisController()
         {
-            _activeGroups = new List<IGroupViewModel>();
+            _activeItems = new List<ITextOrGroupViewModel>();
         }
 
-        public List<IGroupViewModel> GetActiveGroups()
+        public List<ITextOrGroupViewModel> GetActiveItems()
         {
-            return _activeGroups.ToList();
+            return _activeItems.ToList();
         }
 
-        public void AddToActiveGroups(IGroupViewModel group)
+        public void AddToActiveItems(ITextOrGroupViewModel item)
         {
-            if (GroupIsActive(group))
+            if (ItemIsActive(item.GetName()))
             {
                 throw new ArgumentException("Cannot add group to active groups since group is already active.");
             }
-            _activeGroups.Add(group);
+            _activeItems.Add(item);
         }
 
-        public void RemoveFromActiveGroups(IGroupViewModel group)
+        public void RemoveFromActiveItems(string name)
         {
-            if (!GroupIsActive(group))
+            if (!ItemIsActive(name))
             {
                 throw new ArgumentException("Cannot remove group from active groups since it is not active.");
             }
-            _activeGroups.Remove(group);
+            _activeItems.Remove(_activeItems.FirstOrDefault(x => x.GetName() == name));
         }
 
-        public bool GroupIsActive(IGroupViewModel group)
+        public bool ItemIsActive(string name)
         {
-            return _activeGroups.Contains(group);
+            return _activeItems.Any(x => x.GetName() == name);
         }
     }
 }

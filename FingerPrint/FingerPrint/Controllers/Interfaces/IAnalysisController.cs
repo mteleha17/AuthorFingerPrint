@@ -17,25 +17,25 @@ namespace FingerPrint.Controllers
         /// Gets the list of groups actively being considered for analysis.
         /// </summary>
         /// <returns>A list of groups.</returns>
-        List<IGroupViewModel> GetActiveGroups();
+        List<ITextOrGroupViewModel> GetActiveItems();
 
         /// <summary>
         /// Adds the group passed in to the list of active groups.
         /// </summary>
-        /// <param name="group">The group to be added to the list of active groups.</param>
-        void AddToActiveGroups(IGroupViewModel group);
+        /// <param name="item">The group to be added to the list of active groups.</param>
+        void AddToActiveItems(ITextOrGroupViewModel item);
 
         /// <summary>
         /// Removes the group passed in from the list of active groups.
         /// </summary>
-        /// <param name="group">The group to be removed from the list of active groups.</param>
-        void RemoveFromActiveGroups(IGroupViewModel group);
+        /// <param name="item">The group to be removed from the list of active groups.</param>
+        void RemoveFromActiveItems(string name);
 
         /// <summary>
         /// Determines whether the group in question is already active.
         /// </summary>
-        /// <param name="group">The group that is to be looked for in the active group collection.</param>
+        /// <param name="item">The group that is to be looked for in the active group collection.</param>
         /// <returns>True if the group is already active, false otherwise.</returns>
-        bool GroupIsActive(IGroupViewModel group);
+        bool ItemIsActive(string name);
     }
 }

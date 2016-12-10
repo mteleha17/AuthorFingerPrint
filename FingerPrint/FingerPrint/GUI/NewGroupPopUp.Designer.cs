@@ -61,9 +61,10 @@
             // 
             // NewGroupPopUp
             // 
+            this.AcceptButton = this.saveNewGroupButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(392, 171);
+            this.ClientSize = new System.Drawing.Size(382, 171);
             this.Controls.Add(this.saveNewGroupButton);
             this.Controls.Add(this.groupNameTextBox);
             this.Controls.Add(this.addNewGroupLabel);
