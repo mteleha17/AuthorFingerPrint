@@ -12,13 +12,13 @@ namespace FingerPrint
     using System;
     using System.Collections.Generic;
     
-    public partial class Group_Group
+    public partial class Text_Grouping
     {
-        public int GG_ID { get; set; }
-        public int ParentID { get; set; }
-        public int ChildID { get; set; }
+        public long Id { get; set; }
+        public long TextId { get; set; }
+        public long GroupingId { get; set; }
     
-        public virtual Group Group { get; set; }
-        public virtual Group Group1 { get; set; }
+        public virtual Grouping Grouping { get; set; }
+        public virtual Text Text { get; set; }
     }
 }

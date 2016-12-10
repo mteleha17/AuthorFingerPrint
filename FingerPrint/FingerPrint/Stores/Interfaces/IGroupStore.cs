@@ -11,7 +11,7 @@ namespace FingerPrint.Stores
     /// <summary>
     /// Interface to be implemented by a class that handles database transactions involving texts.
     /// </summary>
-    public interface IGroupStore : IItemStore<Group, IGroupModel>
+    public interface IGroupStore : IItemStore<Grouping, IGroupModel>
     {
         /// <summary>
         /// Finds the group corresponding to the provided model and updates its Name field.

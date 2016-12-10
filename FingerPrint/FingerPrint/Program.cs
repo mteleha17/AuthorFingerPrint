@@ -20,7 +20,7 @@ namespace FingerPrint
         [STAThread]
         static void Main()
         {
-            FingerprintV4Entities1 db = new FingerprintV4Entities1();
+            FingerprintLite13Entities db = new FingerprintLite13Entities();
             var modelFactory = new ModelFactory();
             var textStore = new TextStore(db, modelFactory);
             var groupStore = new GroupStore(db, modelFactory, textStore);
