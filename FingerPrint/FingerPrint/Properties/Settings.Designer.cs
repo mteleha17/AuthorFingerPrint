@@ -55,5 +55,16 @@ namespace FingerPrint.Properties {
                 return ((string)(this["FingerprintV3ConnectionString"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=FingerprintV8;Integrated Secur" +
+            "ity=True")]
+        public string FingerprintV8ConnectionString {
+            get {
+                return ((string)(this["FingerprintV8ConnectionString"]));
+            }
+        }
     }
 }

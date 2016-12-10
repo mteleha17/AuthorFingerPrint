@@ -13,10 +13,10 @@ namespace FingerPrint.Stores
 {
     public class TextStore : ITextStore
     {
-        private FingerprintV4Entities1 _db;
+        private FingerprintV8Entities _db;
         private IModelFactory _modelFactory;
 
-        public TextStore(FingerprintV4Entities1 db, IModelFactory modelFactory)
+        public TextStore(FingerprintV8Entities db, IModelFactory modelFactory)
         {
             _db = db;
             _modelFactory = modelFactory;
@@ -31,9 +31,11 @@ namespace FingerPrint.Stores
             }
             Count withQuotes = TranslateCounts(model.GetCountsWithQuotes());
             _db.Counts.Add(withQuotes);
+            _db.SaveChanges();
             Count withoutQuotes = TranslateCounts(model.GetCountsWithoutQuotes());
             
             _db.Counts.Add(withoutQuotes);
+            _db.SaveChanges();
             Text text = new Text()
             {
                 Name = model.GetName(),
@@ -76,10 +78,10 @@ namespace FingerPrint.Stores
             {
                 yield return GetOne(x => x.TextID == text.TextID);
             }
-            for (int i = 0; i < 1; i++)
-            {
-                yield return null;
-            }
+           // for (int i = 0; i < 1; i++)
+           // {
+             //   yield return null;
+           // }
         }
 
         public ITextModel GetOne(Expression<Func<Text, bool>> criteria)

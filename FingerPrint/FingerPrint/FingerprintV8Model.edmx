@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="FingerprintV4Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="FingerprintV8Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Counts">
           <Key>
             <PropertyRef Name="CountsID" />
@@ -58,7 +58,7 @@
           <Property Name="TextID" Type="int" Nullable="false" />
           <Property Name="GroupID" Type="int" Nullable="false" />
         </EntityType>
-        <Association Name="FK__Group_Gro__Child__0E6E26BF">
+        <Association Name="FK__Group_Gro__Child__2D27B809">
           <End Role="Group" Type="Self.Group" Multiplicity="1" />
           <End Role="Group_Group" Type="Self.Group_Group" Multiplicity="*" />
           <ReferentialConstraint>
@@ -70,7 +70,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Group_Gro__Paren__0F624AF8">
+        <Association Name="FK__Group_Gro__Paren__2E1BDC42">
           <End Role="Group" Type="Self.Group" Multiplicity="1" />
           <End Role="Group_Group" Type="Self.Group_Group" Multiplicity="*" />
           <ReferentialConstraint>
@@ -82,7 +82,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Text__CountsWith__3C34F16F">
+        <Association Name="FK__Text__CountsWith__2F10007B">
           <End Role="Counts" Type="Self.Counts" Multiplicity="0..1" />
           <End Role="Text" Type="Self.Text" Multiplicity="*" />
           <ReferentialConstraint>
@@ -94,7 +94,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Text__CountsWith__3D2915A8">
+        <Association Name="FK__Text__CountsWith__300424B4">
           <End Role="Counts" Type="Self.Counts" Multiplicity="0..1" />
           <End Role="Text" Type="Self.Text" Multiplicity="*" />
           <ReferentialConstraint>
@@ -130,25 +130,25 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="FingerprintV4ModelStoreContainer">
+        <EntityContainer Name="FingerprintV8ModelStoreContainer">
           <EntitySet Name="Counts" EntityType="Self.Counts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Group" EntityType="Self.Group" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Group_Group" EntityType="Self.Group_Group" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Text" EntityType="Self.Text" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Text_Group" EntityType="Self.Text_Group" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Group_Gro__Child__0E6E26BF" Association="Self.FK__Group_Gro__Child__0E6E26BF">
+          <AssociationSet Name="FK__Group_Gro__Child__2D27B809" Association="Self.FK__Group_Gro__Child__2D27B809">
             <End Role="Group" EntitySet="Group" />
             <End Role="Group_Group" EntitySet="Group_Group" />
           </AssociationSet>
-          <AssociationSet Name="FK__Group_Gro__Paren__0F624AF8" Association="Self.FK__Group_Gro__Paren__0F624AF8">
+          <AssociationSet Name="FK__Group_Gro__Paren__2E1BDC42" Association="Self.FK__Group_Gro__Paren__2E1BDC42">
             <End Role="Group" EntitySet="Group" />
             <End Role="Group_Group" EntitySet="Group_Group" />
           </AssociationSet>
-          <AssociationSet Name="FK__Text__CountsWith__3C34F16F" Association="Self.FK__Text__CountsWith__3C34F16F">
+          <AssociationSet Name="FK__Text__CountsWith__2F10007B" Association="Self.FK__Text__CountsWith__2F10007B">
             <End Role="Counts" EntitySet="Counts" />
             <End Role="Text" EntitySet="Text" />
           </AssociationSet>
-          <AssociationSet Name="FK__Text__CountsWith__3D2915A8" Association="Self.FK__Text__CountsWith__3D2915A8">
+          <AssociationSet Name="FK__Text__CountsWith__300424B4" Association="Self.FK__Text__CountsWith__300424B4">
             <End Role="Counts" EntitySet="Counts" />
             <End Role="Text" EntitySet="Text" />
           </AssociationSet>
@@ -161,10 +161,11 @@
             <End Role="Text_Group" EntitySet="Text_Group" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="FingerprintV4Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="FingerprintV8Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Count">
           <Key>
             <PropertyRef Name="CountsID" />
@@ -183,8 +184,8 @@
           <Property Name="eleven" Type="Int32" Nullable="false" />
           <Property Name="twelve" Type="Int32" Nullable="false" />
           <Property Name="thirteen" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Texts" Relationship="Self.FK__Text__CountsWith__29221CFB" FromRole="Counts" ToRole="Text" />
-          <NavigationProperty Name="Texts1" Relationship="Self.FK__Text__CountsWith__2A164134" FromRole="Counts" ToRole="Text" />
+          <NavigationProperty Name="Texts" Relationship="Self.FK__Text__CountsWith__2F10007B" FromRole="Counts" ToRole="Text" />
+          <NavigationProperty Name="Texts1" Relationship="Self.FK__Text__CountsWith__300424B4" FromRole="Counts" ToRole="Text" />
         </EntityType>
         <EntityType Name="Group">
           <Key>
@@ -192,8 +193,8 @@
           </Key>
           <Property Name="GroupID" Type="Int32" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
-          <NavigationProperty Name="Group_Group" Relationship="Self.FK__Group_Gro__Child__0E6E26BF" FromRole="Group" ToRole="Group_Group" />
-          <NavigationProperty Name="Group_Group1" Relationship="Self.FK__Group_Gro__Paren__0F624AF8" FromRole="Group" ToRole="Group_Group" />
+          <NavigationProperty Name="Group_Group" Relationship="Self.FK__Group_Gro__Child__2D27B809" FromRole="Group" ToRole="Group_Group" />
+          <NavigationProperty Name="Group_Group1" Relationship="Self.FK__Group_Gro__Paren__2E1BDC42" FromRole="Group" ToRole="Group_Group" />
           <NavigationProperty Name="Texts" Relationship="Self.Text_Group" FromRole="Group" ToRole="Text" />
         </EntityType>
         <EntityType Name="Group_Group">
@@ -203,8 +204,8 @@
           <Property Name="GG_ID" Type="Int32" Nullable="false" />
           <Property Name="ParentID" Type="Int32" Nullable="false" />
           <Property Name="ChildID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Group" Relationship="Self.FK__Group_Gro__Child__0E6E26BF" FromRole="Group_Group" ToRole="Group" />
-          <NavigationProperty Name="Group1" Relationship="Self.FK__Group_Gro__Paren__0F624AF8" FromRole="Group_Group" ToRole="Group" />
+          <NavigationProperty Name="Group" Relationship="Self.FK__Group_Gro__Child__2D27B809" FromRole="Group_Group" ToRole="Group" />
+          <NavigationProperty Name="Group1" Relationship="Self.FK__Group_Gro__Paren__2E1BDC42" FromRole="Group_Group" ToRole="Group" />
         </EntityType>
         <EntityType Name="Text">
           <Key>
@@ -216,24 +217,12 @@
           <Property Name="QuoteInd" Type="Boolean" />
           <Property Name="CountsWithQuotesID" Type="Int32" />
           <Property Name="CountsWithoutQuotesID" Type="Int32" />
-          <NavigationProperty Name="Count" Relationship="Self.FK__Text__CountsWith__29221CFB" FromRole="Text" ToRole="Counts" />
-          <NavigationProperty Name="Count1" Relationship="Self.FK__Text__CountsWith__2A164134" FromRole="Text" ToRole="Counts" />
+          <NavigationProperty Name="Count" Relationship="Self.FK__Text__CountsWith__2F10007B" FromRole="Text" ToRole="Counts" />
+          <NavigationProperty Name="Count1" Relationship="Self.FK__Text__CountsWith__300424B4" FromRole="Text" ToRole="Counts" />
           <NavigationProperty Name="Groups" Relationship="Self.Text_Group" FromRole="Text" ToRole="Group" />
         </EntityType>
-        <Association Name="FK__Text__CountsWith__29221CFB">
-          <End Role="Counts" Type="Self.Count" Multiplicity="1" />
-          <End Role="Text" Type="Self.Text" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Counts">
-              <PropertyRef Name="CountsID" />
-            </Principal>
-            <Dependent Role="Text">
-              <PropertyRef Name="CountsWithQuotesID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Text__CountsWith__2A164134">
-          <End Role="Counts" Type="Self.Count" Multiplicity="1" />
+        <Association Name="FK__Text__CountsWith__2F10007B">
+          <End Role="Counts" Type="Self.Count" Multiplicity="0..1" />
           <End Role="Text" Type="Self.Text" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Counts">
@@ -244,7 +233,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Group_Gro__Child__0E6E26BF">
+        <Association Name="FK__Text__CountsWith__300424B4">
+          <End Role="Counts" Type="Self.Count" Multiplicity="0..1" />
+          <End Role="Text" Type="Self.Text" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Counts">
+              <PropertyRef Name="CountsID" />
+            </Principal>
+            <Dependent Role="Text">
+              <PropertyRef Name="CountsWithQuotesID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Group_Gro__Child__2D27B809">
           <End Role="Group" Type="Self.Group" Multiplicity="1" />
           <End Role="Group_Group" Type="Self.Group_Group" Multiplicity="*" />
           <ReferentialConstraint>
@@ -256,7 +257,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Group_Gro__Paren__0F624AF8">
+        <Association Name="FK__Group_Gro__Paren__2E1BDC42">
           <End Role="Group" Type="Self.Group" Multiplicity="1" />
           <End Role="Group_Group" Type="Self.Group_Group" Multiplicity="*" />
           <ReferentialConstraint>
@@ -272,24 +273,24 @@
           <End Role="Group" Type="Self.Group" Multiplicity="*" />
           <End Role="Text" Type="Self.Text" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="FingerprintV4Entities1" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="FingerprintV8Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Counts" EntityType="Self.Count" />
           <EntitySet Name="Groups" EntityType="Self.Group" />
           <EntitySet Name="Group_Group" EntityType="Self.Group_Group" />
           <EntitySet Name="Texts" EntityType="Self.Text" />
-          <AssociationSet Name="FK__Text__CountsWith__29221CFB" Association="Self.FK__Text__CountsWith__29221CFB">
+          <AssociationSet Name="FK__Text__CountsWith__2F10007B" Association="Self.FK__Text__CountsWith__2F10007B">
             <End Role="Counts" EntitySet="Counts" />
             <End Role="Text" EntitySet="Texts" />
           </AssociationSet>
-          <AssociationSet Name="FK__Text__CountsWith__2A164134" Association="Self.FK__Text__CountsWith__2A164134">
+          <AssociationSet Name="FK__Text__CountsWith__300424B4" Association="Self.FK__Text__CountsWith__300424B4">
             <End Role="Counts" EntitySet="Counts" />
             <End Role="Text" EntitySet="Texts" />
           </AssociationSet>
-          <AssociationSet Name="FK__Group_Gro__Child__0E6E26BF" Association="Self.FK__Group_Gro__Child__0E6E26BF">
+          <AssociationSet Name="FK__Group_Gro__Child__2D27B809" Association="Self.FK__Group_Gro__Child__2D27B809">
             <End Role="Group" EntitySet="Groups" />
             <End Role="Group_Group" EntitySet="Group_Group" />
           </AssociationSet>
-          <AssociationSet Name="FK__Group_Gro__Paren__0F624AF8" Association="Self.FK__Group_Gro__Paren__0F624AF8">
+          <AssociationSet Name="FK__Group_Gro__Paren__2E1BDC42" Association="Self.FK__Group_Gro__Paren__2E1BDC42">
             <End Role="Group" EntitySet="Groups" />
             <End Role="Group_Group" EntitySet="Group_Group" />
           </AssociationSet>
@@ -303,9 +304,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="FingerprintV4ModelStoreContainer" CdmEntityContainer="FingerprintV4Entities1">
+        <EntityContainerMapping StorageEntityContainer="FingerprintV8ModelStoreContainer" CdmEntityContainer="FingerprintV8Entities">
           <EntitySetMapping Name="Counts">
-            <EntityTypeMapping TypeName="FingerprintV4Model.Count">
+            <EntityTypeMapping TypeName="FingerprintV8Model.Count">
               <MappingFragment StoreEntitySet="Counts">
                 <ScalarProperty Name="CountsID" ColumnName="CountsID" />
                 <ScalarProperty Name="one" ColumnName="one" />
@@ -325,7 +326,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Groups">
-            <EntityTypeMapping TypeName="FingerprintV4Model.Group">
+            <EntityTypeMapping TypeName="FingerprintV8Model.Group">
               <MappingFragment StoreEntitySet="Group">
                 <ScalarProperty Name="GroupID" ColumnName="GroupID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -333,7 +334,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Group_Group">
-            <EntityTypeMapping TypeName="FingerprintV4Model.Group_Group">
+            <EntityTypeMapping TypeName="FingerprintV8Model.Group_Group">
               <MappingFragment StoreEntitySet="Group_Group">
                 <ScalarProperty Name="GG_ID" ColumnName="GG_ID" />
                 <ScalarProperty Name="ParentID" ColumnName="ParentID" />
@@ -342,7 +343,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Texts">
-            <EntityTypeMapping TypeName="FingerprintV4Model.Text">
+            <EntityTypeMapping TypeName="FingerprintV8Model.Text">
               <MappingFragment StoreEntitySet="Text">
                 <ScalarProperty Name="TextID" ColumnName="TextID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -353,7 +354,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="Text_Group" TypeName="FingerprintV4Model.Text_Group" StoreEntitySet="Text_Group">
+          <AssociationSetMapping Name="Text_Group" TypeName="FingerprintV8Model.Text_Group" StoreEntitySet="Text_Group">
             <EndProperty Name="Group">
               <ScalarProperty Name="GroupID" ColumnName="GroupID" />
             </EndProperty>

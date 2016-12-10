@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="7e16c1077e8841348741ddaaa1c46356" Name="Diagram1">
+        <EntityTypeShape EntityType="FingerprintV8Model.Count" Width="1.5" PointX="3.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FingerprintV8Model.Group" Width="1.5" PointX="0.75" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="FingerprintV8Model.Group_Group" Width="1.5" PointX="3" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="FingerprintV8Model.Text" Width="1.5" PointX="6" PointY="2.5" IsExpanded="true" />
+        <AssociationConnector Association="FingerprintV8Model.FK__Text__CountsWith__2F10007B" ManuallyRouted="false" />
+        <AssociationConnector Association="FingerprintV8Model.FK__Text__CountsWith__300424B4" ManuallyRouted="false" />
+        <AssociationConnector Association="FingerprintV8Model.FK__Group_Gro__Child__2D27B809" ManuallyRouted="false" />
+        <AssociationConnector Association="FingerprintV8Model.FK__Group_Gro__Paren__2E1BDC42" ManuallyRouted="false" />
+        <AssociationConnector Association="FingerprintV8Model.Text_Group" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
