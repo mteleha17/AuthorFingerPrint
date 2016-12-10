@@ -68,11 +68,21 @@ namespace FingerPrint
                 var form2 = new ErrorMessageDisplay(errorMessage);
                 form2.Show(this);
             }
-            catch (ArgumentException)
+            catch 
             {
-                string errorMessage = "You cannot add a file with the same name as another file";
-                var form2 = new ErrorMessageDisplay(errorMessage);
-                form2.Show(this);
+                if(initialFileNameTextBox.Text =="")
+                {
+                    string errorMessage = "You cannot add a text without a file name";
+                    var form2 = new ErrorMessageDisplay(errorMessage);
+                    form2.Show(this);
+                }
+                else if (_textController.GetTextByName(initialFileNameTextBox.Text) != null)
+                {
+                    string errorMessage = "You cannot add a file with the same name as another file";
+                    var form2 = new ErrorMessageDisplay(errorMessage);
+                    form2.Show(this);
+                }
+                
             }
             if (filesRadioButton.Checked == true)
             {
@@ -127,7 +137,7 @@ namespace FingerPrint
             }
             else
             {
-                string errorMessage = "There are no groups being analyzed. Please add a group before executing.";
+                string errorMessage = "There are no groups or texts being analyzed. Please add a text or group before executing.";
                 var form2 = new ErrorMessageDisplay(errorMessage);
                 form2.Show(this);
             }
@@ -145,7 +155,7 @@ namespace FingerPrint
             }
             else
             {
-                string errorMessage = "You need to select an item to edit if first!";
+                string errorMessage = "You need to select an item to edit it first!";
                 var form2 = new ErrorMessageDisplay(errorMessage);
                 form2.Show(this);
             }
@@ -178,7 +188,7 @@ namespace FingerPrint
                 }
                 else if (fileGroupListViewTab2.SelectedItems.Count <= 0)
                 {
-                    string errorMessage = "You need to select an item to edit if first!";
+                    string errorMessage = "You need to select an item to add it!";
                     var form2 = new ErrorMessageDisplay(errorMessage);
                     form2.Show(this);
                 }
@@ -188,7 +198,7 @@ namespace FingerPrint
                     var form2 = new ErrorMessageDisplay(errorMessage);
                     form2.Show(this);
                 }
-                }
+             }
         }
         private void addButtonTab3_Click(object sender, EventArgs e)    //allows groups and texts to be added to an analysis
         {
@@ -228,7 +238,7 @@ namespace FingerPrint
         }
         private void removeButtonTab3_Click(object sender, EventArgs e) //removes texts from the analysis group
         {
-            if (analysisListView.SelectedItems.Count > 0)
+            try
             {
                 ListViewItem itemToMove = analysisListView.SelectedItems[0];
                 _analysisController.RemoveFromActiveItems(itemToMove.Text);
@@ -237,6 +247,15 @@ namespace FingerPrint
                 updateAnalysisGroups();
                 updateListViews();
                 fillGroupComboBox();
+            }
+            catch (Exception)
+            {
+                if (analysisListView.SelectedItems.Count <= 0)
+                {
+                    string errorMessage = "You need to select an item to remove it!";
+                    var form2 = new ErrorMessageDisplay(errorMessage);
+                    form2.Show(this);
+                }
             }
         }
         private void removeButtonTab2_Click(object sender, EventArgs e) //removes texts and groups from selected group
@@ -259,9 +278,9 @@ namespace FingerPrint
             }
             catch(Exception)
             {
-                if(groupListViewTab2.SelectedItems.Count > 0)
+                if(groupListViewTab2.SelectedItems.Count <= 0)
                 {
-                    string errorMessage = "You need to select an item to edit if first!";
+                    string errorMessage = "You need to select an item to remove it!";
                     var form2 = new ErrorMessageDisplay(errorMessage);
                     form2.Show(this);
                 }
@@ -353,6 +372,13 @@ namespace FingerPrint
                     var form2 = new ErrorMessageDisplay(errorMessage);
                     form2.Show(this);
                 }
+                else
+                {
+                    string errorMessage = "You must not leave the group name blank!";
+                    var form2 = new ErrorMessageDisplay(errorMessage);
+                    form2.Show(this);
+                }
+                
                     
             }
             
@@ -362,15 +388,23 @@ namespace FingerPrint
 
         public void editGroupName(string groupNameOld, string groupNameNew) // edit method used by the editGroup popup
         {
-            IGroupViewModel group = _groupController.GetGroupByName(groupNameOld);
-            _groupController.UpdateGroup(group, groupNameNew);
-            fillGroupComboBox();
-            groupComboBox.SelectedIndex = groupComboBox.Items.IndexOf(groupNameNew);
-            analysisListView.Items.Clear();
-            fillGroupComboBox();
-            //changed -JG
-            updateAnalysisGroups();
-            updateListViews();
+            if (_groupController.GetGroupByName(groupNameNew) == null)
+            {
+                IGroupViewModel group = _groupController.GetGroupByName(groupNameOld);
+                _groupController.UpdateGroup(group, groupNameNew);
+                fillGroupComboBox();
+                groupComboBox.SelectedIndex = groupComboBox.Items.IndexOf(groupNameNew);
+                analysisListView.Items.Clear();
+                fillGroupComboBox();
+                updateAnalysisGroups();
+                updateListViews();
+            }
+            else
+            {
+                string errorMessage = "You cannot change a group name to one that already exists!";
+                var form2 = new ErrorMessageDisplay(errorMessage);
+                form2.Show(this);
+            }
          }
         private void newGroupButton_Click(object sender, EventArgs e) //used to open the newGroup popup
         {
