@@ -37,13 +37,13 @@ namespace FingerPrint
 
         private void saveChangesButton_Click(object sender, EventArgs e)
         {
-            if (_textController.GetTextByName(newFileNameTextbox.Text) == null)
+            try
             {
                 _textController.UpdateText(model, newFileNameTextbox.Text, newAuthorTextBox.Text, quotesCheckbox.Checked);
                 form1.updateListViews();
                 this.Close();
             }
-            else
+            catch
             {
                 string errorMessage = "You cannot change a text's name to one that already exists";
                 var form2 = new ErrorMessageDisplay(errorMessage);
