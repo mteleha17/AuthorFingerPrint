@@ -140,8 +140,8 @@ namespace FingerPrint.Controllers.Implementations
                 throw new ArgumentException("Name cannot be null.");
             }
             IGroupModel updatedModel = (IGroupModel)model;
-            updatedModel.SetName(name);
             _groupStore.ModifyName(updatedModel, name);
+            updatedModel.SetName(name);
         }
 
         public List<IGroupViewModel> GetAllGroups()

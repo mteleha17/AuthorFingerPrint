@@ -97,21 +97,21 @@ namespace FingerPrint.Controllers.Implementations
         public void UpdateText(ITextViewModel model, string name = null, string author = null, bool? includeQuotes = null)
         {
             var updatedModel = (ITextModel)model;
-            if (!string.IsNullOrWhiteSpace(name))
-            {
-                updatedModel.SetName(name);
-                _textStore.ModifyName((ITextModel)model, name);
-            }
+            
             if (!string.IsNullOrWhiteSpace(author))
             {
-                updatedModel.SetAuthor(author);
                 _textStore.ModifyAuthor((ITextModel)model, author);
-
+                updatedModel.SetAuthor(author);
             }
             if (includeQuotes != null)
             {
-                updatedModel.SetIncludeQuotes((bool)includeQuotes);
                 _textStore.ModifyIncludeQuotes((ITextModel)model, (bool)includeQuotes);
+                updatedModel.SetIncludeQuotes((bool)includeQuotes);
+            }
+            if (!string.IsNullOrWhiteSpace(name))
+            {
+                _textStore.ModifyName((ITextModel)model, name);
+                updatedModel.SetName(name);
             }
         }
 
