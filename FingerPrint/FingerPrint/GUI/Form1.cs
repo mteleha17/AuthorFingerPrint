@@ -498,8 +498,13 @@ namespace FingerPrint
         {
             if (fileListViewTab1.SelectedItems.Count > 0)
             {
+               
                 ListViewItem item = fileListViewTab1.SelectedItems[0];
                 string textName = item.SubItems[1].Text;
+                if (_activeItems.Contains(_activeItems.Find(x => x.GetName() == textName)))
+                {
+                    _activeItems.Remove(_activeItems.Find(x => x.GetName() == textName));
+                }
                 ITextViewModel model = _textController.GetTextByName(textName);
                 List<IGroupViewModel> groupList = _groupController.GetAllGroups();
                 foreach (IGroupViewModel groupEntry in groupList)
@@ -511,6 +516,7 @@ namespace FingerPrint
                 }
                 _textController.DeleteText(model);
                 updateListViews();
+                updateAnalysisGroups();
             }
             else
             {
@@ -541,6 +547,9 @@ namespace FingerPrint
                 {
                     ListViewItem item = fileGroupListViewTab2.SelectedItems[0];
                     string textName = item.SubItems[1].Text;
+                    if (_activeItems.Contains(_activeItems.Find(x => x.GetName() == textName))){ 
+                    _activeItems.Remove(_activeItems.Find(x => x.GetName() == textName));
+                }
                     
                     foreach (IGroupViewModel groupEntry in groupList)
                     {
@@ -589,7 +598,7 @@ namespace FingerPrint
         {
             //List<ITextOrGroupViewModel> groupList = _analysisController.GetActiveItems();
             List<ITextOrGroupViewModel> groupList = new List<ITextOrGroupViewModel>(_activeItems);
-
+            analysisListView.Items.Clear();
             foreach (ITextOrGroupViewModel groupEntry in groupList)
             {
                 ListViewItem itemGroup = new ListViewItem();
