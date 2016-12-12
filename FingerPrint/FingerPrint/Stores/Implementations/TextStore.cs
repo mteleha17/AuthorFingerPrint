@@ -13,10 +13,10 @@ namespace FingerPrint.Stores
 {
     public class TextStore : ITextStore
     {
-        private FingerprintV8Entities _db;
+        private FingerprintLite13Entities _db;
         private IModelFactory _modelFactory;
 
-        public TextStore(FingerprintV8Entities db, IModelFactory modelFactory)
+        public TextStore(FingerprintLite13Entities db, IModelFactory modelFactory)
         {
             _db = db;
             _modelFactory = modelFactory;
@@ -29,19 +29,20 @@ namespace FingerPrint.Stores
             {
                 throw new ArgumentException($"Cannot add model since a model already exists in the database with name {model.GetName()}.");
             }
-            Count withQuotes = TranslateCounts(model.GetCountsWithQuotes());
-            _db.Counts.Add(withQuotes);
+            WordCount withQuotes = TranslateCounts(model.GetCountsWithQuotes());
+            _db.WordCounts.Add(withQuotes);
             _db.SaveChanges();
-            Count withoutQuotes = TranslateCounts(model.GetCountsWithoutQuotes());
+            WordCount withoutQuotes = TranslateCounts(model.GetCountsWithoutQuotes());
             
-            _db.Counts.Add(withoutQuotes);
+            _db.WordCounts.Add(withoutQuotes);
             _db.SaveChanges();
+
             Text text = new Text()
             {
                 Name = model.GetName(),
                 Author = model.GetAuthor(),
-                CountsWithQuotesID = withQuotes.CountsID,
-                CountsWithoutQuotesID = withoutQuotes.CountsID,
+                WithQuotesId = withQuotes.Id,
+                WithoutQuotesId = withoutQuotes.Id,
             };
             _db.Texts.Add(text);
             _db.SaveChanges();
@@ -55,14 +56,14 @@ namespace FingerPrint.Stores
             {
                 throw new ArgumentException($"Cannot delete text {model.GetName()} since it does not exist in the database.");
             }
-            //if (_db.Text_Group.Any(x => x.TextID == text.TextID))
-            //{
-            //    throw new ArgumentException($"Cannot delete text {model.GetName()} because it is currently a member of a group.");
-            //}
-            if (_db.Groups.Any(x => x.Texts.Contains(text)))
+            if (_db.Text_Grouping.Any(x => x.Id == text.Id))
             {
                 throw new ArgumentException($"Cannot delete text {model.GetName()} because it is currently a member of a group.");
             }
+            //if (_db.Groupings.Any(x => x.Texts.Contains(text)))
+            //{
+            //    throw new ArgumentException($"Cannot delete text {model.GetName()} because it is currently a member of a group.");
+            //}
             _db.Texts.Remove(text);
             _db.SaveChanges();
         }
@@ -76,17 +77,21 @@ namespace FingerPrint.Stores
         {
             foreach (Text text in _db.Texts.Where(criteria))
             {
-                yield return GetOne(x => x.TextID == text.TextID);
+                yield return GetOne(x => x.Id == text.Id);
             }
-           // for (int i = 0; i < 1; i++)
-           // {
-             //   yield return null;
-           // }
+            //for (int i = 0; i < 1; i++)
+            //{
+            //    yield return null;
+            //}
         }
 
         public ITextModel GetOne(Expression<Func<Text, bool>> criteria)
         {
             Text text = _db.Texts.FirstOrDefault(criteria);
+            if (text == null)
+            {
+                return null;
+            }
             if (text == null)
             {
                 return null;
@@ -142,7 +147,7 @@ namespace FingerPrint.Stores
             {
                 throw new ArgumentException("Cannot update model since no corresponding text exists in the database.");
             }
-            text.QuoteInd = includeQuotes;
+            text.IncludeQuotes = Convert.ToInt32(includeQuotes);
             _db.SaveChanges();
         }
 
@@ -151,27 +156,27 @@ namespace FingerPrint.Stores
         /// </summary>
         /// <param name="model">The count model.</param>
         /// <returns>A Count database entity.</returns>
-        private Count TranslateCounts(ISingleWordCountModel model)
+        private WordCount TranslateCounts(ISingleWordCountModel model)
         {
             if (model.GetLength() != UniversalConstants.CountSize)
             {
                 throw new ArgumentException($"Please pass a model with length {UniversalConstants.CountSize}.");
             }
-            Count output = new Count()
+            WordCount output = new WordCount()
             {
-                one = model.GetAt(0),
-                two = model.GetAt(1),
-                three = model.GetAt(2),
-                four = model.GetAt(3),
-                five = model.GetAt(4),
-                six = model.GetAt(5),
-                seven = model.GetAt(6),
-                eight = model.GetAt(7),
-                nine = model.GetAt(8),
-                ten = model.GetAt(9),
-                eleven = model.GetAt(10),
-                twelve = model.GetAt(11),
-                thirteen = model.GetAt(12)
+                One = model.GetAt(0),
+                Two = model.GetAt(1),
+                Three = model.GetAt(2),
+                Four = model.GetAt(3),
+                Five = model.GetAt(4),
+                Six = model.GetAt(5),
+                Seven = model.GetAt(6),
+                Eight = model.GetAt(7),
+                Nine = model.GetAt(8),
+                Ten = model.GetAt(9),
+                Eleven = model.GetAt(10),
+                Twelve = model.GetAt(11),
+                Thirteen = model.GetAt(12)
             };
             return output;
         }
@@ -181,22 +186,22 @@ namespace FingerPrint.Stores
         /// </summary>
         /// <param name="count">The Count database entity.</param>
         /// <returns>A count model.</returns>
-        private ISingleWordCountModel TranslateCounts(Count count)
+        private ISingleWordCountModel TranslateCounts(WordCount count)
         {
             ISingleWordCountModel output = _modelFactory.GetSingleCountModel(UniversalConstants.CountSize);
-            output.SetAt(0, count.one);
-            output.SetAt(1, count.two);
-            output.SetAt(2, count.three);
-            output.SetAt(3, count.four);
-            output.SetAt(4, count.five);
-            output.SetAt(5, count.six);
-            output.SetAt(6, count.seven);
-            output.SetAt(7, count.eight);
-            output.SetAt(8, count.nine);
-            output.SetAt(9, count.ten);
-            output.SetAt(10, count.eleven);
-            output.SetAt(11, count.twelve);
-            output.SetAt(12, count.thirteen);
+            output.SetAt(0, (int)count.One);
+            output.SetAt(1, (int)count.Two);
+            output.SetAt(2, (int)count.Three);
+            output.SetAt(3, (int)count.Four);
+            output.SetAt(4, (int)count.Five);
+            output.SetAt(5, (int)count.Six);
+            output.SetAt(6, (int)count.Seven);
+            output.SetAt(7, (int)count.Eight);
+            output.SetAt(8, (int)count.Nine);
+            output.SetAt(9, (int)count.Ten);
+            output.SetAt(10, (int)count.Eleven);
+            output.SetAt(11, (int)count.Twelve);
+            output.SetAt(12, (int)count.Thirteen);
             return output;
         }
 
@@ -208,8 +213,8 @@ namespace FingerPrint.Stores
         /// <returns>A flexible count model with two sets of counts (with and without quotations).</returns>
         private IFlexibleWordCountModel GetCountsFromText(Text text)
         {
-            Count withQuotes = _db.Counts.FirstOrDefault(x => x.CountsID == text.CountsWithQuotesID);
-            Count withoutQuotes = _db.Counts.FirstOrDefault(x => x.CountsID == text.CountsWithoutQuotesID);
+            WordCount withQuotes = _db.WordCounts.FirstOrDefault(x => x.Id == text.WithQuotesId);
+            WordCount withoutQuotes = _db.WordCounts.FirstOrDefault(x => x.Id == text.WithoutQuotesId);
             if (withQuotes == null || withoutQuotes == null)
             {
                 throw new ArgumentException("One of the Counts entities is missing.");

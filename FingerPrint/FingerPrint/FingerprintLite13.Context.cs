@@ -13,10 +13,10 @@ namespace FingerPrint
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class FingerprintV8Entities : DbContext
+    public partial class FingerprintLite13Entities : DbContext
     {
-        public FingerprintV8Entities()
-            : base("name=FingerprintV8Entities")
+        public FingerprintLite13Entities()
+            : base("name=FingerprintLite13Entities")
         {
         }
     
@@ -25,9 +25,10 @@ namespace FingerPrint
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Count> Counts { get; set; }
-        public virtual DbSet<Group> Groups { get; set; }
-        public virtual DbSet<Group_Group> Group_Group { get; set; }
+        public virtual DbSet<Grouping> Groupings { get; set; }
+        public virtual DbSet<Grouping_Grouping> Grouping_Grouping { get; set; }
         public virtual DbSet<Text> Texts { get; set; }
+        public virtual DbSet<Text_Grouping> Text_Grouping { get; set; }
+        public virtual DbSet<WordCount> WordCounts { get; set; }
     }
 }

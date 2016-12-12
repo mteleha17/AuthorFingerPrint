@@ -13,11 +13,11 @@ namespace FingerPrint.Stores
 {
     public class GroupStore : IGroupStore
     {
-        private FingerprintV8Entities _db;
+        private FingerprintLite13Entities _db;
         private IModelFactory _modelFactory;
         private ITextStore _textStore;
 
-        public GroupStore(FingerprintV8Entities db, IModelFactory modelFactory, ITextStore textStore)
+        public GroupStore(FingerprintLite13Entities db, IModelFactory modelFactory, ITextStore textStore)
         {
             _db = db;
             _modelFactory = modelFactory;
@@ -27,15 +27,15 @@ namespace FingerPrint.Stores
         public void Add(IGroupModel model)
         {
             string name = model.GetName();
-            if (_db.Groups.Any(x => x.Name == name))
+            if (_db.Groupings.Any(x => x.Name == name))
             {
                 throw new ArgumentException($"Cannot add model since a model already exists in the database with name {model.GetName()}.");
             }
-            Group group = new Group()
+            Grouping group = new Grouping()
             {
                 Name = model.GetName(),
             };
-            _db.Groups.Add(group);
+            _db.Groupings.Add(group);
             _db.SaveChanges();
             AddItems(model, model.GetMembers().Select(x => (ITextOrGroupModel)x));
         }
@@ -43,45 +43,62 @@ namespace FingerPrint.Stores
         public void Delete(IGroupModel model)
         {
             string name = model.GetName();
-            Group group = _db.Groups.FirstOrDefault(x => x.Name == name);
+            Grouping group = _db.Groupings.FirstOrDefault(x => x.Name == name);
             if (group == null)
             {
                 throw new ArgumentException("Cannot delete group because it does not exist in the database.");
             }
             RemoveItems(model, model.GetMembers().Select(x => (ITextOrGroupModel)x));
-            _db.Groups.Remove(group);
+            _db.Groupings.Remove(group);
             _db.SaveChanges();
         }
 
-        public bool Exists(Expression<Func<Group, bool>> criteria)
+        public bool Exists(Expression<Func<Grouping, bool>> criteria)
         {
-            return _db.Groups.Any(criteria);
+            return _db.Groupings.Any(criteria);
         }
 
-        public IEnumerable<IGroupModel> GetMany(Expression<Func<Group, bool>> criteria)
+        public IEnumerable<IGroupModel> GetMany(Expression<Func<Grouping, bool>> criteria)
         {
-            foreach (Group group in _db.Groups.Where(criteria))
+            foreach (Grouping group in _db.Groupings.Where(criteria))
             {
-                yield return GetOne(x => x.GroupID == group.GroupID);
+                yield return GetOne(x => x.Id == group.Id);
             }
         }
 
-        public IGroupModel GetOne(Expression<Func<Group, bool>> criteria)
+        public IGroupModel GetOne(Expression<Func<Grouping, bool>> criteria)
         {
-            Group group = _db.Groups.FirstOrDefault(criteria);
-            IGroupModel output = _modelFactory.GetGroupModel(group.Name, UniversalConstants.CountSize);
-            foreach (Text text in group.Texts)
+            Grouping group = _db.Groupings.FirstOrDefault(criteria);
+            if (group == null)
             {
-                ITextModel textModel = _textStore.GetOne(x => x.TextID == text.TextID);
+                return null;
+            }
+            IGroupModel output = _modelFactory.GetGroupModel(group.Name, UniversalConstants.CountSize);
+            IQueryable<int> TextIds = _db.Texts.Join(
+                _db.Text_Grouping,
+                text => text.Id,
+                text_grouping => text_grouping.TextId,
+                (text, text_grouping) => new { TextId = text_grouping.TextId }
+                ).Join(
+                    _db.Groupings,
+                    tg => tg.TextId,
+                    grouping => grouping.Id,
+                    (tg, grouping) => new { TextId = tg.TextId, GroupingId = grouping.Id }
+                ).Where(x => x.GroupingId == group.Id)
+                 .Select(x => (int)x.TextId);
+
+            foreach (Text text in _db.Texts.Where(x => TextIds.Contains((int)x.Id)))
+            {
+                ITextModel textModel = _textStore.GetOne(x => x.Id == text.Id);
                 if (textModel == null)
                 {
                     throw new ArgumentException("Cannot get group since it contains a reference to a nonexistant text.");
                 }
                 output.Add(textModel);
             }
-            foreach (Group_Group groupGroup in _db.Group_Group.Where(x => x.ParentID == group.GroupID))
+            foreach (Grouping_Grouping groupGroup in _db.Grouping_Grouping.Where(x => x.ParentId == group.Id))
             {
-                IGroupModel groupModel = GetOne(x => x.GroupID == groupGroup.ChildID);
+                IGroupModel groupModel = GetOne(x => x.Id == groupGroup.ChildId);
                 if (groupModel == null)
                 {
                     throw new ArgumentException("Cannot get group since it contains a reference to a nonexistant child group.");
@@ -98,7 +115,7 @@ namespace FingerPrint.Stores
                 throw new ArgumentException("Cannot update group name to null or white space.");
             }
             string name = model.GetName();
-            Group group = _db.Groups.FirstOrDefault(x => x.Name == name);
+            Grouping group = _db.Groupings.FirstOrDefault(x => x.Name == name);
             if (group == null)
             {
                 throw new ArgumentException("Cannot update group name because group does not exist in the database.");
@@ -115,7 +132,7 @@ namespace FingerPrint.Stores
         public void AddItems(IGroupModel model, IEnumerable<ITextOrGroupModel> items)
         {
             string name = model.GetName();
-            Group parentGroup = _db.Groups.FirstOrDefault(x => x.Name == name);
+            Grouping parentGroup = _db.Groupings.FirstOrDefault(x => x.Name == name);
             if (parentGroup == null)
             {
                 throw new ArgumentException("Cannot add items to group because the group is not in the database.");
@@ -138,22 +155,23 @@ namespace FingerPrint.Stores
                         throw new ArgumentException($"Cannot add item to group because it does not exist in the database: text {text.Name}.");
                     }
                     texts.Add(text);
-                    textIds.Add(text.TextID);
+                    textIds.Add((int)text.Id);
                 }
                 else
                 {
                     string groupName = item.GetName();
-                    Group group = _db.Groups.FirstOrDefault(x => x.Name == groupName);
+                    Grouping group = _db.Groupings.FirstOrDefault(x => x.Name == groupName);
                     if (group == null)
                     {
                         throw new ArgumentException($"Cannot add item to group because it does not exist in the database: group {group.Name}.");
                     }
-                    groupIds.Add(group.GroupID);
+                    groupIds.Add((int)group.Id);
                 }
             }
             foreach (Text t in texts)
             {
-                parentGroup.Texts.Add(t);
+                //parentGroup.Texts.Add(t);
+                _db.Text_Grouping.Add(new Text_Grouping() { TextId = t.Id, GroupingId = parentGroup.Id });
                 _db.SaveChanges();
             }
             //foreach (int id in textIds)
@@ -168,12 +186,12 @@ namespace FingerPrint.Stores
             //}
             foreach (int id in groupIds)
             {
-                Group_Group groupGroup = new Group_Group()
+                Grouping_Grouping groupGroup = new Grouping_Grouping()
                 {
-                    ParentID = parentGroup.GroupID,
-                    ChildID = id
+                    ParentId = parentGroup.Id,
+                    ChildId = id
                 };
-                _db.Group_Group.Add(groupGroup);
+                _db.Grouping_Grouping.Add(groupGroup);
                 _db.SaveChanges();
             }
         }
@@ -186,7 +204,7 @@ namespace FingerPrint.Stores
         public void RemoveItems(IGroupModel model, IEnumerable<ITextOrGroupModel> items)
         {
             string name = model.GetName();
-            Group parentGroup = _db.Groups.FirstOrDefault(x => x.Name == name);
+            Grouping parentGroup = _db.Groupings.FirstOrDefault(x => x.Name == name);
             if (parentGroup == null)
             {
                 throw new ArgumentException("Cannot add items to group because the group is not in the database.");
@@ -208,7 +226,11 @@ namespace FingerPrint.Stores
                     {
                         throw new ArgumentException($"Cannot add item to group because it does not exist in the database: text {text.Name}.");
                     }
-                    if (!parentGroup.Texts.Contains(text))
+                    //if (!parentGroup.Texts.Contains(text))
+                    //{
+                    //    throw new ArgumentException("Cannot remove item from group because it is not a member of the group.");
+                    //}
+                    if (!_db.Text_Grouping.Any(x => x.TextId == text.Id && x.GroupingId == parentGroup.Id))
                     {
                         throw new ArgumentException("Cannot remove item from group because it is not a member of the group.");
                     }
@@ -223,12 +245,12 @@ namespace FingerPrint.Stores
                 else
                 {
                     string groupName = item.GetName();
-                    Group child = _db.Groups.FirstOrDefault(x => x.Name == groupName);
+                    Grouping child = _db.Groupings.FirstOrDefault(x => x.Name == groupName);
                     if (child == null)
                     {
                         throw new ArgumentException($"Cannot add item to group because it does not exist in the database: group {child.Name}.");
                     }
-                    Group_Group groupGroup = _db.Group_Group.FirstOrDefault(x => x.ParentID == parentGroup.GroupID && x.ChildID == child.GroupID);
+                    Grouping_Grouping groupGroup = _db.Grouping_Grouping.FirstOrDefault(x => x.ParentId == parentGroup.Id && x.ChildId == child.Id);
                     if (groupGroup == null)
                     {
                         throw new ArgumentException("Cannot remove item from group because it is not a member of the group.");
@@ -238,7 +260,13 @@ namespace FingerPrint.Stores
             }
             foreach (Text t in texts)
             {
-                parentGroup.Texts.Remove(t);
+                Text_Grouping textGrouping = _db.Text_Grouping.FirstOrDefault(x => x.TextId == t.Id && x.GroupingId == parentGroup.Id);
+                if (textGrouping == null)
+                {
+                    throw new ArgumentException("Cannot remove one or more items since the group does not contain them.");
+                }
+                _db.Text_Grouping.Remove(textGrouping);
+                //parentGroup.Texts.Remove(t);
                 _db.SaveChanges();
             }
             //foreach (int id in textGroupIds)
@@ -249,8 +277,8 @@ namespace FingerPrint.Stores
             //}
             foreach (int id in groupGroupIds)
             {
-                Group_Group groupGroup = _db.Group_Group.FirstOrDefault(x => x.GG_ID == id);
-                _db.Group_Group.Remove(groupGroup);
+                Grouping_Grouping groupGroup = _db.Grouping_Grouping.FirstOrDefault(x => x.Id == id);
+                _db.Grouping_Grouping.Remove(groupGroup);
                 _db.SaveChanges();
             }
         }

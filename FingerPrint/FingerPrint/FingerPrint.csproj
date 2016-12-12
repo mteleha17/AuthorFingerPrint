@@ -27,6 +27,8 @@
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -59,6 +61,18 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.SQLite, Version=1.0.103.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.Core.1.0.103\lib\net451\System.Data.SQLite.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data.SQLite.EF6, Version=1.0.103.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.EF6.1.0.103\lib\net451\System.Data.SQLite.EF6.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data.SQLite.Linq, Version=1.0.103.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SQLite.Linq.1.0.103\lib\net451\System.Data.SQLite.Linq.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Windows.Forms.DataVisualization" />
@@ -80,29 +94,26 @@
     <Compile Include="Controllers\Interfaces\IAnalysisController.cs" />
     <Compile Include="Controllers\Interfaces\IGroupController.cs" />
     <Compile Include="Controllers\Interfaces\ITextController.cs" />
-    <Compile Include="Count.cs">
-      <DependentUpon>FingerprintV8Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="FingerprintV8Model.Context.cs">
+    <Compile Include="FingerprintLite13.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>FingerprintV8Model.Context.tt</DependentUpon>
+      <DependentUpon>FingerprintLite13.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="FingerprintV8Model.cs">
+    <Compile Include="FingerprintLite13.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>FingerprintV8Model.tt</DependentUpon>
+      <DependentUpon>FingerprintLite13.tt</DependentUpon>
     </Compile>
-    <Compile Include="FingerprintV8Model.Designer.cs">
+    <Compile Include="FingerprintLite13.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>FingerprintV8Model.edmx</DependentUpon>
+      <DependentUpon>FingerprintLite13.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Group.cs">
-      <DependentUpon>FingerprintV8Model.tt</DependentUpon>
+    <Compile Include="Grouping.cs">
+      <DependentUpon>FingerprintLite13.tt</DependentUpon>
     </Compile>
-    <Compile Include="Group_Group.cs">
-      <DependentUpon>FingerprintV8Model.tt</DependentUpon>
+    <Compile Include="Grouping_Grouping.cs">
+      <DependentUpon>FingerprintLite13.tt</DependentUpon>
     </Compile>
     <Compile Include="GUI\EditGroupName.cs">
       <SubType>Form</SubType>
@@ -160,7 +171,13 @@
     <Compile Include="Stores\Interfaces\ITextStore.cs" />
     <Compile Include="Stores\Implementations\TextStore.cs" />
     <Compile Include="Text.cs">
-      <DependentUpon>FingerprintV8Model.tt</DependentUpon>
+      <DependentUpon>FingerprintLite13.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Text_Grouping.cs">
+      <DependentUpon>FingerprintLite13.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WordCount.cs">
+      <DependentUpon>FingerprintLite13.tt</DependentUpon>
     </Compile>
     <EmbeddedResource Include="GUI\EditGroupName.resx">
       <DependentUpon>EditGroupName.cs</DependentUpon>
@@ -186,12 +203,15 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EntityDeploy Include="FingerprintV8Model.edmx">
+    <None Include="Database\FingerprintLite13.db">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <EntityDeploy Include="FingerprintLite13.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>FingerprintV8Model.Designer.cs</LastGenOutput>
+      <LastGenOutput>FingerprintLite13.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="FingerprintV8Model.edmx.diagram">
-      <DependentUpon>FingerprintV8Model.edmx</DependentUpon>
+    <None Include="FingerprintLite13.edmx.diagram">
+      <DependentUpon>FingerprintLite13.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -205,9 +225,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="DatabaseScripts\dbo.Script_Order.sql" />
@@ -217,15 +235,15 @@
     <Content Include="DatabaseScripts\dbo.Group_Group.sql" />
     <Content Include="DatabaseScripts\dbo.Text.sql" />
     <Content Include="DatabaseScripts\dbo.Text_Group.sql" />
-    <Content Include="FingerprintV8Model.Context.tt">
+    <Content Include="FingerprintLite13.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>FingerprintV8Model.edmx</DependentUpon>
-      <LastGenOutput>FingerprintV8Model.Context.cs</LastGenOutput>
+      <DependentUpon>FingerprintLite13.edmx</DependentUpon>
+      <LastGenOutput>FingerprintLite13.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="FingerprintV8Model.tt">
+    <Content Include="FingerprintLite13.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>FingerprintV8Model.edmx</DependentUpon>
-      <LastGenOutput>FingerprintV8Model.cs</LastGenOutput>
+      <DependentUpon>FingerprintLite13.edmx</DependentUpon>
+      <LastGenOutput>FingerprintLite13.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup>
@@ -245,6 +263,13 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\System.Data.SQLite.Core.1.0.103\build\net451\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.103\build\net451\System.Data.SQLite.Core.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\System.Data.SQLite.Core.1.0.103\build\net451\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.Data.SQLite.Core.1.0.103\build\net451\System.Data.SQLite.Core.targets'))" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

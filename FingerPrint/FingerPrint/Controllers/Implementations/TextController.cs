@@ -14,18 +14,22 @@ namespace FingerPrint.Controllers.Implementations
 {
     public class TextController : ITextController
     {
-        private List<ITextViewModel> _temporaryDatabase;
-        private ITextStore _textStore;//group2
-        private IGroupStore _groupStore;//group2
+        //private List<ITextViewModel> _textTempDb;
+        //private List<IGroupViewModel> _groupTempDb;
+        private ITextStore _textStore;
+        private IGroupStore _groupStore;
         private IModelFactory _modelFactory;
 
-        public TextController(ITextStore textStore,
+        public TextController(List<ITextViewModel> textTempDb,
+            List<IGroupViewModel> groupTempDb, 
+            ITextStore textStore,
             IGroupStore groupStore,
             IModelFactory modelFactory)
         {
-            _temporaryDatabase = new List<ITextViewModel>();
-            _textStore = textStore;//group2
-            _groupStore = groupStore;//group2
+            //_textTempDb = textTempDb;
+            //_groupTempDb = groupTempDb;
+            _textStore = textStore;
+            _groupStore = groupStore;
             _modelFactory = modelFactory;
         }
 
@@ -36,8 +40,8 @@ namespace FingerPrint.Controllers.Implementations
                 throw new ArgumentException("Text name must not be null or white space.");
             }
 
-            return _textStore.GetOne(x => x.Name == name);//group2
-            //return _temporaryDatabase.FirstOrDefault(x => x.GetName() == name);//gorup1
+            return _textStore.GetOne(x => x.Name == name);
+            //return _textTempDb.FirstOrDefault(x => x.GetName() == name);
         }
 
         public bool AnyByName(string name)
@@ -46,8 +50,8 @@ namespace FingerPrint.Controllers.Implementations
             {
                 throw new ArgumentException("Text name must not be null or white space.");
             }
-            return _textStore.Exists(x => x.Name == name);//group2
-            //return _temporaryDatabase.Any(x => x.GetName() == name);//group1
+            return _textStore.Exists(x => x.Name == name);
+            //return _textTempDb.Any(x => x.GetName() == name);
         }
 
         public List<ITextViewModel> GetTextByAuthor(string author)
@@ -56,8 +60,8 @@ namespace FingerPrint.Controllers.Implementations
             {
                 throw new ArgumentException("Author must not be null or white space.");
             }
-            return _textStore.GetMany(x => x.Author == author).Select(x => (ITextViewModel)x).ToList();//group2
-            //return _temporaryDatabase.Where(x => x.GetAuthor() == author).Select(x => (ITextViewModel)x).ToList();//group1
+            return _textStore.GetMany(x => x.Author == author).Select(x => (ITextViewModel)x).ToList();
+            //return _textTempDb.Where(x => x.GetAuthor() == author).Select(x => (ITextViewModel)x).ToList();
         }
 
         public bool AnyByAuthor(string author)
@@ -66,30 +70,30 @@ namespace FingerPrint.Controllers.Implementations
             {
                 throw new ArgumentException("Author must not be null or white space.");
             }
-            return _textStore.Exists(x => x.Author == author);//group2
-            //return _temporaryDatabase.Any(x => x.GetAuthor() == author);//group1
+            return _textStore.Exists(x => x.Author == author);
+            //return _textTempDb.Any(x => x.GetAuthor() == author);
         }
 
         public ITextViewModel CreateText(string name, TextReader input, int length, string author = null)
         {
-            if (AnyByName(name))
+            if (AnyByName(name) || _groupStore.Exists(x => x.Name == name))
             {
-                throw new ArgumentException($"Cannot create text because another text in the database already has the name {name}.");
+                throw new ArgumentException($"Cannot create text because another item in the database already has the name {name}.");
             }
             ITextModel model = _modelFactory.GetTextModel(name, input, length);
             if (!string.IsNullOrWhiteSpace(author))
             {
                 model.SetAuthor(author);
             }
-            _textStore.Add(model);//group2
-            //_temporaryDatabase.Add(model);//group1
+            _textStore.Add(model);
+            //_textTempDb.Add(model);
             return model;
         }
 
         public void DeleteText(ITextViewModel model)
         {
-            _textStore.Delete((ITextModel)model);//group2
-            //_temporaryDatabase.Remove(model);//group1
+            _textStore.Delete((ITextModel)model);
+            //_textTempDb.Remove(model);
         }
 
         public void UpdateText(ITextViewModel model, string name = null, string author = null, bool? includeQuotes = null)
@@ -98,25 +102,25 @@ namespace FingerPrint.Controllers.Implementations
             if (!string.IsNullOrWhiteSpace(name))
             {
                 updatedModel.SetName(name);
-                _textStore.ModifyName((ITextModel)model, name);//group2
+                _textStore.ModifyName((ITextModel)model, name);
             }
             if (!string.IsNullOrWhiteSpace(author))
             {
                 updatedModel.SetAuthor(author);
-                _textStore.ModifyAuthor((ITextModel)model, author);//group2
+                _textStore.ModifyAuthor((ITextModel)model, author);
 
             }
             if (includeQuotes != null)
             {
                 updatedModel.SetIncludeQuotes((bool)includeQuotes);
-                _textStore.ModifyIncludeQuotes((ITextModel)model, (bool)includeQuotes);//group2
+                _textStore.ModifyIncludeQuotes((ITextModel)model, (bool)includeQuotes);
             }
         }
 
         public List<ITextViewModel> GetAllTexts()
         {
-            return _textStore.GetMany(x => true).Select(x => (ITextViewModel)x).ToList();//group2
-            //return _temporaryDatabase.Where(x => true).Select(x => (ITextViewModel)x).ToList();//group1
+            return _textStore.GetMany(x => true).Select(x => (ITextViewModel)x).ToList();
+            //return _textTempDb.Where(x => true).Select(x => (ITextViewModel)x).ToList();
         }
     }
 }

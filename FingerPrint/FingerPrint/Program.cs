@@ -20,7 +20,7 @@ namespace FingerPrint
         [STAThread]
         static void Main()
         {
-            FingerprintV8Entities db = new FingerprintV8Entities();
+            FingerprintLite13Entities db = new FingerprintLite13Entities();
             var modelFactory = new ModelFactory();
             var textStore = new TextStore(db, modelFactory);
             var groupStore = new GroupStore(db, modelFactory, textStore);
@@ -29,7 +29,7 @@ namespace FingerPrint
             var textTempDb = new List<ITextViewModel>();
             var groupTempDb = new List<IGroupViewModel>();
 
-            var textController = new TextController(textStore, groupStore, modelFactory);
+            var textController = new TextController(textTempDb, groupTempDb, textStore, groupStore, modelFactory);
             var groupController = new GroupController(analysisController, textTempDb, groupTempDb, textStore, groupStore, modelFactory);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

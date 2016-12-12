@@ -12,24 +12,24 @@ namespace FingerPrint
     using System;
     using System.Collections.Generic;
     
-    public partial class Group
+    public partial class Grouping
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Group()
+        public Grouping()
         {
-            this.Group_Group = new HashSet<Group_Group>();
-            this.Group_Group1 = new HashSet<Group_Group>();
-            this.Texts = new HashSet<Text>();
+            this.Grouping_Grouping = new HashSet<Grouping_Grouping>();
+            this.Grouping_Grouping1 = new HashSet<Grouping_Grouping>();
+            this.Text_Grouping = new HashSet<Text_Grouping>();
         }
     
-        public int GroupID { get; set; }
+        public long Id { get; set; }
         public string Name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Group_Group> Group_Group { get; set; }
+        public virtual ICollection<Grouping_Grouping> Grouping_Grouping { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Group_Group> Group_Group1 { get; set; }
+        public virtual ICollection<Grouping_Grouping> Grouping_Grouping1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Text> Texts { get; set; }
+        public virtual ICollection<Text_Grouping> Text_Grouping { get; set; }
     }
 }

@@ -12,29 +12,29 @@ namespace FingerPrint
     using System;
     using System.Collections.Generic;
     
-    public partial class Count
+    public partial class WordCount
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Count()
+        public WordCount()
         {
             this.Texts = new HashSet<Text>();
             this.Texts1 = new HashSet<Text>();
         }
     
-        public int CountsID { get; set; }
-        public int one { get; set; }
-        public int two { get; set; }
-        public int three { get; set; }
-        public int four { get; set; }
-        public int five { get; set; }
-        public int six { get; set; }
-        public int seven { get; set; }
-        public int eight { get; set; }
-        public int nine { get; set; }
-        public int ten { get; set; }
-        public int eleven { get; set; }
-        public int twelve { get; set; }
-        public int thirteen { get; set; }
+        public long Id { get; set; }
+        public long One { get; set; }
+        public long Two { get; set; }
+        public long Three { get; set; }
+        public long Four { get; set; }
+        public long Five { get; set; }
+        public long Six { get; set; }
+        public long Seven { get; set; }
+        public long Eight { get; set; }
+        public long Nine { get; set; }
+        public long Ten { get; set; }
+        public long Eleven { get; set; }
+        public long Twelve { get; set; }
+        public long Thirteen { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Text> Texts { get; set; }

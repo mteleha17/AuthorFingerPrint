@@ -17,19 +17,19 @@ namespace FingerPrint
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Text()
         {
-            this.Groups = new HashSet<Group>();
+            this.Text_Grouping = new HashSet<Text_Grouping>();
         }
     
-        public int TextID { get; set; }
+        public long Id { get; set; }
         public string Name { get; set; }
         public string Author { get; set; }
-        public Nullable<bool> QuoteInd { get; set; }
-        public Nullable<int> CountsWithQuotesID { get; set; }
-        public Nullable<int> CountsWithoutQuotesID { get; set; }
+        public long IncludeQuotes { get; set; }
+        public long WithQuotesId { get; set; }
+        public long WithoutQuotesId { get; set; }
     
-        public virtual Count Count { get; set; }
-        public virtual Count Count1 { get; set; }
+        public virtual WordCount WordCount { get; set; }
+        public virtual WordCount WordCount1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Group> Groups { get; set; }
+        public virtual ICollection<Text_Grouping> Text_Grouping { get; set; }
     }
 }
