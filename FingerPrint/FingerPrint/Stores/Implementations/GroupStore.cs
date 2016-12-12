@@ -78,7 +78,12 @@ namespace FingerPrint.Stores
                 _db.Text_Grouping,
                 text => text.Id,
                 text_grouping => text_grouping.TextId,
-                (text, text_grouping) => new { TextId = text_grouping.TextId, GroupingId = text_grouping.GroupingId }
+                (text, text_grouping) => new { TextId = text_grouping.TextId }
+                ).Join(
+                    _db.Groupings,
+                    tg => tg.TextId,
+                    grouping => grouping.Id,
+                    (tg, grouping) => new { TextId = tg.TextId, GroupingId = grouping.Id }
                 ).Where(x => x.GroupingId == group.Id)
                  .Select(x => (int)x.TextId);
 
