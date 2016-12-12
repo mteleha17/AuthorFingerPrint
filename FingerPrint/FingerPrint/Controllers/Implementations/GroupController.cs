@@ -87,7 +87,7 @@ namespace FingerPrint.Controllers.Implementations
             {
                 throw new ArgumentException("Cannot add a null item to a group.");
             }
-            if (items.Contains(model))
+            if (items.Any(x => x.GetName() == model.GetName()))
             {
                 throw new ArgumentException("Cannot add a group to itself.");
             }
