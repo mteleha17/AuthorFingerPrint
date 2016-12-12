@@ -92,12 +92,10 @@ namespace FingerPrint.Stores
             {
                 return null;
             }
-            if (text == null)
-            {
-                return null;
-            }
             IFlexibleWordCountModel counts = GetCountsFromText(text);
-            return _modelFactory.GetTextModel(text.Name, counts);
+            ITextModel model = _modelFactory.GetTextModel(text.Name, counts);
+            model.SetAuthor(text.Author);
+            return model;
         }
 
         public void ModifyAuthor(ITextModel model, string newAuthor)

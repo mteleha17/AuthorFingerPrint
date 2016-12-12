@@ -330,7 +330,9 @@ namespace FingerPrint
             List<ITextViewModel> textList = _textController.GetAllTexts();
             foreach (ITextViewModel textEntry in textList)
             {
+
                  ListViewItem item = new ListViewItem();
+                string author = textEntry.GetAuthor();
                 item.Text = textEntry.GetAuthor();
                 item.SubItems.Add(textEntry.GetName());
                 String includeQuotesl;
