@@ -381,6 +381,7 @@ namespace FingerPrint
                 _groupController.CreateGroup(groupName, UniversalConstants.CountSize);
                 fillGroupComboBox();
                 groupComboBox.SelectedIndex = groupComboBox.FindStringExact(groupName);
+                updateListViews(); 
                 
                               
             }
@@ -517,7 +518,7 @@ namespace FingerPrint
                 _textController.DeleteText(model);
                 updateListViews();
                 updateAnalysisGroups();
-                groupComboBox_SelectedIndexChanged(sender, e);
+                                groupComboBox_SelectedIndexChanged(sender, e);
 
             }
             else
@@ -529,15 +530,18 @@ namespace FingerPrint
         }
         private void groupComboBox_SelectedIndexChanged(object sender, EventArgs e) //makes the selected group the target group
         {
-            
-            IGroupViewModel model = _groupController.GetGroupByName(groupComboBox.Text);
             groupListViewTab2.Items.Clear();
-            List<ITextOrGroupViewModel> list = model.GetMembers();
-            foreach(ITextOrGroupViewModel textOrGroup in list)
+            if (groupComboBox.Text != "")
             {
-                ListViewItem item = new ListViewItem();
-                item.Text = textOrGroup.GetName();
-                groupListViewTab2.Items.Add(item);
+                IGroupViewModel model = _groupController.GetGroupByName(groupComboBox.Text);
+                List<ITextOrGroupViewModel> list = model.GetMembers();
+                foreach (ITextOrGroupViewModel textOrGroup in list)
+                {
+                    ListViewItem item = new ListViewItem();
+                    item.Text = textOrGroup.GetName();
+                    groupListViewTab2.Items.Add(item);
+                }
+               
             }
         }
         private void deleteButtonTab2_Click(object sender, EventArgs e)
@@ -570,24 +574,25 @@ namespace FingerPrint
                         _activeItems.Remove(_activeItems.Find(x => x.GetName() == textName));
                     }
                     //if (_analysisController.ItemIsActive(textName)){
-                    if (_activeItems.Exists(x => x.GetName() == textName))
-                    {
-                        //_analysisController.RemoveFromActiveItems(textName);
-                        ITextOrGroupViewModel modelToRemove = _activeItems.Find(x => x.GetName() == textName);
-                        _activeItems.Remove(modelToRemove);
+                    //if (_activeItems.Exists(x => x.GetName() == textName))
+                    //{
+                    //    //_analysisController.RemoveFromActiveItems(textName);
+                    //    ITextOrGroupViewModel modelToRemove = _activeItems.Find(x => x.GetName() == textName);
+                    //    _activeItems.Remove(modelToRemove);
 
                        
+                    //}
+                    if (!_groupController.IsChild(_groupController.GetGroupByName(textName))){
+                        _groupController.Delete(_groupController.GetGroupByName(textName));
                     }
-                    foreach (IGroupViewModel groupEntry in groupList)
+                    else
                     {
-                      
-                        if (_groupController.Contains(groupEntry.GetName(), textName))
-                        {
-                            _groupController.RemoveItemFromGroup(groupEntry,_groupController.GetGroupByName(textName));
-                        }
+                        string errorMessage = "You cannot delete a group that is within a group";
+                        var form2 = new ErrorMessageDisplay(errorMessage);
+                        form2.Show(this);
                     }
 
-                    _groupController.Delete(_groupController.GetGroupByName(textName));
+                  
                 }
                 fillGroupComboBox();
                 updateListViews();
