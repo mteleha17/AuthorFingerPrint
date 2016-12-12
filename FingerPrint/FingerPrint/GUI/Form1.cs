@@ -134,7 +134,7 @@ namespace FingerPrint
                 }
                 catch
                 {
-                    string errorMessage = "You need to add groups to be analyzed!";
+                    string errorMessage = "You need to add groups to be analyzed";
                     var form2 = new ErrorMessageDisplay(errorMessage);
                     form2.Show(this);
                 }
@@ -159,7 +159,7 @@ namespace FingerPrint
             }
             else
             {
-                string errorMessage = "You need to select an item to edit it first!";
+                string errorMessage = "You need to select an item to edit it first";
                 var form2 = new ErrorMessageDisplay(errorMessage);
                 form2.Show(this);
             }
@@ -186,19 +186,19 @@ namespace FingerPrint
             {
                 if (groupComboBox.Text == "")
                 {
-                    string errorMessage = "You need to select a group or create one first!";
+                    string errorMessage = "You need to select a group or create one first";
                     var form2 = new ErrorMessageDisplay(errorMessage);
                     form2.Show(this);
                 }
                 else if (fileGroupListViewTab2.SelectedItems.Count <= 0)
                 {
-                    string errorMessage = "You need to select an item to add it!";
+                    string errorMessage = "You need to select an item to add it";
                     var form2 = new ErrorMessageDisplay(errorMessage);
                     form2.Show(this);
                 }
                 else
                 {
-                    string errorMessage = "You cannot add a group to itself, or a text to a group that already contains it!";
+                    string errorMessage = "You cannot add a group to itself, or a text to a group that already contains it";
                     var form2 = new ErrorMessageDisplay(errorMessage);
                     form2.Show(this);
                 }
@@ -206,9 +206,10 @@ namespace FingerPrint
         }
         private void addButtonTab3_Click(object sender, EventArgs e)    //allows groups and texts to be added to an analysis
         {
+            ListViewItem itemToMove = new ListViewItem(); 
            try
             {
-            ListViewItem itemToMove = fileGroupListViewTab3.SelectedItems[0];
+             itemToMove = fileGroupListViewTab3.SelectedItems[0];
             
                 if (filesRadioButtonTab3.Checked)
                  {
@@ -228,7 +229,13 @@ namespace FingerPrint
             {
                 if (fileGroupListViewTab3.SelectedItems.Count <= 0)
                 {
-                    string errorMessage = "You need to select an item to edit if first!";
+                    string errorMessage = "You need to select an item to edit if first";
+                    var form2 = new ErrorMessageDisplay(errorMessage);
+                    form2.Show(this);
+                }
+                else if(_groupController.GroupIsEmpty(_groupController.GetGroupByName(itemToMove.Text)))
+                {
+                    string errorMessage = "You cannot analyze an empty group";
                     var form2 = new ErrorMessageDisplay(errorMessage);
                     form2.Show(this);
                 }
@@ -255,7 +262,7 @@ namespace FingerPrint
             {
                 if (analysisListView.SelectedItems.Count <= 0)
                 {
-                    string errorMessage = "You need to select an item to remove it!";
+                    string errorMessage = "You need to select an item to remove it";
                     var form2 = new ErrorMessageDisplay(errorMessage);
                     form2.Show(this);
                 }
@@ -282,7 +289,7 @@ namespace FingerPrint
             {
                 if(groupListViewTab2.SelectedItems.Count <= 0)
                 {
-                    string errorMessage = "You need to select an item to remove it!";
+                    string errorMessage = "You need to select an item to remove it";
                     var form2 = new ErrorMessageDisplay(errorMessage);
                     form2.Show(this);
                 }
@@ -366,19 +373,19 @@ namespace FingerPrint
             catch
             {
                 if (_textController.GetTextByName(groupName) != null) {
-                    string errorMessage = "You cannot name a group the same name as one of the saved texts!";
+                    string errorMessage = "You cannot name a group the same name as one of the saved texts";
                     var form2 = new ErrorMessageDisplay(errorMessage);
                     form2.Show(this);
                 }
                 else if(_groupController.GetGroupByName(groupName) != null)
                 {
-                    string errorMessage = "You have already created that group!";
+                    string errorMessage = "You have already created that group";
                     var form2 = new ErrorMessageDisplay(errorMessage);
                     form2.Show(this);
                 }
                 else
                 {
-                    string errorMessage = "You must not leave the group name blank!";
+                    string errorMessage = "You must not leave the group name blank";
                     var form2 = new ErrorMessageDisplay(errorMessage);
                     form2.Show(this);
                 }
@@ -405,7 +412,7 @@ namespace FingerPrint
             }
             else
             {
-                string errorMessage = "You cannot change a group name to one that already exists!";
+                string errorMessage = "You cannot change a group name to one that already exists";
                 var form2 = new ErrorMessageDisplay(errorMessage);
                 form2.Show(this);
             }
@@ -483,16 +490,17 @@ namespace FingerPrint
                 List<IGroupViewModel> groupList = _groupController.GetAllGroups();
                 foreach (IGroupViewModel groupEntry in groupList)
                 {
-                    
+                    if (_groupController.Contains(groupEntry.GetName(), textName))
+                    {
                         _groupController.RemoveItemFromGroup(groupEntry, _textController.GetTextByName(textName));
-                    
+                    }
                 }
                 _textController.DeleteText(model);
                 updateListViews();
             }
             else
             {
-                string errorMessage = "You need to select an item to delete it first!";
+                string errorMessage = "You need to select an item to delete it first";
                 var form2 = new ErrorMessageDisplay(errorMessage);
                 form2.Show(this);
             }
@@ -502,7 +510,6 @@ namespace FingerPrint
             
             IGroupViewModel model = _groupController.GetGroupByName(groupComboBox.Text);
             groupListViewTab2.Items.Clear();
-            //changed -JG
             List<ITextOrGroupViewModel> list = model.GetMembers();
             foreach(ITextOrGroupViewModel textOrGroup in list)
             {
@@ -513,18 +520,19 @@ namespace FingerPrint
         }
         private void deleteButtonTab2_Click(object sender, EventArgs e)
         {
+            List<IGroupViewModel> groupList = _groupController.GetAllGroups();
             if (fileGroupListViewTab2.SelectedItems.Count > 0)
             {
                 if (filesRadioButton.Checked)
                 {
                     ListViewItem item = fileGroupListViewTab2.SelectedItems[0];
                     string textName = item.SubItems[1].Text;
-                    List<IGroupViewModel> groupList = _groupController.GetAllGroups();
+                    
                     foreach (IGroupViewModel groupEntry in groupList)
                     {
-                       
+                        if (_groupController.Contains(groupEntry.GetName(), textName)){
                             _groupController.RemoveItemFromGroup(groupEntry, _textController.GetTextByName(textName));
-                        
+                        }
                     }
                     _textController.DeleteText(_textController.GetTextByName(textName));
                 }
@@ -538,6 +546,14 @@ namespace FingerPrint
                         fillGroupComboBox();
                         updateAnalysisGroups();
                     }
+                    foreach (IGroupViewModel groupEntry in groupList)
+                    {
+                        if (_groupController.Contains(groupEntry.GetName(), textName))
+                        {
+                            _groupController.RemoveItemFromGroup(groupEntry,_groupController.GetGroupByName(textName));
+                        }
+                    }
+
                     _groupController.Delete(_groupController.GetGroupByName(textName));
                 }
                 fillGroupComboBox();
@@ -545,7 +561,7 @@ namespace FingerPrint
             }
             else
             {
-                string errorMessage = "You need to select an item to delete it first!";
+                string errorMessage = "You need to select an item to delete it first";
                 var form2 = new ErrorMessageDisplay(errorMessage);
                 form2.Show(this);
             }
