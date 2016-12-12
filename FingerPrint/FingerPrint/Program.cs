@@ -29,7 +29,7 @@ namespace FingerPrint
             var textTempDb = new List<ITextViewModel>();
             var groupTempDb = new List<IGroupViewModel>();
 
-            var textController = new TextController(textTempDb, groupTempDb, textStore, groupStore, modelFactory);
+            var textController = new TextController(textStore, groupStore, modelFactory);
             var groupController = new GroupController(analysisController, textTempDb, groupTempDb, textStore, groupStore, modelFactory);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
