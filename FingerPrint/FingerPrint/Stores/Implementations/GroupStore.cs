@@ -62,6 +62,10 @@ namespace FingerPrint.Stores
 
         public bool Contains(string groupName, string itemName)
         {
+            if (string.Equals(groupName, itemName))
+            {
+                return false;
+            }
             Grouping parentGroup = _db.Groupings.FirstOrDefault(x => x.Name == groupName);
             if (parentGroup == null)
             {
