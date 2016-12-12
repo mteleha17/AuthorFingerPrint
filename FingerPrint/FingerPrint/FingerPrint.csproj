@@ -204,7 +204,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <None Include="Database\FingerprintLite13.db">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <EntityDeploy Include="FingerprintLite13.edmx">
       <Generator>EntityModelCodeGenerator</Generator>

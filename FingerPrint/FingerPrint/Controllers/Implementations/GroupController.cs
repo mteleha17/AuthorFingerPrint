@@ -21,8 +21,6 @@ namespace FingerPrint.Controllers.Implementations
         private IModelFactory _modelFactory;
 
         public GroupController(IAnalysisController analysisController,
-            List<ITextViewModel> textTempDb,
-            List<IGroupViewModel> groupTempDb,
             ITextStore textStore,
             IGroupStore groupStore,
             IModelFactory modelFactory)

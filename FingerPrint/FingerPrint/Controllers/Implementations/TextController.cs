@@ -20,9 +20,7 @@ namespace FingerPrint.Controllers.Implementations
         private IGroupStore _groupStore;
         private IModelFactory _modelFactory;
 
-        public TextController(List<ITextViewModel> textTempDb,
-            List<IGroupViewModel> groupTempDb, 
-            ITextStore textStore,
+        public TextController(ITextStore textStore,
             IGroupStore groupStore,
             IModelFactory modelFactory)
         {
