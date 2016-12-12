@@ -55,6 +55,11 @@ namespace FingerPrint
             try
             {
                 StreamReader input = new StreamReader(fileLocationTextBox.Text);
+                if (initialAuthorTextBox.Text == "Name of Author")
+                {
+                    initialAuthorTextBox.Text = "";
+                }
+
                 ITextViewModel model = _textController.CreateText(initialFileNameTextBox.Text, input, UniversalConstants.CountSize, initialAuthorTextBox.Text); //creates the text in the db
                 updateTextListView(fileListViewTab1);
                 initialFileNameTextBox.Text = "New File Name";
