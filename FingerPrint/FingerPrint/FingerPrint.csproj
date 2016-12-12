@@ -228,13 +228,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="DatabaseScripts\dbo.Script_Order.sql" />
-    <Content Include="DatabaseScripts\dbo.Database.sql" />
-    <Content Include="DatabaseScripts\dbo.Counts.sql" />
-    <Content Include="DatabaseScripts\dbo.Group.sql" />
-    <Content Include="DatabaseScripts\dbo.Group_Group.sql" />
-    <Content Include="DatabaseScripts\dbo.Text.sql" />
-    <Content Include="DatabaseScripts\dbo.Text_Group.sql" />
     <Content Include="FingerprintLite13.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>FingerprintLite13.edmx</DependentUpon>
