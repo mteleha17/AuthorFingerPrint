@@ -101,7 +101,6 @@ namespace FingerPrint
                 {
                     dataTable.Rows.Clear(); //clear any previous analysis
                     analysisLineChart.Series.Clear();
-                    //changed -JG
                     List<ITextOrGroupViewModel> groupList = _analysisController.GetActiveItems(); //gets any texts/groups that have been added to the analysis group
                     foreach (ITextOrGroupViewModel groupEntry in groupList)
                     {
@@ -243,7 +242,6 @@ namespace FingerPrint
                 ListViewItem itemToMove = analysisListView.SelectedItems[0];
                 _analysisController.RemoveFromActiveItems(itemToMove.Text);
                 analysisListView.Items.Clear();
-                //changed -JG
                 updateAnalysisGroups();
                 updateListViews();
                 fillGroupComboBox();
@@ -551,101 +549,3 @@ namespace FingerPrint
         
     }
 }
-/*
-    //TestData
-            IFlexibleWordCountModel wordCount = _modelFactory.GetFlexibleCountModel(10);
-            TextModel model = new TextModel("test", wordCount);
-            model.SetAuthor("Twain");
-            model.SetName("Adventures of SON");
-            model.SetIncludeQuotes(true);
-            String includeQuotesl;
-            if (model.GetIncludeQuotes())
-            {
-                includeQuotesl = "Yes";
-            }
-            else{
-                includeQuotesl = "No";
-            }
-            ListViewItem item = new ListViewItem();
-            item.Text = model.GetAuthor();
-            item.SubItems.Add(model.GetName());
-            item.SubItems.Add(includeQuotesl);
-            fileListViewTab1.Items.Add(item);
-            //fileGroupListViewTab2.Items.Add(item);
-            //filesAndGroupsListviewTab3.Items.Add(item);
-ISingleWordCountModel withQuotes = _modelFactory.GetSingleCountModel(10);
-ISingleWordCountModel withoutQuotes = _modelFactory.GetSingleCountModel(10);
-withoutQuotes.SetAt(0, 150);
-withoutQuotes.SetAt(1, 250);
-withoutQuotes.SetAt(2, 400);
-withoutQuotes.SetAt(3, 550);
-withoutQuotes.SetAt(4, 650);
-withoutQuotes.SetAt(5, 500);
-withoutQuotes.SetAt(6, 350);
-withoutQuotes.SetAt(7, 150);
-withoutQuotes.SetAt(8, 60);
-withoutQuotes.SetAt(9, 30);
-IFlexibleWordCountModel wordCount = _modelFactory.GetFlexibleCountModel(withQuotes,withoutQuotes);
-TextModel model = new TextModel("test", wordCount);
-model.SetAuthor("Twain");
-model.SetName("Adventures of SON");
-model.SetIncludeQuotes(false);
-string groupOrTitle = "SampleData1";
-ISingleWordCountModel wcount = model.GetCounts();
-ISingleWordCountModel withQuotes2 = _modelFactory.GetSingleCountModel(10);
-ISingleWordCountModel withoutQuotes2 = _modelFactory.GetSingleCountModel(10);
-withoutQuotes2.SetAt(0, 300);
-withoutQuotes2.SetAt(1, 450);
-withoutQuotes2.SetAt(2, 600);
-withoutQuotes2.SetAt(3, 750);
-withoutQuotes2.SetAt(4, 900);
-withoutQuotes2.SetAt(5, 700);
-withoutQuotes2.SetAt(6, 450);
-withoutQuotes2.SetAt(7, 225);
-withoutQuotes2.SetAt(8, 90);
-withoutQuotes2.SetAt(9, 45);
-IFlexibleWordCountModel wordCount2 = _modelFactory.GetFlexibleCountModel(withQuotes2, withoutQuotes2);
-TextModel model2 = new TextModel("test2", wordCount2);
-model2.SetAuthor("Paul");
-model2.SetName("Failures of Liberalism");
-model2.SetIncludeQuotes(false);
-string groupOrTitle2 = "SampleData2";
-ISingleWordCountModel wcount2 = model2.GetCounts();
-//graph
-analysisLineChart.Series.Add(groupOrTitle);
-analysisLineChart.Series.Add(groupOrTitle2);
-analysisLineChart.Series[groupOrTitle].ChartType = SeriesChartType.Line;
-analysisLineChart.Series[groupOrTitle2].ChartType = SeriesChartType.Line;
-for (int i = 1; i <= 10; i++)
-{
-    analysisLineChart.Series[groupOrTitle].Points.AddXY(i, wcount.GetAt(i-1));
-    analysisLineChart.Series[groupOrTitle2].Points.AddXY(i, wcount2.GetAt(i - 1));
-}
-analysisLineChart.Series[groupOrTitle].ChartArea = "ChartArea1";
-analysisLineChart.Series[groupOrTitle2].ChartArea = "ChartArea1";
-//table
-dataTable.Rows.Add();
-DataGridViewRow row = (DataGridViewRow)dataTable.Rows[0].Clone();
-DataGridViewRow row2 = (DataGridViewRow)dataTable.Rows[0].Clone();
-DataGridViewRow rowToAdd = row;
-DataGridViewRow rowToAdd2 = row2;
-dataTable.Rows.RemoveAt(0);
-rowToAdd.Cells[0].Value = groupOrTitle;
-rowToAdd2.Cells[0].Value = groupOrTitle2;
-for(int i =0; i<model.GetLength(); i++)
-{
-    rowToAdd.Cells[i + 1].Value = wcount.GetAt(i);
-    rowToAdd2.Cells[i + 1].Value = wcount2.GetAt(i);
-}
-dataTable.Rows.Add(rowToAdd);
-dataTable.Rows.Add(rowToAdd2);
-tabControl1.SelectTab(analysisTab);
-analysisTab.Visible = true;
-    /Fake Data, created fake text, added data
-            _modelFactory = new ModelFactory();
-            ModelFactory modelFactory = new ModelFactory();
-            StreamReader input = new StreamReader(fileLocationTextBox.Text);
-            IFlexibleWordCountModel wordCountModel = _modelFactory.GetFlexibleCountModel(10);
-            modelFactory.GenerateCountsTestMethod(input, wordCountModel);
-            TextModel model = new TextModel("Tales", wordCountModel);
-*/
