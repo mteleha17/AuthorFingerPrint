@@ -282,8 +282,8 @@ namespace FingerPrint
                 {
                     _groupController.RemoveItemFromGroup(model, _textController.GetTextByName(itemToMove.Text));
                 }
-                groupListViewTab2.Items.Remove(itemToMove);
                 updateListViews();
+                groupComboBox_SelectedIndexChanged(sender, e);
             }
             catch(Exception)
             {
