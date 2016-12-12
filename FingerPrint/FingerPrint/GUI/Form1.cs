@@ -276,7 +276,6 @@ namespace FingerPrint
                     _groupController.RemoveItemFromGroup(model, _textController.GetTextByName(itemToMove.Text));
                 }
                 groupListViewTab2.Items.Remove(itemToMove);
-                fillGroupComboBox();
                 updateListViews();
             }
             catch(Exception)
@@ -481,9 +480,12 @@ namespace FingerPrint
                 ListViewItem item = fileListViewTab1.SelectedItems[0];
                 string textName = item.SubItems[1].Text;
                 ITextViewModel model = _textController.GetTextByName(textName);
-                if(null != _groupController.GetGroupByName(textName+ " group"))
+                List<IGroupViewModel> groupList = _groupController.GetAllGroups();
+                foreach (IGroupViewModel groupEntry in groupList)
                 {
-                    _groupController.Delete(_groupController.GetGroupByName(textName + " group"));
+                    
+                        _groupController.RemoveItemFromGroup(groupEntry, _textController.GetTextByName(textName));
+                    
                 }
                 _textController.DeleteText(model);
                 updateListViews();
@@ -517,6 +519,13 @@ namespace FingerPrint
                 {
                     ListViewItem item = fileGroupListViewTab2.SelectedItems[0];
                     string textName = item.SubItems[1].Text;
+                    List<IGroupViewModel> groupList = _groupController.GetAllGroups();
+                    foreach (IGroupViewModel groupEntry in groupList)
+                    {
+                       
+                            _groupController.RemoveItemFromGroup(groupEntry, _textController.GetTextByName(textName));
+                        
+                    }
                     _textController.DeleteText(_textController.GetTextByName(textName));
                 }
                 else
@@ -527,7 +536,6 @@ namespace FingerPrint
                         _analysisController.RemoveFromActiveItems(textName);
                         analysisListView.Items.Clear();
                         fillGroupComboBox();
-                        //changed -JG
                         updateAnalysisGroups();
                     }
                     _groupController.Delete(_groupController.GetGroupByName(textName));
