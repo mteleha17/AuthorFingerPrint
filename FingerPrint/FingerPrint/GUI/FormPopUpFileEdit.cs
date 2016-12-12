@@ -47,6 +47,10 @@ namespace FingerPrint
                 {
                     newAuthorTextBox.Text = "";
                 }
+                if(quotesCheckbox.Checked == model.GetIncludeQuotes())
+                {
+                    
+                }
                 _textController.UpdateText(model, newFileNameTextbox.Text, newAuthorTextBox.Text, quotesCheckbox.Checked);
                 form1.updateListViews();
                 this.Close();
