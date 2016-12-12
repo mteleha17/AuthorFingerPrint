@@ -203,6 +203,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="Database\FingerprintLite13.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <EntityDeploy Include="FingerprintLite13.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>FingerprintLite13.Designer.cs</LastGenOutput>
