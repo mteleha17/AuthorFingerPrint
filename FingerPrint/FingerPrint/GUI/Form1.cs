@@ -517,6 +517,8 @@ namespace FingerPrint
                 _textController.DeleteText(model);
                 updateListViews();
                 updateAnalysisGroups();
+                groupComboBox_SelectedIndexChanged(sender, e);
+
             }
             else
             {
@@ -563,6 +565,10 @@ namespace FingerPrint
                 {
                     ListViewItem item = fileGroupListViewTab2.SelectedItems[0];
                     string textName = item.SubItems[0].Text;
+                    if (_activeItems.Contains(_activeItems.Find(x => x.GetName() == textName)))
+                    {
+                        _activeItems.Remove(_activeItems.Find(x => x.GetName() == textName));
+                    }
                     //if (_analysisController.ItemIsActive(textName)){
                     if (_activeItems.Exists(x => x.GetName() == textName))
                     {
@@ -570,12 +576,11 @@ namespace FingerPrint
                         ITextOrGroupViewModel modelToRemove = _activeItems.Find(x => x.GetName() == textName);
                         _activeItems.Remove(modelToRemove);
 
-                        analysisListView.Items.Clear();
-                        fillGroupComboBox();
-                        updateAnalysisGroups();
+                       
                     }
                     foreach (IGroupViewModel groupEntry in groupList)
                     {
+                      
                         if (_groupController.Contains(groupEntry.GetName(), textName))
                         {
                             _groupController.RemoveItemFromGroup(groupEntry,_groupController.GetGroupByName(textName));
@@ -586,6 +591,8 @@ namespace FingerPrint
                 }
                 fillGroupComboBox();
                 updateListViews();
+                updateAnalysisGroups();
+                groupComboBox_SelectedIndexChanged(sender, e);
             }
             else
             {
