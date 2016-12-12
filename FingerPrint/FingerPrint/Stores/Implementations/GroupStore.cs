@@ -241,11 +241,20 @@ namespace FingerPrint.Stores
                     //{
                     //    throw new ArgumentException("Cannot remove item from group because it is not a member of the group.");
                     //}
-                    if (!_db.Text_Grouping.Any(x => x.TextId == text.Id && x.GroupingId == parentGroup.Id))
+
+                    //if (!_db.Text_Grouping.Any(x => x.TextId == text.Id && x.GroupingId == parentGroup.Id))
+                    //{
+                    //    throw new ArgumentException("Cannot remove item from group because it is not a member of the group.");
+                    //}
+                    //texts.Add(text);
+                    Text_Grouping textGrouping = _db.Text_Grouping.FirstOrDefault(x => x.GroupingId == parentGroup.Id && x.TextId == text.Id);
+                    if (textGrouping == null)
                     {
                         throw new ArgumentException("Cannot remove item from group because it is not a member of the group.");
                     }
-                    texts.Add(text);
+                    _db.Text_Grouping.Remove(textGrouping);
+                    _db.SaveChanges();
+
                     //Text_Group textGroup = _db.Text_Group.FirstOrDefault(x => x.GroupID == parentGroup.GroupID && x.TextID == text.TextID);
                     //if (textGroup == null)
                     //{
@@ -266,32 +275,34 @@ namespace FingerPrint.Stores
                     {
                         throw new ArgumentException("Cannot remove item from group because it is not a member of the group.");
                     }
-                    groupGroupIds.Add(groupGroup.Id);
+                    //groupGroupIds.Add(groupGroup.Id);
+                    _db.Grouping_Grouping.Remove(groupGroup);
+                    _db.SaveChanges();
                 }
             }
-            foreach (Text t in texts)
-            {
-                Text_Grouping textGrouping = _db.Text_Grouping.FirstOrDefault(x => x.TextId == t.Id && x.GroupingId == parentGroup.Id);
-                if (textGrouping == null)
-                {
-                    throw new ArgumentException("Cannot remove one or more items since the group does not contain them.");
-                }
-                _db.Text_Grouping.Remove(textGrouping);
-                //parentGroup.Texts.Remove(t);
-                _db.SaveChanges();
-            }
+            //foreach (Text t in texts)
+            //{
+            //    Text_Grouping textGrouping = _db.Text_Grouping.FirstOrDefault(x => x.TextId == t.Id && x.GroupingId == parentGroup.Id);
+            //    if (textGrouping == null)
+            //    {
+            //        throw new ArgumentException("Cannot remove one or more items since the group does not contain them.");
+            //    }
+            //    _db.Text_Grouping.Remove(textGrouping);
+            //    //parentGroup.Texts.Remove(t);
+            //    _db.SaveChanges();
+            //}
             //foreach (int id in textGroupIds)
             //{
             //    //   Text_Group textGroup = _db.Text_Group.FirstOrDefault(x => x.TextTextID == id);
             //    //   _db.Text_Group.Remfove(textGroup);
             //    _db.SaveChanges();
             //}
-            foreach (long id in groupGroupIds)
-            {
-                Grouping_Grouping groupGroup = _db.Grouping_Grouping.FirstOrDefault(x => x.Id == id);
-                _db.Grouping_Grouping.Remove(groupGroup);
-                _db.SaveChanges();
-            }
+            //foreach (long id in groupGroupIds)
+            //{
+            //    Grouping_Grouping groupGroup = _db.Grouping_Grouping.FirstOrDefault(x => x.Id == id);
+            //    _db.Grouping_Grouping.Remove(groupGroup);
+            //    _db.SaveChanges();
+            //}
         }
 
 
