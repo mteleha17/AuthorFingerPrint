@@ -93,7 +93,7 @@ namespace FingerPrint.Controllers.Implementations
             }
             foreach (var i in items)
             {
-                if (i is IGroupViewModel && ((IGroupViewModel)i).GetMembers().Contains(model))
+                if (i is IGroupViewModel && ((IGroupViewModel)i).GetMembers().Any(x => x.GetName() == model.GetName()))
                 {
                     throw new ArgumentException("Cannot add a group to its own child.");
                 }

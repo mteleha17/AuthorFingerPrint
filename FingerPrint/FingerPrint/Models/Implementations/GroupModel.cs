@@ -93,7 +93,7 @@ namespace FingerPrint.Models
             {
                 throw new ArgumentException("Countable item must have the same length as the group to which it is added.");
             }
-            if (_items.Contains(item))
+            if (_items.Any(x => x.GetName() == item.GetName()))
             {
                 throw new ArgumentException($"Item {item} cannot be added to a group that it is already a member of.");
             }
@@ -116,7 +116,7 @@ namespace FingerPrint.Models
             {
                 throw new ArgumentException("Cannot remove null item.");
             }
-            if (!_items.Contains(item))
+            if (!_items.Any(x => x.GetName() == item.GetName()))
             {
                 throw new ArgumentException($"Group does not contain item: {item}.");
             }
@@ -125,13 +125,13 @@ namespace FingerPrint.Models
             //    ((IGroupModel)item).Modified -= new EventHandler(OnModified);
             //}
             item.Modified -= new EventHandler(OnModified);
-            _items.Remove(item);
+            _items.Remove(_items.FirstOrDefault(x => x.GetName() == item.GetName()));
             OnModified(this, EventArgs.Empty);
         }
 
         public bool Contains(ITextOrGroupModel item)
         {
-            return _items.Contains(item);
+            return _items.Any(x => x.GetName() == item.GetName());
         }
 
         public List<ITextOrGroupViewModel> GetMembers()
