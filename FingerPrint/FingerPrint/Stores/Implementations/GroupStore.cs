@@ -52,15 +52,15 @@ namespace FingerPrint.Stores
             {
                 return true;
             }
-            var list = _db.Grouping_Grouping.Join(
+            var list = _db.Grouping_Grouping.Where(x => x.ParentId == groupId).Join(
                 _db.Groupings,
                 gg => gg.ChildId,
                 g => g.Id,
-                (gg, g) => new { ParentId = gg.ParentId, ChildId = gg.ChildId, Childname = g.Name}
+                (gg, g) => new { ChildId = gg.ChildId, ChildName = g.Name}
                 );
             foreach (var item in list)
             {
-                if (item.ParentId == groupId && item.Childname == itemName)
+                if (item.ChildName == itemName)
                 {
                     return true;
                 }
