@@ -24,6 +24,8 @@ namespace FingerPrint.Controllers
 
         bool Contains(string groupName, string itemName);
 
+        bool GroupIsEmpty(IGroupViewModel model);
+
         /// <summary>
         /// Gets all groups that exist in the database.
         /// </summary>

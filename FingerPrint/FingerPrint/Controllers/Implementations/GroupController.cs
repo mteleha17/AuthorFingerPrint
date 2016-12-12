@@ -58,6 +58,11 @@ namespace FingerPrint.Controllers.Implementations
             return _groupStore.Contains(groupName, itemName);
         }
 
+        public bool GroupIsEmpty(IGroupViewModel model)
+        {
+            return model.GetMembers().Count == 0;
+        }
+
         public IGroupViewModel CreateGroup(string name, int length)
         {
             if (AnyByName(name) || _textStore.Exists(x => x.Name == name))
