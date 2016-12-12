@@ -43,38 +43,17 @@ namespace FingerPrint.Stores
         public bool Contains(string groupName, string itemName)
         {
             Grouping group = _db.Groupings.FirstOrDefault(x => x.Name == groupName);
-            if (group == null)
+            Grouping groupItem = _db.Groupings.FirstOrDefault(x => x.Name == itemName);
+            Text textItem = _db.Texts.FirstOrDefault(x => x.Name == itemName);
+            if (textItem == null && groupItem == null)
             {
-                throw new ArgumentException("That group does not exist.");
+                throw new ArgumentException("No item with the specified name exists.");
             }
-            long groupId = group.Id;
-            if (_db.Text_Grouping.Any(x => x.Text.Name == itemName && x.GroupingId == groupId))
+            if (textItem == null)
             {
-                return true;
+                return _db.Grouping_Grouping.Any(x => x.ParentId == group.Id && x.ChildId == groupItem.Id);
             }
-            var list = _db.Grouping_Grouping.Where(x => x.ParentId == groupId).Join(
-                _db.Groupings,
-                gg => gg.ChildId,
-                g => g.Id,
-                (gg, g) => new { ChildId = gg.ChildId, ChildName = g.Name}
-                );
-            foreach (var item in list)
-            {
-                if (item.ChildName == itemName)
-                {
-                    return true;
-                }
-            }
-            foreach (var item in list)
-            {
-                Grouping nextGroup = _db.Groupings.FirstOrDefault(x => x.Id == item.ChildId);
-                if (nextGroup == null)
-                {
-                    continue;
-                }
-                Contains(nextGroup.Name, itemName);
-            }
-            return false;
+            return _db.Text_Grouping.Any(x => x.TextId == textItem.Id && x.GroupingId == group.Id);
         }
 
         public void Delete(IGroupModel model)
