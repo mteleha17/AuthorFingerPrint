@@ -70,7 +70,7 @@ namespace FingerPrint.Controllers.Implementations
         {
             if (_analysisController.ItemIsActive(model.GetName()))
             {
-                throw new ArgumentException($"Cannot delete group {model.GetName()} because it is active.");
+                _analysisController.RemoveFromActiveItems(model.GetName());
             }
             _groupStore.Delete((IGroupModel)model);
             //_tempDbGroup.Remove(model);
@@ -83,6 +83,21 @@ namespace FingerPrint.Controllers.Implementations
 
         public void AddItemsToGroup(IGroupViewModel model, IEnumerable<ITextOrGroupViewModel> items)
         {
+            if (items.Contains(null))
+            {
+                throw new ArgumentException("Cannot add a null item to a group.");
+            }
+            if (items.Contains(model))
+            {
+                throw new ArgumentException("Cannot add a group to itself.");
+            }
+            foreach (var i in items)
+            {
+                if (i is IGroupViewModel && ((IGroupViewModel)i).GetMembers().Contains(model))
+                {
+                    throw new ArgumentException("Cannot add a group to its own child.");
+                }
+            }
             IGroupModel groupModel = (IGroupModel)model;
             IEnumerable<ITextOrGroupModel> itemModels = items.Select(x => (ITextOrGroupModel)x);
             foreach (var m in itemModels)
