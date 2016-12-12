@@ -39,15 +39,21 @@ namespace FingerPrint
         {
             try
             {
-                if(newFileNameTextbox.Text == model.GetName())
+                string name = newFileNameTextbox.Text;
+                string author = newAuthorTextBox.Text;
+                bool isChecked = quotesCheckbox.Checked;
+                if (newFileNameTextbox.Text == model.GetName())
                 {
-                    newFileNameTextbox.Text = "";
+                    //newFileNameTextbox.Text = "";
+                    name = null;
                 }
                 if(newAuthorTextBox.Text == model.GetAuthor())
                 {
-                    newAuthorTextBox.Text = "";
+                    //newAuthorTextBox.Text = "";
+                    author = null;
                 }
-                _textController.UpdateText(model, newFileNameTextbox.Text, newAuthorTextBox.Text, quotesCheckbox.Checked);
+                //_textController.UpdateText(model, newFileNameTextbox.Text, newAuthorTextBox.Text, quotesCheckbox.Checked);
+                _textController.UpdateText(model, name, author, quotesCheckbox.Checked);
                 form1.updateListViews();
                 this.Close();
             }

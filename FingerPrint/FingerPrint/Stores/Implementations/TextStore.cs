@@ -95,6 +95,7 @@ namespace FingerPrint.Stores
             IFlexibleWordCountModel counts = GetCountsFromText(text);
             ITextModel model = _modelFactory.GetTextModel(text.Name, counts);
             model.SetAuthor(text.Author);
+            model.SetIncludeQuotes(Convert.ToBoolean(text.IncludeQuotes));
             return model;
         }
 
