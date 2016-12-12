@@ -20,6 +20,8 @@ namespace FingerPrint.Stores
         /// <param name="newName">The new name for the group.</param>
         void ModifyName(IGroupModel model, string newName);
 
+        bool Contains(string groupName, string itemName);
+
         /// <summary>
         /// Adds a text or group to the specified group.
         /// </summary>

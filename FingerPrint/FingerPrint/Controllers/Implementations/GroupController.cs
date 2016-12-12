@@ -53,6 +53,11 @@ namespace FingerPrint.Controllers.Implementations
             //return _tempDbGroup.Any(x => x.GetName() == name);
         }
 
+        public bool Contains(string groupName, string itemName)
+        {
+            return _groupStore.Contains(groupName, itemName);
+        }
+
         public IGroupViewModel CreateGroup(string name, int length)
         {
             if (AnyByName(name) || _textStore.Exists(x => x.Name == name))

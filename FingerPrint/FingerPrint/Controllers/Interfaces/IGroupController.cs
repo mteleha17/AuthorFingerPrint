@@ -22,6 +22,8 @@ namespace FingerPrint.Controllers
 
         bool AnyByName(string name);
 
+        bool Contains(string groupName, string itemName);
+
         /// <summary>
         /// Gets all groups that exist in the database.
         /// </summary>

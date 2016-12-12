@@ -40,6 +40,43 @@ namespace FingerPrint.Stores
             AddItems(model, model.GetMembers().Select(x => (ITextOrGroupModel)x));
         }
 
+        public bool Contains(string groupName, string itemName)
+        {
+            Grouping group = _db.Groupings.FirstOrDefault(x => x.Name == groupName);
+            if (group == null)
+            {
+                throw new ArgumentException("That group does not exist.");
+            }
+            long groupId = group.Id;
+            if (_db.Text_Grouping.Any(x => x.Text.Name == itemName && x.GroupingId == groupId))
+            {
+                return true;
+            }
+            var list = _db.Grouping_Grouping.Join(
+                _db.Groupings,
+                gg => gg.ChildId,
+                g => g.Id,
+                (gg, g) => new { ParentId = gg.ParentId, ChildId = gg.ChildId, Childname = g.Name}
+                );
+            foreach (var item in list)
+            {
+                if (item.ParentId == groupId && item.Childname == itemName)
+                {
+                    return true;
+                }
+            }
+            foreach (var item in list)
+            {
+                Grouping nextGroup = _db.Groupings.FirstOrDefault(x => x.Id == item.ChildId);
+                if (nextGroup == null)
+                {
+                    continue;
+                }
+                Contains(nextGroup.Name, itemName);
+            }
+            return false;
+        }
+
         public void Delete(IGroupModel model)
         {
             string name = model.GetName();
