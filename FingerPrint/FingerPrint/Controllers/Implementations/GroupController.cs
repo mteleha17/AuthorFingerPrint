@@ -38,6 +38,16 @@ namespace FingerPrint.Controllers.Implementations
             ((GroupStore)_groupStore).DangerousDeleteAllTextsAndGroups();
         }
 
+        public bool IsParent(IGroupViewModel model)
+        {
+            return _groupStore.IsParent((IGroupModel)model);
+        }
+
+        public bool IsChild(IGroupViewModel model)
+        {
+            return _groupStore.IsChild((IGroupModel)model);
+        }
+
         public IGroupViewModel GetGroupByName(string name)
         {
             if (string.IsNullOrWhiteSpace(name))

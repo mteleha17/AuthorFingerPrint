@@ -24,6 +24,10 @@ namespace FingerPrint.Controllers
 
         bool Contains(string groupName, string itemName);
 
+        bool IsParent(IGroupViewModel model);
+
+        bool IsChild(IGroupViewModel model);
+
         bool GroupIsEmpty(IGroupViewModel model);
 
         /// <summary>

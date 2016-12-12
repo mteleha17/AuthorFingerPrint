@@ -42,6 +42,11 @@ namespace FingerPrint.Controllers.Implementations
             //return _textTempDb.FirstOrDefault(x => x.GetName() == name);
         }
 
+        public bool IsChild(ITextViewModel model)
+        {
+            return _textStore.IsChild((ITextModel)model);
+        }
+
         public bool AnyByName(string name)
         {
             if (string.IsNullOrWhiteSpace(name))

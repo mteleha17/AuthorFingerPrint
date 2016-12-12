@@ -31,6 +31,9 @@ namespace FingerPrint.Controllers
         /// <returns>A list of all texts by the specified author, or an empty list if there are no such texts.</returns>
         List<ITextViewModel> GetTextByAuthor(string author);
 
+        bool IsChild(ITextViewModel model);
+
+
         bool AnyByAuthor(string author);
 
         /// <summary>
