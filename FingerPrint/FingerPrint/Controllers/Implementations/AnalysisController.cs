@@ -30,6 +30,10 @@ namespace FingerPrint.Controllers.Implementations
             {
                 throw new ArgumentException("Cannot add group to active groups since group is already active.");
             }
+            if (item is IGroupViewModel && ((IGroupViewModel)item).GetMembers().Count == 0)
+            {
+                throw new ArgumentException("Cannot analyze an empty group.");
+            }
             _activeItems.Add(item);
         }
 
