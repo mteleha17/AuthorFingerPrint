@@ -18,8 +18,9 @@ namespace FingerPrint
         {
             form1 = _form1;
             InitializeComponent();
-            groupNameTextBox.Text = groupName;
             groupNameOld = groupName;
+            groupNameTextBox.Text = groupName;
+            
         }
 
         private void saveChangesButton_Click(object sender, EventArgs e)
