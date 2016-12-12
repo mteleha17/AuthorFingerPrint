@@ -24,6 +24,26 @@ namespace FingerPrint.Stores
             _textStore = textStore;   
         }
 
+        public void DangerousDeleteAllTextsAndGroups()
+        {
+            var textGroups = _db.Text_Grouping;
+            _db.Text_Grouping.RemoveRange(textGroups);
+            _db.SaveChanges();
+            var groupGroups = _db.Grouping_Grouping;
+            _db.Grouping_Grouping.RemoveRange(groupGroups);
+            _db.SaveChanges();
+            var texts = _db.Texts;
+            _db.Texts.RemoveRange(texts);
+            _db.SaveChanges();
+            var groups = _db.Groupings;
+            _db.Groupings.RemoveRange(groups);
+            _db.SaveChanges();
+            var counts = _db.WordCounts;
+            _db.WordCounts.RemoveRange(counts);
+            _db.SaveChanges();
+
+        }
+
         public void Add(IGroupModel model)
         {
             string name = model.GetName();
@@ -37,23 +57,69 @@ namespace FingerPrint.Stores
             };
             _db.Groupings.Add(group);
             _db.SaveChanges();
-            AddItems(model, model.GetMembers().Select(x => (ITextOrGroupModel)x));
+            //AddItems(model, model.GetMembers().Select(x => (ITextOrGroupModel)x));
         }
 
         public bool Contains(string groupName, string itemName)
         {
-            Grouping group = _db.Groupings.FirstOrDefault(x => x.Name == groupName);
-            Grouping groupItem = _db.Groupings.FirstOrDefault(x => x.Name == itemName);
-            Text textItem = _db.Texts.FirstOrDefault(x => x.Name == itemName);
-            if (textItem == null && groupItem == null)
+            Grouping parentGroup = _db.Groupings.FirstOrDefault(x => x.Name == groupName);
+            if (parentGroup == null)
             {
-                throw new ArgumentException("No item with the specified name exists.");
+                throw new ArgumentException("Parent group does not exist.");
             }
-            if (textItem == null)
+            //IQueryable<Grouping_Grouping> childGroupIds = _db.Grouping_Grouping.Where(x => x.ParentId == parentGroup.Id);
+            List<Grouping> allGroups = new List<Grouping>() { parentGroup};
+            List<Grouping> nextGroups = new List<Grouping>();
+            int oldCount = allGroups.Count;
+            int newCount = allGroups.Count;
+            do
             {
-                return _db.Grouping_Grouping.Any(x => x.ParentId == group.Id && x.ChildId == groupItem.Id);
+                oldCount = allGroups.Count;
+                foreach (Grouping group in allGroups)
+                {
+                    nextGroups.AddRange(_db.Grouping_Grouping.Where(x => x.ParentId == group.Id).Join(
+                        _db.Groupings,
+                        gg => gg.ChildId,
+                        g => g.Id,
+                        (gg, g) => g
+                        ));
+                }
+                nextGroups = nextGroups.Distinct().ToList();
+                foreach (var nextGroup in nextGroups)
+                {
+                    allGroups.Add(nextGroup);
+                }
+                allGroups = allGroups.Distinct().ToList();
+                newCount = allGroups.Count;
+                nextGroups = new List<Grouping>();
+            } while (oldCount < newCount);
+            List<Text> allTexts = new List<Text>();
+            foreach (Grouping g in allGroups)
+            {
+                IQueryable<Text> childTexts = _db.Text_Grouping.Where(x => x.GroupingId == g.Id).Join(
+                    _db.Texts,
+                    tg => tg.TextId,
+                    t => t.Id,
+                    (tg, t) => t
+                    );
+                allTexts.AddRange(childTexts);
             }
-            return _db.Text_Grouping.Any(x => x.TextId == textItem.Id && x.GroupingId == group.Id);
+            allTexts = allTexts.Distinct().ToList();
+            return allGroups.Any(x => x.Name == itemName) || allTexts.Any(x => x.Name == itemName);
+
+
+            //Grouping group = _db.Groupings.FirstOrDefault(x => x.Name == groupName);
+            //Grouping groupItem = _db.Groupings.FirstOrDefault(x => x.Name == itemName);
+            //Text textItem = _db.Texts.FirstOrDefault(x => x.Name == itemName);
+            //if (textItem == null && groupItem == null)
+            //{
+            //    throw new ArgumentException("No item with the specified name exists.");
+            //}
+            //if (textItem == null)
+            //{
+            //    return _db.Grouping_Grouping.Any(x => x.ParentId == group.Id && x.ChildId == groupItem.Id);
+            //}
+            //return _db.Text_Grouping.Any(x => x.TextId == textItem.Id && x.GroupingId == group.Id);
         }
 
         public void Delete(IGroupModel model)
@@ -64,7 +130,13 @@ namespace FingerPrint.Stores
             {
                 throw new ArgumentException("Cannot delete group because it does not exist in the database.");
             }
-            RemoveItems(model, model.GetMembers().Select(x => (ITextOrGroupModel)x));
+            //RemoveItems(model, model.GetMembers().Select(x => (ITextOrGroupModel)x));
+            var childTextRecords = _db.Text_Grouping.Where(x => x.GroupingId == group.Id);
+            var childGroupRecords = _db.Grouping_Grouping.Where(x => x.ParentId == group.Id || x.ChildId == group.Id);
+            _db.Text_Grouping.RemoveRange(childTextRecords);
+            _db.SaveChanges();
+            _db.Grouping_Grouping.RemoveRange(childGroupRecords);
+            _db.SaveChanges();
             _db.Groupings.Remove(group);
             _db.SaveChanges();
         }
@@ -130,6 +202,10 @@ namespace FingerPrint.Stores
             if (group == null)
             {
                 throw new ArgumentException("Cannot update group name because group does not exist in the database.");
+            }
+            if (_db.Groupings.Any(x => x.Name == newName))
+            {
+                throw new ArgumentException("Cannot change groups name, since that name is already in use.");
             }
             group.Name = newName;
             _db.SaveChanges();
@@ -305,7 +381,26 @@ namespace FingerPrint.Stores
             //}
         }
 
+        public bool IsChild(IGroupModel model)
+        {
+            string name = model.GetName();
+            Grouping group = _db.Groupings.FirstOrDefault(x => x.Name == name);
+            if (group == null)
+            {
+                throw new ArgumentException("Group does not exist.");
+            }
+            return _db.Grouping_Grouping.Any(x => x.ChildId == group.Id);
+        }
 
-
+        public bool IsParent(IGroupModel model)
+        {
+            string name = model.GetName();
+            Grouping group = _db.Groupings.FirstOrDefault(x => x.Name == name);
+            if (group == null)
+            {
+                throw new ArgumentException("Group does not exist.");
+            }
+            return _db.Grouping_Grouping.Any(x => x.ParentId == group.Id);
+        }
     }
 }

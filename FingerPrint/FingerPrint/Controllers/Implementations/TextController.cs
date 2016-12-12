@@ -110,6 +110,10 @@ namespace FingerPrint.Controllers.Implementations
             }
             if (!string.IsNullOrWhiteSpace(name))
             {
+                if (AnyByName(name) || _groupStore.Exists(x => x.Name == name))
+                {
+                    throw new ArgumentException($"Cannot change text's name to {name} since a text or group with that name already exists.");
+                }
                 _textStore.ModifyName((ITextModel)model, name);
                 updatedModel.SetName(name);
             }

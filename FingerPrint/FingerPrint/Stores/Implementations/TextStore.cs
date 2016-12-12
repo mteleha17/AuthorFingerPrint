@@ -16,6 +16,7 @@ namespace FingerPrint.Stores
         private FingerprintLite13Entities _db;
         private IModelFactory _modelFactory;
 
+
         public TextStore(FingerprintLite13Entities db, IModelFactory modelFactory)
         {
             _db = db;
@@ -33,7 +34,6 @@ namespace FingerPrint.Stores
             _db.WordCounts.Add(withQuotes);
             _db.SaveChanges();
             WordCount withoutQuotes = TranslateCounts(model.GetCountsWithoutQuotes());
-            
             _db.WordCounts.Add(withoutQuotes);
             _db.SaveChanges();
 
@@ -43,6 +43,7 @@ namespace FingerPrint.Stores
                 Author = model.GetAuthor(),
                 WithQuotesId = withQuotes.Id,
                 WithoutQuotesId = withoutQuotes.Id,
+                IncludeQuotes = 1
             };
             _db.Texts.Add(text);
             _db.SaveChanges();
@@ -60,6 +61,7 @@ namespace FingerPrint.Stores
             {
                 throw new ArgumentException($"Cannot delete text {model.GetName()} because it is currently a member of a group.");
             }
+
             //if (_db.Groupings.Any(x => x.Texts.Contains(text)))
             //{
             //    throw new ArgumentException($"Cannot delete text {model.GetName()} because it is currently a member of a group.");
@@ -221,6 +223,17 @@ namespace FingerPrint.Stores
             ISingleWordCountModel withQuotesModel = TranslateCounts(withQuotes);
             ISingleWordCountModel withoutQuotesModel = TranslateCounts(withoutQuotes);
             return _modelFactory.GetFlexibleCountModel(withQuotesModel, withoutQuotesModel);
+        }
+
+        public bool IsChild(ITextModel model)
+        {
+            string name = model.GetName();
+            Text text = _db.Texts.FirstOrDefault(x => x.Name == name);
+            if (text == null)
+            {
+                throw new ArgumentException("Text does not exist.");
+            }
+            return _db.Text_Grouping.Any(x => x.TextId == text.Id);
         }
     }
 }

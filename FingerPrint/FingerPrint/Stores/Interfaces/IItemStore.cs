@@ -47,5 +47,7 @@ namespace FingerPrint.Stores
         /// <param name="criteria">The criteria to be used to select the entities.</param>
         /// <returns>A (possibly empty) list of entities meeting the criteria.</returns>
         IEnumerable<ModelType> GetMany(Expression<Func<EntityType, bool>> criteria);
+
+        bool IsChild(ModelType model);
     }
 }

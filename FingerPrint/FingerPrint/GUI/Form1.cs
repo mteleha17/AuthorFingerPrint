@@ -1,5 +1,6 @@
 ﻿using FingerPrint.AuxiliaryClasses;
 using FingerPrint.Controllers;
+using FingerPrint.Controllers.Implementations;
 using FingerPrint.Models;
 using FingerPrint.Models.Interfaces.TypeInterfaces;
 using System;
@@ -18,15 +19,17 @@ namespace FingerPrint
 {
     public partial class Form1 : Form
     {
-      //  private IModelFactory _modelFactory;
+        //  private IModelFactory _modelFactory;
+        private List<ITextOrGroupViewModel> _activeItems;
         private ITextController _textController;
         private IGroupController _groupController;
-        private IAnalysisController _analysisController;
+        //private IAnalysisController _analysisController;
         public Form1(IAnalysisController analysisController,
             ITextController textController,
             IGroupController groupController)
         {
-            _analysisController = analysisController;
+            _activeItems = new List<ITextOrGroupViewModel>();
+            //_analysisController = analysisController;
             _textController = textController;
             _groupController = groupController;
             InitializeComponent();
@@ -41,6 +44,7 @@ namespace FingerPrint
         {
              updateListViews(); // Fill listviews
              fillGroupComboBox(); // Fill Group comboBox
+             //((GroupController)_groupController).DangerousDeleteEverything();
         }
         private void selectFileButton_Click(object sender, EventArgs e)
         {
@@ -100,13 +104,15 @@ namespace FingerPrint
         }
         private void executeAnalysisButton_Click(object sender, EventArgs e)
         {
-            if (_analysisController.GetActiveItems().Count > 0)
+            //if (_analysisController.GetActiveItems().Count > 0)
+            if (_activeItems.Count > 0)
             {
                 try
                 {
                     dataTable.Rows.Clear(); //clear any previous analysis
                     analysisLineChart.Series.Clear();
-                    List<ITextOrGroupViewModel> groupList = _analysisController.GetActiveItems(); //gets any texts/groups that have been added to the analysis group
+                    //List<ITextOrGroupViewModel> groupList = _analysisController.GetActiveItems(); //gets any texts/groups that have been added to the analysis group
+                    List<ITextOrGroupViewModel> groupList = new List<ITextOrGroupViewModel>(_activeItems); //gets any texts/groups that have been added to the analysis group
                     foreach (ITextOrGroupViewModel groupEntry in groupList)
                     {
                         //table
@@ -213,14 +219,16 @@ namespace FingerPrint
             
                 if (filesRadioButtonTab3.Checked)
                  {
-                    _analysisController.AddToActiveItems(_textController.GetTextByName(itemToMove.SubItems[1].Text));
-                               
+                    //_analysisController.AddToActiveItems(_textController.GetTextByName(itemToMove.SubItems[1].Text));
+                    _activeItems.Add(_textController.GetTextByName(itemToMove.SubItems[1].Text));           
                 }   
                 else
                 {
-                    _analysisController.AddToActiveItems(_groupController.GetGroupByName(itemToMove.Text));
+                    //_analysisController.AddToActiveItems(_groupController.GetGroupByName(itemToMove.Text));
+                    _activeItems.Add(_groupController.GetGroupByName(itemToMove.Text));
+
                 }
-                
+
                 analysisListView.Items.Clear();
                 updateAnalysisGroups();
                 updateListViews();
@@ -252,7 +260,10 @@ namespace FingerPrint
             try
             {
                 ListViewItem itemToMove = analysisListView.SelectedItems[0];
-                _analysisController.RemoveFromActiveItems(itemToMove.Text);
+                //_analysisController.RemoveFromActiveItems(itemToMove.Text);
+                ITextOrGroupViewModel modelToRemove = _activeItems.Find(x => x.GetName() == itemToMove.Text);
+                _activeItems.Remove(modelToRemove);
+
                 analysisListView.Items.Clear();
                 updateAnalysisGroups();
                 updateListViews();
@@ -282,7 +293,9 @@ namespace FingerPrint
                 {
                     _groupController.RemoveItemFromGroup(model, _textController.GetTextByName(itemToMove.Text));
                 }
-                _analysisController.ItemIsActive(model.GetName());
+                //For debugging:
+                //_analysisController.ItemIsActive(model.GetName());
+
                 updateListViews();
                 groupComboBox_SelectedIndexChanged(sender, e);
             }
@@ -541,8 +554,13 @@ namespace FingerPrint
                 {
                     ListViewItem item = fileGroupListViewTab2.SelectedItems[0];
                     string textName = item.SubItems[0].Text;
-                    if (_analysisController.ItemIsActive(textName)){
-                        _analysisController.RemoveFromActiveItems(textName);
+                    //if (_analysisController.ItemIsActive(textName)){
+                    if (_activeItems.Exists(x => x.GetName() == textName))
+                    {
+                        //_analysisController.RemoveFromActiveItems(textName);
+                        ITextOrGroupViewModel modelToRemove = _activeItems.Find(x => x.GetName() == textName);
+                        _activeItems.Remove(modelToRemove);
+
                         analysisListView.Items.Clear();
                         fillGroupComboBox();
                         updateAnalysisGroups();
@@ -569,7 +587,9 @@ namespace FingerPrint
         }
         public void updateAnalysisGroups()
         {
-            List<ITextOrGroupViewModel> groupList = _analysisController.GetActiveItems();
+            //List<ITextOrGroupViewModel> groupList = _analysisController.GetActiveItems();
+            List<ITextOrGroupViewModel> groupList = new List<ITextOrGroupViewModel>(_activeItems);
+
             foreach (ITextOrGroupViewModel groupEntry in groupList)
             {
                 ListViewItem itemGroup = new ListViewItem();

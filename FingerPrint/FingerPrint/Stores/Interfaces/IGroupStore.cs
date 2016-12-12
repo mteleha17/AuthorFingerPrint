@@ -49,5 +49,7 @@ namespace FingerPrint.Stores
         /// <param name="model">The model representing the group to modify.</param>
         /// <param name="items">The texts and/or groups to remove.</param>
         void RemoveItems(IGroupModel model, IEnumerable<ITextOrGroupModel> items);
+
+        bool IsParent(IGroupModel model);
     }
 }

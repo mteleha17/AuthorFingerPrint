@@ -15,7 +15,7 @@ namespace FingerPrint.Controllers.Implementations
     {
         //private List<IGroupViewModel> _tempDbGroup;
         //private List<ITextViewModel> _tempDbText;
-        private IAnalysisController _analysisController;
+        //private IAnalysisController _analysisController;
         private ITextStore _textStore;
         private IGroupStore _groupStore;
         private IModelFactory _modelFactory;
@@ -27,10 +27,15 @@ namespace FingerPrint.Controllers.Implementations
         {
             //_tempDbText = textTempDb;
             //_tempDbGroup = groupTempDb;
-            _analysisController = analysisController;
+            //_analysisController = analysisController;
             _textStore = textStore;
             _groupStore = groupStore;
             _modelFactory = modelFactory;
+        }
+
+        public void DangerousDeleteEverything()
+        {
+            ((GroupStore)_groupStore).DangerousDeleteAllTextsAndGroups();
         }
 
         public IGroupViewModel GetGroupByName(string name)
@@ -78,10 +83,11 @@ namespace FingerPrint.Controllers.Implementations
 
         public void Delete(IGroupViewModel model)
         {
-            if (_analysisController.ItemIsActive(model.GetName()))
-            {
-                _analysisController.RemoveFromActiveItems(model.GetName());
-            }
+            //removed to transition to form1 keeping track of its own active items
+            //if (_analysisController.ItemIsActive(model.GetName()))
+            //{
+            //    _analysisController.RemoveFromActiveItems(model.GetName());
+            //}
             _groupStore.Delete((IGroupModel)model);
             //_tempDbGroup.Remove(model);
         }
@@ -138,6 +144,10 @@ namespace FingerPrint.Controllers.Implementations
             if (string.IsNullOrWhiteSpace(name))
             {
                 throw new ArgumentException("Name cannot be null.");
+            }
+            if (AnyByName(name) || _textStore.Exists(x => x.Name == name))
+            {
+                throw new ArgumentException($"Cannot update group's name to {name} since a text or group with that name already exists.");
             }
             IGroupModel updatedModel = (IGroupModel)model;
             _groupStore.ModifyName(updatedModel, name);
