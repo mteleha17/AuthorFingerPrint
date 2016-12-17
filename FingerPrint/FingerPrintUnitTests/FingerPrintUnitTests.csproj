@@ -82,6 +82,7 @@
     <Compile Include="ModelTests\SingleWordCountModelTests.cs" />
     <Compile Include="ModelTests\TextModelTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StoreTests\GroupStoreTests.cs" />
     <Compile Include="StoreTests\TextStoreTests.cs" />
   </ItemGroup>
   <ItemGroup>

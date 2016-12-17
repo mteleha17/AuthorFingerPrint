@@ -141,6 +141,16 @@ namespace FingerPrintUnitTests.StoreTests
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void TestDeleteNonexistant()
+        {
+            string name = _uniqueNames.Pop();
+            StreamReader text = new StreamReader("../../SampleTextFiles/WordSpanningMultipleLines.txt");
+            ITextModel model = _modelFactory.GetTextModel(name, text, UniversalConstants.CountSize);
+            _textStore.Delete(model);
+        }
+
+        [TestMethod]
         public void TestExists()
         {
             string name = _uniqueNames.Pop();
@@ -160,8 +170,10 @@ namespace FingerPrintUnitTests.StoreTests
         public void TestGetOne()
         {
             string name = _uniqueNames.Pop();
+            ITextModel model = _textStore.GetOne(x => x.Name == name);
+            Assert.IsNull(model);
             StreamReader text = new StreamReader("../../SampleTextFiles/WordSpanningMultipleLines.txt");
-            ITextModel model = _modelFactory.GetTextModel(name, text, UniversalConstants.CountSize);
+            model = _modelFactory.GetTextModel(name, text, UniversalConstants.CountSize);
             _textStore.Add(model);
             ITextModel modelFromDb = _textStore.GetOne(x => x.Name == name);
             CompareTextModels(model, modelFromDb);
@@ -173,14 +185,17 @@ namespace FingerPrintUnitTests.StoreTests
         {
             string name1 = _uniqueNames.Pop();
             string name2 = _uniqueNames.Pop();
+            IEnumerable<ITextModel> modelsFromDb = _textStore.GetMany(x => x.Name == name1);
+            List<ITextModel> models = modelsFromDb.ToList();
+            Assert.AreEqual(0, models.Count);
             StreamReader text1 = new StreamReader("../../SampleTextFiles/WordSpanningMultipleLines.txt");
             StreamReader text2 = new StreamReader("../../SampleTextFiles/MismatchedQuotationMarks.txt");
             ITextModel model1 = _modelFactory.GetTextModel(name1, text1, UniversalConstants.CountSize);
             ITextModel model2 = _modelFactory.GetTextModel(name2, text2, UniversalConstants.CountSize);
             _textStore.Add(model1);
             _textStore.Add(model2);
-            IEnumerable<ITextModel> modelsFromDb = _textStore.GetMany(x => x.Name == name1 || x.Name == name2);
-            List<ITextModel> models = modelsFromDb.ToList();
+            modelsFromDb = _textStore.GetMany(x => x.Name == name1 || x.Name == name2);
+            models = modelsFromDb.ToList();
             CompareTextModels(model1, models[0]);
             CompareTextModels(model2, models[1]);
             _textStore.Delete(model1);
@@ -259,6 +274,77 @@ namespace FingerPrintUnitTests.StoreTests
             Assert.IsNull(nullModel);
             Assert.IsNotNull(model);
             _textStore.Delete(model);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void TestModifyNameDuplicate()
+        {
+            ArgumentException expectedException = null;
+            string name1 = _uniqueNames.Pop();
+            string name2 = _uniqueNames.Pop();
+            try
+            {
+                IEnumerable<ITextModel> modelsFromDb = _textStore.GetMany(x => x.Name == name1);
+                List<ITextModel> models = modelsFromDb.ToList();
+                Assert.AreEqual(0, models.Count);
+                StreamReader text1 = new StreamReader("../../SampleTextFiles/WordSpanningMultipleLines.txt");
+                StreamReader text2 = new StreamReader("../../SampleTextFiles/MismatchedQuotationMarks.txt");
+                ITextModel model1 = _modelFactory.GetTextModel(name1, text1, UniversalConstants.CountSize);
+                ITextModel model2 = _modelFactory.GetTextModel(name2, text2, UniversalConstants.CountSize);
+                _textStore.Add(model1);
+                _textStore.Add(model2);
+                _textStore.ModifyName(model1, name2);
+            }
+            catch (ArgumentException ex)
+            {
+                expectedException = ex;
+            }
+            finally
+            {
+                List<Text> textsToDelete = _db.Texts.Where(x => x.Name == name1 || x.Name == name2).ToList();
+                foreach (Text text in textsToDelete)
+                {
+                    _db.Texts.Remove(text);
+                    _db.SaveChanges();
+                }
+            }
+            if (expectedException != null)
+            {
+                throw expectedException;
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void TestModifyNameNull()
+        {
+            ArgumentException expectedException = null;
+            string name = _uniqueNames.Pop();
+            try
+            {
+                StreamReader sr = new StreamReader("../../SampleTextFiles/WordSpanningMultipleLines.txt");
+                ITextModel model = _modelFactory.GetTextModel(name, sr, UniversalConstants.CountSize);
+                _textStore.Add(model);
+                model = _textStore.GetOne(x => x.Name == name);
+                Assert.IsNotNull(model);
+                string newName = _uniqueNames.Pop();
+                _textStore.ModifyName(model, null);
+            }
+            catch (ArgumentException ex)
+            {
+                expectedException = ex;
+            }
+            finally
+            {
+                Text text = _db.Texts.FirstOrDefault(x => x.Name == name);
+                _db.Texts.Remove(text);
+                _db.SaveChanges();
+            }
+            if (expectedException != null)
+            {
+                throw expectedException;
+            }
         }
 
     }
