@@ -20,15 +20,15 @@ namespace FingerPrint.Controllers
         /// <returns>The group with the specified name or null if there is no such group.</returns>
         IGroupViewModel GetGroupByName(string name);
 
-        bool AnyByName(string name);
+        //bool AnyByName(string name);
 
-        bool Contains(string groupName, string itemName);
+        //bool Contains(string groupName, string itemName);
 
-        bool IsParent(IGroupViewModel model);
+        //bool IsParent(IGroupViewModel model);
 
-        bool IsChild(IGroupViewModel model);
+        //bool IsChild(IGroupViewModel model);
 
-        bool GroupIsEmpty(IGroupViewModel model);
+        //bool GroupIsEmpty(IGroupViewModel model);
 
         /// <summary>
         /// Gets all groups that exist in the database.
@@ -62,7 +62,7 @@ namespace FingerPrint.Controllers
         /// </summary>
         /// <param name="model">The group to which to add the specified texts and/or groups.</param>
         /// <param name="items">The texts and/or groups to add.</param>
-        void AddItemsToGroup(IGroupViewModel model, IEnumerable<ITextOrGroupViewModel> items);
+        //void AddItemsToGroup(IGroupViewModel model, IEnumerable<ITextOrGroupViewModel> items);
 
         /// <summary>
         /// Removes a text or group from the specified group.
@@ -76,7 +76,7 @@ namespace FingerPrint.Controllers
         /// </summary>
         /// <param name="model">The group from which to remove the texts and/or groups.</param>
         /// <param name="items">The texts and/or groups to be removed.</param>
-        void RemoveItemsFromGroup(IGroupViewModel model, IEnumerable<ITextOrGroupViewModel> items);
+        //void RemoveItemsFromGroup(IGroupViewModel model, IEnumerable<ITextOrGroupViewModel> items);
         
         /// <summary>
         /// Updates the specified group in the database.

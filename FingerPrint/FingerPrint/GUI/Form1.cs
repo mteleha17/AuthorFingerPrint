@@ -212,7 +212,7 @@ namespace FingerPrint
         }
         private void addButtonTab3_Click(object sender, EventArgs e)    //allows groups and texts to be added to an analysis
         {
-            ListViewItem itemToMove = new ListViewItem(); 
+           ListViewItem itemToMove = new ListViewItem(); 
            try
             {
              itemToMove = fileGroupListViewTab3.SelectedItems[0];
@@ -241,12 +241,12 @@ namespace FingerPrint
                     var form2 = new ErrorMessageDisplay(errorMessage);
                     form2.Show(this);
                 }
-                else if(_groupController.GroupIsEmpty(_groupController.GetGroupByName(itemToMove.Text)))
-                {
-                    string errorMessage = "You cannot analyze an empty group";
-                    var form2 = new ErrorMessageDisplay(errorMessage);
-                    form2.Show(this);
-                }
+                //else if(_groupController.GroupIsEmpty(_groupController.GetGroupByName(itemToMove.Text)))
+                //{
+                //    string errorMessage = "You cannot analyze an empty group";
+                //    var form2 = new ErrorMessageDisplay(errorMessage);
+                //    form2.Show(this);
+                //}
                 else
                 {
                     string errorMessage = "Group already exists within the analysis group";
@@ -507,14 +507,14 @@ namespace FingerPrint
                     _activeItems.Remove(_activeItems.Find(x => x.GetName() == textName));
                 }
                 ITextViewModel model = _textController.GetTextByName(textName);
-                List<IGroupViewModel> groupList = _groupController.GetAllGroups();
-                foreach (IGroupViewModel groupEntry in groupList)
-                {
-                    if (_groupController.Contains(groupEntry.GetName(), textName))
-                    {
-                        _groupController.RemoveItemFromGroup(groupEntry, _textController.GetTextByName(textName));
-                    }
-                }
+                //List<IGroupViewModel> groupList = _groupController.GetAllGroups();
+                //foreach (IGroupViewModel groupEntry in groupList)
+                //{
+                //    if (_groupController.Contains(groupEntry.GetName(), textName))
+                //    {
+                //        _groupController.RemoveItemFromGroup(groupEntry, _textController.GetTextByName(textName));
+                //    }
+                //}
                 _textController.DeleteText(model);
                 updateListViews();
                 updateAnalysisGroups();
@@ -557,12 +557,12 @@ namespace FingerPrint
                     _activeItems.Remove(_activeItems.Find(x => x.GetName() == textName));
                 }
                     
-                    foreach (IGroupViewModel groupEntry in groupList)
-                    {
-                        if (_groupController.Contains(groupEntry.GetName(), textName)){
-                            _groupController.RemoveItemFromGroup(groupEntry, _textController.GetTextByName(textName));
-                        }
-                    }
+                    //foreach (IGroupViewModel groupEntry in groupList)
+                    //{
+                    //    if (_groupController.Contains(groupEntry.GetName(), textName)){
+                    //        _groupController.RemoveItemFromGroup(groupEntry, _textController.GetTextByName(textName));
+                    //    }
+                    //}
                     _textController.DeleteText(_textController.GetTextByName(textName));
                 }
                 else
@@ -580,18 +580,25 @@ namespace FingerPrint
                     //    ITextOrGroupViewModel modelToRemove = _activeItems.Find(x => x.GetName() == textName);
                     //    _activeItems.Remove(modelToRemove);
 
-                       
-                    //}
-                    if (!_groupController.IsChild(_groupController.GetGroupByName(textName))){
-                        _groupController.Delete(_groupController.GetGroupByName(textName));
-                    }
-                    else
-                    {
-                        string errorMessage = "You cannot delete a group that is within a group";
-                        var form2 = new ErrorMessageDisplay(errorMessage);
-                        form2.Show(this);
-                    }
 
+                    //}
+
+
+                    //<JG>
+
+                    _groupController.Delete(_groupController.GetGroupByName(textName));
+
+                    //if (!_groupController.IsChild(_groupController.GetGroupByName(textName))){
+                    //    _groupController.Delete(_groupController.GetGroupByName(textName));
+                    //}
+                    //else
+                    //{
+                    //    string errorMessage = "You cannot delete a group that is within a group";
+                    //    var form2 = new ErrorMessageDisplay(errorMessage);
+                    //    form2.Show(this);
+                    //}
+                    
+                    //</JG>
                   
                 }
                 fillGroupComboBox();

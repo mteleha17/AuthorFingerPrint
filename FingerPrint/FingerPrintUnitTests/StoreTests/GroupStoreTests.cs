@@ -151,6 +151,40 @@ namespace FingerPrintUnitTests.StoreTests
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void TestAddDuplicateText()
+        {
+            ArgumentException expectedException = null;
+            string groupName = _uniqueNames.Pop();
+            IGroupModel groupModel = _modelFactory.GetGroupModel(groupName, UniversalConstants.CountSize);
+            _groupStore.Add(groupModel);
+            string textName = _uniqueNames.Pop();
+            StreamReader text = new StreamReader("../../SampleTextFiles/WordSpanningMultipleLines.txt");
+            ITextModel textModel = _modelFactory.GetTextModel(textName, text, UniversalConstants.CountSize);
+            _textStore.Add(textModel);
+            _groupStore.AddItem(groupModel, textModel);
+            groupModel = _groupStore.GetOne(x => x.Name == groupName);
+            try
+            {
+                _groupStore.AddItem(groupModel, textModel);
+            }
+            catch (ArgumentException ex)
+            {
+                expectedException = ex;
+            }
+            finally
+            {
+                _groupStore.RemoveItem(groupModel, textModel);
+                _textStore.Delete(textModel);
+                _groupStore.Delete(groupModel);
+            }
+            if (expectedException != null)
+            {
+                throw expectedException;
+            }
+        }
+
+        [TestMethod]
         public void TestAddGroup()
         {
             string name1 = _uniqueNames.Pop();
@@ -224,6 +258,7 @@ namespace FingerPrintUnitTests.StoreTests
             StreamReader text = new StreamReader("../../SampleTextFiles/WordSpanningMultipleLines.txt");
             ITextModel textModel = _modelFactory.GetTextModel(textName, text, UniversalConstants.CountSize);
             _textStore.Add(textModel);
+            Assert.IsFalse(_groupStore.Contains(groupModel.GetName(), textModel.GetName()));
             _groupStore.AddItem(groupModel, textModel);
             groupModel = _groupStore.GetOne(x => x.Name == groupName);
             Assert.IsTrue(_groupStore.Contains(groupModel.GetName(), textModel.GetName()));
@@ -245,7 +280,9 @@ namespace FingerPrintUnitTests.StoreTests
             StreamReader text = new StreamReader("../../SampleTextFiles/WordSpanningMultipleLines.txt");
             ITextModel textModel = _modelFactory.GetTextModel(textName, text, UniversalConstants.CountSize);
             _textStore.Add(textModel);
+            Assert.IsFalse(_groupStore.Contains(group1.GetName(), textModel.GetName()));
             _groupStore.AddItem(group2, textModel);
+            Assert.IsFalse(_groupStore.Contains(group1.GetName(), textModel.GetName()));
             _groupStore.AddItem(group1, group2);
             Assert.IsTrue(_groupStore.Contains(group1.GetName(), textModel.GetName()));
             _groupStore.RemoveItem(group1, group2);
@@ -253,6 +290,16 @@ namespace FingerPrintUnitTests.StoreTests
             _textStore.Delete(textModel);
             _groupStore.Delete(group2);
             _groupStore.Delete(group1);
+        }
+
+        [TestMethod]
+        public void TestContainsSelf()
+        {
+            string groupName = _uniqueNames.Pop();
+            IGroupModel groupModel = _modelFactory.GetGroupModel(groupName, UniversalConstants.CountSize);
+            _groupStore.Add(groupModel);
+            Assert.IsFalse(_groupStore.Contains(groupModel.GetName(), groupModel.GetName()));
+            _groupStore.Delete(groupModel);
         }
 
         [TestMethod]
@@ -266,10 +313,20 @@ namespace FingerPrintUnitTests.StoreTests
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void TestDeleteNonexistant()
+        {
+            string name = _uniqueNames.Pop();
+            IGroupModel group = _modelFactory.GetGroupModel(name, UniversalConstants.CountSize);
+            _groupStore.Delete(group);
+        }
+
+        [TestMethod]
         public void TestExists()
         {
             string name = _uniqueNames.Pop();
             IGroupModel group = _modelFactory.GetGroupModel(name, UniversalConstants.CountSize);
+            Assert.IsFalse(_groupStore.Exists(x => x.Name == name));
             _groupStore.Add(group);
             Assert.IsTrue(_groupStore.Exists(x => x.Name == name));
             _groupStore.Delete(group);
@@ -285,6 +342,9 @@ namespace FingerPrintUnitTests.StoreTests
             Assert.IsNotNull(group);
             Assert.AreEqual(group.GetName(), name);
             _groupStore.Delete(group);
+            name = _uniqueNames.Pop();
+            group = _groupStore.GetOne(x => x.Name == name);
+            Assert.IsNull(group);
         }
 
         [TestMethod]
@@ -411,6 +471,68 @@ namespace FingerPrintUnitTests.StoreTests
             _textStore.Delete(textModel);
             _groupStore.Delete(group2);
             _groupStore.Delete(group1);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void TestRemoveItemThatIsNotAMember()
+        {
+            ArgumentException expectedException = null;
+            string groupName = _uniqueNames.Pop();
+            IGroupModel groupModel = _modelFactory.GetGroupModel(groupName, UniversalConstants.CountSize);
+            _groupStore.Add(groupModel);
+            string textName = _uniqueNames.Pop();
+            StreamReader text = new StreamReader("../../SampleTextFiles/WordSpanningMultipleLines.txt");
+            ITextModel textModel = _modelFactory.GetTextModel(textName, text, UniversalConstants.CountSize);
+            _textStore.Add(textModel);
+            groupModel = _groupStore.GetOne(x => x.Name == groupName);
+            try
+            {
+                _groupStore.RemoveItem(groupModel, textModel);
+            }
+            catch (ArgumentException ex)
+            {
+                expectedException = ex;
+            }
+            finally
+            {
+                _textStore.Delete(textModel);
+                _groupStore.Delete(groupModel);
+            }
+            if (expectedException != null)
+            {
+                throw expectedException;
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void TestRemoveNonexistantItem()
+        {
+            ArgumentException expectedException = null;
+            string groupName = _uniqueNames.Pop();
+            IGroupModel groupModel = _modelFactory.GetGroupModel(groupName, UniversalConstants.CountSize);
+            _groupStore.Add(groupModel);
+            string textName = _uniqueNames.Pop();
+            StreamReader text = new StreamReader("../../SampleTextFiles/WordSpanningMultipleLines.txt");
+            ITextModel textModel = _modelFactory.GetTextModel(textName, text, UniversalConstants.CountSize);
+            groupModel = _groupStore.GetOne(x => x.Name == groupName);
+            try
+            {
+                _groupStore.RemoveItem(groupModel, textModel);
+            }
+            catch (ArgumentException ex)
+            {
+                expectedException = ex;
+            }
+            finally
+            {
+                _groupStore.Delete(groupModel);
+            }
+            if (expectedException != null)
+            {
+                throw expectedException;
+            }
         }
     }
 }
