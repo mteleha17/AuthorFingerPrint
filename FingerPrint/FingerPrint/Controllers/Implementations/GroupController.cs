@@ -20,8 +20,7 @@ namespace FingerPrint.Controllers.Implementations
         private IGroupStore _groupStore;
         private IModelFactory _modelFactory;
 
-        public GroupController(IAnalysisController analysisController,
-            ITextStore textStore,
+        public GroupController(ITextStore textStore,
             IGroupStore groupStore,
             IModelFactory modelFactory)
         {
@@ -33,20 +32,20 @@ namespace FingerPrint.Controllers.Implementations
             _modelFactory = modelFactory;
         }
 
-        public void DangerousDeleteEverything()
-        {
-            ((GroupStore)_groupStore).DangerousDeleteAllTextsAndGroups();
-        }
+        //public void DangerousDeleteEverything()
+        //{
+        //    ((GroupStore)_groupStore).DangerousDeleteAllTextsAndGroups();
+        //}
 
-        public bool IsParent(IGroupViewModel model)
-        {
-            return _groupStore.IsParent((IGroupModel)model);
-        }
+        //public bool IsParent(IGroupViewModel model)
+        //{
+        //    return _groupStore.IsParent((IGroupModel)model);
+        //}
 
-        public bool IsChild(IGroupViewModel model)
-        {
-            return _groupStore.IsChild((IGroupModel)model);
-        }
+        //public bool IsChild(IGroupViewModel model)
+        //{
+        //    return _groupStore.IsChild((IGroupModel)model);
+        //}
 
         public IGroupViewModel GetGroupByName(string name)
         {
@@ -58,29 +57,33 @@ namespace FingerPrint.Controllers.Implementations
             //return _tempDbGroup.FirstOrDefault(x => x.GetName() == name);
         }
 
-        public bool AnyByName(string name)
-        {
-            if (string.IsNullOrWhiteSpace(name))
-            {
-                throw new ArgumentException("The name must not be null.");
-            }
-            return _groupStore.Exists(x => x.Name == name);
-            //return _tempDbGroup.Any(x => x.GetName() == name);
-        }
+        //public bool AnyByName(string name)
+        //{
+        //    if (string.IsNullOrWhiteSpace(name))
+        //    {
+        //        throw new ArgumentException("The name must not be null.");
+        //    }
+        //    return _groupStore.Exists(x => x.Name == name);
+        //    //return _tempDbGroup.Any(x => x.GetName() == name);
+        //}
 
-        public bool Contains(string groupName, string itemName)
-        {
-            return _groupStore.Contains(groupName, itemName);
-        }
+        //public bool Contains(string groupName, string itemName)
+        //{
+        //    return _groupStore.Contains(groupName, itemName);
+        //}
 
-        public bool GroupIsEmpty(IGroupViewModel model)
-        {
-            return model.GetMembers().Count == 0;
-        }
+        //public bool GroupIsEmpty(IGroupViewModel model)
+        //{
+        //    return model.GetMembers().Count == 0;
+        //}
 
         public IGroupViewModel CreateGroup(string name, int length)
         {
-            if (AnyByName(name) || _textStore.Exists(x => x.Name == name))
+            //if (AnyByName(name) || _textStore.Exists(x => x.Name == name))
+            //{
+            //    throw new ArgumentException($"Cannot create group because another item in the database already has the name {name}.");
+            //}
+            if (_groupStore.Exists(x => x.Name == name) || _textStore.Exists(x => x.Name == name))
             {
                 throw new ArgumentException($"Cannot create group because another item in the database already has the name {name}.");
             }
@@ -104,7 +107,7 @@ namespace FingerPrint.Controllers.Implementations
 
         public void AddItemToGroup(IGroupViewModel model, ITextOrGroupViewModel item)
         {
-            AddItemsToGroup(model, new List<ITextOrGroupViewModel>() { item});
+            AddItemsToGroup(model, new List<ITextOrGroupViewModel>() { item });
         }
 
         public void AddItemsToGroup(IGroupViewModel model, IEnumerable<ITextOrGroupViewModel> items)
@@ -135,7 +138,7 @@ namespace FingerPrint.Controllers.Implementations
 
         public void RemoveItemFromGroup(IGroupViewModel model, ITextOrGroupViewModel item)
         {
-            RemoveItemsFromGroup(model, new List<ITextOrGroupViewModel>() { item});
+            RemoveItemsFromGroup(model, new List<ITextOrGroupViewModel>() { item });
         }
 
         public void RemoveItemsFromGroup(IGroupViewModel model, IEnumerable<ITextOrGroupViewModel> items)
@@ -155,9 +158,13 @@ namespace FingerPrint.Controllers.Implementations
             {
                 throw new ArgumentException("Name cannot be null.");
             }
-            if (AnyByName(name) || _textStore.Exists(x => x.Name == name))
+            //if (AnyByName(name) || _textStore.Exists(x => x.Name == name))
+            //{
+            //    throw new ArgumentException($"Cannot update group's name to {name} since a text or group with that name already exists.");
+            //}
+            if (_groupStore.Exists(x => x.Name == name) || _textStore.Exists(x => x.Name == name))
             {
-                throw new ArgumentException($"Cannot update group's name to {name} since a text or group with that name already exists.");
+                throw new ArgumentException($"Cannot create group because another item in the database already has the name {name}.");
             }
             IGroupModel updatedModel = (IGroupModel)model;
             _groupStore.ModifyName(updatedModel, name);

@@ -42,44 +42,48 @@ namespace FingerPrint.Controllers.Implementations
             //return _textTempDb.FirstOrDefault(x => x.GetName() == name);
         }
 
-        public bool IsChild(ITextViewModel model)
-        {
-            return _textStore.IsChild((ITextModel)model);
-        }
+        //public bool IsChild(ITextViewModel model)
+        //{
+        //    return _textStore.IsChild((ITextModel)model);
+        //}
 
-        public bool AnyByName(string name)
-        {
-            if (string.IsNullOrWhiteSpace(name))
-            {
-                throw new ArgumentException("Text name must not be null or white space.");
-            }
-            return _textStore.Exists(x => x.Name == name);
-            //return _textTempDb.Any(x => x.GetName() == name);
-        }
+        //public bool AnyByName(string name)
+        //{
+        //    if (string.IsNullOrWhiteSpace(name))
+        //    {
+        //        throw new ArgumentException("Text name must not be null or white space.");
+        //    }
+        //    return _textStore.Exists(x => x.Name == name);
+        //    //return _textTempDb.Any(x => x.GetName() == name);
+        //}
 
-        public List<ITextViewModel> GetTextByAuthor(string author)
-        {
-            if (string.IsNullOrWhiteSpace(author))
-            {
-                throw new ArgumentException("Author must not be null or white space.");
-            }
-            return _textStore.GetMany(x => x.Author == author).Select(x => (ITextViewModel)x).ToList();
-            //return _textTempDb.Where(x => x.GetAuthor() == author).Select(x => (ITextViewModel)x).ToList();
-        }
+        //public List<ITextViewModel> GetTextByAuthor(string author)
+        //{
+        //    if (string.IsNullOrWhiteSpace(author))
+        //    {
+        //        throw new ArgumentException("Author must not be null or white space.");
+        //    }
+        //    return _textStore.GetMany(x => x.Author == author).Select(x => (ITextViewModel)x).ToList();
+        //    //return _textTempDb.Where(x => x.GetAuthor() == author).Select(x => (ITextViewModel)x).ToList();
+        //}
 
-        public bool AnyByAuthor(string author)
-        {
-            if (string.IsNullOrWhiteSpace(author))
-            {
-                throw new ArgumentException("Author must not be null or white space.");
-            }
-            return _textStore.Exists(x => x.Author == author);
-            //return _textTempDb.Any(x => x.GetAuthor() == author);
-        }
+        //public bool AnyByAuthor(string author)
+        //{
+        //    if (string.IsNullOrWhiteSpace(author))
+        //    {
+        //        throw new ArgumentException("Author must not be null or white space.");
+        //    }
+        //    return _textStore.Exists(x => x.Author == author);
+        //    //return _textTempDb.Any(x => x.GetAuthor() == author);
+        //}
 
         public ITextViewModel CreateText(string name, TextReader input, int length, string author = null)
         {
-            if (AnyByName(name) || _groupStore.Exists(x => x.Name == name))
+            //if (AnyByName(name) || _groupStore.Exists(x => x.Name == name))
+            //{
+            //    throw new ArgumentException($"Cannot create text because another item in the database already has the name {name}.");
+            //}
+            if (_textStore.Exists(x => x.Name == name) || _groupStore.Exists(x => x.Name == name))
             {
                 throw new ArgumentException($"Cannot create text because another item in the database already has the name {name}.");
             }
@@ -102,7 +106,7 @@ namespace FingerPrint.Controllers.Implementations
         public void UpdateText(ITextViewModel model, string name = null, string author = null, bool? includeQuotes = null)
         {
             var updatedModel = (ITextModel)model;
-            
+
             if (!string.IsNullOrWhiteSpace(author))
             {
                 _textStore.ModifyAuthor((ITextModel)model, author);
@@ -115,9 +119,13 @@ namespace FingerPrint.Controllers.Implementations
             }
             if (!string.IsNullOrWhiteSpace(name))
             {
-                if (AnyByName(name) || _groupStore.Exists(x => x.Name == name))
+                //if (AnyByName(name) || _groupStore.Exists(x => x.Name == name))
+                //{
+                //    throw new ArgumentException($"Cannot change text's name to {name} since a text or group with that name already exists.");
+                //}
+                if (_textStore.Exists(x => x.Name == name) || _groupStore.Exists(x => x.Name == name))
                 {
-                    throw new ArgumentException($"Cannot change text's name to {name} since a text or group with that name already exists.");
+                    throw new ArgumentException($"Cannot create text because another item in the database already has the name {name}.");
                 }
                 _textStore.ModifyName((ITextModel)model, name);
                 updatedModel.SetName(name);

@@ -24,8 +24,7 @@ namespace FingerPrint
         private ITextController _textController;
         private IGroupController _groupController;
         //private IAnalysisController _analysisController;
-        public Form1(IAnalysisController analysisController,
-            ITextController textController,
+        public Form1(ITextController textController,
             IGroupController groupController)
         {
             _activeItems = new List<ITextOrGroupViewModel>();

@@ -9,6 +9,7 @@ using FingerPrint.AuxiliaryClasses;
 using System.Collections.Generic;
 using System.Linq;
 using FingerPrint.Models;
+using System.Collections.Concurrent;
 
 namespace FingerPrintUnitTests.StoreTests
 {
@@ -18,7 +19,7 @@ namespace FingerPrintUnitTests.StoreTests
         private FingerprintLite13Entities _db;
         private IModelFactory _modelFactory;
         private ITextStore _textStore;
-        private Stack<string> _uniqueNames;
+        private ConcurrentStack<string> _uniqueNames;
 
         [TestInitialize]
         public void Initialize()
@@ -26,14 +27,14 @@ namespace FingerPrintUnitTests.StoreTests
             _db = new FingerprintLite13Entities();
             _modelFactory = new ModelFactory();
             _textStore = new TextStore(_db, _modelFactory);
-            _uniqueNames = new Stack<string>();
+            _uniqueNames = new ConcurrentStack<string>();
 
             //Assuming we will never need more than 2 text names per method
             int namesNeeded = 2 * (this.GetType()).GetMethods().Count();
             GenerateNames(namesNeeded, _uniqueNames);
         }
 
-        private void GenerateNames(int targetCount, Stack<string> names)
+        private void GenerateNames(int targetCount, ConcurrentStack<string> names)
         {
             int count = 0;
             while (count < targetCount)
@@ -81,7 +82,9 @@ namespace FingerPrintUnitTests.StoreTests
         [TestMethod]
         public void TestAdd()
         {
-            string name = _uniqueNames.Pop();
+            //string name = _uniqueNames.Pop();
+            string name;
+            _uniqueNames.TryPop(out name);
             StreamReader text = new StreamReader("../../SampleTextFiles/WordSpanningMultipleLines.txt");
             ITextModel model = _modelFactory.GetTextModel(name, text, UniversalConstants.CountSize);
             _textStore.Add(model);
@@ -99,7 +102,9 @@ namespace FingerPrintUnitTests.StoreTests
         public void TestAddDuplicate()
         {
             ArgumentException expectedException = null;
-            string name = _uniqueNames.Pop();
+            //string name = _uniqueNames.Pop();
+            string name;
+            _uniqueNames.TryPop(out name);
             try
             {
                 StreamReader text1 = new StreamReader("../../SampleTextFiles/WordSpanningMultipleLines.txt");
@@ -131,7 +136,9 @@ namespace FingerPrintUnitTests.StoreTests
         [TestMethod]
         public void TestDelete()
         {
-            string name = _uniqueNames.Pop();
+            //string name = _uniqueNames.Pop();
+            string name;
+            _uniqueNames.TryPop(out name);
             StreamReader text = new StreamReader("../../SampleTextFiles/WordSpanningMultipleLines.txt");
             ITextModel model = _modelFactory.GetTextModel(name, text, UniversalConstants.CountSize);
             _textStore.Add(model);
@@ -144,7 +151,9 @@ namespace FingerPrintUnitTests.StoreTests
         [ExpectedException(typeof(ArgumentException))]
         public void TestDeleteNonexistant()
         {
-            string name = _uniqueNames.Pop();
+            //string name = _uniqueNames.Pop();
+            string name;
+            _uniqueNames.TryPop(out name);
             StreamReader text = new StreamReader("../../SampleTextFiles/WordSpanningMultipleLines.txt");
             ITextModel model = _modelFactory.GetTextModel(name, text, UniversalConstants.CountSize);
             _textStore.Delete(model);
@@ -153,7 +162,9 @@ namespace FingerPrintUnitTests.StoreTests
         [TestMethod]
         public void TestExists()
         {
-            string name = _uniqueNames.Pop();
+            //string name = _uniqueNames.Pop();
+            string name;
+            _uniqueNames.TryPop(out name);
             StreamReader text = new StreamReader("../../SampleTextFiles/WordSpanningMultipleLines.txt");
             ITextModel model = _modelFactory.GetTextModel(name, text, UniversalConstants.CountSize);
             bool exists = _textStore.Exists(x => x.Name == name);
@@ -169,7 +180,9 @@ namespace FingerPrintUnitTests.StoreTests
         [TestMethod]
         public void TestGetOne()
         {
-            string name = _uniqueNames.Pop();
+            //string name = _uniqueNames.Pop();
+            string name;
+            _uniqueNames.TryPop(out name);
             ITextModel model = _textStore.GetOne(x => x.Name == name);
             Assert.IsNull(model);
             StreamReader text = new StreamReader("../../SampleTextFiles/WordSpanningMultipleLines.txt");
@@ -183,8 +196,12 @@ namespace FingerPrintUnitTests.StoreTests
         [TestMethod]
         public void TestGetMany()
         {
-            string name1 = _uniqueNames.Pop();
-            string name2 = _uniqueNames.Pop();
+            //string name1 = _uniqueNames.Pop();
+            string name1;
+            _uniqueNames.TryPop(out name1);
+            //string name2 = _uniqueNames.Pop();
+            string name2;
+            _uniqueNames.TryPop(out name2);
             IEnumerable<ITextModel> modelsFromDb = _textStore.GetMany(x => x.Name == name1);
             List<ITextModel> models = modelsFromDb.ToList();
             Assert.AreEqual(0, models.Count);
@@ -205,14 +222,18 @@ namespace FingerPrintUnitTests.StoreTests
         [TestMethod]
         public void TestIsChild()
         {
-            string name = _uniqueNames.Pop();
+            //string name = _uniqueNames.Pop();
+            string name;
+            _uniqueNames.TryPop(out name);
             StreamReader sr = new StreamReader("../../SampleTextFiles/WordSpanningMultipleLines.txt");
             ITextModel model = _modelFactory.GetTextModel(name, sr, UniversalConstants.CountSize);
             _textStore.Add(model);
             Assert.IsFalse(_textStore.IsChild(model));
             string textName = model.GetName();
             Text text = _db.Texts.FirstOrDefault(x => x.Name == textName);
-            Grouping group = new Grouping() { Name = _uniqueNames.Pop()};
+            string tempName;
+            _uniqueNames.TryPop(out tempName);
+            Grouping group = new Grouping() { Name = tempName};
             _db.Groupings.Add(group);
             _db.SaveChanges();
             Text_Grouping tg = new Text_Grouping() { TextId = text.Id, GroupingId = group.Id};
@@ -229,7 +250,9 @@ namespace FingerPrintUnitTests.StoreTests
         [TestMethod]
         public void TestModifyAuthor()
         {
-            string name = _uniqueNames.Pop();
+            //string name = _uniqueNames.Pop();
+            string name;
+            _uniqueNames.TryPop(out name);
             StreamReader sr = new StreamReader("../../SampleTextFiles/WordSpanningMultipleLines.txt");
             ITextModel model = _modelFactory.GetTextModel(name, sr, UniversalConstants.CountSize);
             model.SetAuthor("tom");
@@ -245,7 +268,9 @@ namespace FingerPrintUnitTests.StoreTests
         [TestMethod]
         public void TestModifyIncludeQuotes()
         {
-            string name = _uniqueNames.Pop();
+            //string name = _uniqueNames.Pop();
+            string name;
+            _uniqueNames.TryPop(out name);
             StreamReader sr = new StreamReader("../../SampleTextFiles/WordSpanningMultipleLines.txt");
             ITextModel model = _modelFactory.GetTextModel(name, sr, UniversalConstants.CountSize);
             model.SetIncludeQuotes(true);
@@ -261,13 +286,17 @@ namespace FingerPrintUnitTests.StoreTests
         [TestMethod]
         public void TestModifyName()
         {
-            string name = _uniqueNames.Pop();
+            //string name = _uniqueNames.Pop();
+            string name;
+            _uniqueNames.TryPop(out name);
             StreamReader sr = new StreamReader("../../SampleTextFiles/WordSpanningMultipleLines.txt");
             ITextModel model = _modelFactory.GetTextModel(name, sr, UniversalConstants.CountSize);
             _textStore.Add(model);
             model = _textStore.GetOne(x => x.Name == name);
             Assert.IsNotNull(model);
-            string newName = _uniqueNames.Pop();
+            //string newName = _uniqueNames.Pop();
+            string newName;
+            _uniqueNames.TryPop(out newName);
             _textStore.ModifyName(model, newName);
             ITextModel nullModel = _textStore.GetOne(x => x.Name == name);
             model = _textStore.GetOne(x => x.Name == newName);
@@ -281,8 +310,12 @@ namespace FingerPrintUnitTests.StoreTests
         public void TestModifyNameDuplicate()
         {
             ArgumentException expectedException = null;
-            string name1 = _uniqueNames.Pop();
-            string name2 = _uniqueNames.Pop();
+            //string name1 = _uniqueNames.Pop();
+            string name1;
+            _uniqueNames.TryPop(out name1);
+            //string name2 = _uniqueNames.Pop();
+            string name2;
+            _uniqueNames.TryPop(out name2);
             try
             {
                 IEnumerable<ITextModel> modelsFromDb = _textStore.GetMany(x => x.Name == name1);
@@ -320,7 +353,9 @@ namespace FingerPrintUnitTests.StoreTests
         public void TestModifyNameNull()
         {
             ArgumentException expectedException = null;
-            string name = _uniqueNames.Pop();
+            //string name = _uniqueNames.Pop();
+            string name;
+            _uniqueNames.TryPop(out name);
             try
             {
                 StreamReader sr = new StreamReader("../../SampleTextFiles/WordSpanningMultipleLines.txt");
@@ -328,7 +363,9 @@ namespace FingerPrintUnitTests.StoreTests
                 _textStore.Add(model);
                 model = _textStore.GetOne(x => x.Name == name);
                 Assert.IsNotNull(model);
-                string newName = _uniqueNames.Pop();
+                //string newName = _uniqueNames.Pop();
+                string newName;
+                _uniqueNames.TryPop(out newName);
                 _textStore.ModifyName(model, null);
             }
             catch (ArgumentException ex)
