@@ -114,7 +114,7 @@ namespace FingerPrintUnitTests.StoreTests
                 expectedException = ex;
             }
             finally
-            {
+            {   
                 List<Text> textsToDelete = _db.Texts.Where(x => x.Name == name).ToList();
                 foreach (Text text in textsToDelete)
                 {

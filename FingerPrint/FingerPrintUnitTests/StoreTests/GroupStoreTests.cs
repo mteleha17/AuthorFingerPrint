@@ -97,6 +97,38 @@ namespace FingerPrintUnitTests.StoreTests
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void TestAddDuplicate()
+        {
+            ArgumentException expectedException = null;
+            string name = _uniqueNames.Pop();
+            try
+            {
+                IGroupModel group1 = _modelFactory.GetGroupModel(name, UniversalConstants.CountSize);
+                _groupStore.Add(group1);
+                IGroupModel group2 = _modelFactory.GetGroupModel(name, UniversalConstants.CountSize);
+                _groupStore.Add(group2);
+            }
+            catch (ArgumentException ex)
+            {
+                expectedException = ex;
+            }
+            finally
+            {
+                List<Grouping> groupsToDelete = _db.Groupings.Where(x => x.Name == name).ToList();
+                foreach (Grouping group in groupsToDelete)
+                {
+                    _db.Groupings.Remove(group);
+                    _db.SaveChanges();
+                }
+            }
+            if (expectedException != null)
+            {
+                throw expectedException;
+            }
+        }
+
+        [TestMethod]
         public void TestAddText()
         {
             string groupName = _uniqueNames.Pop();
@@ -110,6 +142,8 @@ namespace FingerPrintUnitTests.StoreTests
             groupModel = _groupStore.GetOne(x => x.Name == groupName);
             List<ITextOrGroupViewModel> groupMembers = groupModel.GetMembers();
             Assert.AreEqual(1, groupMembers.Count);
+            Assert.AreEqual(textName, groupMembers[0].GetName());
+            Assert.IsInstanceOfType(groupMembers[0], typeof(ITextModel));
             CompareTextModels(textModel, (ITextModel)groupMembers[0]);
             _groupStore.RemoveItem(groupModel, textModel);
             _textStore.Delete(textModel);
@@ -180,64 +214,203 @@ namespace FingerPrintUnitTests.StoreTests
             _groupStore.Delete(group1);
         }
 
-        //[TestMethod]
-        //public void TestContainsOneLevel()
-        //{
-        //    throw new NotImplementedException();
-        //}
+        [TestMethod]
+        public void TestContainsOneLevel()
+        {
+            string groupName = _uniqueNames.Pop();
+            IGroupModel groupModel = _modelFactory.GetGroupModel(groupName, UniversalConstants.CountSize);
+            _groupStore.Add(groupModel);
+            string textName = _uniqueNames.Pop();
+            StreamReader text = new StreamReader("../../SampleTextFiles/WordSpanningMultipleLines.txt");
+            ITextModel textModel = _modelFactory.GetTextModel(textName, text, UniversalConstants.CountSize);
+            _textStore.Add(textModel);
+            _groupStore.AddItem(groupModel, textModel);
+            groupModel = _groupStore.GetOne(x => x.Name == groupName);
+            Assert.IsTrue(_groupStore.Contains(groupModel.GetName(), textModel.GetName()));
+            _groupStore.RemoveItem(groupModel, textModel);
+            _textStore.Delete(textModel);
+            _groupStore.Delete(groupModel);
+        }
 
-        //[TestMethod]
-        //public void TestDelete()
-        //{
-        //    throw new NotImplementedException();
-        //}
+        [TestMethod]
+        public void TestContainsTwoLevels()
+        {
+            string name1 = _uniqueNames.Pop();
+            IGroupModel group1 = _modelFactory.GetGroupModel(name1, UniversalConstants.CountSize);
+            _groupStore.Add(group1);
+            string name2 = _uniqueNames.Pop();
+            IGroupModel group2 = _modelFactory.GetGroupModel(name2, UniversalConstants.CountSize);
+            _groupStore.Add(group2);
+            string textName = _uniqueNames.Pop();
+            StreamReader text = new StreamReader("../../SampleTextFiles/WordSpanningMultipleLines.txt");
+            ITextModel textModel = _modelFactory.GetTextModel(textName, text, UniversalConstants.CountSize);
+            _textStore.Add(textModel);
+            _groupStore.AddItem(group2, textModel);
+            _groupStore.AddItem(group1, group2);
+            Assert.IsTrue(_groupStore.Contains(group1.GetName(), textModel.GetName()));
+            _groupStore.RemoveItem(group1, group2);
+            _groupStore.RemoveItem(group2, textModel);
+            _textStore.Delete(textModel);
+            _groupStore.Delete(group2);
+            _groupStore.Delete(group1);
+        }
 
-        //[TestMethod]
-        //public void TestExists()
-        //{
-        //    throw new NotImplementedException();
-        //}
+        [TestMethod]
+        public void TestDelete()
+        {
+            string name = _uniqueNames.Pop();
+            IGroupModel group = _modelFactory.GetGroupModel(name, UniversalConstants.CountSize);
+            _groupStore.Add(group);
+            _groupStore.Delete(group);
+            Assert.IsFalse(_groupStore.Exists(x => x.Name == name));
+        }
 
-        //[TestMethod]
-        //public void TestGetOne()
-        //{
-        //    throw new NotImplementedException();
-        //}
+        [TestMethod]
+        public void TestExists()
+        {
+            string name = _uniqueNames.Pop();
+            IGroupModel group = _modelFactory.GetGroupModel(name, UniversalConstants.CountSize);
+            _groupStore.Add(group);
+            Assert.IsTrue(_groupStore.Exists(x => x.Name == name));
+            _groupStore.Delete(group);
+        }
 
-        //[TestMethod]
-        //public void TestGetMany()
-        //{
-        //    throw new NotImplementedException();
-        //}
+        [TestMethod]
+        public void TestGetOne()
+        {
+            string name = _uniqueNames.Pop();
+            IGroupModel group = _modelFactory.GetGroupModel(name, UniversalConstants.CountSize);
+            _groupStore.Add(group);
+            group = _groupStore.GetOne(x => x.Name == name);
+            Assert.IsNotNull(group);
+            Assert.AreEqual(group.GetName(), name);
+            _groupStore.Delete(group);
+        }
 
-        //[TestMethod]
-        //public void TestIsChild()
-        //{
-        //    throw new NotImplementedException();
-        //}
+        [TestMethod]
+        public void TestGetMany()
+        {
+            string name1 = _uniqueNames.Pop();
+            string name2 = _uniqueNames.Pop();
+            IGroupModel group1 = _modelFactory.GetGroupModel(name1, UniversalConstants.CountSize);
+            IGroupModel group2 = _modelFactory.GetGroupModel(name2, UniversalConstants.CountSize);
+            _groupStore.Add(group1);
+            _groupStore.Add(group2);
+            IEnumerable<IGroupModel> models = _groupStore.GetMany(x => x.Name == name1 || x.Name == name2);
+            List<IGroupModel> modelsList = models.ToList();
+            Assert.AreEqual(2, modelsList.Count());
+            if (modelsList[0].GetName() == name1)
+            {
+                Assert.AreEqual(modelsList[1].GetName(), name2);
+            }
+            else
+            {
+                Assert.AreEqual(modelsList[0].GetName(), name2);
+                Assert.AreEqual(modelsList[1].GetName(), name1);
+            }
+            _groupStore.Delete(group1);
+            _groupStore.Delete(group2);
+        }
 
-        //[TestMethod]
-        //public void TestIsParent()
-        //{
-        //    throw new NotImplementedException();
-        //}
+        [TestMethod]
+        public void TestIsChild()
+        {
+            string name1 = _uniqueNames.Pop();
+            IGroupModel group1 = _modelFactory.GetGroupModel(name1, UniversalConstants.CountSize);
+            _groupStore.Add(group1);
+            string name2 = _uniqueNames.Pop();
+            IGroupModel group2 = _modelFactory.GetGroupModel(name2, UniversalConstants.CountSize);
+            _groupStore.Add(group2);
+            _groupStore.AddItem(group1, group2);
+            group1 = _groupStore.GetOne(x => x.Name == name1);
+            Assert.IsFalse(_groupStore.IsChild(group1));
+            Assert.IsTrue(_groupStore.IsChild(group2));
+            _groupStore.RemoveItem(group1, group2);
+            _groupStore.Delete(group2);
+            _groupStore.Delete(group1);
+        }
 
-        //[TestMethod]
-        //public void TestModifyName()
-        //{
-        //    throw new NotImplementedException();
-        //}
+        [TestMethod]
+        public void TestIsParent()
+        {
+            string name1 = _uniqueNames.Pop();
+            IGroupModel group1 = _modelFactory.GetGroupModel(name1, UniversalConstants.CountSize);
+            _groupStore.Add(group1);
+            string name2 = _uniqueNames.Pop();
+            IGroupModel group2 = _modelFactory.GetGroupModel(name2, UniversalConstants.CountSize);
+            _groupStore.Add(group2);
+            _groupStore.AddItem(group1, group2);
+            group1 = _groupStore.GetOne(x => x.Name == name1);
+            Assert.IsTrue(_groupStore.IsParent(group1));
+            Assert.IsFalse(_groupStore.IsParent(group2));
+            _groupStore.RemoveItem(group1, group2);
+            _groupStore.Delete(group2);
+            _groupStore.Delete(group1);
+        }
 
-        //[TestMethod]
-        //public void TestRemoveItem()
-        //{
-        //    throw new NotImplementedException();
-        //}
+        [TestMethod]
+        public void TestModifyName()
+        {
+            string name = _uniqueNames.Pop();
+            IGroupModel model = _modelFactory.GetGroupModel(name, UniversalConstants.CountSize);
+            _groupStore.Add(model);
+            model = _groupStore.GetOne(x => x.Name == name);
+            string name2 = _uniqueNames.Pop();
+            Assert.IsTrue(_groupStore.Exists(x => x.Name == name));
+            Assert.IsFalse(_groupStore.Exists(x => x.Name == name2));
+            _groupStore.ModifyName(model, name2);
+            Assert.IsFalse(_groupStore.Exists(x => x.Name == name));
+            Assert.IsTrue(_groupStore.Exists(x => x.Name == name2));
+            model = _groupStore.GetOne(x => x.Name == name2);
+            _groupStore.Delete(model);
+        }
 
-        //[TestMethod]
-        //public void TestRemoveItems()
-        //{
-        //    throw new NotImplementedException();
-        //}
+        [TestMethod]
+        public void TestRemoveItem()
+        {
+            string groupName = _uniqueNames.Pop();
+            IGroupModel groupModel = _modelFactory.GetGroupModel(groupName, UniversalConstants.CountSize);
+            _groupStore.Add(groupModel);
+            string textName = _uniqueNames.Pop();
+            StreamReader text = new StreamReader("../../SampleTextFiles/WordSpanningMultipleLines.txt");
+            ITextModel textModel = _modelFactory.GetTextModel(textName, text, UniversalConstants.CountSize);
+            _textStore.Add(textModel);
+            _groupStore.AddItem(groupModel, textModel);
+            groupModel = _groupStore.GetOne(x => x.Name == groupName);
+            Assert.IsTrue(_groupStore.Contains(groupModel.GetName(), textModel.GetName()));
+            _groupStore.RemoveItem(groupModel, textModel);
+            Assert.IsFalse(_groupStore.Contains(groupModel.GetName(), textModel.GetName()));
+            _textStore.Delete(textModel);
+            _groupStore.Delete(groupModel);
+        }
+
+        [TestMethod]
+        public void TestRemoveItems()
+        {
+            string name1 = _uniqueNames.Pop();
+            IGroupModel group1 = _modelFactory.GetGroupModel(name1, UniversalConstants.CountSize);
+            _groupStore.Add(group1);
+            string name2 = _uniqueNames.Pop();
+            IGroupModel group2 = _modelFactory.GetGroupModel(name2, UniversalConstants.CountSize);
+            _groupStore.Add(group2);
+            string textName = _uniqueNames.Pop();
+            StreamReader text = new StreamReader("../../SampleTextFiles/WordSpanningMultipleLines.txt");
+            ITextModel textModel = _modelFactory.GetTextModel(textName, text, UniversalConstants.CountSize);
+            _textStore.Add(textModel);
+            List<ITextOrGroupModel> membersToAdd = new List<ITextOrGroupModel>()
+            {
+                group2, textModel
+            };
+            _groupStore.AddItems(group1, membersToAdd);
+            group1 = _groupStore.GetOne(x => x.Name == name1);
+            Assert.IsTrue(_groupStore.Contains(group1.GetName(), group2.GetName()));
+            Assert.IsTrue(_groupStore.Contains(group1.GetName(), textModel.GetName()));
+            _groupStore.RemoveItems(group1, new List<ITextOrGroupModel>() { group2, textModel });
+            Assert.IsFalse(_groupStore.Contains(group1.GetName(), group2.GetName()));
+            Assert.IsFalse(_groupStore.Contains(group1.GetName(), textModel.GetName()));
+            _textStore.Delete(textModel);
+            _groupStore.Delete(group2);
+            _groupStore.Delete(group1);
+        }
     }
 }
