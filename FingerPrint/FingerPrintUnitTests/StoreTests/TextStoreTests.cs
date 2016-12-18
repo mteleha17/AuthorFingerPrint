@@ -43,7 +43,7 @@ namespace FingerPrintUnitTests.StoreTests
                 string name = "a";
                 int unit = 'b' - 'a';
                 Random random = new Random();
-                while (_db.Texts.Any(x => x.Name == name) || names.Any(x => x == name))
+                while (_db.Texts.Any(x => x.Name == name) || _db.Groupings.Any(x => x.Name == name) || names.Any(x => x == name))
                 {
                     if (tries > 15)
                     {

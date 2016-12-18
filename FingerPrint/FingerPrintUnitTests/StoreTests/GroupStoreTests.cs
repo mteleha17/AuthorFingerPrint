@@ -46,7 +46,7 @@ namespace FingerPrintUnitTests.StoreTests
                 string name = "a";
                 int unit = 'b' - 'a';
                 Random random = new Random();
-                while (_db.Texts.Any(x => x.Name == name) || names.Any(x => x == name))
+                while (_db.Texts.Any(x => x.Name == name) || _db.Groupings.Any(x => x.Name == name) || names.Any(x => x == name))
                 {
                     if (tries > 15)
                     {
@@ -283,10 +283,10 @@ namespace FingerPrintUnitTests.StoreTests
             StreamReader text = new StreamReader("../../SampleTextFiles/WordSpanningMultipleLines.txt");
             ITextModel textModel = _modelFactory.GetTextModel(textName, text, UniversalConstants.CountSize);
             _textStore.Add(textModel);
-            Assert.IsFalse(_groupStore.Contains(groupModel.GetName(), textModel.GetName()));
+            Assert.IsFalse(_groupStore.Contains(groupModel, textModel));
             _groupStore.AddItem(groupModel, textModel);
             groupModel = _groupStore.GetOne(x => x.Name == groupName);
-            Assert.IsTrue(_groupStore.Contains(groupModel.GetName(), textModel.GetName()));
+            Assert.IsTrue(_groupStore.Contains(groupModel, textModel));
             _groupStore.RemoveItem(groupModel, textModel);
             _textStore.Delete(textModel);
             _groupStore.Delete(groupModel);
@@ -311,11 +311,11 @@ namespace FingerPrintUnitTests.StoreTests
             StreamReader text = new StreamReader("../../SampleTextFiles/WordSpanningMultipleLines.txt");
             ITextModel textModel = _modelFactory.GetTextModel(textName, text, UniversalConstants.CountSize);
             _textStore.Add(textModel);
-            Assert.IsFalse(_groupStore.Contains(group1.GetName(), textModel.GetName()));
+            Assert.IsFalse(_groupStore.Contains(group1, textModel));
             _groupStore.AddItem(group2, textModel);
-            Assert.IsFalse(_groupStore.Contains(group1.GetName(), textModel.GetName()));
+            Assert.IsFalse(_groupStore.Contains(group1, textModel));
             _groupStore.AddItem(group1, group2);
-            Assert.IsTrue(_groupStore.Contains(group1.GetName(), textModel.GetName()));
+            Assert.IsTrue(_groupStore.Contains(group1, textModel));
             _groupStore.RemoveItem(group1, group2);
             _groupStore.RemoveItem(group2, textModel);
             _textStore.Delete(textModel);
@@ -331,7 +331,7 @@ namespace FingerPrintUnitTests.StoreTests
             _uniqueNames.TryPop(out groupName);
             IGroupModel groupModel = _modelFactory.GetGroupModel(groupName, UniversalConstants.CountSize);
             _groupStore.Add(groupModel);
-            Assert.IsFalse(_groupStore.Contains(groupModel.GetName(), groupModel.GetName()));
+            Assert.IsFalse(_groupStore.Contains(groupModel, groupModel));
             _groupStore.Delete(groupModel);
         }
 
@@ -499,9 +499,9 @@ namespace FingerPrintUnitTests.StoreTests
             _textStore.Add(textModel);
             _groupStore.AddItem(groupModel, textModel);
             groupModel = _groupStore.GetOne(x => x.Name == groupName);
-            Assert.IsTrue(_groupStore.Contains(groupModel.GetName(), textModel.GetName()));
+            Assert.IsTrue(_groupStore.Contains(groupModel, textModel));
             _groupStore.RemoveItem(groupModel, textModel);
-            Assert.IsFalse(_groupStore.Contains(groupModel.GetName(), textModel.GetName()));
+            Assert.IsFalse(_groupStore.Contains(groupModel, textModel));
             _textStore.Delete(textModel);
             _groupStore.Delete(groupModel);
         }
@@ -531,11 +531,11 @@ namespace FingerPrintUnitTests.StoreTests
             };
             _groupStore.AddItems(group1, membersToAdd);
             group1 = _groupStore.GetOne(x => x.Name == name1);
-            Assert.IsTrue(_groupStore.Contains(group1.GetName(), group2.GetName()));
-            Assert.IsTrue(_groupStore.Contains(group1.GetName(), textModel.GetName()));
+            Assert.IsTrue(_groupStore.Contains(group1, group2));
+            Assert.IsTrue(_groupStore.Contains(group1, textModel));
             _groupStore.RemoveItems(group1, new List<ITextOrGroupModel>() { group2, textModel });
-            Assert.IsFalse(_groupStore.Contains(group1.GetName(), group2.GetName()));
-            Assert.IsFalse(_groupStore.Contains(group1.GetName(), textModel.GetName()));
+            Assert.IsFalse(_groupStore.Contains(group1, group2));
+            Assert.IsFalse(_groupStore.Contains(group1, textModel));
             _textStore.Delete(textModel);
             _groupStore.Delete(group2);
             _groupStore.Delete(group1);

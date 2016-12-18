@@ -32,21 +32,6 @@ namespace FingerPrint.Controllers.Implementations
             _modelFactory = modelFactory;
         }
 
-        //public void DangerousDeleteEverything()
-        //{
-        //    ((GroupStore)_groupStore).DangerousDeleteAllTextsAndGroups();
-        //}
-
-        //public bool IsParent(IGroupViewModel model)
-        //{
-        //    return _groupStore.IsParent((IGroupModel)model);
-        //}
-
-        //public bool IsChild(IGroupViewModel model)
-        //{
-        //    return _groupStore.IsChild((IGroupModel)model);
-        //}
-
         public IGroupViewModel GetGroupByName(string name)
         {
             if (string.IsNullOrWhiteSpace(name))
@@ -54,127 +39,138 @@ namespace FingerPrint.Controllers.Implementations
                 throw new ArgumentException("The name must not be null.");
             }
             return _groupStore.GetOne(x => x.Name == name);
-            //return _tempDbGroup.FirstOrDefault(x => x.GetName() == name);
         }
-
-        //public bool AnyByName(string name)
-        //{
-        //    if (string.IsNullOrWhiteSpace(name))
-        //    {
-        //        throw new ArgumentException("The name must not be null.");
-        //    }
-        //    return _groupStore.Exists(x => x.Name == name);
-        //    //return _tempDbGroup.Any(x => x.GetName() == name);
-        //}
-
-        //public bool Contains(string groupName, string itemName)
-        //{
-        //    return _groupStore.Contains(groupName, itemName);
-        //}
-
-        //public bool GroupIsEmpty(IGroupViewModel model)
-        //{
-        //    return model.GetMembers().Count == 0;
-        //}
 
         public IGroupViewModel CreateGroup(string name, int length)
         {
-            //if (AnyByName(name) || _textStore.Exists(x => x.Name == name))
-            //{
-            //    throw new ArgumentException($"Cannot create group because another item in the database already has the name {name}.");
-            //}
             if (_groupStore.Exists(x => x.Name == name) || _textStore.Exists(x => x.Name == name))
             {
                 throw new ArgumentException($"Cannot create group because another item in the database already has the name {name}.");
             }
             IGroupModel model = _modelFactory.GetGroupModel(name, length);
             _groupStore.Add(model);
-            //_tempDbGroup.Add(model);
             return model;
 
         }
 
-        public void Delete(IGroupViewModel model)
+        public void Delete(string name)
         {
-            //removed to transition to form1 keeping track of its own active items
-            //if (_analysisController.ItemIsActive(model.GetName()))
-            //{
-            //    _analysisController.RemoveFromActiveItems(model.GetName());
-            //}
-            _groupStore.Delete((IGroupModel)model);
-            //_tempDbGroup.Remove(model);
-        }
-
-        public void AddItemToGroup(IGroupViewModel model, ITextOrGroupViewModel item)
-        {
-            AddItemsToGroup(model, new List<ITextOrGroupViewModel>() { item });
-        }
-
-        public void AddItemsToGroup(IGroupViewModel model, IEnumerable<ITextOrGroupViewModel> items)
-        {
-            if (items.Contains(null))
+            IGroupModel model = _groupStore.GetOne(x => x.Name == name);
+            if (model == null)
             {
-                throw new ArgumentException("Cannot add a null item to a group.");
+                throw new ArgumentException($"Can't delete group with name {name} because it doesn't exist.");
             }
-            if (items.Any(x => x.GetName() == model.GetName()))
+            _groupStore.Disassociate(model);
+            _groupStore.Delete(model);
+        }
+
+        public IGroupViewModel AddItemToGroup(string groupName, string itemName)
+        {
+            if (groupName == itemName)
             {
                 throw new ArgumentException("Cannot add a group to itself.");
             }
-            foreach (var i in items)
+            IGroupModel parent = _groupStore.GetOne(x => x.Name == groupName);
+            if (parent == null)
             {
-                if (i is IGroupViewModel && ((IGroupViewModel)i).GetMembers().Any(x => x.GetName() == model.GetName()))
+                throw new ArgumentException($"Can't add item to group named {groupName} since it doesn't exist.");
+            }
+            ITextModel childText = _textStore.GetOne(x => x.Name == itemName);
+            IGroupModel childGroup = _groupStore.GetOne(x => x.Name == itemName);
+            if (childText == null)
+            {
+                if (childGroup == null)
                 {
-                    throw new ArgumentException("Cannot add a group to its own child.");
+                    throw new ArgumentException($"Can't add item named {itemName} to group since it doesn't exist.");
                 }
+                if (_groupStore.Contains(childGroup, parent))
+                {
+                    throw new ArgumentException("Can't add a group as a child to its own parent or a parent of its parent or ...");
+                }
+                if (_groupStore.Contains(parent, childGroup))
+                {
+                    throw new ArgumentException("Cannot add item to group since it is already a member of that group.");
+                }
+                parent.Add(childGroup);
+                _groupStore.AddItem(parent, childGroup);
             }
-            IGroupModel groupModel = (IGroupModel)model;
-            IEnumerable<ITextOrGroupModel> itemModels = items.Select(x => (ITextOrGroupModel)x);
-            foreach (var m in itemModels)
+            else
             {
-                groupModel.Add(m);
+                if (childGroup != null)
+                {
+                    throw new ArgumentException("The database has a text and group with the same name. That shouldn't happen.");
+                }
+                if (_groupStore.Contains(parent, childText))
+                {
+                    throw new ArgumentException("Cannot add item to group since it is already a member of that group.");
+                }
+                parent.Add(childText);
+                _groupStore.AddItem(parent, childText);
             }
-            _groupStore.AddItems(groupModel, itemModels);
+            return parent;
         }
 
-        public void RemoveItemFromGroup(IGroupViewModel model, ITextOrGroupViewModel item)
+        public IGroupViewModel RemoveItemFromGroup(string groupName, string itemName)
         {
-            RemoveItemsFromGroup(model, new List<ITextOrGroupViewModel>() { item });
-        }
-
-        public void RemoveItemsFromGroup(IGroupViewModel model, IEnumerable<ITextOrGroupViewModel> items)
-        {
-            IGroupModel groupModel = (IGroupModel)model;
-            IEnumerable<ITextOrGroupModel> itemModels = items.Select(x => (ITextOrGroupModel)x);
-            foreach (var m in itemModels)
+            IGroupModel parent = _groupStore.GetOne(x => x.Name == groupName);
+            if (parent == null)
             {
-                groupModel.Remove(m);
+                throw new ArgumentException($"Can't remove item from group named {groupName} since it doesn't exist.");
             }
-            _groupStore.RemoveItems(groupModel, itemModels);
+            ITextModel childText = _textStore.GetOne(x => x.Name == itemName);
+            IGroupModel childGroup = _groupStore.GetOne(x => x.Name == itemName);
+            if (childText == null)
+            {
+                if (childGroup == null)
+                {
+                    throw new ArgumentException($"Can't remove item named {itemName} from group since it doesn't exist.");
+                }
+                if (!_groupStore.Contains(parent, childGroup))
+                {
+                    throw new ArgumentException("Cannot remove item from group since it is not a member of that group.");
+                }
+                parent.Remove(childGroup);
+                _groupStore.RemoveItem(parent, childGroup);
+            }
+            else
+            {
+                if (childGroup != null)
+                {
+                    throw new ArgumentException("The database has a text and group with the same name. That shouldn't happen.");
+                }
+                if (!_groupStore.Contains(parent, childText))
+                {
+                    throw new ArgumentException("Cannot remove item from group since it is not a member of that group.");
+                }
+                parent.Remove(childText);
+                _groupStore.RemoveItem(parent, childText);
+            }
+            return parent;
         }
 
-        public void UpdateGroup(IGroupViewModel model, string name)
+        public IGroupViewModel UpdateGroup(string oldName, string newName)
         {
-            if (string.IsNullOrWhiteSpace(name))
+            IGroupModel model = _groupStore.GetOne(x => x.Name == oldName);
+            if (model == null)
+            {
+                throw new ArgumentException("Cannot update group since it doesn't exist.");
+            }
+            if (string.IsNullOrWhiteSpace(newName))
             {
                 throw new ArgumentException("Name cannot be null.");
             }
-            //if (AnyByName(name) || _textStore.Exists(x => x.Name == name))
-            //{
-            //    throw new ArgumentException($"Cannot update group's name to {name} since a text or group with that name already exists.");
-            //}
-            if (_groupStore.Exists(x => x.Name == name) || _textStore.Exists(x => x.Name == name))
+            if (_groupStore.Exists(x => x.Name == newName) || _textStore.Exists(x => x.Name == newName))
             {
-                throw new ArgumentException($"Cannot create group because another item in the database already has the name {name}.");
+                throw new ArgumentException($"Cannot create group because another item in the database already has the name {newName}.");
             }
-            IGroupModel updatedModel = (IGroupModel)model;
-            _groupStore.ModifyName(updatedModel, name);
-            updatedModel.SetName(name);
+            _groupStore.ModifyName(model, newName);
+            model.SetName(newName);
+            return model;
         }
 
         public List<IGroupViewModel> GetAllGroups()
         {
             return _groupStore.GetMany(x => true).Select(x => ((IGroupViewModel)x)).ToList();
-            //return _tempDbGroup.Where(x => true).Select(x => ((IGroupViewModel)x)).ToList();
         }
     }
 }

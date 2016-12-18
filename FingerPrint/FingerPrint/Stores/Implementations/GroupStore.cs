@@ -60,8 +60,10 @@ namespace FingerPrint.Stores
             //AddItems(model, model.GetMembers().Select(x => (ITextOrGroupModel)x));
         }
 
-        public bool Contains(string groupName, string itemName)
+        public bool Contains(IGroupModel group, ITextOrGroupModel item)
         {
+            string groupName = group.GetName();
+            string itemName = item.GetName();
             if (string.Equals(groupName, itemName))
             {
                 return false;
@@ -79,9 +81,9 @@ namespace FingerPrint.Stores
             do
             {
                 oldCount = allGroups.Count;
-                foreach (Grouping group in allGroups)
+                foreach (Grouping grouping in allGroups)
                 {
-                    nextGroups.AddRange(_db.Grouping_Grouping.Where(x => x.ParentId == group.Id).Join(
+                    nextGroups.AddRange(_db.Grouping_Grouping.Where(x => x.ParentId == grouping.Id).Join(
                         _db.Groupings,
                         gg => gg.ChildId,
                         g => g.Id,
@@ -405,6 +407,22 @@ namespace FingerPrint.Stores
                 throw new ArgumentException("Group does not exist.");
             }
             return _db.Grouping_Grouping.Any(x => x.ParentId == group.Id);
+        }
+
+        public void Disassociate(IGroupModel model)
+        {
+            string name = model.GetName();
+            Grouping group = _db.Groupings.FirstOrDefault(x => x.Name == name);
+            if (group == null)
+            {
+                throw new ArgumentException("Cannot disassociate group since it does not exist.");
+            }
+            IQueryable<Text_Grouping> textAssociations = _db.Text_Grouping.Where(x => x.GroupingId == group.Id);
+            IQueryable<Grouping_Grouping> groupAssociations = _db.Grouping_Grouping.Where(x => x.ParentId == group.Id || x.ChildId == group.Id);
+            _db.Text_Grouping.RemoveRange(textAssociations);
+            _db.SaveChanges();
+            _db.Grouping_Grouping.RemoveRange(groupAssociations);
+            _db.SaveChanges();
         }
     }
 }

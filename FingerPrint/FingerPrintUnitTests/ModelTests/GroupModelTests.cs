@@ -111,7 +111,7 @@ namespace FingerPrintUnitTests.ModelTests
             {
                 groupOne.Add(textOne);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 Assert.Fail();
             }

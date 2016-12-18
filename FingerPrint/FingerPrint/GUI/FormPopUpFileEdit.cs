@@ -53,7 +53,7 @@ namespace FingerPrint
                     author = null;
                 }
                 //_textController.UpdateText(model, newFileNameTextbox.Text, newAuthorTextBox.Text, quotesCheckbox.Checked);
-                _textController.UpdateText(model, name, author, quotesCheckbox.Checked);
+                _textController.UpdateText(model.GetName(), name, author, quotesCheckbox.Checked);
                 form1.updateListViews();
                 this.Close();
             }

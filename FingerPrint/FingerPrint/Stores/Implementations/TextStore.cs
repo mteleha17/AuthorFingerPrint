@@ -235,5 +235,18 @@ namespace FingerPrint.Stores
             }
             return _db.Text_Grouping.Any(x => x.TextId == text.Id);
         }
+
+        public void Disassociate(ITextModel model)
+        {
+            string name = model.GetName();
+            Text text = _db.Texts.FirstOrDefault(x => x.Name == name);
+            if (text == null)
+            {
+                throw new ArgumentException("Cannot disassociate text since it does not exist.");
+            }
+            IQueryable<Text_Grouping> associations = _db.Text_Grouping.Where(x => x.TextId == text.Id);
+            _db.Text_Grouping.RemoveRange(associations);
+            _db.SaveChanges();
+        }
     }
 }

@@ -135,7 +135,7 @@ namespace FingerPrint.Models.Implementations
             bool continueWord = false;
             string firstHalfOfWord = "";
             int previousWordLength = 0;
-            bool mismatchedQuotationMarks = false;
+            //bool mismatchedQuotationMarks = false;
             string line;
 
             while ((line = text.ReadLine()) != null) // read text file line by line until end of line
@@ -239,10 +239,10 @@ namespace FingerPrint.Models.Implementations
             Debug.Write("\nTotal with quotes: " + totalWordCountWithQuotes);
             Debug.Write("\nTotal without quotes: " + totalWordCountWithoutQuotes);
             // determines if there are mismatched quotation marks
-            if (inQuotes)
-            {
-                mismatchedQuotationMarks = true;
-            }
+            //if (inQuotes)
+            //{
+            //    mismatchedQuotationMarks = true;
+            //}
             // set wordlength counts for the model
             for (int i = 0; i < frequencyWithQuotes.Length; i++)
             {
