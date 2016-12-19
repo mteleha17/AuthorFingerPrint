@@ -40,7 +40,7 @@ namespace FingerPrint.Controllers.Implementations
             return _textStore.GetOne(x => x.Name == name);
         }
 
-        public ITextViewModel CreateText(string name, TextReader input, int length, string author = null)
+        public void CreateText(string name, TextReader input, int length, string author = null)
         {
             if (_textStore.Exists(x => x.Name == name) || _groupStore.Exists(x => x.Name == name))
             {
@@ -52,7 +52,6 @@ namespace FingerPrint.Controllers.Implementations
                 model.SetAuthor(author);
             }
             _textStore.Add(model);
-            return model;
         }
 
         public void DeleteText(string name)
@@ -62,18 +61,16 @@ namespace FingerPrint.Controllers.Implementations
             {
                 throw new ArgumentException($"Can't delete text named {name} since it doesn't exist.");
             }
-            _textStore.Disassociate(model);
             _textStore.Delete(model);
         }
 
-        public ITextModel UpdateText(string oldName, string newName = null, string author = null, bool? includeQuotes = null)
+        public void UpdateText(string oldName, string newName = null, string author = null, bool? includeQuotes = null)
         {
             ITextModel model = _textStore.GetOne(x => x.Name == oldName);
             if (model == null)
             {
                 throw new ArgumentException("Cannot update text because it does not exist.");
             }
-
             if (author != null)
             {
                 if (string.IsNullOrWhiteSpace(author))
@@ -101,7 +98,6 @@ namespace FingerPrint.Controllers.Implementations
                 _textStore.ModifyName(model, newName);
                 model.SetName(newName);
             }
-            return model;
         }
 
         public List<ITextViewModel> GetAllTexts()

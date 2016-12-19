@@ -17,14 +17,14 @@ namespace FingerPrint.Controllers
 
         List<IGroupViewModel> GetAllGroups();
 
-        IGroupViewModel CreateGroup(string name, int length);
+        void CreateGroup(string name, int length);
 
         void Delete(string name);
 
-        IGroupViewModel AddItemToGroup(string groupName, string itemName);
+        void AddItemToGroup(string groupName, string itemName);
 
-        IGroupViewModel RemoveItemFromGroup(string groupName, string itemName);
+        void RemoveItemFromGroup(string groupName, string itemName);
 
-        IGroupViewModel UpdateGroup(string oldName, string newName);
+        void UpdateGroup(string oldName, string newName);
     }
 }

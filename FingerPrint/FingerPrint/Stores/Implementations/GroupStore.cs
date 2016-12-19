@@ -136,13 +136,7 @@ namespace FingerPrint.Stores
             {
                 throw new ArgumentException("Cannot delete group because it does not exist in the database.");
             }
-            //RemoveItems(model, model.GetMembers().Select(x => (ITextOrGroupModel)x));
-            var childTextRecords = _db.Text_Grouping.Where(x => x.GroupingId == group.Id);
-            var childGroupRecords = _db.Grouping_Grouping.Where(x => x.ParentId == group.Id || x.ChildId == group.Id);
-            _db.Text_Grouping.RemoveRange(childTextRecords);
-            _db.SaveChanges();
-            _db.Grouping_Grouping.RemoveRange(childGroupRecords);
-            _db.SaveChanges();
+            Disassociate(group);
             _db.Groupings.Remove(group);
             _db.SaveChanges();
         }
@@ -247,6 +241,10 @@ namespace FingerPrint.Stores
                     {
                         throw new ArgumentException($"Cannot add item to group because it does not exist in the database: text {textName}.");
                     }
+                    if (_db.Text_Grouping.Any(x => x.GroupingId == parentGroup.Id && x.TextId == text.Id))
+                    {
+                        throw new ArgumentException("Cannot add item to group because it is already a member of that group.");
+                    }
                     texts.Add(text);
                     textIds.Add((int)text.Id);
                 }
@@ -257,6 +255,10 @@ namespace FingerPrint.Stores
                     if (group == null)
                     {
                         throw new ArgumentException($"Cannot add item to group because it does not exist in the database: group {groupName}.");
+                    }
+                    if (_db.Grouping_Grouping.Any(x => x.ParentId == parentGroup.Id && x.ChildId == group.Id))
+                    {
+                        throw new ArgumentException("Cannot add item to group because it is already a member of that group.");
                     }
                     groupIds.Add((int)group.Id);
                 }
@@ -409,10 +411,8 @@ namespace FingerPrint.Stores
             return _db.Grouping_Grouping.Any(x => x.ParentId == group.Id);
         }
 
-        public void Disassociate(IGroupModel model)
+        private void Disassociate(Grouping group)
         {
-            string name = model.GetName();
-            Grouping group = _db.Groupings.FirstOrDefault(x => x.Name == name);
             if (group == null)
             {
                 throw new ArgumentException("Cannot disassociate group since it does not exist.");

@@ -19,10 +19,10 @@ namespace FingerPrint.Controllers
 
         List<ITextViewModel> GetAllTexts();
 
-        ITextViewModel CreateText(string name, TextReader input, int length, string author = null);
+        void CreateText(string name, TextReader input, int length, string author = null);
 
         void DeleteText(string name);
 
-        ITextModel UpdateText(string originalName, string newName = null, string author = null, bool? quotesOn = null);
+        void UpdateText(string originalName, string newName = null, string author = null, bool? quotesOn = null);
     }
 }

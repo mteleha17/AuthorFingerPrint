@@ -41,7 +41,7 @@ namespace FingerPrint.Controllers.Implementations
             return _groupStore.GetOne(x => x.Name == name);
         }
 
-        public IGroupViewModel CreateGroup(string name, int length)
+        public void CreateGroup(string name, int length)
         {
             if (_groupStore.Exists(x => x.Name == name) || _textStore.Exists(x => x.Name == name))
             {
@@ -49,8 +49,6 @@ namespace FingerPrint.Controllers.Implementations
             }
             IGroupModel model = _modelFactory.GetGroupModel(name, length);
             _groupStore.Add(model);
-            return model;
-
         }
 
         public void Delete(string name)
@@ -60,11 +58,10 @@ namespace FingerPrint.Controllers.Implementations
             {
                 throw new ArgumentException($"Can't delete group with name {name} because it doesn't exist.");
             }
-            _groupStore.Disassociate(model);
             _groupStore.Delete(model);
         }
 
-        public IGroupViewModel AddItemToGroup(string groupName, string itemName)
+        public void AddItemToGroup(string groupName, string itemName)
         {
             if (groupName == itemName)
             {
@@ -107,10 +104,9 @@ namespace FingerPrint.Controllers.Implementations
                 parent.Add(childText);
                 _groupStore.AddItem(parent, childText);
             }
-            return parent;
         }
 
-        public IGroupViewModel RemoveItemFromGroup(string groupName, string itemName)
+        public void RemoveItemFromGroup(string groupName, string itemName)
         {
             IGroupModel parent = _groupStore.GetOne(x => x.Name == groupName);
             if (parent == null)
@@ -145,10 +141,9 @@ namespace FingerPrint.Controllers.Implementations
                 parent.Remove(childText);
                 _groupStore.RemoveItem(parent, childText);
             }
-            return parent;
         }
 
-        public IGroupViewModel UpdateGroup(string oldName, string newName)
+        public void UpdateGroup(string oldName, string newName)
         {
             IGroupModel model = _groupStore.GetOne(x => x.Name == oldName);
             if (model == null)
@@ -165,7 +160,6 @@ namespace FingerPrint.Controllers.Implementations
             }
             _groupStore.ModifyName(model, newName);
             model.SetName(newName);
-            return model;
         }
 
         public List<IGroupViewModel> GetAllGroups()

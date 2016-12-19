@@ -63,7 +63,8 @@ namespace FingerPrint
                     initialAuthorTextBox.Text = "";
                 }
 
-                ITextViewModel model = _textController.CreateText(initialFileNameTextBox.Text, input, UniversalConstants.CountSize, initialAuthorTextBox.Text); //creates the text in the db
+                _textController.CreateText(initialFileNameTextBox.Text, input, UniversalConstants.CountSize, initialAuthorTextBox.Text); //creates the text in the db
+                ITextViewModel model = _textController.GetTextByName(initialFileNameTextBox.Text);
                 updateTextListView(fileListViewTab1);
                 initialFileNameTextBox.Text = "New File Name";
                 initialAuthorTextBox.Text = "Name of Author";
@@ -104,6 +105,7 @@ namespace FingerPrint
         private void executeAnalysisButton_Click(object sender, EventArgs e)
         {
             //if (_analysisController.GetActiveItems().Count > 0)
+            RefreshActiveItems();
             if (_activeItems.Count > 0)
             {
                 try
@@ -623,6 +625,22 @@ namespace FingerPrint
                 ListViewItem itemGroup = new ListViewItem();
                 itemGroup.Text = groupEntry.GetName();
                 analysisListView.Items.Add(itemGroup);
+            }
+        }
+
+        private void RefreshActiveItems()
+        {
+            for (int i = 0; i < _activeItems.Count; i++)
+            {
+                ITextOrGroupViewModel model = _activeItems[i];
+                if (model is ITextViewModel)
+                {
+                    _activeItems[i] = _textController.GetTextByName(model.GetName());
+                }
+                else
+                {
+                    _activeItems[i] = _groupController.GetGroupByName(model.GetName());
+                }
             }
         }
 

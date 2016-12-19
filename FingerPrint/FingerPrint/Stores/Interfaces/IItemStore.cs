@@ -26,7 +26,5 @@ namespace FingerPrint.Stores
         IEnumerable<ModelType> GetMany(Expression<Func<EntityType, bool>> criteria);
 
         bool IsChild(ModelType model);
-
-        void Disassociate(ModelType model);
     }
 }

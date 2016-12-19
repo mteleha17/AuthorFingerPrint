@@ -57,15 +57,7 @@ namespace FingerPrint.Stores
             {
                 throw new ArgumentException($"Cannot delete text {model.GetName()} since it does not exist in the database.");
             }
-            if (_db.Text_Grouping.Any(x => x.TextId == text.Id))
-            {
-                throw new ArgumentException($"Cannot delete text {model.GetName()} because it is currently a member of a group.");
-            }
-
-            //if (_db.Groupings.Any(x => x.Texts.Contains(text)))
-            //{
-            //    throw new ArgumentException($"Cannot delete text {model.GetName()} because it is currently a member of a group.");
-            //}
+            Disassociate(text);
             _db.Texts.Remove(text);
             _db.SaveChanges();
         }
@@ -236,10 +228,8 @@ namespace FingerPrint.Stores
             return _db.Text_Grouping.Any(x => x.TextId == text.Id);
         }
 
-        public void Disassociate(ITextModel model)
+        private void Disassociate(Text text)
         {
-            string name = model.GetName();
-            Text text = _db.Texts.FirstOrDefault(x => x.Name == name);
             if (text == null)
             {
                 throw new ArgumentException("Cannot disassociate text since it does not exist.");
