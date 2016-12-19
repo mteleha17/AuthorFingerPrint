@@ -220,56 +220,6 @@ namespace FingerPrintUnitTests.StoreTests
         }
 
         [TestMethod]
-        public void TestAddItems()
-        {
-            //string name1 = _uniqueNames.Pop();
-            string name1;
-            _uniqueNames.TryPop(out name1);
-            IGroupModel group1 = _modelFactory.GetGroupModel(name1, UniversalConstants.CountSize);
-            _groupStore.Add(group1);
-            //string name2 = _uniqueNames.Pop();
-            string name2;
-            _uniqueNames.TryPop(out name2);
-            IGroupModel group2 = _modelFactory.GetGroupModel(name2, UniversalConstants.CountSize);
-            _groupStore.Add(group2);
-            //string textName = _uniqueNames.Pop();
-            string textName;
-            _uniqueNames.TryPop(out textName);
-            StreamReader text = new StreamReader("../../SampleTextFiles/WordSpanningMultipleLines.txt");
-            ITextModel textModel = _modelFactory.GetTextModel(textName, text, UniversalConstants.CountSize);
-            _textStore.Add(textModel);
-            List<ITextOrGroupModel> membersToAdd = new List<ITextOrGroupModel>()
-            {
-                group2, textModel
-            };
-            _groupStore.AddItems(group1, membersToAdd);
-            group1 = _groupStore.GetOne(x => x.Name == name1);
-            List<ITextOrGroupViewModel> groupMembers = group1.GetMembers();
-            Assert.AreEqual(2, groupMembers.Count);
-            int textIndex = 0;
-            int groupIndex = 0;
-            if (groupMembers[0] is ITextModel)
-            {
-                textIndex = 0;
-                groupIndex = 1;
-            }
-            else
-            {
-                textIndex = 1;
-                groupIndex = 0;
-            }
-            Assert.IsInstanceOfType(groupMembers[textIndex], typeof(ITextModel));
-            CompareTextModels(textModel, (ITextModel)groupMembers[textIndex]);
-            Assert.AreEqual(name2, groupMembers[groupIndex].GetName());
-            Assert.IsInstanceOfType(groupMembers[groupIndex], typeof(IGroupModel));
-            _groupStore.RemoveItem(group1, group2);
-            _groupStore.RemoveItem(group1, textModel);
-            _textStore.Delete(textModel);
-            _groupStore.Delete(group2);
-            _groupStore.Delete(group1);
-        }
-
-        [TestMethod]
         public void TestContainsOneLevel()
         {
             //string groupName = _uniqueNames.Pop();
@@ -419,50 +369,6 @@ namespace FingerPrintUnitTests.StoreTests
         }
 
         [TestMethod]
-        public void TestIsChild()
-        {
-            //string name1 = _uniqueNames.Pop();
-            string name1;
-            _uniqueNames.TryPop(out name1);
-            IGroupModel group1 = _modelFactory.GetGroupModel(name1, UniversalConstants.CountSize);
-            _groupStore.Add(group1);
-            //string name2 = _uniqueNames.Pop();
-            string name2;
-            _uniqueNames.TryPop(out name2);
-            IGroupModel group2 = _modelFactory.GetGroupModel(name2, UniversalConstants.CountSize);
-            _groupStore.Add(group2);
-            _groupStore.AddItem(group1, group2);
-            group1 = _groupStore.GetOne(x => x.Name == name1);
-            Assert.IsFalse(_groupStore.IsChild(group1));
-            Assert.IsTrue(_groupStore.IsChild(group2));
-            _groupStore.RemoveItem(group1, group2);
-            _groupStore.Delete(group2);
-            _groupStore.Delete(group1);
-        }
-
-        [TestMethod]
-        public void TestIsParent()
-        {
-            //string name1 = _uniqueNames.Pop();
-            string name1;
-            _uniqueNames.TryPop(out name1);
-            IGroupModel group1 = _modelFactory.GetGroupModel(name1, UniversalConstants.CountSize);
-            _groupStore.Add(group1);
-            //string name2 = _uniqueNames.Pop();
-            string name2;
-            _uniqueNames.TryPop(out name2);
-            IGroupModel group2 = _modelFactory.GetGroupModel(name2, UniversalConstants.CountSize);
-            _groupStore.Add(group2);
-            _groupStore.AddItem(group1, group2);
-            group1 = _groupStore.GetOne(x => x.Name == name1);
-            Assert.IsTrue(_groupStore.IsParent(group1));
-            Assert.IsFalse(_groupStore.IsParent(group2));
-            _groupStore.RemoveItem(group1, group2);
-            _groupStore.Delete(group2);
-            _groupStore.Delete(group1);
-        }
-
-        [TestMethod]
         public void TestModifyName()
         {
             //string name = _uniqueNames.Pop();
@@ -504,41 +410,6 @@ namespace FingerPrintUnitTests.StoreTests
             Assert.IsFalse(_groupStore.Contains(groupModel, textModel));
             _textStore.Delete(textModel);
             _groupStore.Delete(groupModel);
-        }
-
-        [TestMethod]
-        public void TestRemoveItems()
-        {
-            //string name1 = _uniqueNames.Pop();
-            string name1;
-            _uniqueNames.TryPop(out name1);
-            IGroupModel group1 = _modelFactory.GetGroupModel(name1, UniversalConstants.CountSize);
-            _groupStore.Add(group1);
-            //string name2 = _uniqueNames.Pop();
-            string name2;
-            _uniqueNames.TryPop(out name2);
-            IGroupModel group2 = _modelFactory.GetGroupModel(name2, UniversalConstants.CountSize);
-            _groupStore.Add(group2);
-            //string textName = _uniqueNames.Pop();
-            string textName;
-            _uniqueNames.TryPop(out textName);
-            StreamReader text = new StreamReader("../../SampleTextFiles/WordSpanningMultipleLines.txt");
-            ITextModel textModel = _modelFactory.GetTextModel(textName, text, UniversalConstants.CountSize);
-            _textStore.Add(textModel);
-            List<ITextOrGroupModel> membersToAdd = new List<ITextOrGroupModel>()
-            {
-                group2, textModel
-            };
-            _groupStore.AddItems(group1, membersToAdd);
-            group1 = _groupStore.GetOne(x => x.Name == name1);
-            Assert.IsTrue(_groupStore.Contains(group1, group2));
-            Assert.IsTrue(_groupStore.Contains(group1, textModel));
-            _groupStore.RemoveItems(group1, new List<ITextOrGroupModel>() { group2, textModel });
-            Assert.IsFalse(_groupStore.Contains(group1, group2));
-            Assert.IsFalse(_groupStore.Contains(group1, textModel));
-            _textStore.Delete(textModel);
-            _groupStore.Delete(group2);
-            _groupStore.Delete(group1);
         }
 
         [TestMethod]

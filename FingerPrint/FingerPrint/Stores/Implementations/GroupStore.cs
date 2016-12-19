@@ -74,7 +74,7 @@ namespace FingerPrint.Stores
                 throw new ArgumentException("Parent group does not exist.");
             }
             //IQueryable<Grouping_Grouping> childGroupIds = _db.Grouping_Grouping.Where(x => x.ParentId == parentGroup.Id);
-            List<Grouping> allGroups = new List<Grouping>() { parentGroup};
+            List<Grouping> allGroups = new List<Grouping>() { parentGroup };
             List<Grouping> nextGroups = new List<Grouping>();
             int oldCount = allGroups.Count;
             int newCount = allGroups.Count;
@@ -213,202 +213,84 @@ namespace FingerPrint.Stores
 
         public void AddItem(IGroupModel model, ITextOrGroupModel item)
         {
-            AddItems(model, new List<ITextOrGroupModel>() { item});
-        }
-
-        public void AddItems(IGroupModel model, IEnumerable<ITextOrGroupModel> items)
-        {
-            string name = model.GetName();
-            Grouping parentGroup = _db.Groupings.FirstOrDefault(x => x.Name == name);
-            if (parentGroup == null)
+            string parentName = model.GetName();
+            Grouping parent = _db.Groupings.FirstOrDefault(x => x.Name == parentName);
+            if (parent == null)
             {
-                throw new ArgumentException("Cannot add items to group because the group is not in the database.");
+                throw new ArgumentException("Cannot add to group since the group does not exist.");
             }
-            List<Text> texts = new List<Text>();
-            List<int> textIds = new List<int>();
-            List<int> groupIds = new List<int>();
-            foreach (var item in items)
+            string childName = item.GetName();
+            Text childText = _db.Texts.FirstOrDefault(x => x.Name == childName);
+            Grouping childGroup = _db.Groupings.FirstOrDefault(x => x.Name == childName);
+            if (childText == null)
             {
-                if (item == null)
+                if (childGroup == null)
                 {
-                    throw new ArgumentException("Cannot add null item to group.");
+                    throw new ArgumentException("Cannot add item to group since the item does not exist.");
                 }
-                if (item is ITextModel)
+                if (_db.Grouping_Grouping.Any(x => x.ParentId == parent.Id && x.ChildId == childGroup.Id))
                 {
-                    string textName = item.GetName();
-                    Text text = _db.Texts.FirstOrDefault(x => x.Name == textName);
-                    if (text == null)
-                    {
-                        throw new ArgumentException($"Cannot add item to group because it does not exist in the database: text {textName}.");
-                    }
-                    if (_db.Text_Grouping.Any(x => x.GroupingId == parentGroup.Id && x.TextId == text.Id))
-                    {
-                        throw new ArgumentException("Cannot add item to group because it is already a member of that group.");
-                    }
-                    texts.Add(text);
-                    textIds.Add((int)text.Id);
+                    throw new ArgumentException("Cannot add item to group since it is already a member.");
                 }
-                else
-                {
-                    string groupName = item.GetName();
-                    Grouping group = _db.Groupings.FirstOrDefault(x => x.Name == groupName);
-                    if (group == null)
-                    {
-                        throw new ArgumentException($"Cannot add item to group because it does not exist in the database: group {groupName}.");
-                    }
-                    if (_db.Grouping_Grouping.Any(x => x.ParentId == parentGroup.Id && x.ChildId == group.Id))
-                    {
-                        throw new ArgumentException("Cannot add item to group because it is already a member of that group.");
-                    }
-                    groupIds.Add((int)group.Id);
-                }
-            }
-            foreach (Text t in texts)
-            {
-                //parentGroup.Texts.Add(t);
-                _db.Text_Grouping.Add(new Text_Grouping() { TextId = t.Id, GroupingId = parentGroup.Id });
+                Grouping_Grouping association = new Grouping_Grouping() { ParentId = parent.Id, ChildId = childGroup.Id };
+                _db.Grouping_Grouping.Add(association);
                 _db.SaveChanges();
             }
-            //foreach (int id in textIds)
-            //{
-            //    Text_Group textGroup = new Text_Group()
-            //    {
-            //        GroupID = parentGroup.GroupID,
-            //        TextID = id
-            //    };
-            //    _db.Text_Group.Add(textGroup);
-            //    _db.SaveChanges();
-            //}
-            foreach (int id in groupIds)
+            else
             {
-                Grouping_Grouping groupGroup = new Grouping_Grouping()
+                if (childGroup != null)
                 {
-                    ParentId = parentGroup.Id,
-                    ChildId = id
-                };
-                _db.Grouping_Grouping.Add(groupGroup);
+                    throw new InvalidOperationException("The database contains both a text and a group with the same name. That's not good.");
+                }
+                if (_db.Text_Grouping.Any(x => x.TextId == childText.Id && x.GroupingId == parent.Id))
+                {
+                    throw new ArgumentException("Cannot add item to group since it is already a member.");
+                }
+                Text_Grouping assocation = new Text_Grouping() { TextId = childText.Id, GroupingId = parent.Id};
+                _db.Text_Grouping.Add(assocation);
                 _db.SaveChanges();
             }
         }
 
         public void RemoveItem(IGroupModel model, ITextOrGroupModel item)
         {
-            RemoveItems(model, new List<ITextOrGroupModel>() { item});
-        }
-
-        public void RemoveItems(IGroupModel model, IEnumerable<ITextOrGroupModel> items)
-        {
-            string name = model.GetName();
-            Grouping parentGroup = _db.Groupings.FirstOrDefault(x => x.Name == name);
-            if (parentGroup == null)
+            string parentName = model.GetName();
+            Grouping parent = _db.Groupings.FirstOrDefault(x => x.Name == parentName);
+            if (parent == null)
             {
-                throw new ArgumentException("Cannot add items to group because the group is not in the database.");
+                throw new ArgumentException("Cannot add to group since the group does not exist.");
             }
-            List<Text> texts = new List<Text>();
-            //List<int> textGroupIds = new List<int>();
-            List<long> groupGroupIds = new List<long>();
-            foreach (var item in items)
+            string childName = item.GetName();
+            Text childText = _db.Texts.FirstOrDefault(x => x.Name == childName);
+            Grouping childGroup = _db.Groupings.FirstOrDefault(x => x.Name == childName);
+            if (childText == null)
             {
-                if (item == null)
+                if (childGroup == null)
                 {
-                    throw new ArgumentException("Cannot remove null item from group.");
+                    throw new ArgumentException("Cannot remove item from group since the item does not exist.");
                 }
-                if (item is ITextModel)
+                Grouping_Grouping association = _db.Grouping_Grouping.FirstOrDefault(x => x.ParentId == parent.Id && x.ChildId == childGroup.Id);
+                if (association == null)
                 {
-                    string textName = item.GetName();
-                    Text text = _db.Texts.FirstOrDefault(x => x.Name == textName);
-                    if (text == null)
-                    {
-                        throw new ArgumentException($"Cannot add item to group because it does not exist in the database: text {textName}.");
-                    }
-                    //if (!parentGroup.Texts.Contains(text))
-                    //{
-                    //    throw new ArgumentException("Cannot remove item from group because it is not a member of the group.");
-                    //}
-
-                    //if (!_db.Text_Grouping.Any(x => x.TextId == text.Id && x.GroupingId == parentGroup.Id))
-                    //{
-                    //    throw new ArgumentException("Cannot remove item from group because it is not a member of the group.");
-                    //}
-                    //texts.Add(text);
-                    Text_Grouping textGrouping = _db.Text_Grouping.FirstOrDefault(x => x.GroupingId == parentGroup.Id && x.TextId == text.Id);
-                    if (textGrouping == null)
-                    {
-                        throw new ArgumentException("Cannot remove item from group because it is not a member of the group.");
-                    }
-                    _db.Text_Grouping.Remove(textGrouping);
-                    _db.SaveChanges();
-
-                    //Text_Group textGroup = _db.Text_Group.FirstOrDefault(x => x.GroupID == parentGroup.GroupID && x.TextID == text.TextID);
-                    //if (textGroup == null)
-                    //{
-                    //    throw new ArgumentException("Cannot remove item from group because it is not a member of the group.");
-                    //}
-                   // textGroupIds.Add(textGroup.TextTextID);
+                    throw new ArgumentException("Cannot remove item from group since it is not a member of that group.");
                 }
-                else
+                _db.Grouping_Grouping.Remove(association);
+                _db.SaveChanges();
+            }
+            else
+            {
+                if (childGroup != null)
                 {
-                    string groupName = item.GetName();
-                    Grouping child = _db.Groupings.FirstOrDefault(x => x.Name == groupName);
-                    if (child == null)
-                    {
-                        throw new ArgumentException($"Cannot add item to group because it does not exist in the database: group {groupName}.");
-                    }
-                    Grouping_Grouping groupGroup = _db.Grouping_Grouping.FirstOrDefault(x => x.ParentId == parentGroup.Id && x.ChildId == child.Id);
-                    if (groupGroup == null)
-                    {
-                        throw new ArgumentException("Cannot remove item from group because it is not a member of the group.");
-                    }
-                    //groupGroupIds.Add(groupGroup.Id);
-                    _db.Grouping_Grouping.Remove(groupGroup);
-                    _db.SaveChanges();
+                    throw new InvalidOperationException("The database contains both a text and a group with the same name. That's not good.");
                 }
+                Text_Grouping assocation = _db.Text_Grouping.FirstOrDefault(x => x.TextId == childText.Id && x.GroupingId == parent.Id);
+                if (assocation == null)
+                {
+                    throw new ArgumentException("Cannot remove item from group since it is not a member of that group.");
+                }
+                _db.Text_Grouping.Remove(assocation);
+                _db.SaveChanges();
             }
-            //foreach (Text t in texts)
-            //{
-            //    Text_Grouping textGrouping = _db.Text_Grouping.FirstOrDefault(x => x.TextId == t.Id && x.GroupingId == parentGroup.Id);
-            //    if (textGrouping == null)
-            //    {
-            //        throw new ArgumentException("Cannot remove one or more items since the group does not contain them.");
-            //    }
-            //    _db.Text_Grouping.Remove(textGrouping);
-            //    //parentGroup.Texts.Remove(t);
-            //    _db.SaveChanges();
-            //}
-            //foreach (int id in textGroupIds)
-            //{
-            //    //   Text_Group textGroup = _db.Text_Group.FirstOrDefault(x => x.TextTextID == id);
-            //    //   _db.Text_Group.Remfove(textGroup);
-            //    _db.SaveChanges();
-            //}
-            //foreach (long id in groupGroupIds)
-            //{
-            //    Grouping_Grouping groupGroup = _db.Grouping_Grouping.FirstOrDefault(x => x.Id == id);
-            //    _db.Grouping_Grouping.Remove(groupGroup);
-            //    _db.SaveChanges();
-            //}
-        }
-
-        public bool IsChild(IGroupModel model)
-        {
-            string name = model.GetName();
-            Grouping group = _db.Groupings.FirstOrDefault(x => x.Name == name);
-            if (group == null)
-            {
-                throw new ArgumentException("Group does not exist.");
-            }
-            return _db.Grouping_Grouping.Any(x => x.ChildId == group.Id);
-        }
-
-        public bool IsParent(IGroupModel model)
-        {
-            string name = model.GetName();
-            Grouping group = _db.Groupings.FirstOrDefault(x => x.Name == name);
-            if (group == null)
-            {
-                throw new ArgumentException("Group does not exist.");
-            }
-            return _db.Grouping_Grouping.Any(x => x.ParentId == group.Id);
         }
 
         private void Disassociate(Grouping group)

@@ -119,7 +119,7 @@ namespace FingerPrintUnitTests.StoreTests
                 expectedException = ex;
             }
             finally
-            {   
+            {
                 List<Text> textsToDelete = _db.Texts.Where(x => x.Name == name).ToList();
                 foreach (Text text in textsToDelete)
                 {
@@ -217,34 +217,6 @@ namespace FingerPrintUnitTests.StoreTests
             CompareTextModels(model2, models[1]);
             _textStore.Delete(model1);
             _textStore.Delete(model2);
-        }
-
-        [TestMethod]
-        public void TestIsChild()
-        {
-            //string name = _uniqueNames.Pop();
-            string name;
-            _uniqueNames.TryPop(out name);
-            StreamReader sr = new StreamReader("../../SampleTextFiles/WordSpanningMultipleLines.txt");
-            ITextModel model = _modelFactory.GetTextModel(name, sr, UniversalConstants.CountSize);
-            _textStore.Add(model);
-            Assert.IsFalse(_textStore.IsChild(model));
-            string textName = model.GetName();
-            Text text = _db.Texts.FirstOrDefault(x => x.Name == textName);
-            string tempName;
-            _uniqueNames.TryPop(out tempName);
-            Grouping group = new Grouping() { Name = tempName};
-            _db.Groupings.Add(group);
-            _db.SaveChanges();
-            Text_Grouping tg = new Text_Grouping() { TextId = text.Id, GroupingId = group.Id};
-            _db.Text_Grouping.Add(tg);
-            _db.SaveChanges();
-            Assert.IsTrue(_textStore.IsChild(model));
-            _db.Text_Grouping.Remove(tg);
-            _db.SaveChanges();
-            _db.Groupings.Remove(group);
-            _db.SaveChanges();
-            _textStore.Delete(model);
         }
 
         [TestMethod]

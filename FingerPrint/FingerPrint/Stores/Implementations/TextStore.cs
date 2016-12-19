@@ -16,7 +16,6 @@ namespace FingerPrint.Stores
         private FingerprintLite13Entities _db;
         private IModelFactory _modelFactory;
 
-
         public TextStore(FingerprintLite13Entities db, IModelFactory modelFactory)
         {
             _db = db;
@@ -144,11 +143,6 @@ namespace FingerPrint.Stores
             _db.SaveChanges();
         }
 
-        /// <summary>
-        /// Takes a count model and returns a new Count database entity.
-        /// </summary>
-        /// <param name="model">The count model.</param>
-        /// <returns>A Count database entity.</returns>
         private WordCount TranslateCounts(ISingleWordCountModel model)
         {
             if (model.GetLength() != UniversalConstants.CountSize)
@@ -174,11 +168,6 @@ namespace FingerPrint.Stores
             return output;
         }
 
-        /// <summary>
-        /// Takes a Count database entity and returns a count model.
-        /// </summary>
-        /// <param name="count">The Count database entity.</param>
-        /// <returns>A count model.</returns>
         private ISingleWordCountModel TranslateCounts(WordCount count)
         {
             ISingleWordCountModel output = _modelFactory.GetSingleCountModel(UniversalConstants.CountSize);
@@ -198,12 +187,6 @@ namespace FingerPrint.Stores
             return output;
         }
 
-        /// <summary>
-        /// Takes a Text database entity and returns a flexible count model representing the
-        /// text's two sets of counts (with and without quotations).
-        /// </summary>
-        /// <param name="text">The Text entity.</param>
-        /// <returns>A flexible count model with two sets of counts (with and without quotations).</returns>
         private IFlexibleWordCountModel GetCountsFromText(Text text)
         {
             WordCount withQuotes = _db.WordCounts.FirstOrDefault(x => x.Id == text.WithQuotesId);
@@ -215,17 +198,6 @@ namespace FingerPrint.Stores
             ISingleWordCountModel withQuotesModel = TranslateCounts(withQuotes);
             ISingleWordCountModel withoutQuotesModel = TranslateCounts(withoutQuotes);
             return _modelFactory.GetFlexibleCountModel(withQuotesModel, withoutQuotesModel);
-        }
-
-        public bool IsChild(ITextModel model)
-        {
-            string name = model.GetName();
-            Text text = _db.Texts.FirstOrDefault(x => x.Name == name);
-            if (text == null)
-            {
-                throw new ArgumentException("Text does not exist.");
-            }
-            return _db.Text_Grouping.Any(x => x.TextId == text.Id);
         }
 
         private void Disassociate(Text text)
