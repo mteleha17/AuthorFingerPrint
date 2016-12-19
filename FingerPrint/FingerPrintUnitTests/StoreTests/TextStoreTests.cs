@@ -328,17 +328,54 @@ namespace FingerPrintUnitTests.StoreTests
             //string name = _uniqueNames.Pop();
             string name;
             _uniqueNames.TryPop(out name);
+            StreamReader sr = new StreamReader("../../SampleTextFiles/WordSpanningMultipleLines.txt");
+            ITextModel model = _modelFactory.GetTextModel(name, sr, UniversalConstants.CountSize);
+            _textStore.Add(model);
+            model = _textStore.GetOne(x => x.Name == name);
+            Assert.IsNotNull(model);
+            //string newName = _uniqueNames.Pop();
+            string newName;
+            _uniqueNames.TryPop(out newName);
             try
             {
-                StreamReader sr = new StreamReader("../../SampleTextFiles/WordSpanningMultipleLines.txt");
-                ITextModel model = _modelFactory.GetTextModel(name, sr, UniversalConstants.CountSize);
-                _textStore.Add(model);
-                model = _textStore.GetOne(x => x.Name == name);
-                Assert.IsNotNull(model);
-                //string newName = _uniqueNames.Pop();
-                string newName;
-                _uniqueNames.TryPop(out newName);
+                
                 _textStore.ModifyName(model, null);
+            }
+            catch (ArgumentException ex)
+            {
+                expectedException = ex;
+            }
+            finally
+            {
+                Text text = _db.Texts.FirstOrDefault(x => x.Name == name);
+                _db.Texts.Remove(text);
+                _db.SaveChanges();
+            }
+            if (expectedException != null)
+            {
+                throw expectedException;
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void TestModifyNameEmpty()
+        {
+            ArgumentException expectedException = null;
+            //string name = _uniqueNames.Pop();
+            string name;
+            _uniqueNames.TryPop(out name);
+            StreamReader sr = new StreamReader("../../SampleTextFiles/WordSpanningMultipleLines.txt");
+            ITextModel model = _modelFactory.GetTextModel(name, sr, UniversalConstants.CountSize);
+            _textStore.Add(model);
+            model = _textStore.GetOne(x => x.Name == name);
+            Assert.IsNotNull(model);
+            //string newName = _uniqueNames.Pop();
+            string newName;
+            _uniqueNames.TryPop(out newName);
+            try
+            {
+                _textStore.ModifyName(model, "");
             }
             catch (ArgumentException ex)
             {

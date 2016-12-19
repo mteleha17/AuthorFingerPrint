@@ -32,6 +32,11 @@ namespace FingerPrint.Controllers.Implementations
             _modelFactory = modelFactory;
         }
 
+        public void DangerousDeleteEverything()
+        {
+            ((GroupStore)_groupStore).DangerousDeleteAllTextsAndGroups();
+        }
+
         public IGroupViewModel GetGroupByName(string name)
         {
             if (string.IsNullOrWhiteSpace(name))

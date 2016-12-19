@@ -228,6 +228,21 @@ namespace FingerPrint.Stores
                 {
                     throw new ArgumentException("Cannot add item to group since the item does not exist.");
                 }
+                if (childGroup.Id == parent.Id)
+                {
+                    throw new ArgumentException("Cannot add a group to itself.");
+                }
+                if (item is IGroupModel)
+                {
+                    if (Contains((IGroupModel)item, model))
+                    {
+                        throw new ArgumentException("Cannot add item to its own child or a child of its child or ...");
+                    }
+                }
+                else
+                {
+                    throw new ArgumentException("The item's name corresponds to a group in the db, but the item is not a group model. Something is wrong.");
+                }
                 if (_db.Grouping_Grouping.Any(x => x.ParentId == parent.Id && x.ChildId == childGroup.Id))
                 {
                     throw new ArgumentException("Cannot add item to group since it is already a member.");

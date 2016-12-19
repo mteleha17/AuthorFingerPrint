@@ -220,6 +220,153 @@ namespace FingerPrintUnitTests.StoreTests
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void TestAddDuplicateGroup()
+        {
+            ArgumentException expectedException = null;
+            //string groupName = _uniqueNames.Pop();
+            string groupName1;
+            _uniqueNames.TryPop(out groupName1);
+            IGroupModel groupModel1 = _modelFactory.GetGroupModel(groupName1, UniversalConstants.CountSize);
+            _groupStore.Add(groupModel1);
+            //string textName = _uniqueNames.Pop();
+            string groupName2;
+            _uniqueNames.TryPop(out groupName2);
+            IGroupModel groupModel2 = _modelFactory.GetGroupModel(groupName2, UniversalConstants.CountSize);
+            _groupStore.Add(groupModel2);
+            _groupStore.AddItem(groupModel1, groupModel2);
+            groupModel1 = _groupStore.GetOne(x => x.Name == groupName1);
+            try
+            {
+                _groupStore.AddItem(groupModel1, groupModel2);
+            }
+            catch (ArgumentException ex)
+            {
+                expectedException = ex;
+            }
+            finally
+            {
+                _groupStore.RemoveItem(groupModel1, groupModel2);
+                _groupStore.Delete(groupModel2);
+                _groupStore.Delete(groupModel1);
+            }
+            if (expectedException != null)
+            {
+                throw expectedException;
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void TestAddGroupToItself()
+        {
+            ArgumentException expectedException = null;
+            string name1;
+            _uniqueNames.TryPop(out name1);
+            IGroupModel group1 = _modelFactory.GetGroupModel(name1, UniversalConstants.CountSize);
+            _groupStore.Add(group1);
+            try
+            {
+                _groupStore.AddItem(group1, group1);
+            }
+            catch (ArgumentException ex)
+            {
+                expectedException = ex;
+            }
+            finally
+            {
+                _groupStore.Delete(group1);
+            }
+            if (expectedException != null)
+            {
+                throw expectedException;
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void TestAddGroupToOwnChild()
+        {
+            ArgumentException expectedException = null;
+            string name1;
+            _uniqueNames.TryPop(out name1);
+            IGroupModel group1 = _modelFactory.GetGroupModel(name1, UniversalConstants.CountSize);
+            _groupStore.Add(group1);
+            string name2;
+            _uniqueNames.TryPop(out name2);
+            IGroupModel group2 = _modelFactory.GetGroupModel(name2, UniversalConstants.CountSize);
+            _groupStore.Add(group2);
+            _groupStore.AddItem(group1, group2);
+            try
+            {
+                _groupStore.AddItem(group2, group1);
+            }
+            catch (ArgumentException ex)
+            {
+                expectedException = ex;
+            }
+            finally
+            {
+                if (_groupStore.Contains(group2, group1))
+                {
+                    _groupStore.RemoveItem(group2, group1);
+                }
+                _groupStore.RemoveItem(group1, group2);
+                _groupStore.Delete(group2);
+                _groupStore.Delete(group1);
+            }
+            if (expectedException != null)
+            {
+                throw expectedException;
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void TestAddGroupToChildOfChild()
+        {
+            ArgumentException expectedException = null;
+            string name1;
+            _uniqueNames.TryPop(out name1);
+            IGroupModel group1 = _modelFactory.GetGroupModel(name1, UniversalConstants.CountSize);
+            _groupStore.Add(group1);
+            string name2;
+            _uniqueNames.TryPop(out name2);
+            IGroupModel group2 = _modelFactory.GetGroupModel(name2, UniversalConstants.CountSize);
+            _groupStore.Add(group2);
+            _groupStore.AddItem(group1, group2);
+            string name3;
+            _uniqueNames.TryPop(out name3);
+            IGroupModel group3 = _modelFactory.GetGroupModel(name3, UniversalConstants.CountSize);
+            _groupStore.Add(group3);
+            _groupStore.AddItem(group2, group3);
+            try
+            {
+                _groupStore.AddItem(group3, group1);
+            }
+            catch (ArgumentException ex)
+            {
+                expectedException = ex;
+            }
+            finally
+            {
+                if (_groupStore.Contains(group3, group1))
+                {
+                    _groupStore.RemoveItem(group2, group1);
+                }
+                _groupStore.RemoveItem(group2, group3);
+                _groupStore.RemoveItem(group1, group2);
+                _groupStore.Delete(group3);
+                _groupStore.Delete(group2);
+                _groupStore.Delete(group1);
+            }
+            if (expectedException != null)
+            {
+                throw expectedException;
+            }
+        }
+
+        [TestMethod]
         public void TestContainsOneLevel()
         {
             //string groupName = _uniqueNames.Pop();
@@ -387,6 +534,96 @@ namespace FingerPrintUnitTests.StoreTests
             Assert.IsTrue(_groupStore.Exists(x => x.Name == name2));
             model = _groupStore.GetOne(x => x.Name == name2);
             _groupStore.Delete(model);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void TestModifyNameDuplicate()
+        {
+            ArgumentException expectedException = null;
+            string name1;
+            _uniqueNames.TryPop(out name1);
+            string name2;
+            _uniqueNames.TryPop(out name2);
+            IGroupModel model1 = _modelFactory.GetGroupModel(name1, UniversalConstants.CountSize);
+            IGroupModel model2 = _modelFactory.GetGroupModel(name2, UniversalConstants.CountSize);
+            _groupStore.Add(model1);
+            _groupStore.Add(model2);
+            model1 = _groupStore.GetOne(x => x.Name == name1);
+            model2 = _groupStore.GetOne(x => x.Name == name2);
+            try
+            {
+                _groupStore.ModifyName(model1, name2);
+            }
+            catch (ArgumentException ex)
+            {
+                expectedException = ex;
+            }
+            finally
+            {
+                _groupStore.Delete(model1);
+                _groupStore.Delete(model2);
+            }
+            if (expectedException != null)
+            {
+                throw expectedException;
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void TestModifyNameNull()
+        {
+            ArgumentException expectedException = null;
+            string name;
+            _uniqueNames.TryPop(out name);
+            IGroupModel model = _modelFactory.GetGroupModel(name, UniversalConstants.CountSize);
+            _groupStore.Add(model);
+            model = _groupStore.GetOne(x => x.Name == name);
+            try
+            {
+                _groupStore.ModifyName(model, null);
+            }
+            catch (ArgumentException ex)
+            {
+                expectedException = ex;
+            }
+            finally
+            {
+                _groupStore.Delete(model);
+            }
+            if (expectedException != null)
+            {
+                throw expectedException;
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void TestModifyNameEmpty()
+        {
+            ArgumentException expectedException = null;
+            string name;
+            _uniqueNames.TryPop(out name);
+            IGroupModel model = _modelFactory.GetGroupModel(name, UniversalConstants.CountSize);
+            _groupStore.Add(model);
+            model = _groupStore.GetOne(x => x.Name == name);
+            try
+            {
+                _groupStore.ModifyName(model, "");
+            }
+            catch (ArgumentException ex)
+            {
+                expectedException = ex;
+            }
+            finally
+            {
+                _groupStore.Delete(model);
+            }
+            if (expectedException != null)
+            {
+                throw expectedException;
+            }
         }
 
         [TestMethod]
