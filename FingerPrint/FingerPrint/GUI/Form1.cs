@@ -41,9 +41,10 @@ namespace FingerPrint
         /// 
         private void Form1_Load(object sender, EventArgs e)
         {
-             updateListViews(); // Fill listviews
+            ////((GroupController)_groupController).DangerousDeleteEverything();
+
+            updateListViews(); // Fill listviews
              fillGroupComboBox(); // Fill Group comboBox
-             //((GroupController)_groupController).DangerousDeleteEverything();
         }
         private void selectFileButton_Click(object sender, EventArgs e)
         {
